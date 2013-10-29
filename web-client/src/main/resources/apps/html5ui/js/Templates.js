@@ -144,7 +144,7 @@ GeoNetwork.HTML5UI.Templates.SHORT_TITLE =
     <input type="checkbox" \
         <tpl if="selected==\'true\'">checked="true"</tpl> \
         class="selector" \
-        onclick="javascript:catalogue.metadataSelect((this.checked?\'add\':\'remove\'), [\'{uuid}\']);"\
+        onclick="javascript:catalogue.metadataSelect((this.checked?\'add\':\'remove\'), [\'{uuid}\']);"/>\
     <a href="javascript:void(0);" onclick="javascript:catalogue.metadataShow(\'{uuid}\');return false;">\
     {[Ext.util.Format.ellipsis(values.title, 30, true)]}</a>\
     </h1>';
@@ -153,7 +153,7 @@ GeoNetwork.HTML5UI.Templates.TITLE =
     <input type="checkbox" \
         <tpl if="selected==\'true\'">checked="true"</tpl> \
         class="selector" \
-        onclick="javascript:catalogue.metadataSelect((this.checked?\'add\':\'remove\'), [\'{uuid}\']);"\
+        onclick="javascript:catalogue.metadataSelect((this.checked?\'add\':\'remove\'), [\'{uuid}\']);"/>\
     <a href="javascript:void(0);" onclick="javascript:catalogue.metadataShow(\'{uuid}\');return false;">{title}</a>\
     </h1>';
 
@@ -174,7 +174,7 @@ GeoNetwork.HTML5UI.Templates.RATING_TPL = '<div class="rating">' +
  */
 GeoNetwork.HTML5UI.Templates.LOGO =
     '<div class="md-logo">\
-        <img src="{[catalogue.URL]}/images/harvesting/{groupName}.png"/>\
+        <tpl if="(typeof groupName != \'undefined\') && groupName !=\'\' "><img src="{[catalogue.URL]}/images/harvesting/{groupName}.png"/></tpl>\
     </div>';
 
 
@@ -278,7 +278,9 @@ GeoNetwork.HTML5UI.Templates.THUMB =
             </a>\
         </tpl>\
         <tpl if="!thumbnail">\
-            <div class="emptyThumbnail"/>\
+            <div class="emptyThumbnail">\
+				<span>{[OpenLayers.i18n("no-thumbnail")]}</span>\
+			</div>\
         </tpl>\
     </div>';
 
