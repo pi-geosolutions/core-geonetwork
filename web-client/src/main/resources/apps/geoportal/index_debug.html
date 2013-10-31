@@ -38,7 +38,7 @@
       <div id="title" class="mn-main"></div>
     </div>
     <div id="mn-top">
-      <div class="pipe"><a href="#" onclick="Ext.getDom('shortcut').style.display='block';">?</a></div>
+      <div class="pipe" id="help-link"><a href="#" onclick="Ext.getDom('shortcut').style.display='block';">Aide</a></div>
       <div class="pipe" id="lang-form"></div>
       <div class="pipe" id="login-form"></div>
       <div class="pipe first" id="mode-form"></div>
@@ -106,25 +106,29 @@
     <script type="text/javascript">
     	//GeoNetwork.Geoportal.MAXEXTENT = new OpenLayers.Bounds(-17,13,-13.7,14);
     	window.Geoportal = {
-    			MAXEXTENT 			:[-1900000,1460000,-1530000,1560000],
+    			//MAXEXTENT 			:[-2.003750834E7,-2.003750834E7,2.0037508345578495E7,2.0037508345578495E7],
+    			MAXEXTENT 			:[-1500000,1100000,500000,3000000],
     			/*Mask 				: {
 						    			name 	: 'Translucent mask around Gambia', 
 						        		url 	: 'http://ige.fr/geoserver-prod/wms?',
 						        		layers 	: 'gm:gm_countryMask'	
 					    			},*/
-    			portalHeader 		:'<img class="TGcatLogo" src="../images/logos/gambie.png"/><span class="bigger">Gestion des risques </span><br /><span class="smaller">Géoportail "Risques" de la Gambie</span>',
-    			overviewWmsUrl		: 'http://gm-gdt.ige.fr/geoserver-prod/wms',
-    			overviewWmsLayers	: 'gm_fond_carto',
+    			portalHeader 		:'<img class="catLogo" src="../images/logos/logoAEDD_small.jpg"/>&nbsp;<img class="catLogo" src="../images/logos/logoDGPC_small.jpg"/>&nbsp;'+
+    					'<span class="bigger">Gestion durable des terres au Mali</span><br /><span class="smaller pan-right">Géoportail ILWAC</span>',
+    			overviewWmsUrl		: 'http://ilwac.ige.fr/geoserver-prod/wms',
+    			overviewWmsLayers	: 'ml_fond_carto',
     			overviewWmsFormat	: 'image/jpeg',
     			plainMapTitle 		: "Fond générique",
-    			plainMapWmsUrl		: 'http://gm-gdt.ige.fr/geoserver-prod/wms',
-    			plainMapWmsLayers 	:'gm_fond_carto',
+    			plainMapWmsUrl		: 'http://ilwac.ige.fr/geoserver-prod/wms',
+    			plainMapWmsLayers 	:'ml_fond_carto',
     			plainMapWmsFormat	:'image/jpeg',
-    			geonamesCountryIndicator : 'GM'
+    			geonamesCountryIndicator : 'ML'
     	};
     	
     </script>
-    <script type="text/javascript" src="http://gm-risk.ige.fr/sigdt-config/config-gambie-gn2_11/layertree.js"></script>
+<!-- <script type="text/javascript" src="http://gm-risk.ige.fr/sigdt-config/config-gambie-gn2_11/layertree.js"></script>
+-->
+    <script type="text/javascript" src="http://ilwac.ige.fr/sigdt-config/config-ilwac/layertree.js"></script>
     <script type="text/javascript" src="js/infotree.js"></script>
     
     <script src="http://maps.google.com/maps/api/js?sensor=false&v=3.6"></script>

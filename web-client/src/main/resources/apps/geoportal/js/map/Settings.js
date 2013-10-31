@@ -36,38 +36,38 @@ GeoNetwork.map.printCapabilities = "../../pdf";
 //GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-180, -90, 180, 90);
 //GeoNetwork.map.MAXEXTENT = GeoNetwork.Geoportal.MAXEXTENT?GeoNetwork.Geoportal.MAXEXTENT:new OpenLayers.Bounds(-180, -90, 180, 90);
 //GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-5.1,41,9.7,51);
-var ovmapWmsURL = window.Geoportal.overviewWmsUrl?window.Geoportal.overviewWmsUrl:'http://gm-risk.ige.fr/geoserver-prod/wms';
+var ovmapWmsURL = window.Geoportal.overviewWmsUrl?window.Geoportal.overviewWmsUrl:'http://ilwac.ige.fr/geoserver-prod/wms';
 var ovmapWmsLayers = window.Geoportal.overviewWmsLayers?window.Geoportal.overviewWmsLayers:'ml_fond_carto';
 var ovmapWmsFormat = window.Geoportal.overviewWmsFormat?window.Geoportal.overviewWmsFormat:'image/jpeg';
 
 var plainMapTitle = window.Geoportal.plainMapTitle?window.Geoportal.plainMapTitle:'Fond générique';
-var plainMapWmsUrl = window.Geoportal.plainMapWmsUrl?window.Geoportal.plainMapWmsUrl:'http://gm-risk.ige.fr/geoserver-prod/wms';
+var plainMapWmsUrl = window.Geoportal.plainMapWmsUrl?window.Geoportal.plainMapWmsUrl:'http://ilwac.ige.fr/geoserver-prod/wms';
 var plainMapWmsLayers = window.Geoportal.plainMapWmsLayers?window.Geoportal.plainMapWmsLayers:'ml_fond_carto';
 var plainMapWmsFormat = window.Geoportal.plainMapWmsFormat?window.Geoportal.plainMapWmsFormat:'image/jpeg';
 
-GeoNetwork.map.ovmapLayers = [new OpenLayers.Layer.OSM()];
+GeoNetwork.map.ovmapLayers = [new OpenLayers.Layer.WMS('ovmap', ovmapWmsURL, {layers: ovmapWmsLayers, format: ovmapWmsFormat, TILED:'true'})];
 GeoNetwork.map.BACKGROUND_LAYERS = [
 	/*<jp>*//*jp : commented*/
     //new OpenLayers.Layer.WMS("Background layer", "localhost:8081/geoserver/wms", {layers: 'ige:Cntry00', format: 'image/jpeg'}, {isBaseLayer: true})
 	/*jp: added*/
-	/*new OpenLayers.Layer.WMS(plainMapTitle, plainMapWmsUrl, {layers: plainMapWmsLayers, format: plainMapWmsFormat, TILED:'true'}, {isBaseLayer: true})
-	 ,*/
+	new OpenLayers.Layer.WMS(plainMapTitle, plainMapWmsUrl, {layers: plainMapWmsLayers, format: plainMapWmsFormat, TILED:'true'}, {isBaseLayer: true})
+	 ,
    
-   new OpenLayers.Layer.Google(
+   /*new OpenLayers.Layer.Google(
 	  	      OpenLayers.i18n("ovGoogleHybrid"),
 	  	      {type: google.maps.MapTypeId.HYBRID, 'sphericalMercator': true, numZoomLevels: 22}
-		)/*,
+		),*/
    new OpenLayers.Layer.Google(
  	      "Google Satellite",
  	      {type: google.maps.MapTypeId.SATELLITE, 'sphericalMercator': true, numZoomLevels: 22}
 	),
-	new OpenLayers.Layer.OSM()*/
+	new OpenLayers.Layer.OSM()
 ];
 
 //// Config for OSM based maps
 GeoNetwork.map.PROJECTION = "EPSG:900913";
 ////GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-550000, 5000000, 1200000, 7000000);
-GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508.34);
+GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-2.003750834E7,-2.003750834E7,2.0037508345578495E7,2.0037508345578495E7);
 GeoNetwork.map.MAXEXTENT = window.Geoportal.MAXEXTENT?new OpenLayers.Bounds(window.Geoportal.MAXEXTENT):GeoNetwork.map.EXTENT;
 //GeoNetwork.map.BACKGROUND_LAYERS = [
 //    new OpenLayers.Layer.OSM()
@@ -111,7 +111,7 @@ GeoNetwork.map.MAIN_MAP_OPTIONS = {
  //controls: [],
  controls: [
 	           new OpenLayers.Control.MousePosition( {'prefix': 'Lon ', 'separator':'°, Lat ', 'suffix':'°','numDigits':3, displayProjection:new OpenLayers.Projection("WGS84")}),
-	           //new OpenLayers.Control.OverviewMap({layers: GeoNetwork.map.ovmapLayers,maximized:true, minRatio:16,maxRatio:128,size : new OpenLayers.Size(130,100)})
+	           new OpenLayers.Control.OverviewMap({layers: GeoNetwork.map.ovmapLayers,maximized:true, minRatio:16,maxRatio:128,size : new OpenLayers.Size(130,100)})
 	           ],
  theme:null
 };

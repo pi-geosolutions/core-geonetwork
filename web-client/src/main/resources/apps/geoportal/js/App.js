@@ -791,7 +791,7 @@ GeoNetwork.app = function () {
         var info = catalogue.getInfo();
         /*<jp>*//*jp : commented first line, replaced by the next*/
         //Ext.getDom('title').innerHTML = '<img class="catLogo" src="../../images/logos/' + info.siteId + '.gif"/>&nbsp;' + info.name;
-        Ext.getDom('title').innerHTML = '<img class="catLogo" src="../images/logos/Coat_of_Arms_of_The_Gambia.svg.png"/>&nbsp;'+ info.name;
+        Ext.getDom('title').innerHTML = window.Geoportal.portalHeader ? window.Geoportal.portalHeader :'<img class="catLogo" src="../../images/logos/' + info.siteId + '.gif"/>&nbsp;' + info.name;
         /*</jp>*/document.title = info.name;
     }
     

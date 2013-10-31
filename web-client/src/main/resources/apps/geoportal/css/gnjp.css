@@ -15,8 +15,9 @@
 
 #mn-top #help-link a{
 	color:white;
-	font-size: 200%;
+	font-size: 14pt;
 	font-weight:bold;
+	padding-left : 30px;
 }
 #mn-top #help-link a:hover{
 	border : 1px dotted white;
@@ -51,8 +52,18 @@
 }
 
 .catLogo {
-	height : 35px;
-	width:35px;	
+	height : 33px;
+	width:33px;	
+	margin:1px;
+}
+
+.bigger {
+	font-size:12pt;
+	font-weight:bold;
+}
+.smaller {
+	font-size:8pt;
+	padding-left : 240px;
 }
 
 .infoTabPanel .pratiquesGDT .greyed .x-panel-body{

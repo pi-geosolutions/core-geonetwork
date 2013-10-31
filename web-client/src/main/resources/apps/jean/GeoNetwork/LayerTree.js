@@ -120,18 +120,20 @@ GeoNetwork.Geoportal.LayerTree = function() {
 	    		    	var geom_field = child.geom_field || "the_geom";
 	    		    	var url = child.url + "?tables="+tables_list+"&fields="+field_list+"&geom_field="+geom_field;
 	    				
-	    		    	layer = new OpenLayers.Layer.GML( child.layer, 
-	    						url,
-	    						{ 
-			    		    		format: OpenLayers.Format.GeoJSON
-			    		    		,styleMap: m_styleMap
-			    		    		,isBaseLayer: false
-									,visibility:checked
-									,uuid:child.uuid
-									,projection: new OpenLayers.Projection("EPSG:4326")
-									, legend : child.legend //if set, links the layer with its metadata
-	    						}
-	    		    	);
+	    		    	layer = new OpenLayers.Layer.Vector( child.layer, {
+	    						protocol: new OpenLayers.Protocol.HTTP({
+	    		                    url: url
+	    		                    ,format: new OpenLayers.Format.GeoJSON()
+			    		    		//,format: OpenLayers.Format.GeoJSON*/
+	    						})
+		    		    		,styleMap: m_styleMap
+		    		    		,isBaseLayer: false
+								,visibility:checked
+								,uuid:child.uuid
+								,projection: new OpenLayers.Projection("EPSG:4326")
+								, legend : child.legend //if set, links the layer with its metadata
+	    		                ,strategies: [new OpenLayers.Strategy.Fixed()]
+    					});
 	    				layers.push(layer);
 	    				break;
 	    			default: 
