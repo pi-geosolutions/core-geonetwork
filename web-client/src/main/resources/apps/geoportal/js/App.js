@@ -32,7 +32,7 @@ GeoNetwork.app = function () {
      * An interactive map panel for data visualization
      */
     var iMap, searchForm, facetsPanel, resultsPanel, metadataResultsView, tBar, bBar,
-        mainTagCloudViewPanel, infoPanel,
+        mainTagCloudViewPanel, infoPanel, toolsPanel,
         dataTabPanel,
         visualizationModeInitialized = false,
         showSortBy=true,
@@ -99,6 +99,45 @@ GeoNetwork.app = function () {
     function initMap_Step2() {
         var c = Ext.getCmp('center'),
             vp = Ext.getCmp('vp');
+        
+    	if (window.Geoportal.shortcutsCombo) {
+        	var shortcutsPanel = new GeoExt.ShortcutsComboPanel({ 
+                title:OpenLayers.i18n('shortcuts'),
+                id:'raccourcisCbPanel',
+                autoHeight:true,
+                width:'100%',
+                padding : 10,
+              	cbWidth:200,
+              	cbListWidth:195,
+                //height: 90,
+            	//collapsible: true,
+                cls:"rac-panel",
+                map:iMap.getMap(),
+                config:window.Geoportal.shortcutsCombo
+        	});
+        	toolsPanel.add(shortcutsPanel);
+    	}
+    	if (window.Geoportal.pratiquesConf) {
+        	var pratiquesGDTCbPanel = new GeoExt.PratiquesGDTComboPanel({ 
+                title:OpenLayers.i18n('pratiquesGDT'),
+                id:'pratiquesGDTPanel',
+                autoHeight:true,
+                width:'100%',
+                padding : 10,
+              	cbWidth:200,
+              	cbListWidth:300,
+                //height: 90,
+            	//collapsible: true,
+                cls:"rac-panel",
+                map:iMap.getMap(),
+                config:window.Geoportal.pratiquesConf
+            });
+        	toolsPanel.add(pratiquesGDTCbPanel);
+    	}
+    	if (toolsPanel.items.length==0) {
+    		dataTabPanel.remove(toolsPanel);
+    	}
+
         
         if (iMap) {
             c.add(iMap.getViewport());
@@ -890,6 +929,15 @@ GeoNetwork.app = function () {
                 facetListConfig: GeoNetwork.Settings.facetListConfig || []
             });*/
             
+		    toolsPanel = new Ext.Panel({
+		    	title: OpenLayers.i18n('tools'),
+		    	layout:'vbox',
+		    	align:'stretch',
+		    	autoScroll: true,
+		    	items : []
+		    });
+
+            
             //Tab panel
             dataTabPanel = new Ext.TabPanel({
             	id:'westTabPanel',
@@ -936,7 +984,9 @@ GeoNetwork.app = function () {
 		                			//autoScroll: true,
 		                			items : /*breadcrumb, facetsPanel,*/resultsPanel
 	                			}]
-	                },{
+	                },
+	                toolsPanel
+	                ,{
 				    	title: OpenLayers.i18n('print'),
 				    	id:'printPanelTab',
             			layout:'fit',

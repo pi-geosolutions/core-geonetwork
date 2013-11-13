@@ -41,7 +41,7 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
     initComponent: function() {
         GeoExt.PratiquesGDTComboPanel.superclass.initComponent.call(this);
         if (this.entete===null) {
-        	this.entete = this.config.title;
+        	this.entete = OpenLayers.i18n(this.config.title);
         }
         this.add({html:this.entete,border:false,width:'auto'});
         if (this.config.items!==null) {

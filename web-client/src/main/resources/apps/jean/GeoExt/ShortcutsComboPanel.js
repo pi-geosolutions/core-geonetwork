@@ -47,6 +47,7 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
         		this.manageEvents(this.sc_combos, i, this.map);
         	}
         }
+        window.Geoportal.debug = this.sc_combos;
     },
     
     createCombo: function(conf, i) {

@@ -1,4 +1,30 @@
 /* Override other styles --- JP interface */
+#loading-mask {
+	background-color:#DDD;
+}
+#loading {
+	display:block;
+	position : absolute;
+	width:500px;
+	position:relative;
+  	margin-left: auto;
+  	margin-right: auto;
+  	top:50px;
+}
+#loading .loading-indicator {
+	display:block;
+	border : 1px solid black;
+	width : 350px;
+	height:auto;
+	padding : 20px;
+	background : url("../../images/default/spinner.gif") no-repeat scroll 5px 50% white;
+	padding-left : 50px;
+	
+}
+#loading .loading-indicator p {
+	margin : 20px;
+}
+
 
 #header {
     border-bottom-width: 0px;

@@ -50,6 +50,9 @@ GeoNetwork.jpLang.en = {
 	'dash_ChooseYear':'Choose the year to display',
 	'linkedMtdWarnTitle' : 'Warning',
 	'linkedMtdWarnText' : 'You will loose the changes made since last save. If you have made significant changes, you may want to save the metadata contents first (\'Save\' button). <br /> Do you want to proceed anyway ?',
+	'tools':'Tools',
+	'shortcuts':'Shortcuts',
+	'pratiquesGDT':'Sustainable Land Management (SLM) practices',
 	'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.jpLang.en);

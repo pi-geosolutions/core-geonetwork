@@ -7,6 +7,7 @@
         </properties>
         
         <file name=".*/WEB-INF/config.xml">
+       			<addXML xpath="appHandler"><param name="geonetwork.dir" value="/home/jean/tomcat7/data/ml-ilwac-gn2_10-datadir" /></addXML>
                 <replaceXML xpath="resources">
                         <resource enabled="true">
                                 <name>main-db</name>
@@ -35,5 +36,16 @@
                         </resource>
                 </replaceXML>   
         </file>
+       	<file name=".*/WEB-INF/config-gui.xml">
+			<replaceAtt xpath="client" attName="widget" value="true" />
+			<replaceAtt xpath="client" attName="url"
+				value="../../apps/geoportal/index_debug.html" />
+			<replaceAtt xpath="client" attName="createParameter" value="#create" />
+			<replaceAtt xpath="client" attName="parameters"
+				value="hl=fre" />
+	<!-- 	<replaceAtt xpath="client" attName="parameters"
+			value="extent=-17,13,-13.7,14&amp;hl=fre" />
+			-->
+		</file>
 	
 </overrides>

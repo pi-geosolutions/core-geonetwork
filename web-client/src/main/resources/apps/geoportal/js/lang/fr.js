@@ -49,6 +49,10 @@ GeoNetwork.jpLang.fr = {
 		'dash_ChooseYear':"Choisir l'année à afficher",
 		'linkedMtdWarnTitle' : 'Attention',
 		'linkedMtdWarnText' : 'Vous allez perdre tous les changements effectués depuis la dernière sauvegarde. Si vous avez changé du contenu, vous voudrez probablement enregistrer les modifications, au préalable. Voulez-vous continuer malgré tout ?',
+		'tools':'Outils',
+		'shortcuts':'Raccourcis',
+		'pratiquesGDT':'Pratiques de Gestion Durable des Terres (GDT)',
+		'pratiquesConfTitle':'pratiques de GDT',
 		'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.jpLang.fr);
