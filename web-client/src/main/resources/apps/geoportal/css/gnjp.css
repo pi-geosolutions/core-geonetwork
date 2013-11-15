@@ -52,6 +52,10 @@
 #mn-top .pipe {
 	border-left : 0px;
 }
+#mn-top #login-form {
+	
+}
+
 #mn-top #login-form form,
 #mn-top #lang-form form {
 	background-color:transparent;

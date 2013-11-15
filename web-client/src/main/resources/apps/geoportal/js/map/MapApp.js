@@ -98,11 +98,12 @@ GeoNetwork.mapApp = function() {
         }
         else {
             map = new OpenLayers.Map('ol_map', options);
-            /*<jp>*/
-            bounds=options.maxExtent;
-            /*</jp>*/
-            fixedScales = scales;
         }
+
+        /*<jp>*/
+        bounds=options.restrictedExtent;
+        /*</jp>*/
+        fixedScales = scales;
     };
 
     /**

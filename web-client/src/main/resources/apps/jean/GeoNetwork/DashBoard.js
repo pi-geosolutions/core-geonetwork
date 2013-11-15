@@ -162,6 +162,7 @@ Ext.extend(GeoNetwork.DashBoardWindow, GeoNetwork.BaseWindow, {
     		this.loadTabs();
     	} else {
     		for (var i = 0 ; i < this.tabs.length ; i++) {
+    			console.log("setting lonlat for tab "+this.tabs[i].title);
     			this.tabs[i].setLonLat(lon, lat);
     		}
     	}

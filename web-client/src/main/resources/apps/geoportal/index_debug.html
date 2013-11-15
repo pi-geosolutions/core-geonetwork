@@ -37,7 +37,7 @@
       <hr />
       <p><b>Geoportal on Sustainable Land Management in Mali </b><br />
       Loading...</p></div>
-      Optimisé pour Firefox < 20.0, Chrome 
+      Optimisé pour Firefox 20.0, Chrome 
     </div>
     
     <div id="header">
@@ -115,7 +115,8 @@
     	//GeoNetwork.Geoportal.MAXEXTENT = new OpenLayers.Bounds(-17,13,-13.7,14);
     	window.Geoportal = {
     			//MAXEXTENT 			:[-2.003750834E7,-2.003750834E7,2.0037508345578495E7,2.0037508345578495E7],
-    			MAXEXTENT 			:[-1500000,1100000,500000,3000000],
+    			//MAXEXTENT 			:[-1500000,1100000,500000,3000000],
+    			MAXEXTENT 			:[-2000000,600000,1000000,3500000],
     			/*Mask 				: {
 						    			name 	: 'Translucent mask around Gambia', 
 						        		url 	: 'http://ige.fr/geoserver-prod/wms?',
@@ -127,19 +128,19 @@
     			overviewWmsLayers	: 'ml_fond_carto',
     			overviewWmsFormat	: 'image/jpeg',
     			plainMapTitle 		: "Fond générique",
-    			plainMapWmsUrl		: 'http://ilwac.ige.fr/geoserver-prod/wms',
+    			plainMapWmsUrl		: "http://ilwac.ige.fr/geoserver-prod/wms",
     			plainMapWmsLayers 	:'ml_fond_carto',
     			plainMapWmsFormat	:'image/jpeg',
     			geonamesCountryIndicator : 'ML',
     			shortcutsCombo 		: [{
 						nom:'Régions...',
-						url:'http://ilwac.ige.fr/sigdt-config/services-ilwac/getRegions.php'
+						url:'http://192.168.1.86/sigdt-config/services-ilwac/getRegions.php'
 					},{
 						nom:'Cercles...',
-						url:'http://ilwac.ige.fr/sigdt-config/services-ilwac/getCercles.php'
+						url:'http://192.168.1.86/sigdt-config/services-ilwac/getCercles.php'
 					},{
 						nom:'Communes...',
-						url:'http://ilwac.ige.fr/sigdt-config/services-ilwac/getCommunes.php'
+						url:'http://192.168.1.86/sigdt-config/services-ilwac/getCommunes.php'
 				}],
 				pratiquesConf 		: {
 						//title : '<h1 class="soberH1">Carte des pratiques GDT</h1>',
@@ -147,20 +148,18 @@
 						items: 
 							[{
 								nom:'Familles de Pratiques GDT...',
-								url:'http://ilwac.ige.fr/sigdt-config/services-ilwac/getFamPratiques.php?emptyRecord=true'
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getFamPratiques.php?emptyRecord=true'
 							},{
 								nom:'Pratiques...',
-								url:'http://ilwac.ige.fr/sigdt-config/services-ilwac/getPratique.php'
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getPratique.php'
 							}],
-						mapUrl:'http://ilwac.ige.fr/sigdt-config/services-ilwac/getPosPratique.php?id='
+						mapUrl:'http://192.168.1.86/sigdt-config/services-ilwac/getPosPratique.php?id='
 				}
     	};
     	
     </script>
-<!-- <script type="text/javascript" src="http://gm-risk.ige.fr/sigdt-config/config-gambie-gn2_11/layertree.js"></script>
--->
-    <script type="text/javascript" src="http://ilwac.ige.fr/sigdt-config/config-ilwac/layertree.js"></script>
-    <script type="text/javascript" src="js/infotree.js"></script>
+    <script type="text/javascript" src="http://192.168.1.86/sigdt-config/config-ilwac/layertree.js"></script>
+    <script type="text/javascript" src="http://192.168.1.86/sigdt-config/config-ilwac/infotree.js"></script>
     
     <script src="http://maps.google.com/maps/api/js?sensor=false&v=3.6"></script>
    

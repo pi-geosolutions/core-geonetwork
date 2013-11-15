@@ -1093,9 +1093,11 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
     isLoggedIn: function(){
         var response = OpenLayers.Request.GET({
             url: this.services.getMyInfo,
+            headers: {
+                "Content-Type": "application/xml"
+            },
             async: false
         }), exception, authenticated, me;
-       
        me = response.responseXML.getElementsByTagName('me')[0];
        authenticated = me.getAttribute('authenticated') == 'true';
        

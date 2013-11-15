@@ -14,6 +14,7 @@ GeoNetwork.PratiquesGDTPanel = Ext.extend(Ext.Panel, {
 	zae_url 			: null,
 	pratiquesAppState	: {
 			zae_id			: null,
+			url				: null,
 			buttons			: [],
 			lat				: null,
 			lon				: null,
@@ -67,7 +68,6 @@ GeoNetwork.PratiquesGDTPanel = Ext.extend(Ext.Panel, {
         this.add(this.panels_center);
         this.add(this.panels_west);
         this.add(this.panels_north);
-        
 
         this.doLayout();
         
@@ -119,24 +119,32 @@ GeoNetwork.PratiquesGDTPanel = Ext.extend(Ext.Panel, {
     	return this.pratiquesAppState.buttons;
     },
     
+    /*
+     * Called by mother app, Dashboard's setLonLat function
+     */
     setLonLat: function(lon, lat) {
     	this.lat = lat;
     	this.lon = lon;
     	this.pratiquesAppState.lat = lat;
     	this.pratiquesAppState.lon = lon;
     	var url = this.zae_url+"lat="+this.pratiquesAppState.lat+"&lon="+this.pratiquesAppState.lon;
-        var zae_store = new Ext4.data.JsonStore({ //JsonP isn't instanciated in ext3.4 core (exists in ux...)
-		    proxy: {
-		        type: 'jsonp',
+    	this.pratiquesAppState.url=url;
+        var zae_store = new Ext.data.JsonStore({ //JsonP isn't instanciated in ext3.4 core (exists in ux...)
+		    /*proxy: {
+		        type: 'json',
 		        url : url,
 		        reader: {
 		            type: 'json',
 		            root: 'data',
 	           		idProperty: 'id'
 		        }
-		    },
+		    },*/
+	        url : url,
+		    root: 'data',
+       		idProperty: 'id',
 			fields: [{name:'id', type: 'string'}, {name:'name', type:'string'}]
 		});
+
         zae_store.load({
         	scope:this,
         	callback: function(records, operation, success) {
@@ -148,15 +156,11 @@ GeoNetwork.PratiquesGDTPanel = Ext.extend(Ext.Panel, {
                     tpl.overwrite(this.panels_north.body, data);
                     
         			this.pratiquesAppState.zae_id = data.id; //we update the zae_id for the panel
-        			this.setMainPanel(); //we update the main content, because of the zae_id change
+         			this.setMainPanel(); //we update the main content, because of the zae_id change
         		}
         	}
         });
     	
-    	if (this.pratiquesAppState.current_button === null || 
-    			this.pratiquesAppState.current_button.current_values===undefined) {
-    		return false; //if not set, we stop here
-    	}
     },
     
     setMainPanel: function() {
@@ -280,9 +284,9 @@ GeoNetwork.PratiquesGDTPanel.openFichePratique = function(idpratique) {
 	pratiqueww.add(panel_north);
 	pratiqueww.show();
 
-	window.Geoportal.WhiteBoard.fichepanel = panel;
+	window.Geoportal.DashBoard.fichepanel = panel;
 	panel.load({
-		url: window.Geoportal.WhiteBoard.fichesPratiquesURL,
+		url: window.Geoportal.DashBoard.fichesPratiquesURL,
 	    method: 'GET',
 	    params: {
 	        id: idpratique

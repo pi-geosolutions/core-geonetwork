@@ -24,7 +24,7 @@
     // Define on browser type
     var bGecko    = !!window.controllers,
         bIE        = window.document.all && !window.opera,
-        bIE7    = bIE && window.navigator.userAgent.match(/MSIE 7.0/);
+        bIE7    = bIE ;//&& window.navigator.userAgent.match(/MSIE 7.0/);
 
     // Enables "XMLHttpRequest()" call next to "new XMLHttpReques()"
     function fXMLHttpRequest() {
@@ -365,8 +365,11 @@
     function fGetDocument(oRequest) {
         var oDocument    = oRequest.responseXML,
             sResponse    = oRequest.responseText;
+        
+        if (oDocument==null) oDocument={};
         // Try parsing responseText
-        if (bIE && sResponse && oDocument && !oDocument.documentElement && oRequest.getResponseHeader("Content-Type").match(/[^\/]+\/[^\+]+\+xml/)) {
+        //if (bIE && sResponse && oDocument && !oDocument.documentElement && oRequest.getResponseHeader("Content-Type").match(/[^\/]+\/[^\+]+\+xml/)) {
+        if (bIE && sResponse && oDocument && !oDocument.documentElement && (oRequest.getResponseHeader("Content-Type").match("/xml$")=="/xml")) {
             oDocument    = new window.ActiveXObject("Microsoft.XMLDOM");
             oDocument.async                = false;
             oDocument.validateOnParse    = false;
