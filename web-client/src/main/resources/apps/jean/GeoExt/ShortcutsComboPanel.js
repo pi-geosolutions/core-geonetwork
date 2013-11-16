@@ -26,18 +26,20 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
   	config:null,
   	cbWidth:150,
   	cbListWidth:145,
-  	entete:'<h1 class="soberH1">Entités administratives</h1>',
-  	sc_combos:[],
                       
     /** private: method[initComponent]
      *  Initializes the legend panel.
      */
     initComponent: function() {
         GeoExt.ShortcutsComboPanel.superclass.initComponent.call(this);
+        //declare vars
+      	this.sc_combos=[];
+      	this.entete = (this.config.entete==null) ? '<h1 class="soberH1">Entités administratives</h1>': OpenLayers.i18n(this.config.entete);
+      	
         this.add({html:this.entete,border:false,width:'auto'});
-        if (this.config!==null) {
-        	for (var i=0 ; i<this.config.length ; i++) {
-        		var cb = this.createCombo(this.config[i],i);
+        if (this.config.items!==null) {
+        	for (var i=0 ; i<this.config.items.length ; i++) {
+        		var cb = this.createCombo(this.config.items[i],i);
         		this.sc_combos.push(cb);
         		this.add(cb);
         	}
@@ -47,7 +49,7 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
         		this.manageEvents(this.sc_combos, i, this.map);
         	}
         }
-        window.Geoportal.debug = this.sc_combos;
+        //window.Geoportal.debug = this.sc_combos;
     },
     
     createCombo: function(conf, i) {

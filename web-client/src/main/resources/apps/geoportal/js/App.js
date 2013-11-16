@@ -100,17 +100,31 @@ GeoNetwork.app = function () {
         var c = Ext.getCmp('center'),
             vp = Ext.getCmp('vp');
         
+        if (window.Geoportal.shortcutsZAE) {
+        	var shortcutsZAEPanel = new GeoExt.ShortcutsComboPanel({ 
+                title:OpenLayers.i18n('shortcuts'),
+                id:'raccourcisZaePanel',
+                autoHeight:true,
+                width:'100%',
+                padding : 10,
+              	cbWidth:200,
+              	cbListWidth:195,
+                cls:"rac-panel",
+                map:iMap.getMap(),
+                config:window.Geoportal.shortcutsZAE
+        	});
+        	toolsPanel.add(shortcutsZAEPanel);
+    	}
     	if (window.Geoportal.shortcutsCombo) {
         	var shortcutsPanel = new GeoExt.ShortcutsComboPanel({ 
                 title:OpenLayers.i18n('shortcuts'),
+                header : (window.Geoportal.shortcutsZAE==null),
                 id:'raccourcisCbPanel',
                 autoHeight:true,
                 width:'100%',
                 padding : 10,
               	cbWidth:200,
               	cbListWidth:195,
-                //height: 90,
-            	//collapsible: true,
                 cls:"rac-panel",
                 map:iMap.getMap(),
                 config:window.Geoportal.shortcutsCombo
@@ -134,6 +148,38 @@ GeoNetwork.app = function () {
             });
         	toolsPanel.add(pratiquesGDTCbPanel);
     	}
+    	if (window.Geoportal.geonamesCountryIndicator) {
+    		
+    		var geonamesSearchPanel = new Ext.Panel({
+    			title: OpenLayers.i18n('geonamesSearchPanelTitle'),
+    			id:'geonamesPanel',
+                autoHeight:true,
+                width:'100%',
+                padding : 10,
+              	cbWidth:200,
+              	cbListWidth:300,
+                cls:"rac-panel",
+                items:[{
+                    xtype: "displayfield",
+                    value: OpenLayers.i18n('geonamesCbHeader')
+                },{
+                	xtype: 'gxux_geonamessearchcombo', 
+                	fieldLabel: OpenLayers.i18n("Geonames"), 
+                	zoom:8,
+                    map:iMap.getMap(),
+                	width:250,
+                	listWidth:250,
+                	loadingText: OpenLayers.i18n("geonamesLoadingText"), 
+                    emptyText: OpenLayers.i18n("geonamesEmptyText"), 
+                    lang: 'fr',
+                    countryString: window.Geoportal.geonamesCountryIndicator?'country='+window.Geoportal.geonamesCountryIndicator:'country=BF',
+                    locationIcon: '../images/viseur.png',
+                    tpl: '<tpl for="."><div class="x-combo-list-item geonamesComboList" lon={lng} lat={lat}><h1>{name}</h1><p>lat: {lat}, lon:{lng} <br />{[OpenLayers.i18n(values.fcodeName)]}</p></div></tpl>'
+            	}]
+    		});
+        	toolsPanel.add(geonamesSearchPanel);
+    	}
+    	
     	if (toolsPanel.items.length==0) {
     		dataTabPanel.remove(toolsPanel);
     	}
@@ -931,7 +977,7 @@ GeoNetwork.app = function () {
             
 		    toolsPanel = new Ext.Panel({
 		    	title: OpenLayers.i18n('tools'),
-		    	layout:'vbox',
+		    	layout:'fit',
 		    	align:'stretch',
 		    	autoScroll: true,
 		    	items : []

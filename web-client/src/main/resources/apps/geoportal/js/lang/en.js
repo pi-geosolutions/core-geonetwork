@@ -34,7 +34,7 @@ GeoNetwork.jpLang.en = {
     'ovGoogleHybrid':"Google Hybrid background map",
 	'print': 'Print',
 	'printHeader':"Please note that this isn't truly a print page but a PDF page generator. This PDF you can then print or save on your computer. "+
-		'<br /><b>Warning:</b> Google-based backgrounds will not show in the printed view. This is due to Google-licence restrictions. So, take care to put some data in the background for printing, or you could get something like a white, squared area...',
+		'<br /><br /><b>Warning:</b> Google-based backgrounds will not show in the printed view. This is due to Google-licence restrictions. So, take care to put some data in the background for printing, or you could get something like a white, squared area...',
 	'results': 'Search results',
 	'showLegend': 'Display the legend',
 	'horizCurtainButtonText': 'Horizontal curtain',
@@ -52,7 +52,9 @@ GeoNetwork.jpLang.en = {
 	'linkedMtdWarnText' : 'You will loose the changes made since last save. If you have made significant changes, you may want to save the metadata contents first (\'Save\' button). <br /> Do you want to proceed anyway ?',
 	'tools':'Tools',
 	'shortcuts':'Shortcuts',
-	'pratiquesGDT':'Sustainable Land Management (SLM) practices',
+	'pratiquesGDT':'<h1 class="soberH1">Map the Sustainable Land Management (SLM) practices</h1>',
+	'shortcutsAdminTitle': '<h1 class="soberH1">Administrative netities</h1>',
+	'shortcutsZaeTitle': '<h1 class="soberH1">Agro-ecologic areas</h1>',
 	'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.jpLang.en);

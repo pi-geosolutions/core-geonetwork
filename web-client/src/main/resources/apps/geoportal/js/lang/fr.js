@@ -52,7 +52,13 @@ GeoNetwork.jpLang.fr = {
 		'tools':'Outils',
 		'shortcuts':'Raccourcis',
 		'pratiquesGDT':'Pratiques de Gestion Durable des Terres (GDT)',
-		'pratiquesConfTitle':'pratiques de GDT',
+		'pratiquesConfTitle':'<h1 class="soberH1">Carte des pratiques GDT</h1>',
+		'shortcutsAdminTitle': '<h1 class="soberH1">Entités administratives</h1>',
+		'shortcutsZaeTitle': '<h1 class="soberH1">Zonages agro-écologiques</h1>',
+		'geonamesSearchPanelTitle' : 'Chercher un lieu (base Geonames)',
+		'geonamesCbHeader': 'Cet outil effectue une recherche de lieux dans la base de données Geonames (geonames.org). <br />Entrez les premières lettre du nom de lieu recherché, et s\'il est présent dans la base, les résultats correspondant seront listés. Lorsque vous survolez un résultat, sa position est pointée sur la carte.',
+		'geonamesLoadingText': 'Interrogation de la base Geonames...',
+		'geonamesEmptyText': 'Chercher un lieu (Geonames)',
 		'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.jpLang.fr);

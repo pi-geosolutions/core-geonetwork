@@ -34,6 +34,7 @@
 
 #header #title{
 	color:white;
+	line-height: 16px;
 }
 #shortcut {
 	overflow-y:auto;

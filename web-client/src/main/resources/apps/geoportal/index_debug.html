@@ -37,7 +37,7 @@
       <hr />
       <p><b>Geoportal on Sustainable Land Management in Mali </b><br />
       Loading...</p></div>
-      Optimisé pour Firefox 20.0, Chrome 
+      Optimisé pour / optimized for : <br />Firefox (version 17 et +) , Chrome (version 29 et +), Internet Explorer 8, 9 et 10.
     </div>
     
     <div id="header">
@@ -90,6 +90,7 @@
     <script type="text/javascript" src="../jean/Ext/Fixes.js"></script>
     <script type="text/javascript" src="../jean/GeoExt/ShortcutsComboPanel.js"></script>
     <script type="text/javascript" src="../jean/GeoExt/PratiquesGDTComboPanel.js"></script>
+    <script type="text/javascript" src="../jean/GeoExt/GeoNamesSearchCombo.js"></script>
     <script type="text/javascript" src="../jean/GeoExt/FoldableLegendPlugin.js"></script>
     <script type="text/javascript" src="../jean/GeoExt/ShowOnlyVisibleLayersPlugin.js"></script>
     <script type="text/javascript" src="../jean/GeoNetwork/LayerTree.js"></script>
@@ -132,16 +133,28 @@
     			plainMapWmsLayers 	:'ml_fond_carto',
     			plainMapWmsFormat	:'image/jpeg',
     			geonamesCountryIndicator : 'ML',
-    			shortcutsCombo 		: [{
-						nom:'Régions...',
-						url:'http://192.168.1.86/sigdt-config/services-ilwac/getRegions.php'
-					},{
-						nom:'Cercles...',
-						url:'http://192.168.1.86/sigdt-config/services-ilwac/getCercles.php'
-					},{
-						nom:'Communes...',
-						url:'http://192.168.1.86/sigdt-config/services-ilwac/getCommunes.php'
-				}],
+    			shortcutsZAE 		: {
+						entete : 'shortcutsZaeTitle',	
+    					items : 
+    						[{
+								nom:'Zones agro-écologiques...',
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getBoundsZAE.php'
+						}]
+    			},
+				shortcutsCombo 		: {
+						entete : 'shortcutsAdminTitle',
+						items : 
+							[{
+								nom:'Régions...',
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getRegions.php'
+							},{
+								nom:'Cercles...',
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getCercles.php'
+							},{
+								nom:'Communes...',
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getCommunes.php'
+						}]
+				},
 				pratiquesConf 		: {
 						//title : '<h1 class="soberH1">Carte des pratiques GDT</h1>',
 						title : 'pratiquesConfTitle',

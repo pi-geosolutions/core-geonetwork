@@ -3,11 +3,11 @@
 	<properties>
                 <db.user>geonetwork</db.user>
                 <db.pass>geonetwork</db.pass>
-                <db.dbname>jdbc:postgresql://localhost:5432/ml_ilwac_gn2_10</db.dbname>
+                <db.dbname>jdbc:postgresql://localhost:5432/ml_ilwac_dev</db.dbname>
         </properties>
         
         <file name=".*/WEB-INF/config.xml">
-       			<addXML xpath="appHandler"><param name="geonetwork.dir" value="/home/jean/tomcat7/data/ml-ilwac-gn2_10-datadir" /></addXML>
+       			<addXML xpath="appHandler"><param name="geonetwork.dir" value="/home/jean/tomcat7/data/ml-ilwac-dev-datadir" /></addXML>
                 <replaceXML xpath="resources">
                         <resource enabled="true">
                                 <name>main-db</name>
