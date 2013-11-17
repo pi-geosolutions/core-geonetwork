@@ -18,14 +18,20 @@
   <body>
     <div id="loading-mask"></div>
     <div id="loading">
-      <div class="loading-indicator">Loading ...</div>
+      <div class="loading-indicator">
+      <p><b>Géoportail de la Gestion Durable des Terres au Mali </b><br />
+      Chargement en cours...</p>
+      <hr />
+      <p><b>Geoportal on Sustainable Land Management in Mali </b><br />
+      Loading...</p></div>
+      Optimisé pour / optimized for : <br />Firefox (version 17 et +) , Chrome (version 29 et +), Internet Explorer 8, 9 et 10.
     </div>
     
     <div id="header">
       <div id="title" class="mn-main"></div>
     </div>
     <div id="mn-top">
-      <div class="pipe"><a href="#" onclick="Ext.getDom('shortcut').style.display='block';">?</a></div>
+      <div class="pipe"><a href="#" onclick="Ext.getDom('shortcut').style.display='block';">Aide</a></div>
       <div class="pipe" id="lang-form"></div>
       <div class="pipe" id="login-form"></div>
       <div class="pipe first" id="mode-form"></div>
@@ -54,25 +60,63 @@
     	//we can use this namespace because GeoNetwork.Geoportal object was created in LayerTree.js)
     	//GeoNetwork.Geoportal.MAXEXTENT = new OpenLayers.Bounds(-17,13,-13.7,14);
     	window.Geoportal = {
-    			MAXEXTENT 			:[-1900000,1460000,-1530000,1560000],
-    			Mask 				: {
+    			//MAXEXTENT 			:[-2.003750834E7,-2.003750834E7,2.0037508345578495E7,2.0037508345578495E7],
+    			//MAXEXTENT 			:[-1500000,1100000,500000,3000000],
+    			MAXEXTENT 			:[-2000000,600000,1000000,3500000],
+    			/*Mask 				: {
 						    			name 	: 'Translucent mask around Gambia', 
 						        		url 	: 'http://ige.fr/geoserver-prod/wms?',
 						        		layers 	: 'gm:gm_countryMask'	
-					    			},
-    			portalHeader 		:'<img class="TGcatLogo" src="../images/logos/gambie.png"/><span class="bigger">Gestion des risques </span><br /><span class="smaller">Géoportail "Risques" de la Gambie</span>',
-    			overviewWmsUrl		: 'http://gm-gdt.ige.fr/geoserver-prod/wms',
-    			overviewWmsLayers	: 'gm_fond_carto',
+					    			},*/
+    			portalHeader 		:'<img class="catLogo" src="../images/logos/logoAEDD_small.jpg"/>&nbsp;<img class="catLogo" src="../images/logos/logoDGPC_small.jpg"/>&nbsp;'+
+    					'<span class="bigger">Gestion durable des terres au Mali</span><br /><span class="smaller pan-right">Géoportail ILWAC</span>',
+    			overviewWmsUrl		: 'http://ilwac.ige.fr/geoserver-prod/wms',
+    			overviewWmsLayers	: 'ml_fond_carto',
     			overviewWmsFormat	: 'image/jpeg',
     			plainMapTitle 		: "Fond générique",
-    			plainMapWmsUrl		: 'http://gm-gdt.ige.fr/geoserver-prod/wms',
-    			plainMapWmsLayers 	:'gm_fond_carto',
+    			plainMapWmsUrl		: "http://ilwac.ige.fr/geoserver-prod/wms",
+    			plainMapWmsLayers 	:'ml_fond_carto',
     			plainMapWmsFormat	:'image/jpeg',
-    			geonamesCountryIndicator : 'GM'
+    			geonamesCountryIndicator : 'ML',
+    			shortcutsZAE 		: {
+						entete : 'shortcutsZaeTitle',	
+    					items : 
+    						[{
+								nom:'Zones agro-écologiques...',
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getBoundsZAE.php'
+						}]
+    			},
+				shortcutsCombo 		: {
+						entete : 'shortcutsAdminTitle',
+						items : 
+							[{
+								nom:'Régions...',
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getRegions.php'
+							},{
+								nom:'Cercles...',
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getCercles.php'
+							},{
+								nom:'Communes...',
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getCommunes.php'
+						}]
+				},
+				pratiquesConf 		: {
+						//title : '<h1 class="soberH1">Carte des pratiques GDT</h1>',
+						title : 'pratiquesConfTitle',
+						items: 
+							[{
+								nom:'Familles de Pratiques GDT...',
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getFamPratiques.php?emptyRecord=true'
+							},{
+								nom:'Pratiques...',
+								url:'http://192.168.1.86/sigdt-config/services-ilwac/getPratique.php'
+							}],
+						mapUrl:'http://192.168.1.86/sigdt-config/services-ilwac/getPosPratique.php?id='
+				}
     	};
     </script>
-    <script type="text/javascript" src="http://gm-risk.ige.fr/sigdt-config/config-gambie-gn2_11/layertree.js"></script>
-    <script type="text/javascript" src="http://gm-risk.ige.fr/sigdt-config/config-gambie-gn2_11/infotree.js"></script>
+    <script type="text/javascript" src="http://192.168.1.86/sigdt-config/config-ilwac/layertree.js"></script>
+    <script type="text/javascript" src="http://192.168.1.86/sigdt-config/config-ilwac/infotree.js"></script>
     <script type="text/javascript" src="js/App-mini.js"></script>
   </body>
 </html>

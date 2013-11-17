@@ -315,8 +315,7 @@ GeoExt.ux.GeoNamesSearchCombo = Ext.extend(Ext.form.ComboBox, {
 
         if(this.zoom > 0) {
             this.on("select", function(combo, record, index) {
-            	console.log(record);
-                var position = new OpenLayers.LonLat(
+            	var position = new OpenLayers.LonLat(
                     record.data.lng, record.data.lat
                 );
                 position.transform(

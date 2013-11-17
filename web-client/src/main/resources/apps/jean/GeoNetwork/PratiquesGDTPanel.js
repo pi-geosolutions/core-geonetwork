@@ -77,10 +77,43 @@ GeoNetwork.PratiquesGDTPanel = Ext.extend(Ext.Panel, {
              */
            // "aftermapmove"
         );
+        
     },
     
     updateContent: function() {
-    	
+    	var url = this.zae_url+"lat="+this.pratiquesAppState.lat+"&lon="+this.pratiquesAppState.lon;
+    	this.pratiquesAppState.url=url;
+        var zae_store = new Ext.data.JsonStore({ //JsonP isn't instanciated in ext3.4 core (exists in ux...)
+		    /*proxy: {
+		        type: 'json',
+		        url : url,
+		        reader: {
+		            type: 'json',
+		            root: 'data',
+	           		idProperty: 'id'
+		        }
+		    },*/
+	        url : url,
+		    root: 'data',
+       		idProperty: 'id',
+			fields: [{name:'id', type: 'string'}, {name:'name', type:'string'}]
+		});
+
+        zae_store.load({
+        	scope:this,
+        	callback: function(records, operation, success) {
+        		if (success && records.length>0) {
+        			var data = records[0].data;
+                    var tpl = new Ext.Template( // We update he north' elements info
+                        '<p>Ecosystème : {name}</p>'
+                    );
+                    tpl.overwrite(this.panels_north.body, data);
+                    
+        			this.pratiquesAppState.zae_id = data.id; //we update the zae_id for the panel
+         			this.setMainPanel(); //we update the main content, because of the zae_id change
+        		}
+        	}
+        });
     },
 
     loadActions: function() {
@@ -127,39 +160,7 @@ GeoNetwork.PratiquesGDTPanel = Ext.extend(Ext.Panel, {
     	this.lon = lon;
     	this.pratiquesAppState.lat = lat;
     	this.pratiquesAppState.lon = lon;
-    	var url = this.zae_url+"lat="+this.pratiquesAppState.lat+"&lon="+this.pratiquesAppState.lon;
-    	this.pratiquesAppState.url=url;
-        var zae_store = new Ext.data.JsonStore({ //JsonP isn't instanciated in ext3.4 core (exists in ux...)
-		    /*proxy: {
-		        type: 'json',
-		        url : url,
-		        reader: {
-		            type: 'json',
-		            root: 'data',
-	           		idProperty: 'id'
-		        }
-		    },*/
-	        url : url,
-		    root: 'data',
-       		idProperty: 'id',
-			fields: [{name:'id', type: 'string'}, {name:'name', type:'string'}]
-		});
-
-        zae_store.load({
-        	scope:this,
-        	callback: function(records, operation, success) {
-        		if (success && records.length>0) {
-        			var data = records[0].data;
-                    var tpl = new Ext.Template( // We update he north' elements info
-                        '<p>Ecosystème : {name}</p>'
-                    );
-                    tpl.overwrite(this.panels_north.body, data);
-                    
-        			this.pratiquesAppState.zae_id = data.id; //we update the zae_id for the panel
-         			this.setMainPanel(); //we update the main content, because of the zae_id change
-        		}
-        	}
-        });
+    	this.updateContent();
     	
     },
     
