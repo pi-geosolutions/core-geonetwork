@@ -330,6 +330,14 @@ p.abstract {
 	display:none;
 }
 
+.metadata img.logo {
+	display:none;
+}
+
+.related td.main span.icon {
+	padding-bottom:5px;
+}
+
 
 /****************************************************************
 		CSS des widgets / plugins

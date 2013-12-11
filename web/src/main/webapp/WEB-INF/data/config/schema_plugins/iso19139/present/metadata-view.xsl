@@ -558,7 +558,15 @@
                             <xsl:value-of select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString"/>
                           </xsl:when>
                           <xsl:otherwise>
-                            <xsl:value-of select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+                          	<xsl:choose>
+	                          <xsl:when
+	                            test="normalize-space(gmd:CI_OnlineResource/gmd:name/gmx:MimeFileType)!=''">
+	                            <xsl:value-of select="gmd:CI_OnlineResource/gmd:name/gmx:MimeFileType"/>
+	                          </xsl:when>
+	                          <xsl:otherwise>
+	                            <xsl:value-of select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+	                          </xsl:otherwise>
+	                        </xsl:choose>
                           </xsl:otherwise>
                         </xsl:choose>
                       </xsl:when>
@@ -572,7 +580,15 @@
                             <xsl:value-of select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString"/>
                           </xsl:when>
                           <xsl:otherwise>
-                            <xsl:value-of select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+                          	<xsl:choose>
+	                          <xsl:when
+	                            test="normalize-space(gmd:CI_OnlineResource/gmd:name/gmx:MimeFileType)!=''">
+	                            <xsl:value-of select="gmd:CI_OnlineResource/gmd:name/gmx:MimeFileType"/>
+	                          </xsl:when>
+	                          <xsl:otherwise>
+	                            <xsl:value-of select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+	                          </xsl:otherwise>
+	                        </xsl:choose>
                           </xsl:otherwise>
                         </xsl:choose>
                       </xsl:otherwise>
