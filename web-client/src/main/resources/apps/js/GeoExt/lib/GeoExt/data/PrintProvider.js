@@ -724,6 +724,12 @@ GeoExt.data.PrintProvider = Ext.extend(Ext.util.Observable, {
                 });
                 return enc;
             },
+            "gx_vectorlegend": function(legend) {
+            	  return [{
+                      name: legend.items.get(0).text,
+                      classes: []
+                  }];
+            },
             "base": function(legend){
                 return [{
                     name: legend.items.get(0).text,

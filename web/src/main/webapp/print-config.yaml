@@ -95,3 +95,23 @@ layouts:
               text: '${now yyyy} GeoNetwork opensource'  
               fontEncoding: Cp1252
               fontSize: 10
+
+    lastPage:
+      rotation: true
+      pageSize: A4   
+      header:
+        height: 50
+        items:
+          - !text
+            font: Helvetica
+            fontSize: 30
+            align: left
+            text: 'Legendes'
+      items:
+        - !legends
+          maxIconWidth: 0
+          maxIconHeight: 0
+          classIndentation: 0
+          layerSpace: 5
+          layerFontSize: 10
+              

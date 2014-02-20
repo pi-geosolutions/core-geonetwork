@@ -348,7 +348,7 @@ GeoNetwork.mapApp = function() {
             buttons: [{
                 text: OpenLayers.i18n("mf.print.generatingPDF"),
                 handler: function() {
-                    printProvider.print(Ext.getCmp('mappanel'), printPage);
+                    printProvider.print(Ext.getCmp('mappanel'), printPage, {legend:legendPanel});
                 }
             }],
             listeners: {

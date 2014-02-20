@@ -307,7 +307,7 @@ GeoNetwork.mapApp = function() {
             buttons: [{
                 text: OpenLayers.i18n("mf.print.generatingPDF"),
                 handler: function() {
-                    printProvider.print(Ext.getCmp('mappanel'), printPage);
+                    printProvider.print(Ext.getCmp('mappanel'), printPage, {legend:legendPanel});
                 }
             }]/*,
             listeners: {
@@ -326,7 +326,7 @@ GeoNetwork.mapApp = function() {
                     mode: "screen"
                 });
             });
-        }, 60000);
+        }, 6000);
     };
     /**
      * Creates the map viewer toolbars
@@ -1200,13 +1200,9 @@ GeoNetwork.mapApp = function() {
                 style: 'padding:5px'
             },
             title: 'Legend',
-            height:200,
             autoScroll: true,
-            split: true,
-            collapsible: true,
-            collapsed: true,
             border: false,
-            region: 'south'
+            region: 'center'
         });
     };
 
@@ -1217,7 +1213,7 @@ GeoNetwork.mapApp = function() {
     var createViewport = function() {
         createToolbars();         
         createTree();
-        //createLegendPanel();
+        createLegendPanel();
         createPrintPanel();
         
         var mapOverlay = createMapOverlay();
@@ -1237,7 +1233,7 @@ GeoNetwork.mapApp = function() {
             layout: 'border',
             border: false,
             //renderTo:'map_container',
-            items: [/*{
+            items: [{
                     id: 'layerManager',
                     region: 'east',
                     xtype: 'panel',
@@ -1250,8 +1246,8 @@ GeoNetwork.mapApp = function() {
                     minSize: 170,
                     maxSize: 300,
                     layout: 'border',
-                    items: [accordion, legendPanel]
-                },*/{
+                    items: [legendPanel]
+                },{
                     region: 'center',
                     layout: 'fit',
                     frame: false,
