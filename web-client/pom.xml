@@ -536,6 +536,7 @@
                 <include>${project.build.directory}/classes/apps/jean/GeoExt/ShowOnlyVisibleLayersPlugin.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoExt/LayerCurtainSlider.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoExt/ShortcutsComboPanel.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoExt/ShortcutsComboPanelZAE.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoExt/PratiquesGDTComboPanel.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoExt/GeoNamesSearchCombo.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/NDVIPanel.js</include>

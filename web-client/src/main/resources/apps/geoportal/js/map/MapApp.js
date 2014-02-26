@@ -468,7 +468,7 @@ GeoNetwork.mapApp = function() {
                     isDefault: true
                 }),
             toggleGroup: "move",
-            allowDepress: false,
+            allowDepress: true,
             pressed: true,
             map: map,
             iconCls: 'pan'
@@ -572,6 +572,8 @@ GeoNetwork.mapApp = function() {
             pressed: false,
             map: map,
             iconCls: 'dashboard',
+            text: OpenLayers.i18n('dashBoardTooltipTitle'), 
+            autoWidth:true,
             tooltip: {
             	title: OpenLayers.i18n('dashBoardTooltipTitle'), 
             	text: OpenLayers.i18n('dashBoardTooltipText') 
@@ -1532,6 +1534,29 @@ var processLayersSuccess = function(response) {
                 failure: processLayersFailure,
                 timeout: 10000
             });
+        },
+        
+        openDashBoardAt : function (lonlat_geog, options) {
+        	//coords in WGS84
+        	console.log(lonlat_geog);
+        	//we get them in local projection
+        	var lonlat = lonlat_geog.clone();
+            lonlat.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+            var point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
+            dashBoardLayer.destroyFeatures();
+            dashBoardLayer.addFeatures(new OpenLayers.Feature.Vector(point));
+            _setAlwaysOnTop(dashBoardLayer);
+            GeoNetwork.WindowManager.showWindow("dashBoard");
+            //GeoNetwork.WindowManager.getWindow("ilwacinfo").setMap(map);
+            //GeoNetwork.WindowManager.getWindow("dashBoard").setxy(evt.xy);
+
+        	console.log(lonlat_geog);
+            GeoNetwork.WindowManager.getWindow("dashBoard").setLonLat(lonlat_geog.lon, lonlat_geog.lat);
+            if (options.tabNb) {
+                GeoNetwork.WindowManager.getWindow("dashBoard").openTab(options.tabNb);
+            }
+           
+            return false;
         },
 
         getViewport: function() {

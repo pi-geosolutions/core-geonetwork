@@ -31,9 +31,10 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
   	resetBtn:null,
   	vectorMark_radius:6,
   	vectorLayer:null,
-    vectorMark_styles:[new OpenLayers.StyleMap(OpenLayers.Util.applyDefaults({pointRadius:3, fillOpacity: 0.1}, OpenLayers.Feature.Vector.style["default"])),
-    					new OpenLayers.StyleMap(OpenLayers.Util.applyDefaults({pointRadius:6, fillOpacity: 0.4}, OpenLayers.Feature.Vector.style["default"])),
-    					new OpenLayers.StyleMap(OpenLayers.Util.applyDefaults({pointRadius:8, fillOpacity: 0.8}, OpenLayers.Feature.Vector.style["default"]))],
+  	vectorSelectAction:null,
+    vectorMark_styles:[new OpenLayers.StyleMap(OpenLayers.Util.applyDefaults({pointRadius:2, fillOpacity: 0.1}, OpenLayers.Feature.Vector.style["default"])),
+    					new OpenLayers.StyleMap(OpenLayers.Util.applyDefaults({pointRadius:4, fillOpacity: 0.4}, OpenLayers.Feature.Vector.style["default"])),
+    					new OpenLayers.StyleMap(OpenLayers.Util.applyDefaults({pointRadius:6, fillOpacity: 0.8}, OpenLayers.Feature.Vector.style["default"]))],
                       
     /** private: method[initComponent]
      *  Initializes the legend panel.
@@ -170,6 +171,39 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
 				  {
 				    this.vectorLayer = new OpenLayers.Layer.Vector("Pratiques GDT", {style: style});
 				    this.map.addLayer(this.vectorLayer);
+			/*	 // create select feature control
+				    var selectCtrl = new OpenLayers.Control.SelectFeature(this.vectorLayer);
+
+				    // define "createPopup" function
+				    var bogusMarkup = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.";
+				    function createPopup(feature) {
+				        popup = new GeoExt.Popup({
+				            title: 'My Popup',
+				            location: feature,
+				            width:200,
+				            html: bogusMarkup,
+				            maximizable: true,
+				            collapsible: true
+				        });
+				        // unselect feature when the popup
+				        // is closed
+				        popup.on({
+				            close: function() {
+				                if(OpenLayers.Util.indexOf(this.vectorLayer.selectedFeatures,
+				                                           this.feature) > -1) {
+				                    selectCtrl.unselect(this.feature);
+				                }
+				            }
+				        });
+				        popup.show();
+				    }
+
+				    // create popup on "featureselected"
+				    this.vectorLayer.events.on({
+				        featureselected: function(e) {
+				            createPopup(e.feature);
+				        }
+				    });*/
 				  }
 				  else {
 				    this.vectorLayer.destroyFeatures();
@@ -182,14 +216,21 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
 		                    new OpenLayers.Projection("EPSG:4326"),
 		                    me.map.getProjectionObject()
 					      );
-				    var pointFeature = new OpenLayers.Feature.Vector(point,{});
+				    var pointFeature = new OpenLayers.Feature.Vector(point,
+			    			record.data/*,
+			    			{
+		    					fillColor:'#ee9900',
+		    					strokeColor:'#ee9900',
+		    					//label:record.get("nom"),
+		    					fillOpacity:0.33*record.get("importance"),
+				    			strokeOpacity: 0.4+0.2*record.get("importance"),
+				    			pointRadius:1+3*record.get("importance")
+			    			}*/);
 				    this.vectorLayer.addFeatures([pointFeature]);
-				    pointFeature.style.fillOpacity=0.33*record.get("importance");
-				    pointFeature.style.strokeOpacity=0.4+0.2*record.get("importance");
-				    pointFeature.style.pointRadius=1+record.get("importance");
-				    this.vectorLayer.redraw();
 				  },this);
   			      this.vectorLayer.redraw();
+  			      /*this.map.addControl(selectCtrl);
+  			      selectCtrl.activate();*/
 				},this);
 		    }
 	  	},this);

@@ -63,7 +63,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 									, opacity : (child.opacity===null?'1.0':child.opacity)
 									, isGeoportalNativeLayer : true
 									, uuid : child.uuid //if set, links the layer with its metadata
-									, legend : child.legend //if set, links the layer with its metadata
+									, legend : child.legend //if set, links the layer with an image legend
 								}
 	    				);
 	    				layers.push(layer);
@@ -131,7 +131,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 								,visibility:checked
 								,uuid:child.uuid
 								,projection: new OpenLayers.Projection("EPSG:4326")
-								, legend : child.legend //if set, links the layer with its metadata
+								, legend : child.legend //if set, links the layer with its legend (image)
 	    		                ,strategies: [new OpenLayers.Strategy.Fixed()]
     					});
 	    				layers.push(layer);

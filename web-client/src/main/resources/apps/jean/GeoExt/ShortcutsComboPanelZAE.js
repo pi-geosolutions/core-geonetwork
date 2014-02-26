@@ -20,9 +20,10 @@ Ext.namespace('GeoExt');
  *  A panel showing legends of all layers in a layer store.
  *  Depending on the layer type, a legend renderer will be chosen.
  */
-GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
+GeoExt.ShortcutsComboPanelZAE = Ext.extend(GeoExt.ShortcutsComboPanel, {
 
   	map:null,
+  	mapapp:null,
   	config:null,
   	cbWidth:150,
   	cbListWidth:145,
@@ -31,25 +32,7 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
      *  Initializes the legend panel.
      */
     initComponent: function() {
-        GeoExt.ShortcutsComboPanel.superclass.initComponent.call(this);
-        //declare vars
-      	this.sc_combos=[];
-      	this.entete = (this.config.entete==null) ? '<h1 class="soberH1">Entités administratives</h1>': OpenLayers.i18n(this.config.entete);
-      	
-        this.add({html:this.entete,border:false,width:'auto'});
-        if (this.config.items!==null) {
-        	for (var i=0 ; i<this.config.items.length ; i++) {
-        		var cb = this.createCombo(this.config.items[i],i);
-        		this.sc_combos.push(cb);
-        		this.add(cb);
-        	}
-        }
-        if (this.sc_combos.length>0) {
-        	for (var i=0 ; i<this.sc_combos.length ; i++) {
-        		this.manageEvents(this.sc_combos, i, this.map);
-        	}
-        }
-        //window.Geoportal.debug = this.sc_combos;
+        GeoExt.ShortcutsComboPanelZAE.superclass.initComponent.call(this);
     },
     
     createCombo: function(conf, i) {
@@ -57,6 +40,8 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
 		           // set up the fields mapping into the xml doc
 		           {name: 'id', mapping:'@id'},
 		           {name: 'nom'},
+		           {name: 'lon'},
+		           {name: 'lat'},
 		           {name: 'yUL'},
 		           {name: 'yLR'},
 		           {name: 'xLR'},
@@ -102,35 +87,41 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
     manageEvents: function(combos, i, map) {
     	var me=this;
     	combos[i].on('select', function(combo, record, index) {
-		    var bbox = new OpenLayers.Bounds(
-		                                  parseFloat(record.get('xUL')),
-		                                  parseFloat(record.get('yLR')),
-		                                  parseFloat(record.get('xLR')),
-		                                  parseFloat(record.get('yUL'))
-		                              );
+    		var xUL = parseFloat(record.get('xUL'));
+    		var yLR = parseFloat(record.get('yLR'));
+    		var xLR = parseFloat(record.get('xLR'));
+    		var yUL = parseFloat(record.get('yUL'));
+    		var lon = parseFloat(record.get('lon'));
+    		var lat = parseFloat(record.get('lat'));
+		    var bbox = new OpenLayers.Bounds(xUL,yLR,xLR,yUL);
 		    bbox.transform(
                     new OpenLayers.Projection("EPSG:4326"),
                     me.map.getProjectionObject()
 		      );
-		    if (map!=null)
-		      map.zoomToExtent(bbox);
-		      
+		    if (map!=null) {
+		    	map.zoomToExtent(bbox);
+		    	if (this.linkedLayers) {
+		    		for (var i = 0 ; i < this.linkedLayers.length ; i++) {
+		    			var layers = map.getLayersByName(this.linkedLayers[i]);
+		    			if (layers.length > 0) {
+		    				layers[0].setVisibility(true);
+		    			}
+		    		}
+		    	}
+		    }
+
+		    if (me.mapapp!=null&& me.config.dashboard.openOnSelect) {
+		    	me.mapapp.openDashBoardAt(new OpenLayers.LonLat(lon,lat), me.config.dashboard.options);
+		    }
+
 		    this.selectedRecord = record; 
-		    
+
 		    for (var j=i+1 ; j < combos.length ; j++) {
 		    	combos[j].clearValue();
-		    	
-				if ((record.id!=="-1")) { //ie si on a choisi une entrée réelle
-					var indx = j-i;
-					combos[j].store.filter('up'+indx, record.id); //marche si le combo a déjà été chargé une fois (sinon, cf store_communes.on('load'... )
-				}
-		    }
-		    if (this.linkedLayers) {
-		    	for (var i = 0 ; i < this.linkedLayers.length ; i++) {
-		    		var layers = map.getLayersByName(this.linkedLayers[i]);
-		    		if (layers.length > 0) {
-		    			layers[0].setVisibility(true);
-		    		}
+
+		    	if ((record.id!=="-1")) { //ie si on a choisi une entrée réelle
+		    		var indx = j-i;
+		    		combos[j].store.filter('up'+indx, record.id); //marche si le combo a déjà été chargé une fois (sinon, cf store_communes.on('load'... )
 		    	}
 		    }
 	  	});
@@ -151,7 +142,7 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
      *  Private method called when the legend panel is being rendered.
      */
     onRender: function() {
-        GeoExt.ShortcutsComboPanel.superclass.onRender.apply(this, arguments);
+        GeoExt.ShortcutsComboPanelZAE.superclass.onRender.apply(this, arguments);
     },
 
     /** private: method[onDestroy]
@@ -163,10 +154,10 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
             this.layerStore.un("remove", this.onStoreRemove, this);
             this.layerStore.un("update", this.onStoreUpdate, this);
         }*/
-        GeoExt.ShortcutsComboPanel.superclass.onDestroy.apply(this, arguments);
+        GeoExt.ShortcutsComboPanelZAE.superclass.onDestroy.apply(this, arguments);
     }
     
 });
 
 /** api: xtype = gx_shortcutscombopanel */
-Ext.reg('gx_shortcutscombopanel', GeoExt.ShortcutsComboPanel);
+Ext.reg('gx_shortcutscombopanelzae', GeoExt.ShortcutsComboPanelZAE);

@@ -124,6 +124,7 @@ Ext.extend(GeoNetwork.DashBoardWindow, GeoNetwork.BaseWindow, {
 		    	
 		    	break;
     	}
+
     	return panel;
     },
     
@@ -164,6 +165,7 @@ Ext.extend(GeoNetwork.DashBoardWindow, GeoNetwork.BaseWindow, {
     		for (var i = 0 ; i < this.tabs.length ; i++) {
     			//console.log("setting lonlat for tab "+this.tabs[i].title);
     			this.tabs[i].setLonLat(lon, lat);
+    			console.log(this.tabs[i]);
     		}
     	}
     },
@@ -176,6 +178,11 @@ Ext.extend(GeoNetwork.DashBoardWindow, GeoNetwork.BaseWindow, {
     		array.push([src[i]]);
     	}
     	return array;
+    },
+    openTab: function(tabNb) {
+    	if (tabNb < this.tabpanel.items.getCount()) {
+    		this.tabpanel.setActiveTab(tabNb);
+    	}
     }
 
 

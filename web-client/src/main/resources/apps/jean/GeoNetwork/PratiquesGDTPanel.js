@@ -77,7 +77,10 @@ GeoNetwork.PratiquesGDTPanel = Ext.extend(Ext.Panel, {
              */
            // "aftermapmove"
         );
-        
+        if (this.pratiquesAppState.lat && this.pratiquesAppState.lon) {
+        	console.log('updating PratiqueGDTPanel');
+        	this.updateContent();
+        }
     },
     
     updateContent: function() {
@@ -156,12 +159,13 @@ GeoNetwork.PratiquesGDTPanel = Ext.extend(Ext.Panel, {
      * Called by mother app, Dashboard's setLonLat function
      */
     setLonLat: function(lon, lat) {
+    	console.log(lon);
+    	console.log(lat);
     	this.lat = lat;
     	this.lon = lon;
     	this.pratiquesAppState.lat = lat;
     	this.pratiquesAppState.lon = lon;
     	this.updateContent();
-    	
     },
     
     setMainPanel: function() {

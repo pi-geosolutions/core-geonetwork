@@ -101,60 +101,71 @@ GeoNetwork.app = function () {
             vp = Ext.getCmp('vp');
         
         if (window.Geoportal.shortcutsZAE) {
-        	var shortcutsZAEPanel = new GeoExt.ShortcutsComboPanel({ 
-                title:OpenLayers.i18n('shortcuts'),
-                id:'raccourcisZaePanel',
-                autoHeight:true,
-                width:'100%',
-                padding : 10,
-              	cbWidth:200,
-              	cbListWidth:195,
-                cls:"rac-panel",
-                map:iMap.getMap(),
-                config:window.Geoportal.shortcutsZAE
-        	});
+        	var config = { 
+	                title:window.Geoportal.shortcutsZAE.title ? OpenLayers.i18n(window.Geoportal.shortcutsZAE.title):OpenLayers.i18n('shortcuts'),
+	                id:'raccourcisZaePanel',
+	                autoHeight:true,
+	                border:false,
+	                width:'100%',
+	                padding : 10,
+	              	cbWidth:200,
+	              	cbListWidth:195,
+	                cls:"rac-panel",
+	                map:iMap.getMap(),
+	                mapapp : iMap,
+	                config:window.Geoportal.shortcutsZAE
+	        	};
+        	Ext.apply(config, window.Geoportal.shortcutsZAE.options);
+        	var shortcutsZAEPanel = new GeoExt.ShortcutsComboPanelZAE(config);
         	toolsPanel.add(shortcutsZAEPanel);
     	}
-    	if (window.Geoportal.shortcutsCombo) {
-        	var shortcutsPanel = new GeoExt.ShortcutsComboPanel({ 
-                title:OpenLayers.i18n('shortcuts'),
-                header : (window.Geoportal.shortcutsZAE==null),
-                id:'raccourcisCbPanel',
-                autoHeight:true,
-                width:'100%',
-                padding : 10,
-              	cbWidth:200,
-              	cbListWidth:195,
-                cls:"rac-panel",
-                map:iMap.getMap(),
-                config:window.Geoportal.shortcutsCombo
-        	});
-        	toolsPanel.add(shortcutsPanel);
-    	}
     	if (window.Geoportal.pratiquesConf) {
-        	var pratiquesGDTCbPanel = new GeoExt.PratiquesGDTComboPanel({ 
-                title:OpenLayers.i18n('pratiquesGDT'),
-                id:'pratiquesGDTPanel',
-                autoHeight:true,
-                width:'100%',
-                padding : 10,
-              	cbWidth:200,
-              	cbListWidth:300,
-                //height: 90,
-            	//collapsible: true,
-                cls:"rac-panel",
-                map:iMap.getMap(),
-                config:window.Geoportal.pratiquesConf
-            });
+    		var config = { 
+                    title:OpenLayers.i18n('pratiquesGDT'),
+                    id:'pratiquesGDTPanel',
+                    autoHeight:true,
+                    width:'100%',
+	                border:false,
+                    padding : 10,
+                  	cbWidth:200,
+                  	cbListWidth:300,
+                    //height: 90,
+                	//collapsible: true,
+                    cls:"rac-panel",
+                    map:iMap.getMap(),
+                    config:window.Geoportal.pratiquesConf
+                };
+        	Ext.apply(config, window.Geoportal.pratiquesConf.options);
+        	var pratiquesGDTCbPanel = new GeoExt.PratiquesGDTComboPanel(config);
         	toolsPanel.add(pratiquesGDTCbPanel);
+    	}
+    	if (window.Geoportal.shortcutsCombo) {
+    		var config= {
+	                title:window.Geoportal.shortcutsCombo.title ? OpenLayers.i18n(window.Geoportal.shortcutsCombo.title):OpenLayers.i18n('shortcuts'),
+	                header : (window.Geoportal.shortcutsZAE==null),
+	                id:'raccourcisCbPanel',
+	                autoHeight:true,
+	                width:'100%',
+	                border:false,
+	                padding : 10,
+	              	cbWidth:200,
+	              	cbListWidth:195,
+	                cls:"rac-panel",
+	                map:iMap.getMap(),
+	                config:window.Geoportal.shortcutsCombo
+        		};
+        	Ext.apply(config, window.Geoportal.shortcutsCombo.options);
+    		var shortcutsPanel = new GeoExt.ShortcutsComboPanel(config);
+        	toolsPanel.add(shortcutsPanel);
     	}
     	if (window.Geoportal.geonamesCountryIndicator) {
     		
     		var geonamesSearchPanel = new Ext.Panel({
-    			title: OpenLayers.i18n('geonamesSearchPanelTitle'),
+    			//title: OpenLayers.i18n('geonamesSearchPanelTitle'),
     			id:'geonamesPanel',
                 autoHeight:true,
                 width:'100%',
+                border:false,
                 padding : 10,
               	cbWidth:200,
               	cbListWidth:300,
@@ -178,6 +189,30 @@ GeoNetwork.app = function () {
             	}]
     		});
         	toolsPanel.add(geonamesSearchPanel);
+    	}
+    	
+    	if (window.Geoportal.toolsPanelConfig.linkedLayers) {
+    		var linkedLayers=window.Geoportal.toolsPanelConfig.linkedLayers;
+    		var map = iMap.getMap();
+    		toolsPanel.on("activate", function() {
+    			for (var i = 0 ; i < linkedLayers.length ; i++) {
+    	    		var layers = map.getLayersByName(linkedLayers[i]);
+    	    		if (layers.length > 0) {
+    	    			layers[0].setVisibility(true);
+    	    		}
+    	    	}
+    		}) ;
+    		if (window.Geoportal.toolsPanelConfig.disableLayersOnDeactivate) {
+    			toolsPanel.on("deactivate", function() {
+    				for (var i = 0 ; i < linkedLayers.length ; i++) {
+    					var layers = map.getLayersByName(linkedLayers[i]);
+    					if (layers.length > 0) {
+    						layers[0].setVisibility(false);
+    					}
+    				}
+    			}) ;
+    		}
+	    	
     	}
     	
     	if (toolsPanel.items.length==0) {
