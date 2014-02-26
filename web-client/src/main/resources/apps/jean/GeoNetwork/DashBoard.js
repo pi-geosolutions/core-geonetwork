@@ -161,13 +161,12 @@ Ext.extend(GeoNetwork.DashBoardWindow, GeoNetwork.BaseWindow, {
     	this.lat = lat;
     	if (this.tabs.length==0) { //initialize the window's content
     		this.loadTabs();
-    	} else {
+    	} 
     		for (var i = 0 ; i < this.tabs.length ; i++) {
     			//console.log("setting lonlat for tab "+this.tabs[i].title);
     			this.tabs[i].setLonLat(lon, lat);
-    			console.log(this.tabs[i]);
     		}
-    	}
+    	
     },
     setxy: function(xy) {
     	this.xy = xy;

@@ -548,15 +548,7 @@ GeoNetwork.mapApp = function() {
                 var lonlat = map.getLonLatFromViewPortPx(evt.xy);
                 var lonlat_geog = lonlat.clone();
                 lonlat_geog.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
-                var point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
-                dashBoardLayer.destroyFeatures();
-                dashBoardLayer.addFeatures(new OpenLayers.Feature.Vector(point));
-                _setAlwaysOnTop(dashBoardLayer);
-                GeoNetwork.WindowManager.showWindow("dashBoard");
-                //GeoNetwork.WindowManager.getWindow("ilwacinfo").setMap(map);
-                GeoNetwork.WindowManager.getWindow("dashBoard").setxy(evt.xy);
-                
-                GeoNetwork.WindowManager.getWindow("dashBoard").setLonLat(lonlat_geog.lon, lonlat_geog.lat);
+                _openDashBoardAt(lonlat_geog,{tabNb:3});
                 return false;
             },
             'deactivate': function() {
@@ -582,37 +574,7 @@ GeoNetwork.mapApp = function() {
         
         toolbar.push(action);
         
-/*     // "curtain" tool. Ref. website vissir
-        action = new Ext.Button({
-        	tooltip: {title: OpenLayers.i18n("curtainControlTooltipTitle"), 
-        		text: OpenLayers.i18n("curtainControlTooltipText")},
-        	iconCls: 'curtainControl',
-        	map: map,
-        	disabled:true,
-            allowDepress: true,
-        	handler: function(button){
-        		if (button.pressed) { //then we want to disable the tool
-        			curtainControl.hideIt();
-        			button.toggle(false);
-        		} else  {
-        			var node = tree.getSelectionModel().getSelectedNode();
-        			button.toggle(false);
-        			if (node) {
-        				var layer = node.attributes.layer;
-        				if (layer && !layer.isBaseLayer) {
-        					if (!curtainControl) {
-        	        			curtainControl = new GeoExt.CurtainControl({map:map, toctree: tree, viewport:viewport});
-        	        		} 
-        	        		curtainControl.popIt();
-        	        		curtainControl.show();
-        	        		button.toggle(true);
-        				}
-        			}
-        		}
-        	}
-        });
-        toolbar.push(action);
- */      
+
         // create split button for measure controls
 
         var measureSplit = new Ext.SplitButton({
@@ -1422,6 +1384,28 @@ var processLayersSuccess = function(response) {
         	map.setLayerIndex(layer,  map.layers.length-1);
         });
     };
+    
+    var _openDashBoardAt = function (lonlat_geog, options) {
+    	//coords in WGS84
+    	//we get them in local projection
+    	var lonlat = lonlat_geog.clone();
+        lonlat.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+        var point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
+        dashBoardLayer.destroyFeatures();
+        dashBoardLayer.addFeatures(new OpenLayers.Feature.Vector(point));
+        _setAlwaysOnTop(dashBoardLayer);
+        GeoNetwork.WindowManager.showWindow("dashBoard");
+        //GeoNetwork.WindowManager.getWindow("ilwacinfo").setMap(map);
+        //GeoNetwork.WindowManager.getWindow("dashBoard").setxy(evt.xy);
+
+        GeoNetwork.WindowManager.getWindow("dashBoard").setLonLat(lonlat_geog.lon, lonlat_geog.lat);
+        if (options.tabNb) {
+            GeoNetwork.WindowManager.getWindow("dashBoard").openTab(options.tabNb);
+        }
+       
+        return false;
+    };
+
 
     
     // public space:
@@ -1537,26 +1521,7 @@ var processLayersSuccess = function(response) {
         },
         
         openDashBoardAt : function (lonlat_geog, options) {
-        	//coords in WGS84
-        	console.log(lonlat_geog);
-        	//we get them in local projection
-        	var lonlat = lonlat_geog.clone();
-            lonlat.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-            var point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
-            dashBoardLayer.destroyFeatures();
-            dashBoardLayer.addFeatures(new OpenLayers.Feature.Vector(point));
-            _setAlwaysOnTop(dashBoardLayer);
-            GeoNetwork.WindowManager.showWindow("dashBoard");
-            //GeoNetwork.WindowManager.getWindow("ilwacinfo").setMap(map);
-            //GeoNetwork.WindowManager.getWindow("dashBoard").setxy(evt.xy);
-
-        	console.log(lonlat_geog);
-            GeoNetwork.WindowManager.getWindow("dashBoard").setLonLat(lonlat_geog.lon, lonlat_geog.lat);
-            if (options.tabNb) {
-                GeoNetwork.WindowManager.getWindow("dashBoard").openTab(options.tabNb);
-            }
-           
-            return false;
+        	_openDashBoardAt(lonlat_geog, options);
         },
 
         getViewport: function() {
