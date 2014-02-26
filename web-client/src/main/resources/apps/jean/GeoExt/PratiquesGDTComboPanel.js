@@ -29,6 +29,8 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
   	cbWidth:150,
   	cbListWidth:145,
   	resetBtn:null,
+  	openPratiqueBtn:null,
+  	pratiqueId:null,
   	vectorMark_radius:6,
   	vectorLayer:null,
   	vectorSelectAction:null,
@@ -52,9 +54,10 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
         		this.add(cb);
         	}
         }
-        this.resetBtn = new Ext.Button({text:OpenLayers.i18n('reset'),cls:'pratiquesResetBtn',disabled:true});
+        this.resetBtn = new Ext.Button({text:OpenLayers.i18n('reset'),cls:'pratiquesBtns',disabled:true});
         this.add(this.resetBtn);
         this.resetBtn.on('click', function(btn, event) {
+        	this.openPratiqueBtn.disable();
         	if (this.map.getLayerIndex(this.vectorLayer)!==-1)
         		this.map.removeLayer(this.vectorLayer);
         		
@@ -66,6 +69,11 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
         		}
     		}
     		btn.disable();
+        },this);
+        this.openPratiqueBtn = new Ext.Button({text:OpenLayers.i18n('openPratiqueSheet'),cls:'pratiquesBtns',disabled:true});
+        this.add(this.openPratiqueBtn);
+        this.openPratiqueBtn.on('click', function(btn, event) {
+        	GeoNetwork.PratiquesGDTPanel.openFichePratique(this.pratiqueId, false);
         },this);
         if (this.sc_combos.length>0) {
         	for (var i=0 ; i<this.sc_combos.length ; i++) {
@@ -141,6 +149,7 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
 		    }
 		    
 		    if (i==combos.length-1) {
+		    	this.pratiqueId = record.get('id');
 		    	var store_zonagesPratique = new Ext.data.Store({
 				  // load using HTTP
 				  url: this.config.mapUrl+record.get('id'),
@@ -231,7 +240,10 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
   			      this.vectorLayer.redraw();
   			      /*this.map.addControl(selectCtrl);
   			      selectCtrl.activate();*/
+  			      this.openPratiqueBtn.enable();
 				},this);
+		    } else {
+		    	this.openPratiqueBtn.disable();
 		    }
 	  	},this);
 	  	

@@ -56,6 +56,7 @@ GeoNetwork.jpLang.en = {
 	'shortcutsAdminTitle': '<h1 class="soberH1">Administrative netities</h1>',
 	'shortcutsZaeTitle': '<h1 class="soberH1">Agro-ecologic areas</h1>',
 	'SLMtools' : 'SLM Best Pratices',
+	'openPratiqueSheet' : 'Open sheet',
 	'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.jpLang.en);

@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="18.000000px"
    height="18.000000px"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.43"
-   sodipodi:docbase="/home/sderle/projects/openlayers/layerswitcher/art"
+   inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="layer-switcher-maximize.svg"
    inkscape:export-filename="/Users/phil/Documents/work/metacarta/2svn.openlayers.net/follower/code/b-edits-1/openlayers/assets/ui_elements/zoom-minus-mini.png"
    inkscape:export-xdpi="90.000000"
-   inkscape:export-ydpi="90.000000">
+   inkscape:export-ydpi="90.000000"
+   version="1.1">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -28,14 +29,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="16"
-     inkscape:cx="9"
+     inkscape:cx="9.125"
      inkscape:cy="9"
      inkscape:document-units="px"
      inkscape:current-layer="layer4"
      inkscape:window-width="1226"
      inkscape:window-height="800"
-     inkscape:window-x="42"
-     inkscape:window-y="25" />
+     inkscape:window-x="402"
+     inkscape:window-y="128"
+     showgrid="false"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -50,30 +53,7 @@
   <g
      inkscape:label="background"
      inkscape:groupmode="layer"
-     id="layer1">
-    <g
-       id="g2110"
-       transform="matrix(-7.849624e-17,1,-1,-7.849624e-17,18,0)">
-      <path
-         transform="matrix(0,-1.00316,1.00316,0,-2.844e-2,18.02844)"
-         d="M 17.971654 9 A 8.9716539 8.9716539 0 1 1  0.028346062,9 A 8.9716539 8.9716539 0 1 1  17.971654 9 z"
-         sodipodi:ry="8.9716539"
-         sodipodi:rx="8.9716539"
-         sodipodi:cy="9"
-         sodipodi:cx="9"
-         id="path2059"
-         style="fill:#00008b;fill-opacity:1;stroke:none;stroke-width:39.98414612;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         sodipodi:type="arc" />
-      <rect
-         transform="matrix(0,-1,1,0,0,0)"
-         y="4.3599998e-06"
-         x="-9.0000048"
-         height="18"
-         width="9"
-         id="rect2061"
-         style="fill:#00008b;fill-opacity:1;stroke:none;stroke-width:39.98414612;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    </g>
-  </g>
+     id="layer1" />
   <g
      inkscape:groupmode="layer"
      id="layer4"
@@ -82,15 +62,22 @@
     <text
        xml:space="preserve"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1;display:inline;font-family:Helvetica"
-       x="1.5214844"
-       y="-3.2949219"
+       x="3.7089844"
+       y="-4.7324219"
        id="text2114"
        sodipodi:linespacing="125%"
        transform="scale(1,-1)"><tspan
          sodipodi:role="line"
          id="tspan2118"
-         x="1.5214844"
-         y="-3.2949219">+</tspan></text>
+         x="3.7089844"
+         y="-4.7324219">+</tspan></text>
+    <rect
+       style="fill:none;stroke:#ffffff;stroke-width:0.99699599px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
+       id="rect1438"
+       width="13.003004"
+       height="13.002999"
+       x="2.435998"
+       y="2.5610003" />
   </g>
   <g
      inkscape:groupmode="layer"

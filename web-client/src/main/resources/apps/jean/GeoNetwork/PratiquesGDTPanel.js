@@ -259,12 +259,12 @@ GeoNetwork.PratiquesGDTPanel = Ext.extend(Ext.Panel, {
 Ext.reg('gn_gdtpanel', GeoNetwork.PratiquesGDTPanel); 
 
 
-GeoNetwork.PratiquesGDTPanel.openFichePratique = function(idpratique) {
+GeoNetwork.PratiquesGDTPanel.openFichePratique = function(idpratique, modal=true) {
 	var pratiqueww = new Ext.Window({
 		title: "Fiche de pratique GDT",
 		width:600,
 		height:400,
-		modal:true,
+		modal:modal,
 		layout:'border',
 		maximizable:true,
 		autoScroll:true
