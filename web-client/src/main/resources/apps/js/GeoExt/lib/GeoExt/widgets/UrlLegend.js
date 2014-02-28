@@ -54,6 +54,12 @@ GeoExt.UrlLegend = Ext.extend(GeoExt.LayerLegend, {
  *  Private override
  */
 GeoExt.UrlLegend.supports = function(layerRecord) {
+	//JP : fixes the way I load the layers for ILWAC project, by skipping classic geoext load
+	if (layerRecord.data.layer.legend) {
+		//console.log(layerRecord);
+		layerRecord.set("legendURL",layerRecord.data.layer.legend);
+		return true;
+	}
     return layerRecord.get("legendURL") != null;
 };
 

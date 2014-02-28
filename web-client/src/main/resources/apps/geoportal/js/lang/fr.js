@@ -62,6 +62,7 @@ GeoNetwork.jpLang.fr = {
 		'SLMtools' : 'Bonnes pratiques GDT',
 		'searchTools' : 'Outils de recherche (lieux)',
 		'openPratiqueSheet' : 'Ouvrir la fiche',
+		'legend': 'Legende',
 		'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.jpLang.fr);

@@ -47,7 +47,6 @@ GeoExt.plugins.ShowOnlyVisibleLayersPlugin = Ext.extend(Ext.util.Observable, {
      */
     onRenderNode: function(node) {
         var layer = node.layer instanceof OpenLayers.Layer && node.layer;
-        
         /*var ui = node.getUI();
         console.log('ui',ui);
         console.log('layervis',layer.getVisibility());

@@ -183,6 +183,7 @@ GeoNetwork.app = function () {
                 	loadingText: OpenLayers.i18n("geonamesLoadingText"), 
                     emptyText: OpenLayers.i18n("geonamesEmptyText"), 
                     lang: 'fr',
+                    username:'pigeo_ilwac',
                     countryString: window.Geoportal.geonamesCountryIndicator?'country='+window.Geoportal.geonamesCountryIndicator:'country=BF',
                     locationIcon: '../images/viseur.png',
                     tpl: '<tpl for="."><div class="x-combo-list-item geonamesComboList" lon={lng} lat={lat}><h1>{name}</h1><p>lat: {lat}, lon:{lng} <br />{[OpenLayers.i18n(values.fcodeName)]}</p></div></tpl>'
@@ -1186,7 +1187,7 @@ GeoNetwork.app = function () {
                     searchForm.fireEvent('search');
                 }, 500);
             }
-            
+             
 
             
             setTimeout(function () {

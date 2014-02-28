@@ -57,6 +57,7 @@ GeoNetwork.jpLang.en = {
 	'shortcutsZaeTitle': '<h1 class="soberH1">Agro-ecologic areas</h1>',
 	'SLMtools' : 'SLM Best Pratices',
 	'openPratiqueSheet' : 'Open sheet',
+	'legend': 'Legend',
 	'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.jpLang.en);

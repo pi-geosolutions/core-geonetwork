@@ -211,7 +211,8 @@ GeoNetwork.mapApp = function() {
             } else {
                 Ext.getCmp("tbRemoveButton").enable();
             }
-            Ext.getCmp("tbMetadataButton").setDisabled(!(node.layer instanceof OpenLayers.Layer.WMS));
+            //Ext.getCmp("tbMetadataButton").setDisabled(!(node.layer instanceof OpenLayers.Layer.WMS));
+            Ext.getCmp("tbMetadataButton").setDisabled(node.attributes.layer.uuid==null);
             Ext.getCmp("btnZoomToExtent").enable();
         } else {
             Ext.getCmp("tbRemoveButton").disable();
@@ -234,7 +235,7 @@ GeoNetwork.mapApp = function() {
             printProvider: printProvider
         });
         
-        pageLayer = new OpenLayers.Layer.Vector(OpenLayers.i18n('printLayer'), {visibility: false});
+        pageLayer = new OpenLayers.Layer.Vector(OpenLayers.i18n('printLayer'), {visibility: false, displayInLayerSwitcher:false});
         pageLayer.addFeatures(printPage.feature);
         //OpenLayers.Console.log(pageLayer);
         map.addLayer(pageLayer);
@@ -1008,7 +1009,9 @@ GeoNetwork.mapApp = function() {
                             c.items.get("removeMenu").show();	
                             c.items.get("removeMenu").enable();		
                             c.items.get("metadataMenu").show();
-                            c.items.get("metadataMenu").enable();	
+                            //c.items.get("metadataMenu").enable();	
+                            c.items.get("metadataMenu").setDisabled(node.attributes.layer.uuid==null);	
+                            //console.log(node.attributes.layer);
                             
                             //sync to layer opacity value
                             var opm = c.items.get("opacityMenu");
@@ -1163,7 +1166,7 @@ GeoNetwork.mapApp = function() {
                 labelCls: 'mylabel',
                 style: 'padding:5px'
             },
-            title: 'Legend',
+            title: OpenLayers.i18n('legend'),
             autoScroll: true,
             border: false,
             region: 'center'

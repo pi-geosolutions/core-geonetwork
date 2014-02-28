@@ -36,6 +36,11 @@ GeoExt.ux.GeoNamesSearchCombo = Ext.extend(Ext.form.ComboBox, {
      *  default value is 350.
      */
     listWidth: 350,
+    /** api: config[listWidth]
+     *  See http://www.dev.sencha.com/deploy/dev/docs/source/Combo.html#cfg-Ext.form.ComboBox-listWidth,
+     *  default value is 350.
+     */
+    username: 'dummy',
 
     /** api: config[loadingText]
      *  See http://www.dev.sencha.com/deploy/dev/docs/source/Combo.html#cfg-Ext.form.ComboBox-loadingText,
@@ -233,6 +238,10 @@ GeoExt.ux.GeoNamesSearchCombo = Ext.extend(Ext.form.ComboBox, {
 
         if (this.featureClassString.length > 0) {
             urlAppendString = urlAppendString + this.featureClassString;
+        }
+
+        if (this.username.length > 0) {
+            urlAppendString = urlAppendString + "&username="+this.username;
         }
 
         if (this.featureCodeString.length > 0) {

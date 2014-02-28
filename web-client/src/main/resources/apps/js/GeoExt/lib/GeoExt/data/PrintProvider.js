@@ -541,7 +541,9 @@ GeoExt.data.PrintProvider = Ext.extend(Ext.util.Observable, {
     getAbsoluteUrl: function(url) {
         var a;
         if(Ext.isIE) {
-            a = document.createElement("<a href='" + url + "'/>");
+            /*a = document.createElement("<a href='" + url + "'/>");*/
+        	a = document.createElement("a");
+        	a.href = url;
             a.style.display = "none";
             document.body.appendChild(a);
             a.href = a.href;
@@ -725,10 +727,9 @@ GeoExt.data.PrintProvider = Ext.extend(Ext.util.Observable, {
                 return enc;
             },
             "gx_vectorlegend": function(legend) {
-            	  return [{
-                      name: legend.items.get(0).text,
-                      classes: []
-                  }];
+            	return [{
+                    name: '',
+                    classes: []}];
             },
             "base": function(legend){
                 return [{

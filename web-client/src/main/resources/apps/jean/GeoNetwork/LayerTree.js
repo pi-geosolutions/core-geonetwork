@@ -2,6 +2,9 @@
  * Copyright (C) 2013 Jean Pommier
  * jean.pommier@ige.fr
  */
+ /**
+  * @include GeoExt/widgets/tree/TreeNodeUIEventMixin.js
+  */
 Ext.namespace('GeoNetwork.Geoportal');
 //var activeIndex = 0;
 
@@ -185,31 +188,35 @@ GeoNetwork.Geoportal.LayerTree = function() {
                 GeoExt.tree.LayerNodeUI, new GeoExt.tree.TreeNodeUIEventMixin() 
             );
         	
+        	var mytreeloader = new Ext.tree.TreeLoader({
+	            // applyLoader has to be set to false to not interfer with loaders
+	            // of nodes further down the tree hierarchy
+	            applyLoader: false,
+	            uiProviders: {
+	                "layernodeui": LayerNodeUI //Ca n'a pas l'air d'être pris en compte : on n'a pas de TreeNodeUIEventMixin (pas d'evt onRenderNode)
+	            }
+	        });
 		    layertree = new Ext.tree.TreePanel({
 		        title:'layerTree',
 		        header:false,
 		        id: "geoportalLayerTree",
 		        enableDD: false,
 		        autoScroll:true,
-			    loader: new Ext.tree.TreeLoader({
-		            // applyLoader has to be set to false to not interfer with loaders
-		            // of nodes further down the tree hierarchy
-		            applyLoader: false,
-		            uiProviders: {
-		                "layernodeui": LayerNodeUI //Ca n'a pas l'air d'être pris en compte : on n'a pas de TreeNodeUIEventMixin (pas d'evt onRenderNode)
-		            }
-		        }),
+			    loader: mytreeloader,
+			    //plugins don't work because UIEventMixin won't work properly for this tree (think it is a matter of not having found how to use 
+			    // "layernodeui" as uiprovider for the nodes, while loading them
+			    /*
 		        plugins: [
-            		new GeoExt.plugins.FoldableLegendPlugin({})
-            	],
+		            		new GeoExt.plugins.FoldableLegendPlugin({}),
+		            		new GeoExt.plugins.FixLegendURLPlugin({})
+            	],*/
             	root: {
 		            nodeType: "async",
 		            // the children property of an Ext.tree.AsyncTreeNode is used to
 		            // provide an initial set of layer nodes. We use the treeConfig
 		            // from above, that we created with OpenLayers.Format.JSON.write.
 		            children: Ext.decode(jsontree)
-		        },    
-		       
+		        },
 		        rootVisible: false,
 		        border: false,
 		        region: 'center'			
