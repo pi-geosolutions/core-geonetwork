@@ -311,7 +311,7 @@ GeoNetwork.Lang.fr = {
     'add-onlinesrc': 'Associer une ressource en ligne',
     'add-parent': 'Associer une fiche parent',
     'add-service': 'Associer un service',
-    'add-dataset': 'Associer un jeux de données',
+    'add-dataset': 'Associer un jeu de données',
     'add-sources': 'Associer une donnée source',
     'add-fcats': 'Associer un catalogue d\'attributs',
     'add-sibling': 'Associer une ressource',
@@ -483,6 +483,7 @@ GeoNetwork.Lang.fr = {
     'relatedservices': 'Services associés',
     'relatedparent': 'Métadonnée parent',
     'relatedsibling': 'Ressources associées',
+    'relatedassociated': 'Ressources associées',
     'relateddatasets': 'Métadonnées associées',
     'relatedchildren': 'Enfants',
     'relatedrelated': 'Relation catalogue d\'attributs/données',
@@ -672,6 +673,7 @@ GeoNetwork.Lang.fr = {
     'linklabel-text/plain': 'Liens',
     'linklabel-image/png': 'Images',
     'linklabel-image/jpeg': 'Images',
-    'linklabel-': 'Liens'
+    'linklabel-': 'Liens',
+		'bigMap': 'Open Map and hide search results'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.Lang.fr);

@@ -908,6 +908,21 @@ public class SchemaManager {
 	private void addSchema(String fromAppPath, String name, Element schemaPluginCatRoot, String xmlSchemaFile, String xmlSuggestFile, String xmlSubstitutionsFile, String xmlIdFile, String oasisCatFile, String conversionsFile) throws Exception {
 		String path = new File(xmlSchemaFile).getParent();
 
+		// -- add any oasis catalog files to Jeeves.XML_CATALOG_FILES system 
+		// -- property for resolver to pick up - useful during schema parsing
+
+		if (new File(oasisCatFile).exists()) {
+			String catalogProp = System.getProperty(Jeeves.XML_CATALOG_FILES);
+			if (catalogProp == null) catalogProp = ""; // shouldn't happen
+			if (catalogProp.equals("")) {
+				catalogProp = oasisCatFile;
+			} else {
+				catalogProp = catalogProp + ";" + oasisCatFile;
+			}
+			System.setProperty(Jeeves.XML_CATALOG_FILES, catalogProp);
+      Xml.resetResolver();	
+		}
+
 		MetadataSchema mds = new SchemaLoader().load(xmlSchemaFile, xmlSubstitutionsFile);
 		mds.setName(name);
 		mds.setSchemaDir(path);
@@ -935,20 +950,6 @@ public class SchemaManager {
 			} else {
 				Log.warning(Geonet.SCHEMA_MANAGER, "Unable to load loc file: " + filePath);
 			}
-		}
-
-		// -- add any oasis catalog files to Jeeves.XML_CATALOG_FILES system 
-		// -- property for resolver to pick up
-
-		if (new File(oasisCatFile).exists()) {
-			String catalogProp = System.getProperty(Jeeves.XML_CATALOG_FILES);
-			if (catalogProp == null) catalogProp = ""; // shouldn't happen
-			if (catalogProp.equals("")) {
-				catalogProp = oasisCatFile;
-			} else {
-				catalogProp = catalogProp + ";" + oasisCatFile;
-			}
-			System.setProperty(Jeeves.XML_CATALOG_FILES, catalogProp);
 		}
 
 		Pair<String, String> idInfo = extractIdInfo(xmlIdFile, name);
@@ -1118,7 +1119,7 @@ public class SchemaManager {
     			String zero = "";
     			if (baseNrInt < 10) zero = "0";
                 newBlank.setAttribute("uriStartString", Geonet.File.METADATA_BLANK + zero + baseNrInt);
-                newBlank.setAttribute("rewritePrefix",  buildSchemaFolderPath(name));
+                newBlank.setAttribute("rewritePrefix",  new File(buildSchemaFolderPath(name)).toURI().toURL().toString());
     		} else {
     			throw new IllegalArgumentException("Exceeded maximum number of plugin schemas "+Geonet.File.METADATA_MAX_BLANKS);
     		}

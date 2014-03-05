@@ -1484,6 +1484,11 @@ public class DataManager {
         Element xml = Xml.loadString(data, false);
         if (!isTemplate.equals("s")) {
             xml = updateFixedInfo(schema, Integer.toString(serial), uuid, xml, parentUuid, DataManager.UpdateDatestamp.yes, dbms, context);
+
+            // the updateFixedInfo may have altered the UUID
+            if (schemaMan.getSchema(schema).isReadwriteUUID()) {
+                uuid = extractUUID(schema, xml);
+            }
         }
 
         //--- store metadata
@@ -1773,6 +1778,9 @@ public class DataManager {
             String parentUuid = null;
             md = updateFixedInfo(schema, id, null, md, parentUuid, (updateDateStamp ? DataManager.UpdateDatestamp.yes : DataManager.UpdateDatestamp.no), dbms, context);
         }
+
+        //--- force namespace prefix for iso19139 metadata
+        setNamespacePrefixUsingSchemas(schema, md);
 
         String uuid = null;
         if (schemaMan.getSchema(schema).isReadwriteUUID()) {

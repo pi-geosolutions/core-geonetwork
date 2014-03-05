@@ -83,7 +83,7 @@ GeoNetwork.mapApp = function() {
 
         var showBigMapButton = new OpenLayers.Control.Button({
             trigger : showBigMap,
-            title : 'Open kaart en verberg zoekresultaten'
+            title : OpenLayers.i18n('bigMap')
         });
 
         OpenLayers.Util.extend(showBigMapButton, {
@@ -1567,8 +1567,17 @@ GeoNetwork.mapApp = function() {
                         ol_layer.dimensions = layerCap.dimensions;
                         ol_layer.metadataURLs = layerCap.metadataURLs;
                         ol_layer.abstractInfo = layerCap['abstract'];
+                        map.addLayer(ol_layer);
+                    } else {
+                        //Someone used the wrong layername. doh!
+                        //let them correct it
+                        //show wms layer selection
+                        GeoNetwork.WindowManager.showWindow("addwms");
+                        var panel = Ext.getCmp(GeoNetwork.WindowManager
+                                .getWindow("addwms").browserPanel.id);
+                        panel.setURL(caps.capability.request.getcapabilities.href);
                     }
-                    map.addLayer(ol_layer);
+
                 }
             }
 

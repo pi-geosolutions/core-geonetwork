@@ -1075,10 +1075,12 @@ public class SearchManager {
 	 * @throws Exception
 	 */
 	public Collection<TermFrequency> getTermsFequency(String fieldName, String searchValue, int maxNumberOfTerms,
-	                                            int threshold) throws Exception {
+	                                            int threshold, String language) throws Exception {
         Collection<TermFrequency> termList = new ArrayList<TermFrequency>();
         IndexAndTaxonomy indexAndTaxonomy = getNewIndexReader(null);
         String searchValueWithoutWildcard = searchValue.replaceAll("[*?]", "");
+		String analyzedSearchValue = LuceneSearcher.analyzeText(fieldName, searchValueWithoutWildcard, SearchManager.getAnalyzer(language, true));
+
         boolean startsWithOnly = !searchValue.startsWith("*") && searchValue.endsWith("*");
         
         try {
@@ -1093,7 +1095,11 @@ public class SearchManager {
                     while (term != null && i++ < maxNumberOfTerms) {
                         String text = term.utf8ToString();
                         if (termEnum.docFreq() >= threshold) {
-                            if ((startsWithOnly && StringUtils.startsWithIgnoreCase(text, searchValueWithoutWildcard))
+                        	String analyzedText = LuceneSearcher.analyzeText(fieldName, text, SearchManager.getAnalyzer(language, true));
+
+                            if ((startsWithOnly && StringUtils.startsWithIgnoreCase(analyzedText, analyzedSearchValue))
+                                    || (!startsWithOnly && StringUtils.containsIgnoreCase(analyzedText, analyzedSearchValue)) 
+                                    || (startsWithOnly && StringUtils.startsWithIgnoreCase(text, searchValueWithoutWildcard))
                                     || (!startsWithOnly && StringUtils.containsIgnoreCase(text, searchValueWithoutWildcard))) {
                                 TermFrequency freq = new TermFrequency(text, termEnum.docFreq());
                                 termList.add(freq);
@@ -1585,7 +1591,7 @@ public class SearchManager {
         private final Transaction                     _transaction;
         private final int                             _maxWritesInTransaction;
         private final Timer                           _timer;
-        private final Parser                          _gmlParser;
+        private final Map<String, Parser> _parserMap = new HashMap<String, Parser>();
         private final Lock                            _lock;
         private SpatialIndexWriter                    _writer;
         private volatile Committer                             _committerTask;
@@ -1612,7 +1618,8 @@ public class SearchManager {
             }
             _maxWritesInTransaction = maxWritesInTransaction;
             _timer = new Timer(true);
-            _gmlParser = new Parser(new GMLConfiguration());
+            _parserMap.put(Geonet.Namespaces.GML.getURI(), new Parser(new GMLConfiguration()));
+            _parserMap.put(Geonet.Namespaces.GML32.getURI(), new Parser(new org.geotools.gml3.v3_2.GMLConfiguration()));
             boolean rebuildIndex;
 
             rebuildIndex = createWriter(_datastore);
@@ -1637,7 +1644,7 @@ public class SearchManager {
         private boolean createWriter(DataStore datastore) throws IOException {
             boolean rebuildIndex;
             try {
-                _writer = new SpatialIndexWriter(datastore, _gmlParser,_transaction, _maxWritesInTransaction, _lock);
+                _writer = new SpatialIndexWriter(datastore, _parserMap,_transaction, _maxWritesInTransaction, _lock);
 				rebuildIndex = _writer.getFeatureSource().getSchema() == null;
             }
             catch (Throwable e) {
@@ -1772,7 +1779,7 @@ public class SearchManager {
          */
         private SpatialIndexWriter writerNoLocking() throws Exception {
             if (_writer == null) {
-                _writer = new SpatialIndexWriter(_datastore, _gmlParser, _transaction, _maxWritesInTransaction, _lock);
+                _writer = new SpatialIndexWriter(_datastore, _parserMap, _transaction, _maxWritesInTransaction, _lock);
             }
             return _writer;
         }

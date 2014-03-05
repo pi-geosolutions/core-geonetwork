@@ -434,6 +434,8 @@ GeoNetwork.Lang.es = {
     'advancedSearchOptions':'Criterios avanzados',
     'relatedservices':'Servicios relacionados con',
     'relatedchildren':'Hijos',
+    'relatedsibling': 'Related records',
+    'relatedassociated': 'Related records',
     'relatedfcats':'Catálogo de Funciones Relacionadas',
     'relatedhasfeaturecat':'Conjuntos de datos',
     'relatedsources':'Registros de origen',
@@ -632,7 +634,8 @@ GeoNetwork.Lang.es = {
     'linklabel-text/plain': 'Web link',
     'linklabel-image/png': 'Image link',
     'linklabel-image/jpeg': 'Image link',
-    'linklabel-': 'Link'
+    'linklabel-': 'Link',
+		'bigMap': 'Open Map and hide search results'
 };
 
 OpenLayers.Util.extend(OpenLayers.Lang.es, GeoNetwork.Lang.es);

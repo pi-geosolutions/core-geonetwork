@@ -1089,7 +1089,6 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             return '';
         }
     },
-    	 
     /** api: method[isLoggedIn]
      * 
      *  Get the xml.info for me. If user is not identified
@@ -1106,6 +1105,7 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             },
             async: false
         }), exception, authenticated, me;
+       
        me = response.responseXML.getElementsByTagName('me')[0];
        authenticated = me.getAttribute('authenticated') == 'true';
        
@@ -1136,6 +1136,10 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             if (cookie) {
                 cookie.set('user', undefined);
             }
+            
+            this.identifiedUser = undefined;
+            this.onAfterBadLogin();
+            
             return false;
         }
     },

@@ -452,6 +452,8 @@ GeoNetwork.Lang.ca={
     'advancedSearchOptions': 'Criteris avançats',
     'relatedservices': 'Serveis relacionats',
     'relatedchildren': 'Fills',
+    'relatedsibling': 'Related records',
+    'relatedassociated': 'Related records',
     'relatedfcats': 'Catàleg d\'entitats relacionat',
     'relatedhasfeaturecat': 'Conjunt de dades',
     'relatedsources': 'Source datasets',
@@ -651,7 +653,8 @@ GeoNetwork.Lang.ca={
     'Advanced': "Avançat",
     'newWindow': "Nova finestra",
     'mdEditor': "Editor de metadades",
-    'List': "Llista"
+    'List': "Llista",
+		'bigMap': 'Open Map and hide search results'
 };
 
 OpenLayers.Util.extend(OpenLayers.Lang.ca,GeoNetwork.Lang.ca);
