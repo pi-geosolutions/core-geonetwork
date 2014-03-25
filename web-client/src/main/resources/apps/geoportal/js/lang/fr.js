@@ -20,6 +20,7 @@ Ext.namespace('GeoNetwork', 'GeoNetwork.jpLang');
 
 GeoNetwork.jpLang.fr = {
 		//fixes
+	    'org': "Organisation",
 	    //new ones
 		'choose': 'Choisir',
 		'facetsTitle':'Affiner la recherche',

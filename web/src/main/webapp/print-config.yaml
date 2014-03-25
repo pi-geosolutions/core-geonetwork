@@ -120,7 +120,7 @@ layouts:
             font: Helvetica
             fontSize: 30
             align: left
-            text: 'Legends'
+            text: 'Legendes'
       items:
         - !legends
           defaultScale: 0.5
