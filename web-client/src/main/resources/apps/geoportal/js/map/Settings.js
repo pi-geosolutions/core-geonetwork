@@ -36,12 +36,12 @@ GeoNetwork.map.printCapabilities = "../../pdf";
 //GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-180, -90, 180, 90);
 //GeoNetwork.map.MAXEXTENT = GeoNetwork.Geoportal.MAXEXTENT?GeoNetwork.Geoportal.MAXEXTENT:new OpenLayers.Bounds(-180, -90, 180, 90);
 //GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-5.1,41,9.7,51);
-var ovmapWmsURL = window.Geoportal.overviewWmsUrl?window.Geoportal.overviewWmsUrl:'http://ilwac.ige.fr/geoserver-prod/wms';
+var ovmapWmsURL = window.Geoportal.overviewWmsUrl?window.Geoportal.overviewWmsUrl:'http://gm-risk.ige.fr/geoserver-prod/wms';
 var ovmapWmsLayers = window.Geoportal.overviewWmsLayers?window.Geoportal.overviewWmsLayers:'ml_fond_carto';
 var ovmapWmsFormat = window.Geoportal.overviewWmsFormat?window.Geoportal.overviewWmsFormat:'image/jpeg';
 
 var plainMapTitle = window.Geoportal.plainMapTitle?window.Geoportal.plainMapTitle:'Fond générique';
-var plainMapWmsUrl = window.Geoportal.plainMapWmsUrl?window.Geoportal.plainMapWmsUrl:'http://ilwac.ige.fr/geoserver-prod/wms';
+var plainMapWmsUrl = window.Geoportal.plainMapWmsUrl?window.Geoportal.plainMapWmsUrl:'http://gm-risk.ige.fr/geoserver-prod/wms';
 var plainMapWmsLayers = window.Geoportal.plainMapWmsLayers?window.Geoportal.plainMapWmsLayers:'ml_fond_carto';
 var plainMapWmsFormat = window.Geoportal.plainMapWmsFormat?window.Geoportal.plainMapWmsFormat:'image/jpeg';
 
