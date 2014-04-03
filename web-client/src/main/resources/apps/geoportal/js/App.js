@@ -158,7 +158,23 @@ GeoNetwork.app = function () {
     		var shortcutsPanel = new GeoExt.ShortcutsComboPanel(config);
         	toolsPanel.add(shortcutsPanel);
     	}
-    	if (window.Geoportal.geonamesCountryIndicator) {
+    	if (window.Geoportal.geonamesSearch) {
+    		var cbConfig = {
+                	xtype: 'gxux_geonamessearchcombo', 
+                	fieldLabel: OpenLayers.i18n("Geonames"), 
+                	zoom:8,
+                    map:iMap.getMap(),
+                	width:250,
+                	listWidth:250,
+                	loadingText: OpenLayers.i18n("geonamesLoadingText"), 
+                    emptyText: OpenLayers.i18n("geonamesEmptyText"), 
+                    lang: 'fr',
+                    username:'pigeo_ilwac',
+                    countryString: window.Geoportal.geonamesCountryIndicator?'country='+window.Geoportal.geonamesCountryIndicator:'country=BF',
+                    locationIcon: '../images/viseur.png',
+                    tpl: '<tpl for="."><div class="x-combo-list-item geonamesComboList" lon={lng} lat={lat}><h1>{name}</h1><p>lat: {lat}, lon:{lng} <br />{[OpenLayers.i18n(values.fcodeName)]}</p></div></tpl>'
+            	};
+    		Ext.apply(cbConfig, window.Geoportal.geonamesSearch);
     		
     		var geonamesSearchPanel = new Ext.Panel({
     			//title: OpenLayers.i18n('geonamesSearchPanelTitle'),
@@ -173,21 +189,9 @@ GeoNetwork.app = function () {
                 items:[{
                     xtype: "displayfield",
                     value: OpenLayers.i18n('geonamesCbHeader')
-                },{
-                	xtype: 'gxux_geonamessearchcombo', 
-                	fieldLabel: OpenLayers.i18n("Geonames"), 
-                	zoom:8,
-                    map:iMap.getMap(),
-                	width:250,
-                	listWidth:250,
-                	loadingText: OpenLayers.i18n("geonamesLoadingText"), 
-                    emptyText: OpenLayers.i18n("geonamesEmptyText"), 
-                    lang: 'fr',
-                    username:'pigeo_ilwac',
-                    countryString: window.Geoportal.geonamesCountryIndicator?'country='+window.Geoportal.geonamesCountryIndicator:'country=BF',
-                    locationIcon: '../images/viseur.png',
-                    tpl: '<tpl for="."><div class="x-combo-list-item geonamesComboList" lon={lng} lat={lat}><h1>{name}</h1><p>lat: {lat}, lon:{lng} <br />{[OpenLayers.i18n(values.fcodeName)]}</p></div></tpl>'
-            	}]
+                },
+                cbConfig
+                ]
     		});
         	toolsPanel.add(geonamesSearchPanel);
     	}

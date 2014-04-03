@@ -7,7 +7,7 @@
         </properties>
         
         <file name=".*/WEB-INF/config.xml">
-       			<!-- <addXML xpath="appHandler"><param name="geonetwork.dir" value="/home/jean/tomcat7/data/gm-risk-dev-datadir" /></addXML>-->
+       			<addXML xpath="appHandler"><param name="geonetwork.dir" value="/home/jean/tomcat7/data/gm-risk-dev-datadir" /></addXML>
                 <replaceXML xpath="resources">
                         <resource enabled="true">
                                 <name>main-db</name>

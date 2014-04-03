@@ -64,6 +64,7 @@ GeoNetwork.jpLang.fr = {
 		'searchTools' : 'Outils de recherche (lieux)',
 		'openPratiqueSheet' : 'Ouvrir la fiche',
 		'legend': 'Legende',
+		'openLegendButtonText':'Ouvrir la légende dans un popup',
 		'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.jpLang.fr);

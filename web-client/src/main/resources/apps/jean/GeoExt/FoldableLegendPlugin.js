@@ -95,7 +95,8 @@ GeoExt.plugins.FoldableLegendPlugin = Ext.extend(Ext.util.Observable, {
     				           STYLE: null,
     				           STYLES: null,
     				           SRS: null,
-    				           FORMAT: "image/gif"
+    				           FORMAT: "image/png",
+    				           LEGEND_OPTIONS:"fontName:Times%20New%20Roman;dpi:90;fontAntiAliasing:true"
     						});
 
             				//console.log(url);

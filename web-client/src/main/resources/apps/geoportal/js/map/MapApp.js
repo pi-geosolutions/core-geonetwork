@@ -198,6 +198,28 @@ GeoNetwork.mapApp = function() {
 
     
     /**
+     * Handler to open the legend in separate window if too large
+     *
+     */
+    var openLegendHandler = function(node) {
+        if (node) {
+            var layer;
+            layer = node.attributes.layer;
+            if (layer) {
+            	if (layer.legend) {
+            		window.open(layer.legend, node.text + '('+OpenLayers.i18n('legend') +')', "location=no, scrollbars=yes, resizable=yes");
+            	} 
+        	}
+        }
+    };
+
+    var openLegendHandlerContextMenu = function() {
+        var node = Ext.getCmp('toctree').getSelectionModel().getSelectedNode();
+        openLegendHandler(node);
+    };
+
+    
+    /**
      * Updates the TOC toolbar buttons depending on TOC layer selected 
      *
      */
@@ -250,6 +272,14 @@ GeoNetwork.mapApp = function() {
             items: [{
                 xtype: "displayfield",
                 value: OpenLayers.i18n('printHeader')
+            },{
+                xtype: "textfield",
+                name: "title",
+                value: "",
+                fieldLabel: OpenLayers.i18n("mf.print.mapTitle"),
+                plugins: new GeoExt.plugins.PrintPageField({
+                    printPage: printPage
+                })
             },{
                 xtype: "textarea",
                 name: "comment",
@@ -1002,6 +1032,7 @@ GeoNetwork.mapApp = function() {
                         if (node.parentNode.attributes.nodeType == "gx_baselayercontainer") { //we are on a base layer 
                             c.items.get("removeMenu").disable();	
                             c.items.get("metadataMenu").disable();
+                            c.items.get("openLegendMenu").hide();
                             c.items.get("opacityMenu").disable();
                             c.items.get("horizCurtainMenu").disable();
                             c.items.get("vertCurtainMenu").disable();
@@ -1009,8 +1040,10 @@ GeoNetwork.mapApp = function() {
                             c.items.get("removeMenu").show();	
                             c.items.get("removeMenu").enable();		
                             c.items.get("metadataMenu").show();
+                            //c.items.get("openLegendMenu").show();
                             //c.items.get("metadataMenu").enable();	
                             c.items.get("metadataMenu").setDisabled(node.attributes.layer.uuid==null);	
+                            c.items.get("openLegendMenu").setVisible(node.attributes.layer.legend!=null);	
                             //console.log(node.attributes.layer);
                             
                             //sync to layer opacity value
@@ -1093,6 +1126,12 @@ GeoNetwork.mapApp = function() {
                     id: "metadataMenu",
                     iconCls:"metadataMenu",
                     handler: metadataLayerHandlerContextMenu
+                },
+                {
+                    text: OpenLayers.i18n("openLegendButtonText"),
+                    id: "openLegendMenu",
+                    iconCls:"openLegendMenu",
+                    handler: openLegendHandlerContextMenu
                 },
                 {
                     text:OpenLayers.i18n('opacityButtonText'),

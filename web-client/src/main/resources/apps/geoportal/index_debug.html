@@ -111,7 +111,7 @@
 						        		url 	: 'http://ige.fr/geoserver-prod/wms?',
 						        		layers 	: 'gm:gm_countryMask'	
 					    			},*/
-    			portalHeader 		:'<img class="TGcatLogo" src="../images/logos/gambie.png"/><span class="bigger"> GAM-DRIS </span><br /><span class="smaller">Risk Management Portal for Gambia</span>',
+    			portalHeader 		:'<img class="catLogo" src="../images/logos/Coat_of_Arms_of_The_Gambia.svg.png"/><span class="bigger"> GAM-DRIS </span><br /><span class="smaller">Risk Management Portal for Gambia</span>',
     			overviewWmsUrl		: 'http://gm-risk.ige.fr/geoserver-prod/wms',
     			overviewWmsLayers	: 'gm_fond_carto',
     			overviewWmsFormat	: 'image/jpeg',
@@ -119,11 +119,14 @@
     			plainMapWmsUrl		: "http://gm-risk.ige.fr/geoserver-prod/wms",
     			plainMapWmsLayers 	:'gm_fond_carto',
     			plainMapWmsFormat	:'image/jpeg',
-    			geonamesCountryIndicator : 'GM'/*,
+    			geonamesSearch		: {
+    				countryString:'country=GM',
+    				zoom : 11
+    			},
     			toolsPanelConfig	: {
     				linkedLayers : ["Zonage Agro-ecologique (source PIRT)"],
     				disableLayersOnDeactivate : false	
-   				},
+   				}/*,
     			shortcutsZAE 		: {
 						entete : 'shortcutsZaeTitle',	
 						title : 'SLMtools',

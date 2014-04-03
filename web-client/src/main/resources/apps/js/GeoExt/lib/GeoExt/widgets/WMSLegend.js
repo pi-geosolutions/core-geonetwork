@@ -70,7 +70,10 @@ GeoExt.WMSLegend = Ext.extend(GeoExt.LayerLegend, {
      *          }
      *      });   
      */
-    baseParams: null,
+    baseParams: {
+        FORMAT: "image/png",
+        LEGEND_OPTIONS:"fontName:Times%20New%20Roman;dpi:150;fontAntiAliasing:true"
+    },
     
     /** private: method[initComponent]
      *  Initializes the WMS legend. For group layers it will create multiple
