@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<geonet>
+    <services package="fr.pigeosolutions.geoportal">
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Dashboard services                                           -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+		<!-- - - - - Ndvi extractor service - - - -->
+		
+		<!-- - - -  unused for now. Object : collect info about which datasets are 
+					available and their boundaries (time interval, etc)- - - -->
+		<service name="pigeo.ndvi.initialize">
+			<class name="fr.pigeosolutions.geoportal.services.ndvi.Initialize">
+				<param name="basePath" value="geoportal/NDVIlikes/"/>
+				<param name="ext" value="tif"/>
+			</class>
+		</service>
+		<service name="pigeo.ndvi.listfiles">
+			<class name="fr.pigeosolutions.geoportal.services.ndvi.ListFiles">
+				<param name="basePath" value="geoportal/NDVIlikes/"/>
+				<param name="ext" value="tif"/>
+			</class>
+		</service>
+		<service name="pigeo.ndvi.getvalues">
+			<class name="fr.pigeosolutions.geoportal.services.ndvi.GetValues">
+				<param name="basePath" value="geoportal/NDVIlikes/"/>
+				<param name="ext" value="tif"/>
+			</class>
+		</service>
+		<service name="pigeo.ndvi.getvalues_tsv">
+			<class name="fr.pigeosolutions.geoportal.services.ndvi.GetValues">
+				<param name="basePath" value="geoportal/NDVIlikes/"/>
+				<param name="ext" value="tif"/>
+			</class>
+			<output sheet="pigeo/geoportal/XMLdata2tsv.xsl" contentType="text/plain; charset=UTF-8"/>
+		</service>
+		
+    </services>
+</geonet>

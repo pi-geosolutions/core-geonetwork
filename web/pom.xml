@@ -420,6 +420,18 @@
 		<artifactId>flying-saucer-pdf-itext5</artifactId>
 		<version>9.0.1</version>
 	</dependency>
+			
+		<!-- Pi-geosolutions geoportal dependencies -->
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-geotiff</artifactId>
+			<version>8.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-image</artifactId>
+			<version>8.6</version>
+		</dependency>
 	
 	
 	</dependencies>

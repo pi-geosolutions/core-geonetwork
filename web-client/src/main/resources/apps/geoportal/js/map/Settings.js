@@ -51,18 +51,14 @@ GeoNetwork.map.BACKGROUND_LAYERS = [
     //new OpenLayers.Layer.WMS("Background layer", "localhost:8081/geoserver/wms", {layers: 'ige:Cntry00', format: 'image/jpeg'}, {isBaseLayer: true})
 	/*jp: added*/
 	new OpenLayers.Layer.WMS(plainMapTitle, plainMapWmsUrl, {layers: plainMapWmsLayers, format: plainMapWmsFormat, TILED:'true'}, {isBaseLayer: true})
-	 ,
-   
-   /*new OpenLayers.Layer.Google(
-	  	      OpenLayers.i18n("ovGoogleHybrid"),
-	  	      {type: google.maps.MapTypeId.HYBRID, 'sphericalMercator': true, numZoomLevels: 22}
-		),*/
-   new OpenLayers.Layer.Google(
- 	      "Google Satellite",
- 	      {type: google.maps.MapTypeId.SATELLITE, 'sphericalMercator': true, numZoomLevels: 22}
-	),
-	new OpenLayers.Layer.OSM()
-];
+	];
+if (window.Geoportal.online) {
+	GeoNetwork.map.BACKGROUND_LAYERS.push(new OpenLayers.Layer.Google(
+	 	      "Google Satellite",
+	 	      {type: google.maps.MapTypeId.SATELLITE, 'sphericalMercator': true, numZoomLevels: 22}
+		));
+	GeoNetwork.map.BACKGROUND_LAYERS.push(new OpenLayers.Layer.OSM());
+}
 
 //// Config for OSM based maps
 GeoNetwork.map.PROJECTION = "EPSG:900913";

@@ -8,6 +8,9 @@
 		<Class name="~.*\..*Test" />
 	</Match>
   <Match>
+		<Class name="~fr\.pigeosolutions\.geoportal\.[h-zH-Z].*" />
+	</Match>
+  <Match>
 		<Class name="~org\.fao\.geonet\.[h-zH-Z].*" />
 	</Match>
 	<Match>

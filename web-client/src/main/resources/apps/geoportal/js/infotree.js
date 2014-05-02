@@ -26,7 +26,7 @@ window.Geoportal.DashBoard = {
 	   		    	}*/
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: 'http://gm-risk.ige.fr/geoportal-services/tsv_queryNDVI.php?data=ndvi&mode=yearByMonths'
+	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=ndvi&mode=yearByMonths'
 	   		    	}
 	   		    },
 	   		    {
@@ -36,7 +36,7 @@ window.Geoportal.DashBoard = {
 	   		    	text_body	: "",
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: 'http://gm-risk.ige.fr/geoportal-services/tsv_queryNDVI.php?data=ndvi&mode=decade'
+	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=ndvi&mode=decade'
 	   		    	}
 	   		    }
 	   	    ] 
@@ -62,7 +62,7 @@ window.Geoportal.DashBoard = {
 	   		    	}*/
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: 'http://gm-risk.ige.fr/geoportal-services/tsv_queryNDVI.php?data=sm&mode=yearByMonths'
+	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=sm&mode=yearByMonths'
 	   		    	}
 	   		    },
 	   		    {
@@ -72,7 +72,7 @@ window.Geoportal.DashBoard = {
 	   		    	text_body	: "",
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: 'http://gm-risk.ige.fr/geoportal-services/tsv_queryNDVI.php?data=sm&mode=decade'
+	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=sm&mode=decade'
 	   		    	}
 	   		    }
 	   	    ] 
@@ -98,7 +98,7 @@ window.Geoportal.DashBoard = {
 	   		    	}*/
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: 'http://gm-risk.ige.fr/geoportal-services/tsv_queryNDVI.php?data=vci&mode=yearByMonths'
+	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=vci&mode=yearByMonths'
 	   		    	}
 	   		    },
 	   		    {
@@ -108,7 +108,7 @@ window.Geoportal.DashBoard = {
 	   		    	text_body	: "",
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: 'http://gm-risk.ige.fr/geoportal-services/tsv_queryNDVI.php?data=vci&mode=decade'
+	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=vci&mode=decade'
 	   		    	}
 	   		    }
 	   	    ] 
