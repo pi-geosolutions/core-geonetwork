@@ -51,6 +51,12 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     treeView:null,
     detailView:null,
     consoleView : null,
+    nodeForm:null,
+    nodeFormFields : {
+    	'folder':['id', 'type', 'text', 'expanded', 'extensions'],
+    	'wms':['id', 'type','text','layers', 'url', 'legend', 'uuid', 'format', 'checked', 'TILED', 'cls', 'qtip', 'extensions'],
+    	'chart':['id', 'type','text','url', 'legend', 'uuid',  'tablenames', 'changeScales', 'charting_fields', 'other_fields', 'format', 'checked', 'cls', 'qtip', 'context', 'template', 'extensions']    	
+    },
     
     /** private: method[initComponent] 
      *  Initializes the layertree manager panel.
@@ -63,7 +69,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         Ext.apply(this, config);
         Ext.applyIf(this, this.defaultConfig);
         GeoNetwork.admin.LayertreeManagerPanel.superclass.initComponent.call(this);
-        
+                
         // Build the layout
         this.detailView = new Ext.Panel({
             region: 'east',
@@ -75,7 +81,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
             autoScroll: true,
             minWidth: 250,
             width: '50%',
-            items: null
+            items: []
         });
         this.treeView = new Ext.Panel({
                 region: 'center',
@@ -102,6 +108,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         this.add(this.treeView);
         
         this.load();
+        this.createForm();
     },
     /**
      * Search and clean current editing and disabled toolbar
@@ -110,83 +117,9 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      * TODO : Add warning if on editing
      */
     load: function() {
-    	treeConfig = this.getFromDB();
-    	var treeConfig = [
-    	              	{
-    	            		text	    : 'Fond de carte'
-    	            		,allowDrag  : false
-    	            		,allowDrop  : false
-    	            	},
-    	            	
-    	            	{
-    	            		text        : 'ILWAC'
-    	            		,expanded   : true
-    	            		,cls 	    : 'ilwac'
-    	            		,children   : [
-    	            		    {
-    	            		        layers      : 'ml_x_landsat_region' 
-    	            		        ,layer       : "la couverture Landsat d'ILWAC" 
-    	            		        ,url		: 'http://ilwac.ige.fr/geoserver-prod/wms?'
-    	            		        ,format		: "image/png"
-    	            		        ,type		: 'wms'
-            							,"leaf":true
-    	            		    },{
-    	            				layers      : 'ml:ml_5d2_ocsol10'
-    	            				,layer       : "Occupation des sols provisoire réalisée à partir des images Landsat 2010"
-    	            				, qtip	: "Il s'agit de la version béta, améliorée par rapport à la 1ere verion en ligne. La version finale fournira des améliorations supplémentaires"
-    	            				,legend		:"http://ilwac.ige.fr/legendes/cos_ilwac_legende.png"
-    	            				//,uuid       : '62b236b3-23ca-4e02-a418-a5cd37b08d88'                         //***********************OK
-    	            				,url		: 'http://ilwac.ige.fr/geoserver-prod/wms?'
-    	            				,format		: "image/png"
-    	            				,type		: 'wms'   
-            							,"leaf":true           
-    	            			},{
-    	            				layers      : 'ml:ml_5d_ocsol_change'
-    	            						,layer       : "Changements majeurs de l'Occupation du Sol entre 1990 et 2010 (version de travail)"
-    	            						, qtip	: "Il s'agit d'une version provisoire, de travail, pas encore homogénéisée et finalisée"
-    	            				,url		: 'http://ilwac.ige.fr/geoserver-prod/wms?'
-    	            				,format		: "image/png"
-    	            				,type		: 'wms'    
-            							,"leaf":true          
-    	            			} 
-    	            		]
-    	            	},
-    	            	
-    	            	{
-    	            		text        : 'Donnés générales'
-    	            		,expanded   : false
-    	            		,children   : [
-    	            		    {
-    	            		        text        : 'Limites administratives (source DNH)'
-    	            				,expanded   : true
-    	            				,children   : [
-    	            					{
-    	            						layers      : 'ml:ml_1a3_communes'
-    	            						,layer       : "Communes"
-    	            						,url		: 'http://ilwac.ige.fr/geoserver-prod/wms?'
-    	            						,format		: "image/png"
-    	            						,type		: 'wms'     
-    	            							,"leaf":true         
-    	            					},{
-    	            						layers      : 'ml:ml_1a2_cercles' 
-    	            						,layer       : "Cercles" 
-    	            						,url		: 'http://ilwac.ige.fr/geoserver-prod/wms?'
-    	            						,format		: "image/png"
-    	            						,type		: 'wms'
-    	            							,"leaf":true
-    	            					},{
-    	            						layers      : 'ml:ml_1a1_regions' 
-    	            						,layer       : "Régions" 
-    	            						,url		: 'http://ilwac.ige.fr/geoserver-prod/wms?'
-    	            						,format		: "image/png"
-    	            						,type		: 'wms'
-	            							,"leaf":true
-    	            					}]
-    	            		    }]
-    	            	}
-    	            	];
-
-    	treeConfig = this.getFromDB();
+    	var treeConfig = this.getFromDB();
+    	if (treeConfig==null) return;
+    	
     	var treeLoader = new Ext.tree.TreeLoader({
     		// this below is using the config attributes of the node to do
     		// some testing. The attr.has_events is coming from the loader in PHP
@@ -195,18 +128,15 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	    			attr.text = attr.layer;
 	    			attr.leaf=true;
 	    		}
+	    		if (attr.checked==null && attr.leaf==true) {
+	    			attr.checked = false;
+	    		}
+	    		if (attr.leaf!=true) {
+	    			attr.type='folder';
+	    		}
     			return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
     		}
 		});
-    	if (treeConfig==null) return;
-    	var mytreeloader = new Ext.tree.TreeLoader({
-            // applyLoader has to be set to false to not interfer with loaders
-            // of nodes further down the tree hierarchy
-            applyLoader: false/*,
-            uiProviders: {
-                "layernodeui": LayerNodeUI //Ca n'a pas l'air d'être pris en compte : on n'a pas de TreeNodeUIEventMixin (pas d'evt onRenderNode)
-            }*/
-        });
 	    var tree = new Ext.tree.TreePanel({
 	        title:'layerTree',
 	        header:false,
@@ -223,9 +153,14 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	        },
 	        rootVisible: false,
 	        border: false,
-	        layout:'fit'
+	        layout:'fit',
+	        listeners: {
+	            click: function(node, event){
+	                this.editNode(node);
+	            },
+	            scope : this
+	        }
 	    });
-
     	this.treeView.add(tree);
     },
     /**
@@ -249,7 +184,150 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         return treeConfig;
     },
     
-    
+    /**
+     * Search and clean current editing and disabled toolbar
+     * (no record selected). 
+     * 
+     * TODO : Add warning if on editing
+     */
+    createForm: function() {
+       this.nodeForm = new Ext.FormPanel({
+            id: 'node-form',
+            labelWidth:75,
+            frame:true,
+            labelAlign: 'left',
+            title: 'node details', 
+            defaultType: 'textfield',
+            defaults: {width: '90%'},
+            autoHeight: true,
+            border: false,
+            items: [{
+                fieldLabel: 'Id',
+                name: 'id',
+                disabled:true
+            },{
+            	xtype: 'combo',
+                fieldLabel: 'type',
+                name: 'type',
+                typeAhead: true,
+                triggerAction: 'all',
+                disabled:true,
+                lazyRender:true,
+                mode: 'local',
+                store: new Ext.data.ArrayStore({
+                    id: 0,
+                    fields: [
+                        'name',
+                        'displayText'
+                    ],
+                    data: [['folder', 'Folder'],['wms', 'WMS'], ['chart', 'Chart']]
+                }),
+                valueField: 'name',
+                displayField: 'displayText'
+            },{
+                fieldLabel: 'Text',
+                name: 'text'
+            },{
+                fieldLabel: 'layers',
+                name: 'layers'
+            },{
+                fieldLabel: 'url',
+                name: 'url'
+            },{
+                fieldLabel: 'Legend URL',
+                name: 'legend'
+            },{
+                fieldLabel: 'UUID',
+                name: 'uuid'
+            },{
+            	xtype: 'checkbox',
+                fieldLabel: 'checked',
+                name: 'checked'
+            },{
+                xtype: 'radiogroup',
+                columns: 'auto',
+                fieldLabel: 'Image format',
+                name:'format', //necessary for hide/show procedures
+                items: [{
+                    name: 'format',
+                    inputValue: 'image/png',
+                    boxLabel: 'PNG'
+                }, {
+                    name: 'format',
+                    inputValue: 'image/jpg',
+                    boxLabel: 'JPG'
+                }]
+            },{
+                fieldLabel: 'Is layer ?',
+                name: 'leaf',
+                disabled:true,
+                value:false
+            },{
+            	xtype: 'checkbox',
+                fieldLabel: 'Cacheable',
+                name: 'TILED'
+            },{
+                fieldLabel: 'CSS class',
+                name: 'cls'
+            },{
+                fieldLabel: 'Infos',
+                name: 'qtip'
+            },{
+            	xtype:'textarea',
+                fieldLabel: 'Additionnal parameters',
+                name: 'extensions'
+            }],
+
+
+            buttons: [{
+                text: 'Apply'
+            },{
+                text: 'Cancel'
+            }]
+        });
+        this.nodeForm.getForm().applyToFields({hidden:true});
+        this.detailView.add(this.nodeForm);
+        this.detailView.doLayout();
+    },
+
+    /**
+     * Search and clean current editing and disabled toolbar
+     * (no record selected). 
+     * 
+     * TODO : Add warning if on editing
+     */
+    editNode: function(node) {
+    	
+    	if (node.attributes.type) {
+        	this.initForm(node.attributes.type);
+    	} else {
+        	this.nodeForm.getForm().reset();
+    	}
+    	this.nodeForm.getForm().setValues(node.attributes);
+    },
+
+    /**
+     * Search and clean current editing and disabled toolbar
+     * (no record selected). 
+     * 
+     * TODO : Add warning if on editing
+     */
+    initForm: function(type) {
+     	this.nodeForm.getForm().reset();
+     	
+     	Ext.each(this.nodeForm.getForm().items.items, function(field,index) {
+     		if (this.nodeFormFields[type].indexOf(field.name)>=0) {
+     			field.show();
+     		} else {
+         		field.hide();
+     		}
+     	}, this);//we hide the fields, since 'reset' doesn't do it
+     	/*
+     	for (var i = 0 ; i < this.nodeFormFields[type].length ; i++) {
+    		var field = this.nodeForm.getForm().findField('#'+this.nodeFormFields[type][i]);
+        	if (field!=null) field.show();
+    	}*/
+    }
 
 
 });
