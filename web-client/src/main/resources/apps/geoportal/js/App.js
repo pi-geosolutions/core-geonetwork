@@ -985,6 +985,27 @@ GeoNetwork.app = function () {
 //            var treeconf = new OpenLayers.Format.JSON().write(window.treeConfig);
 //            console.log("app treeconf");
 //            console.log(treeconf);
+            
+            //var tree = new OpenLayers.Format.JSON().read();
+            var treeconf="";
+            var request = OpenLayers.Request.GET({
+                url: catalogue.hostUrl + '/srv/' + catalogue.lang + "/pigeo.layertree.get",
+                async: false
+            });
+            
+            
+            if (request.responseText) {
+                var xml = request.responseXML.documentElement;
+                Ext.each(properties, function(item, idx){
+                    var children = xml.getElementsByTagName(item)[0];
+                    if (children) {
+                        this.info[item] = children.childNodes[0].nodeValue;
+                    }
+                }, this);
+            }
+
+            console.log(request);
+            
             var geoportalLayerTree = new GeoNetwork.Geoportal.LayerTree();
             geoportalLayerTree.init(window.treeConfig, iMap.getMap());
             var lt = geoportalLayerTree.getTree();
