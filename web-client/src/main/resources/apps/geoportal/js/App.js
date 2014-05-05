@@ -992,22 +992,28 @@ GeoNetwork.app = function () {
                 url: catalogue.hostUrl + '/srv/' + catalogue.lang + "/pigeo.layertree.get",
                 async: false
             });
-            
+
+			            
+            var treeConfig = [ {
+				nodeType : 'gx_baselayercontainer',
+				text : 'Fond de carte',
+				allowDrag : false,
+				allowDrop : false
+			}, {
+				text : 'No overlays : error loading Layertree',
+				children : []
+			} ];
             
             if (request.responseText) {
-                var xml = request.responseXML.documentElement;
-                Ext.each(properties, function(item, idx){
-                    var children = xml.getElementsByTagName(item)[0];
-                    if (children) {
-                        this.info[item] = children.childNodes[0].nodeValue;
-                    }
-                }, this);
+            	OpenLayers.Console.log("loading Layertree from database");
+            	var jsonTree = new OpenLayers.Format.JSON().read( request.responseText );
+            	treeConfig = jsonTree.treeConfig;
+            } else if (window.treeConfig) {
+            	OpenLayers.Console.log("loading Layertree from file config");
+            	treeConfig = window.treeConfig;
             }
-
-            console.log(request);
-            
             var geoportalLayerTree = new GeoNetwork.Geoportal.LayerTree();
-            geoportalLayerTree.init(window.treeConfig, iMap.getMap());
+            geoportalLayerTree.init(treeConfig, iMap.getMap());
             var lt = geoportalLayerTree.getTree();
             // Top navigation widgets
             //createModeSwitcher();

@@ -108,9 +108,19 @@
                 <table width="100%" class="text-aligned-left">
 
                     <!-- metadata services -->
+                    <xsl:variable name="geoportalServices">
+                       <xsl:call-template name="addrow">
+                            <xsl:with-param name="service" select="'pigeo.layertree.get'"/>
+                            <xsl:with-param name="title"
+                                            select="'Show layertree'"/>
+                            <xsl:with-param name="desc" select="'Displays the layertree as JSON file'"/>
+                        </xsl:call-template>
+                    </xsl:variable>
+                    
+                    <!-- metadata services -->
                     <xsl:variable name="mdServices">
 
-                        <xsl:if test="not($readonly)">
+                         <xsl:if test="not($readonly)">
                             <xsl:call-template name="addrow">
                                 <xsl:with-param name="service" select="'metadata.create.form'"/>
                                 <xsl:with-param name="link">
@@ -232,10 +242,18 @@
                     </xsl:variable>
 
                     <xsl:call-template name="addTitle">
+                        <xsl:with-param name="icon">exec.png</xsl:with-param>
+                        <xsl:with-param name="title"
+                                        select="'Geoportal configuration'"/>
+                        <xsl:with-param name="content" select="$geoportalServices"/>
+                    </xsl:call-template>
+
+                    <xsl:call-template name="addTitle">
                         <xsl:with-param name="icon">xml.png</xsl:with-param>
                         <xsl:with-param name="title"
                                         select="concat(/root/gui/strings/metadata, '&#160;&amp;&#160;', /root/gui/strings/template)"/>
                         <xsl:with-param name="content">
+                        
                             <xsl:copy-of select="$mdServices"/>
                             <tr>
                                 <td class="spacer"/>

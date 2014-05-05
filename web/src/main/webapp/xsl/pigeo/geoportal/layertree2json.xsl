@@ -51,11 +51,11 @@
        Responsibilities: placed quotes around string, and chain up to next filter, escape-bs-string -->
   <xsl:template name="escape-string">
     <xsl:param name="s"/>
-    <xsl:text>\"</xsl:text>
+    <xsl:text>"</xsl:text>
     <xsl:call-template name="escape-bs-string">
       <xsl:with-param name="s" select="$s"/>
     </xsl:call-template>
-    <xsl:text>\"</xsl:text>
+    <xsl:text>"</xsl:text>
   </xsl:template>
   
   <!-- Escape the backslash (\) before everything else. -->
@@ -168,12 +168,14 @@
     <xsl:if test="not(following-sibling::*)">}</xsl:if>
   </xsl:template>
 
-  <!-- array -->
+  <!-- array  : will work only for 'children' tags-->
+  <!-- TODO : make this more generic while keepin the 'children will always 
+  		give an array not matter how many are inside' special case-->
   <!-- defer processing siblings with the same name until the last element
-with that 
-       name at that level is found, at which time they can be collected
-into an array -->
-  <xsl:template match="*[count(../*[name(current())=name()])&gt;1]">
+		with that name at that level is found, at which time they can be collected
+		into an array -->
+ <!-- <xsl:template match="*[count(../*[name(current())=name()])&gt;1]">-->
+  <xsl:template match="*[name()='children']|*[name()='treeConfig']">
     <xsl:variable name="el" select="name()"/>
     <xsl:if test="not(preceding-sibling::*)">{</xsl:if>
     <xsl:if test="not(following-sibling::*[name()=$el])">
@@ -200,7 +202,7 @@ into an array -->
   
   <!-- convert root element to an anonymous container -->
   <xsl:template match="/">
-    <xsl:apply-templates select="/root/response/."/>
+    <xsl:apply-templates select="/root/response/*"/>
   </xsl:template>
     
 </xsl:stylesheet>
