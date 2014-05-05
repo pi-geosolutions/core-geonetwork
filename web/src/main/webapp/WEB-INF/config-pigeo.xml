@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <geonet>
     <services package="fr.pigeosolutions.geoportal">
-
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <!-- Layertree services                                           -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<service name="pigeo.layertree.get">
 			<class name="fr.pigeosolutions.geoportal.services.layertree.Get">
 			</class>
-			<output sheet="pigeo/geoportal/layertree2json.xsl" contentType="text/plain; charset=UTF-8"/>
+			<output sheet="pigeo/geoportal/layertree-2json.xsl" contentType="text/plain; charset=UTF-8"/>
 		</service>
+		<service name="pigeo.layertree.admin">
+			<output sheet="pigeo/geoportal/layertree-admin.xsl"/>
+		</service>
+		
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <!-- Dashboard services                                           -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

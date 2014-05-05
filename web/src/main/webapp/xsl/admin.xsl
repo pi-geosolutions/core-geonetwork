@@ -112,10 +112,16 @@
                        <xsl:call-template name="addrow">
                             <xsl:with-param name="service" select="'pigeo.layertree.get'"/>
                             <xsl:with-param name="title"
-                                            select="'Show layertree'"/>
+                                            select="'Show layertree (JSON)'"/>
                             <xsl:with-param name="desc" select="'Displays the layertree as JSON file'"/>
+                      	</xsl:call-template>	
+                        <xsl:call-template name="addrow">
+                            <xsl:with-param name="service" select="'pigeo.layertree.admin'"/>
+                            <xsl:with-param name="title" select="'Manage layertree'"/>
+                            <xsl:with-param name="desc" select="'View, reorganize, add nodes to the layertree'"/>
                         </xsl:call-template>
                     </xsl:variable>
+                    
                     
                     <!-- metadata services -->
                     <xsl:variable name="mdServices">
@@ -241,12 +247,15 @@
                         </xsl:call-template>
                     </xsl:variable>
 
-                    <xsl:call-template name="addTitle">
-                        <xsl:with-param name="icon">exec.png</xsl:with-param>
-                        <xsl:with-param name="title"
-                                        select="'Geoportal configuration'"/>
-                        <xsl:with-param name="content" select="$geoportalServices"/>
-                    </xsl:call-template>
+                     <!-- Only add the subtemplate if the client is widget based -->
+                    <xsl:if test="/root/gui/config/client/@widget">
+	                    <xsl:call-template name="addTitle">
+	                        <xsl:with-param name="icon">exec.png</xsl:with-param>
+	                        <xsl:with-param name="title"
+	                                        select="'Geoportal configuration'"/>
+	                        <xsl:with-param name="content" select="$geoportalServices"/>
+	                    </xsl:call-template>
+                    </xsl:if>
 
                     <xsl:call-template name="addTitle">
                         <xsl:with-param name="icon">xml.png</xsl:with-param>

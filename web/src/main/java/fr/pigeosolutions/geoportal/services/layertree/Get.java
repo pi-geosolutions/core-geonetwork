@@ -74,6 +74,8 @@ public class Get implements Service {
             nodeXML.addContent(new Element("weight").setText(node.getChildText("weight")));
             if (node.getChildText("isfolder").equalsIgnoreCase("y")) {
                 loadChildNodes(dbms, Integer.valueOf(nodeId), nodeXML);
+            } else {
+                nodeXML.addContent(new Element("leaf").setText("true"));
             }
             parentXML.addContent(nodeXML);
         }
