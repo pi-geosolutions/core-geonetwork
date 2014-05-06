@@ -53,16 +53,18 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     consoleView : null,
     nodeForm:null,
     nodeFormFields : {
-    	'folder':['id', 'type', 'text', 'expanded', 'extensions'],
-    	'wms':['id', 'type','text','layers', 'url', 'legend', 'uuid', 'format', 'checked', 'TILED', 'cls', 'qtip', 'extensions'],
-    	'chart':['id', 'type','text','url', 'legend', 'uuid',  'tablenames', 'changeScales', 'charting_fields', 'other_fields', 'format', 'checked', 'cls', 'qtip', 'context', 'template', 'extensions']    	
+    	'chart':['id', 'type','text', 'uuid','legend','url', 'tablenames', 'changeScales', 'charting_fields', 'other_fields', 'format', 'cls', 'qtip', 'context', 'template', 'extensions'],    	
+    	'wms':['id', 'type','text', 'uuid', 'legend', 'url', 'layers', 'format', 'TILED', 'cls', 'qtip', 'extensions'],
+    	'folder':['id', 'type', 'text', /*'expanded', */'extensions']
     },
+    fieldsOrder : ['id', 'type', 'uuid', 'text', 'url', 'layers', 'format', 'TILED','legend',
+                   'tablenames', 'changeScales', 'charting_fields', 'other_fields','context', 'template',
+                   //'expanded', //suppressed : will be managed in the tree panel
+                   'cls', 'qtip', 'extensions'],    	
     
     /** private: method[initComponent] 
      *  Initializes the layertree manager panel.
      *  
-     *  TODO : Add a refresh action (after import)
-     *  TODO : init type of directory by URL parameter
      */
     initComponent: function(config){
     
@@ -100,7 +102,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
                 autoScroll: true,
                 minHeight: 50,
                 height: 100,
-                items: null
+                html:"&gt; <b>Welcome in the Layertree Management Board</b><br />It allows you to view, edit, add, transform the layers and the structure"
             });
         
         this.add(this.detailView);
@@ -108,13 +110,12 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         this.add(this.treeView);
         
         this.load();
-        this.createForm();
+        this.createForm(this.nodeFormFields, this.fieldsOrder);
     },
     /**
-     * Search and clean current editing and disabled toolbar
-     * (no record selected). 
+     * Load layertree data in an Ext.tree
      * 
-     * TODO : Add warning if on editing
+     * TODO : 
      */
     load: function() {
     	var treeConfig = this.getFromDB();
@@ -156,7 +157,17 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	        layout:'fit',
 	        listeners: {
 	            click: function(node, event){
-	                this.editNode(node);
+	                this.nodeForm.editNode(node);
+	            },
+	            expandnode: function(node){
+	                node.attributes.expanded = node.isExpanded();
+	            },
+	            collapsenode: function(node){
+	                node.attributes.expanded = node.isExpanded();
+	            },
+	            checkchange: function(node, checked){
+	            	console.log(checked);
+	                node.attributes.checked = checked;
 	            },
 	            scope : this
 	        }
@@ -164,10 +175,9 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	this.treeView.add(tree);
     },
     /**
-     * Search and clean current editing and disabled toolbar
-     * (no record selected). 
+     * Gets the layertree as json data from the DB, via pigeo services
      * 
-     * TODO : Add warning if on editing
+     * TODO :
      */
     getFromDB: function() {
         var request = OpenLayers.Request.GET({
@@ -185,150 +195,25 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     },
     
     /**
-     * Search and clean current editing and disabled toolbar
-     * (no record selected). 
+     * Builds the form dynamically using the nodeFormFields listed fields, 
+     * in the order given by fieldsOrder array
      * 
-     * TODO : Add warning if on editing
+     * TODO : 
      */
-    createForm: function() {
-       this.nodeForm = new Ext.FormPanel({
-            id: 'node-form',
-            labelWidth:75,
-            frame:true,
-            labelAlign: 'left',
-            title: 'node details', 
-            defaultType: 'textfield',
-            defaults: {width: '90%'},
-            autoHeight: true,
-            border: false,
-            items: [{
-                fieldLabel: 'Id',
-                name: 'id',
-                disabled:true
-            },{
-            	xtype: 'combo',
-                fieldLabel: 'type',
-                name: 'type',
-                typeAhead: true,
-                triggerAction: 'all',
-                disabled:true,
-                lazyRender:true,
-                mode: 'local',
-                store: new Ext.data.ArrayStore({
-                    id: 0,
-                    fields: [
-                        'name',
-                        'displayText'
-                    ],
-                    data: [['folder', 'Folder'],['wms', 'WMS'], ['chart', 'Chart']]
-                }),
-                valueField: 'name',
-                displayField: 'displayText'
-            },{
-                fieldLabel: 'Text',
-                name: 'text'
-            },{
-                fieldLabel: 'layers',
-                name: 'layers'
-            },{
-                fieldLabel: 'url',
-                name: 'url'
-            },{
-                fieldLabel: 'Legend URL',
-                name: 'legend'
-            },{
-                fieldLabel: 'UUID',
-                name: 'uuid'
-            },{
-            	xtype: 'checkbox',
-                fieldLabel: 'checked',
-                name: 'checked'
-            },{
-                xtype: 'radiogroup',
-                columns: 'auto',
-                fieldLabel: 'Image format',
-                name:'format', //necessary for hide/show procedures
-                items: [{
-                    name: 'format',
-                    inputValue: 'image/png',
-                    boxLabel: 'PNG'
-                }, {
-                    name: 'format',
-                    inputValue: 'image/jpg',
-                    boxLabel: 'JPG'
-                }]
-            },{
-                fieldLabel: 'Is layer ?',
-                name: 'leaf',
-                disabled:true,
-                value:false
-            },{
-            	xtype: 'checkbox',
-                fieldLabel: 'Cacheable',
-                name: 'TILED'
-            },{
-                fieldLabel: 'CSS class',
-                name: 'cls'
-            },{
-                fieldLabel: 'Infos',
-                name: 'qtip'
-            },{
-            	xtype:'textarea',
-                fieldLabel: 'Additionnal parameters',
-                name: 'extensions'
-            }],
-
-
-            buttons: [{
-                text: 'Apply'
-            },{
-                text: 'Cancel'
-            }]
-        });
-        this.nodeForm.getForm().applyToFields({hidden:true});
+    createForm: function(nodeFormFields, fieldsOrder) {
+        this.nodeForm = new GeoNetwork.admin.LayerForm({'nodeFormFields':nodeFormFields, 'fieldsOrder':fieldsOrder/*, 'buttons':buttons*/});
+        
         this.detailView.add(this.nodeForm);
         this.detailView.doLayout();
     },
-
     /**
-     * Search and clean current editing and disabled toolbar
-     * (no record selected). 
+     * Builds the layertree as a json object, cleared of all extjs objects, just like plain old layertree.js
      * 
-     * TODO : Add warning if on editing
+     * TODO : 
      */
-    editNode: function(node) {
-    	
-    	if (node.attributes.type) {
-        	this.initForm(node.attributes.type);
-    	} else {
-        	this.nodeForm.getForm().reset();
-    	}
-    	this.nodeForm.getForm().setValues(node.attributes);
-    },
-
-    /**
-     * Search and clean current editing and disabled toolbar
-     * (no record selected). 
-     * 
-     * TODO : Add warning if on editing
-     */
-    initForm: function(type) {
-     	this.nodeForm.getForm().reset();
-     	
-     	Ext.each(this.nodeForm.getForm().items.items, function(field,index) {
-     		if (this.nodeFormFields[type].indexOf(field.name)>=0) {
-     			field.show();
-     		} else {
-         		field.hide();
-     		}
-     	}, this);//we hide the fields, since 'reset' doesn't do it
-     	/*
-     	for (var i = 0 ; i < this.nodeFormFields[type].length ; i++) {
-    		var field = this.nodeForm.getForm().findField('#'+this.nodeFormFields[type][i]);
-        	if (field!=null) field.show();
-    	}*/
+    tree2json: function() {
+        
     }
-
 
 });
 

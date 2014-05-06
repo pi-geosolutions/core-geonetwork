@@ -47,7 +47,8 @@
 		<script type="text/javascript" src="{$widgetPath}/js/GeoNetwork/lib/GeoNetwork/Util.js"/>			
     	<script type="text/javascript" src="{$widgetPath}/geoportal/js/lang/fr.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/geoportal/js/lang/en.js"></script>
-    	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/LayertreeManagerPanel.js"></script>
+    	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/LayerForm.js"></script>
+    	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/LayertreeManagerPanel.js"></script>
     	
     	
     	
