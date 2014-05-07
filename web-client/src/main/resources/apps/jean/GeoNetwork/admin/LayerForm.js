@@ -189,11 +189,8 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     	} else {
         	this.getForm().reset();
     	}
-    	//fixes somes node values
-    	if (node.attributes.TILED==null) {
-    		node.attributes.TILED=true;
-    	}
     	//loads the node values in the form
+    	this.log("loaded parameters for layer : <i>"+node.text+"</i>");
     	this.getForm().setValues(node.attributes);
     	this.currentNode=node;
     },
@@ -242,12 +239,16 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
 			//apply on node
 			Ext.apply(node.attributes,attr);
 			node.setText(attr.text);
-			console.log(node);
-			console.log(attr);
+
+	    	this.log("layer <i>"+attr.text+"</i> successfully updated. Don't forget to save the tree when you are done.");
 		}
+    },
+    
+    log: function(msg) {
+    	if (this.parent!=null) {
+    		this.parent.log(msg);
+    	}
     }
-
-
 });
 
 /** api: xtype = gn_admin_LayerForm */

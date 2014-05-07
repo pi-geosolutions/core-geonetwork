@@ -104,7 +104,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
                 autoScroll: true,
                 minHeight: 50,
                 height: 100,
-                html:"&gt; <b>Welcome in the Layertree Management Board</b><br />It allows you to view, edit, add, transform the layers and the structure"
+                html:"&gt; <b>Welcome in the Layertree Management Board</b><br />It allows you to view, edit, add, transform the layers and the structure<br />"
             });
         
         this.add(this.detailView);
@@ -113,6 +113,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         
         this.load();
         this.createForm(this.nodeFormFields, this.fieldsOrder);
+        window.lm = this;
     },
     /**
      * Load layertree data in an Ext.tree
@@ -130,13 +131,15 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	    		if (attr.layer && attr.text==null) {
 	    			attr.text = attr.layer;
 	    			attr.leaf=true;
+	    			if (attr.TILED==null && attr.type=="wms") attr.TILED=true;
 	    		}
 	    		if (attr.checked==null && attr.leaf==true) {
 	    			attr.checked = false;
 	    		}
 	    		if (attr.leaf!=true) {
 	    			attr.type='folder';
-	    		}
+	    		}    	//fixes somes node values
+
     			return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
     		}
 		});
@@ -154,7 +157,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	            // from above, that we created with OpenLayers.Format.JSON.write.
 	            children: treeConfig
 	        },
-	        rootVisible: false,
+	        rootVisible: true,
 	        border: false,
 	        layout:'fit',
 	        listeners: {
@@ -174,6 +177,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	        }
 	    });
     	this.treeView.add(this.tree);
+    	//console.log(this.tree.getRootNode().childNodes[2]);
     },
     /**
      * Gets the layertree as json data from the DB, via pigeo services
@@ -206,8 +210,8 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      * TODO : 
      */
     createForm: function(nodeFormFields, fieldsOrder) {
-        this.nodeForm = new GeoNetwork.admin.LayerForm({'nodeFormFields':nodeFormFields, 'fieldsOrder':fieldsOrder/*, 'buttons':buttons*/});
-        
+        this.nodeForm = new GeoNetwork.admin.LayerForm({'nodeFormFields':nodeFormFields, 'fieldsOrder':fieldsOrder});
+        this.nodeForm.parent = this;
         this.detailView.add(this.nodeForm);
         this.detailView.doLayout();
     },
@@ -242,22 +246,27 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 		    header:{"Content-Type":"text/plain"},
 		    data: xml,
             success: function(response){
-            	console.log("cool");
-            	/*
-            	var json = response.responseText;
-                var o = Ext.decode(json);
-                if (o.success) {
-                    window.location = o.url;
+            	var xml = response.responseXML;
+                if (xml.firstChild.textContent =="success") {
+                	this.log("backed up old layertree");
+                    this.log("Successfully saved the layertree to DB");
+                } else if (xml.firstChild.textContent.startsWith("WARNING")) {
+                    	this.log(xml.firstChild.textContent);
                 } else {
-                    
-                }*/
+                    this.log(xml.firstChild.textContent);
+                    Ext.MessageBox.show({icon: Ext.MessageBox.ERROR,
+                        title: OpenLayers.i18n("Save layertree"), msg:
+                        OpenLayers.i18n("ERROR : couldn't save the layertree. Please contact your administrator."),
+                        buttons: Ext.MessageBox.OK});
+                }
             },
             failure: function(response){
             	Ext.MessageBox.show({icon: Ext.MessageBox.ERROR,
-                    title: OpenLayers.i18n("saveWMCFile.windowTitle"), msg:
-                    OpenLayers.i18n("saveWMCFile.errorSaveWMC"),
+                    title: OpenLayers.i18n("Save layertree"), msg:
+                    OpenLayers.i18n("ERROR : couldn't save the layertree. Please contact your administrator."),
                     buttons: Ext.MessageBox.OK});
-            }
+            },
+            scope : this
         });
     },    
     /**
@@ -272,6 +281,11 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     },
     //used for recursion in the previous function
     getChildrenAsXML: function(root) {
+    	if (root.loaded==false) {
+    		//workaround to get hidden nodes (unfolded folder)
+    		// by default, they are not loaded, thus not available for eachChild function
+    		this.tree.getLoader().load(root); 
+    	}
     	var children = "";
     	var index = 1;//will be used to determine the node's weight
         root.eachChild(function(node) {
@@ -320,10 +334,14 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     },
     //used for recursion in the previous function
     getChildrenAttributes: function(root) {
+    	if (root.loaded==false) {
+    		//workaround to get hidden nodes (unfolded folder)
+    		// by default, they are not loaded, thus not available for eachChild function
+    		this.tree.getLoader().load(root); 
+    	}
     	var obj = {"children":[]};
     	var index = 1;//will be used to determine the node's weight
         root.eachChild(function(node) {
-        	console.log(node.text);
         	var attr = this.clone(node.attributes); //to avoid affecting the layertree
         	delete attr["loader"]; //a bit of cleanup
         	delete attr["children"]; //a bit of cleanup
@@ -337,6 +355,53 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         	index++;
         }, this);
         return obj;
+    },
+    
+    addFolder: function() {
+    	var folder = {
+    			type:"folder",
+    			text:"new folder",
+    			leaf:false
+    	};
+    	this.addNode(folder);
+    },
+    
+    addWMS: function() {
+    	var wms = {
+    			type:"wms",
+    			text:"new wms layer",
+    			url: "/geoserver-prod/wms?",
+    			format:"image/png",
+    			TILED:true,
+    			leaf:true
+    	};
+    	this.addNode(wms);
+    },
+    
+    addChart: function() {
+    	var chart = {
+			type:"chart",
+			text:"new chart layer",
+			url:"http://ilwac.ige.fr/geoportal-services/json_getChartData.php",
+			format:"geojson",
+			tablenames:'table1, table2, ...',
+			changeScales:"2500000,0",
+			leaf:true
+    	};
+    	this.addNode(chart);
+    },
+    addNode: function(tpl) {
+    	var node = this.tree.getSelectionModel().getSelectedNode();
+    	if (node==null) {
+    		Ext.Msg.alert('Add node', 'Please first select a parent node in the tree');
+    		return false;
+    	}
+    	if (node.leaf) { //we can add a node only to a folder
+    		node = node.parentNode;
+    	}
+    	node.appendChild(new Ext.tree.TreeNode(tpl));
+    	console.log(node);
+    	return true;
     },
     
     getToolbar: function() {
@@ -354,7 +419,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	    itemId: 'treesave',
     	    scope:this
     	});
-        var menu = new Ext.menu.Menu({
+        var tree_menu = new Ext.menu.Menu({
             id: 'mainMenu',
             items: [
                     action_2json,
@@ -364,12 +429,47 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
                 }*/
             ]
         });
+        
+    	var action_addfolder = new Ext.Action({
+    		text:'Add folder',
+    		iconCls:'folder',
+    		handler: this.addFolder,
+    	    itemId: 'addfolder',
+    	    scope:this
+    	});
+    	var action_addwms = new Ext.Action({
+    		text:'Add WMS layer (default)',
+    		iconCls:'wms',
+    		handler: this.addWMS,
+    	    itemId: 'addwms',
+    	    scope:this
+    	});
+    	var action_addchart = new Ext.Action({
+    		text:'Add chart',
+    		iconCls:'chart',
+    		handler: this.addChart,
+    	    itemId: 'addchart',
+    	    scope:this
+    	});
+        var add_menu = new Ext.menu.Menu({
+            id: 'mainMenu',
+            items: [
+                    action_addfolder,
+                    action_addwms,
+                    action_addchart
+            ]
+        });
+
 
         var tb = new Ext.Toolbar();
         tb.add({
             text:'Tree',
             iconCls: 'bmenu',  // <-- icon
-            menu: menu  // assign menu by instance
+            menu: tree_menu  // assign menu by instance
+        },{
+            text:'Add',
+            iconCls: 'bmenu',  // <-- icon
+            menu: add_menu  // assign menu by instance
         });
         return tb;
     },
@@ -379,6 +479,14 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     clone: function(obj) {
     	var newobj = {};
     	return Ext.apply(newobj, obj);
+    },
+    
+    //logs messages in the south panel, used as a console
+    log: function(msg) { //careful, it will work only if the class has fully loaded.
+    	if (this.consoleView.body!=null) {
+        	this.consoleView.body.dom.innerHTML+="<br />&gt; "+msg;
+        	this.consoleView.body.scroll('b', Infinity);
+    	}
     }
 
 });

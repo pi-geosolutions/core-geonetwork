@@ -1007,12 +1007,13 @@ GeoNetwork.app = function () {
             if (request.responseText) {
             	OpenLayers.Console.log("loading Layertree from database");
             	var jsonTree = new OpenLayers.Format.JSON().read( request.responseText );
-            	treeConfig = jsonTree.treeConfig;
+            	treeConfig = jsonTree.children;
             } else if (window.treeConfig) {
             	OpenLayers.Console.log("loading Layertree from file config");
             	treeConfig = window.treeConfig;
             }
             var geoportalLayerTree = new GeoNetwork.Geoportal.LayerTree();
+            window.geoportalLayerTree = geoportalLayerTree;
             geoportalLayerTree.init(treeConfig, iMap.getMap());
             var lt = geoportalLayerTree.getTree();
             // Top navigation widgets
