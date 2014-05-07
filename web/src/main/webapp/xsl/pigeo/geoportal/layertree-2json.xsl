@@ -148,7 +148,7 @@
   <!-- 	Jean Pommier
   		json extension : gets json "as-is" : drops the <json> tags and take the json code inside, as additionnal json parameters for the object
   		
-  		!!!!!!!!!!!!!!!!!! : be careful not to put jsonextension tag at first or last place, as open/closure won't be applied for it !!!!!!!!!!!!!!!!!
+  		!!!!!!!!!!!!!!!!!! : be careful not to put json tag at first or last place, as open/closure won't be applied for it !!!!!!!!!!!!!!!!!
    -->
   <xsl:template match="jsonextensions">
     <xsl:value-of select="."/>

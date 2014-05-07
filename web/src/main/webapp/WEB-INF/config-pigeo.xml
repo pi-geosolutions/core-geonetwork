@@ -9,6 +9,10 @@
 			</class>
 			<output sheet="pigeo/geoportal/layertree-2json.xsl" contentType="text/plain; charset=UTF-8"/>
 		</service>
+		<service name="pigeo.layertree.set">
+			<class name="fr.pigeosolutions.geoportal.services.layertree.Set">
+			</class>
+		</service>
 		<service name="pigeo.layertree.admin">
 			<output sheet="pigeo/geoportal/layertree-admin.xsl"/>
 		</service>

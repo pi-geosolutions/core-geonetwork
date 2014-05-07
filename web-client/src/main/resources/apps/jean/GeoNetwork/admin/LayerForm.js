@@ -158,6 +158,10 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
 				                name: 'format',
 				                inputValue: 'image/jpg',
 				                boxLabel: 'JPG'
+				            }, {
+				                name: 'format',
+				                inputValue: 'geojson',
+				                boxLabel: 'GeoJSON'
 				            }]
 				        });
 						break;

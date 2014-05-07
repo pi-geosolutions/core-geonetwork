@@ -62,7 +62,7 @@ public class Get implements Service {
     
      
     private void loadNodes(String nodename, Dbms dbms, Element parentXML, String where) throws SQLException {
-        java.util.List list = dbms.select("SELECT id, parentid, weight, isfolder, jsonextensions FROM geoportal.nodes "+where).getChildren();
+        java.util.List list = dbms.select("SELECT id, parentid, weight, isfolder, json FROM geoportal.nodes "+where).getChildren();
         for (int i = 0; i < list.size(); i++) {
             Element node = (Element) list.get(i);
             String nodeId = node.getChildText("id"); 
@@ -70,7 +70,7 @@ public class Get implements Service {
             //Element nodeXML = new Element("children").setAttribute("id", nodeId).setAttribute("weight", node.getChildText("weight")).setAttribute("isfolder", node.getChildText("isfolder")) ;
             Element nodeXML = new Element(nodename);
             nodeXML.addContent(new Element("id").setText(node.getChildText("id")));
-            nodeXML.addContent(new Element("jsonextensions").setText(node.getChildText("jsonextensions")));
+            nodeXML.addContent(new Element("jsonextensions").setText(node.getChildText("json")));
             nodeXML.addContent(new Element("weight").setText(node.getChildText("weight")));
             if (node.getChildText("isfolder").equalsIgnoreCase("y")) {
                 loadChildNodes(dbms, Integer.valueOf(nodeId), nodeXML);

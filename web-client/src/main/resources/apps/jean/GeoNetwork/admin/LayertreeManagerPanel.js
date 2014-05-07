@@ -51,6 +51,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     treeView:null,
     detailView:null,
     consoleView : null,
+    tree:null, 
     nodeForm:null,
     nodeFormFields : {
     	'chart':['id', 'type','text', 'uuid','legend','url', 'tablenames', 'changeScales', 'charting_fields', 'other_fields', 'format', 'cls', 'qtip', 'context', 'template', 'extensions'],    	
@@ -90,7 +91,8 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
                 split: true,
                 autoScroll: true,
                 minHeigth: 300,
-                items: null
+                items: null,
+                tbar:this.getToolbar()
             });
         this.consoleView = new Ext.Panel({
                 region: 'south',
@@ -138,7 +140,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     			return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
     		}
 		});
-	    var tree = new Ext.tree.TreePanel({
+	    this.tree = new Ext.tree.TreePanel({
 	        title:'layerTree',
 	        header:false,
 	        id: "geoportalLayerTree",
@@ -166,13 +168,12 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	                node.attributes.expanded = node.isExpanded();
 	            },
 	            checkchange: function(node, checked){
-	            	console.log(checked);
 	                node.attributes.checked = checked;
 	            },
 	            scope : this
 	        }
 	    });
-    	this.treeView.add(tree);
+    	this.treeView.add(this.tree);
     },
     /**
      * Gets the layertree as json data from the DB, via pigeo services
@@ -207,12 +208,173 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         this.detailView.doLayout();
     },
     /**
-     * Builds the layertree as a json object, cleared of all extjs objects, just like plain old layertree.js
-     * 
-     * TODO : 
+     * Displays the layertree as text, in a popup window
      */
     tree2json: function() {
-        
+        var json = this.serializeTree();
+        var win = new Ext.Window({
+        	title:'Layertree (JSON)',
+        	layout:'border',
+            width:500,
+            height:300,
+            modal:true,
+            closeAction:'close',
+            plain: true,
+            items : new Ext.Panel({
+            	region:'center',
+            	autoScroll:true,
+                html:json
+            })
+        });
+	    win.show(this);
+    },
+    /**
+     * Saves the tree structure on DB
+     */
+    treeSave: function() {
+        var xml = this.XMLencapsulateTree();
+        OpenLayers.Request.POST({
+		    url: this.serviceBaseUrl + "/pigeo.layertree.set",
+		    header:{"Content-Type":"text/plain"},
+		    data: xml,
+            success: function(response){
+            	console.log("cool");
+            	/*
+            	var json = response.responseText;
+                var o = Ext.decode(json);
+                if (o.success) {
+                    window.location = o.url;
+                } else {
+                    
+                }*/
+            },
+            failure: function(response){
+            	Ext.MessageBox.show({icon: Ext.MessageBox.ERROR,
+                    title: OpenLayers.i18n("saveWMCFile.windowTitle"), msg:
+                    OpenLayers.i18n("saveWMCFile.errorSaveWMC"),
+                    buttons: Ext.MessageBox.OK});
+            }
+        });
+    },    
+    /**
+     * Builds the layertree as a json object, cleared of all extjs objects, just like plain old layertree.js
+     */
+    XMLencapsulateTree: function() {
+    	var root = this.tree.getRootNode();
+    	var tree_xml = "<tree>\n";
+    	tree_xml += this.getChildrenAsXML(root);
+    	tree_xml += "</tree>";
+    	return tree_xml;
+    },
+    //used for recursion in the previous function
+    getChildrenAsXML: function(root) {
+    	var children = "";
+    	var index = 1;//will be used to determine the node's weight
+        root.eachChild(function(node) {
+        	var xml = "<children>\n";
+        	var attr = this.clone(node.attributes); //to avoid affecting the layertree
+
+        	xml +="<id>"+attr.id+"</id>\n";
+        	delete attr["id"]; //a bit of cleanup
+        	
+        	xml +="<weight>"+index+"</weight>\n";
+        	var isfolder = "y";
+        	if (node.leaf) {
+        		isfolder = "n";
+        	} 
+        	xml +="<isfolder>"+isfolder+"</isfolder>\n";
+        	
+        	delete attr["loader"]; //a bit of cleanup
+        	delete attr["children"]; //a bit of cleanup
+
+        	//remove {} for storage : we just keep the list of key:value pairs 
+        	var json = new OpenLayers.Format.JSON().write(attr);
+        	if (json.substr(0,1)=="{") {
+        		json = json.substr(1, json.length-2);
+        	}
+        	xml +="<jsonextensions>"+json+"</jsonextensions>\n";
+        	
+        	if (node.hasChildNodes()) {
+        		xml += this.getChildrenAsXML(node, "children");
+        	}
+        	
+        	xml += "</children>";
+
+            children+=xml;
+        	index++;
+        }, this);
+        return children;
+    },
+    /**
+     * Builds the layertree as a json object, cleared of all extjs objects, just like plain old layertree.js
+     */
+    serializeTree: function() {
+    	var root = this.tree.getRootNode();
+        var treeConfig = this.getChildrenAttributes(root);//still a js object
+        var json = new OpenLayers.Format.JSON().write(treeConfig);//serialized
+        return json;
+    },
+    //used for recursion in the previous function
+    getChildrenAttributes: function(root) {
+    	var children = [];
+    	var index = 1;//will be used to determine the node's weight
+        root.eachChild(function(node) {
+        	console.log(node.text);
+        	var attr = this.clone(node.attributes); //to avoid affecting the layertree
+        	delete attr["loader"]; //a bit of cleanup
+        	delete attr["children"]; //a bit of cleanup
+        	
+        	attr.weight = index;
+        	attr.children = this.getChildrenAttributes(node);
+        	if (attr.children.length==0) {
+        		delete attr["children"];
+        	}
+        	children.push(attr);
+        	index++;
+        }, this);
+        return children;
+    },
+    
+    getToolbar: function() {
+    	var action_2json = new Ext.Action({
+    		text:'Export as Json',
+    		iconCls:'save',
+    		handler: this.tree2json,
+    	    itemId: 'tree2json',
+    	    scope:this
+    	});
+    	var action_save = new Ext.Action({
+    		text:'Save',
+    		iconCls:'save',
+    		handler: this.treeSave,
+    	    itemId: 'treesave',
+    	    scope:this
+    	});
+        var menu = new Ext.menu.Menu({
+            id: 'mainMenu',
+            items: [
+                    action_2json,
+                    action_save
+                    /*,{
+                    text: 'I like Ext'
+                }*/
+            ]
+        });
+
+        var tb = new Ext.Toolbar();
+        tb.add({
+            text:'Tree',
+            iconCls: 'bmenu',  // <-- icon
+            menu: menu  // assign menu by instance
+        });
+        return tb;
+    },
+    /**
+     * Utils
+     * */
+    clone: function(obj) {
+    	var newobj = {};
+    	return Ext.apply(newobj, obj);
     }
 
 });
