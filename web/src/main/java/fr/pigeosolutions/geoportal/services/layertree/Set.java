@@ -58,20 +58,6 @@ public class Set implements Service {
     private boolean backup(Dbms dbms, ServiceContext context) throws SQLException {
         Element layertreeXML = new Element("tree");
         
-        /* add baselayercontainer at the beginning of the layertree
-         * {
-         * nodeType    : 'gx_baselayercontainer'
-         * ,text       : 'Fond de carte'
-         * ,allowDrag  : false
-         * ,allowDrop  : false
-         * }
-         */
-        Element nodeXML = new Element("children");
-        nodeXML.addContent(new Element("nodeType").setText("gx_baselayercontainer"));
-        nodeXML.addContent(new Element("text").setText("Fond de carte"));
-        nodeXML.addContent(new Element("allowDrag").setText("false"));
-        nodeXML.addContent(new Element("allowDrop").setText("false"));
-        layertreeXML.addContent(nodeXML);
         //loads the tree from DB
         String whereClause = "WHERE id=parentid ORDER BY weight";
         loadNodes(dbms, layertreeXML, whereClause);
@@ -98,7 +84,8 @@ public class Set implements Service {
             nodeXML.addContent(new Element("jsonextensions").setText(node.getChildText("json")));
             nodeXML.addContent(new Element("weight").setText(node.getChildText("weight")));
             if (node.getChildText("isfolder").equalsIgnoreCase("y")) {
-                loadChildNodes(dbms, Integer.valueOf(nodeId), nodeXML);
+                String cond = "WHERE parentid="+nodeId+" AND id<>"+nodeId+"ORDER BY weight";
+                loadNodes(dbms, nodeXML, cond);
             } else {
                 nodeXML.addContent(new Element("leaf").setText("true"));
             }
@@ -107,8 +94,4 @@ public class Set implements Service {
         return;
     }    
     
-    private void loadChildNodes(Dbms dbms, int id, Element parentXML) throws SQLException {
-        loadNodes(dbms, parentXML, "WHERE parentid="+id+" AND id<>"+id+"ORDER BY weight");
-        return;
-    }
 }

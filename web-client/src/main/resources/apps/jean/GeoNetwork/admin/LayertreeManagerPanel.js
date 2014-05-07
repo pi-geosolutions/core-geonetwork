@@ -190,7 +190,11 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         if (request.responseText) {
         	OpenLayers.Console.log("loading Layertree from database");
         	var jsonTree = new OpenLayers.Format.JSON().read( request.responseText );
-        	treeConfig = jsonTree.treeConfig;
+        	if (jsonTree.children!=null) {
+        		treeConfig = jsonTree.children; //structure we get from DB (new version)
+        	} else {
+            	treeConfig = jsonTree.treeConfig;//structure we get from old layertree files
+        	}
         } 
         return treeConfig;
     },
@@ -316,7 +320,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     },
     //used for recursion in the previous function
     getChildrenAttributes: function(root) {
-    	var children = [];
+    	var obj = {"children":[]};
     	var index = 1;//will be used to determine the node's weight
         root.eachChild(function(node) {
         	console.log(node.text);
@@ -329,10 +333,10 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         	if (attr.children.length==0) {
         		delete attr["children"];
         	}
-        	children.push(attr);
+        	obj.children.push(attr);
         	index++;
         }, this);
-        return children;
+        return obj;
     },
     
     getToolbar: function() {
