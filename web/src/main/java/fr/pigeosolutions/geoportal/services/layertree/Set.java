@@ -123,7 +123,7 @@ public class Set implements Service {
                             +"SELECT id from row ;";
 */
             //System.out.println(req);
-            Element output = dbms.select("WITH row AS (INSERT INTO geoportal.nodes (parentid, weight, isfolder, json) VALUES (?, ?, ?, ?) RETURNING id SELECT id from row ;)", 
+            Element output = dbms.select("WITH row AS (INSERT INTO geoportal.nodes (parentid, weight, isfolder, json) VALUES (?, ?, ?, ?) RETURNING id ) SELECT id from row ;", 
                     parentid,
                     Integer.parseInt(node.getChildText("weight")),
                     isfolder,

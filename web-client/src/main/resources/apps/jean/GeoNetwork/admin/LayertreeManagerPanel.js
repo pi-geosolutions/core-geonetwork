@@ -128,7 +128,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     		// this below is using the config attributes of the node to do
     		// some testing. The attr.has_events is coming from the loader in PHP
     		createNode: function(attr) {
-	    		if (attr.layer && attr.text==null) {
+/*	    		if (attr.layer && attr.text==null) {
 	    			attr.text = attr.layer;
 	    			if (attr.TILED==null && attr.type=="wms") attr.TILED=true;
 	    		}
@@ -145,6 +145,21 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	    			attr.iconCls='folder';
 	    			attr.leaf=true;
 	    		}
+*/
+				if (attr.layer && attr.text==null) { //deals with importing old-style layertree.js file
+	    			attr.text = attr.layer;
+	    			attr.leaf=true;
+	    			if (attr.TILED==null && attr.type=="wms") attr.TILED=true;
+	    		}
+	    		if (attr.checked==null && attr.leaf==true) {
+	    			attr.checked = false;
+	    		}
+	    		if (attr.type!='folder' && attr.type!=null) {
+	    			attr.leaf=true;
+	    		}
+	    		if (attr.leaf!=true && attr.type==null) {
+	    			attr.type='folder';
+	    		}    	//fixes somes node values
 
     			return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
     		}
@@ -321,6 +336,9 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     			attr.cls = nodecls.replace("x-tree-node-expanded","");
     			if (attr.cls.length == 0) delete attr.cls;
     		}
+    		if (attr.type=='folder') {
+    			delete attr.layer;
+    		}
 
         	//remove {} for storage : we just keep the list of key:value pairs 
         	var json = new OpenLayers.Format.JSON().write(attr);
@@ -369,6 +387,9 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     			attr.cls = nodecls.replace("x-tree-node-expanded","");
     			if (attr.cls.length == 0) delete attr.cls;
     		}
+    		if (attr.type=='folder') {
+    			delete attr.layer;
+    		}
         	
         	//attr.weight = index;
         	attr.children = this.getChildrenAttributes(node).children;
@@ -386,7 +407,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     			type:"folder",
     			text:"new folder",
     			iconCls:folder,
-    			leaf:true
+    			leaf:false
     	};
     	this.addNode(folder);
     },
@@ -398,6 +419,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     			url: "/geoserver-prod/wms?",
     			format:"image/png",
     			TILED:true,
+    			checked:false,
     			leaf:true
     	};
     	this.addNode(wms);
@@ -411,6 +433,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 			format:"geojson",
 			tablenames:'table1, table2, ...',
 			changeScales:"2500000,0",
+			checked:false,
 			leaf:true
     	};
     	this.addNode(chart);
@@ -421,10 +444,10 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     		Ext.Msg.alert('Add node', 'Please first select a parent node in the tree');
     		return false;
     	}
-    	if (node.attributes.type!='folder') { //we can add a node only to a folder
+    	if (node.leaf) { //we can add a node only to a folder
     		node = node.parentNode;
     	}
-    	node.appendChild(new Ext.tree.TreeNode(tpl));
+     	node.appendChild(new Ext.tree.TreeNode(tpl));
     	console.log(node);
     	return true;
     },
