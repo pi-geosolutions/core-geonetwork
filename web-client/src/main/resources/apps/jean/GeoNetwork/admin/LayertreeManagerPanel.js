@@ -130,15 +130,21 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     		createNode: function(attr) {
 	    		if (attr.layer && attr.text==null) {
 	    			attr.text = attr.layer;
-	    			attr.leaf=true;
 	    			if (attr.TILED==null && attr.type=="wms") attr.TILED=true;
 	    		}
-	    		if (attr.checked==null && attr.leaf==true) {
+	    		if (attr.type!='folder' && attr.type!=null) {
+	    			attr.leaf=true;
+	    		}
+	    		if (attr.checked==null && (attr.type!="folder" && attr.type!=null)) {
 	    			attr.checked = false;
 	    		}
-	    		if (attr.leaf!=true) {
+	    		if (attr.type==null && attr.leaf!=true) {
 	    			attr.type='folder';
 	    		}    	//fixes somes node values
+	    		if (attr.type=='folder' && attr.children==null) {
+	    			attr.iconCls='folder';
+	    			attr.leaf=true;
+	    		}
 
     			return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
     		}
@@ -155,7 +161,10 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	            // the children property of an Ext.tree.AsyncTreeNode is used to
 	            // provide an initial set of layer nodes. We use the treeConfig
 	            // from above, that we created with OpenLayers.Format.JSON.write.
-	            children: treeConfig
+	            children: treeConfig,
+	            expanded:true,
+	            type:'folder',
+	            id:0
 	        },
 	        rootVisible: true,
 	        border: false,
@@ -223,10 +232,11 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         var win = new Ext.Window({
         	title:'Layertree (JSON)',
         	layout:'border',
-            width:500,
-            height:300,
+            width:'70%',
+            height:400,
             modal:true,
             closeAction:'close',
+            maximizable:true,
             plain: true,
             items : new Ext.Panel({
             	region:'center',
@@ -297,13 +307,20 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         	
         	xml +="<weight>"+index+"</weight>\n";
         	var isfolder = "y";
-        	if (node.leaf) {
+        	if (attr.type!='folder' && attr.type!=null) {
         		isfolder = "n";
         	} 
         	xml +="<isfolder>"+isfolder+"</isfolder>\n";
         	
         	delete attr["loader"]; //a bit of cleanup
         	delete attr["children"]; //a bit of cleanup
+    		delete attr.leaf; //will be automatically generated
+    		delete attr.weight; //will be automatically generated
+    		if (attr.cls!=null) {
+    			var nodecls = attr.cls;
+    			attr.cls = nodecls.replace("x-tree-node-expanded","");
+    			if (attr.cls.length == 0) delete attr.cls;
+    		}
 
         	//remove {} for storage : we just keep the list of key:value pairs 
         	var json = new OpenLayers.Format.JSON().write(attr);
@@ -328,8 +345,8 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      */
     serializeTree: function() {
     	var root = this.tree.getRootNode();
-        var treeConfig = this.getChildrenAttributes(root);//still a js object
-        var json = new OpenLayers.Format.JSON().write(treeConfig);//serialized
+        var treeConfig = this.getChildrenAttributes(root);//is still a js {object}
+        var json = new OpenLayers.Format.JSON().write(treeConfig);//serialized is now a string
         return json;
     },
     //used for recursion in the previous function
@@ -340,19 +357,26 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     		this.tree.getLoader().load(root); 
     	}
     	var obj = {"children":[]};
-    	var index = 1;//will be used to determine the node's weight
+    	//var index = 1;//will be used to determine the node's weight
         root.eachChild(function(node) {
         	var attr = this.clone(node.attributes); //to avoid affecting the layertree
         	delete attr["loader"]; //a bit of cleanup
         	delete attr["children"]; //a bit of cleanup
+    		delete attr.leaf; //will be automatically generated
+    		delete attr.weight; //will be automatically generated
+    		if (attr.cls!=null) {
+    			var nodecls = attr.cls;
+    			attr.cls = nodecls.replace("x-tree-node-expanded","");
+    			if (attr.cls.length == 0) delete attr.cls;
+    		}
         	
-        	attr.weight = index;
-        	attr.children = this.getChildrenAttributes(node);
+        	//attr.weight = index;
+        	attr.children = this.getChildrenAttributes(node).children;
         	if (attr.children.length==0) {
         		delete attr["children"];
-        	}
+        	} 
         	obj.children.push(attr);
-        	index++;
+        	//index++;
         }, this);
         return obj;
     },
@@ -361,7 +385,8 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	var folder = {
     			type:"folder",
     			text:"new folder",
-    			leaf:false
+    			iconCls:folder,
+    			leaf:true
     	};
     	this.addNode(folder);
     },
@@ -396,7 +421,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     		Ext.Msg.alert('Add node', 'Please first select a parent node in the tree');
     		return false;
     	}
-    	if (node.leaf) { //we can add a node only to a folder
+    	if (node.attributes.type!='folder') { //we can add a node only to a folder
     		node = node.parentNode;
     	}
     	node.appendChild(new Ext.tree.TreeNode(tpl));

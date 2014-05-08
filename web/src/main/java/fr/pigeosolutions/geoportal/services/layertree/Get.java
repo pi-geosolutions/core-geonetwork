@@ -37,32 +37,34 @@ public class Get implements Service {
             Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
             Element layertreeXML = new Element(Jeeves.Elem.RESPONSE);
             
-            String whereClause = "WHERE id=parentid ORDER BY weight";
+            String whereClause = "WHERE parentid=0 ORDER BY weight";
             loadNodes(dbms, layertreeXML, whereClause);
             
             // --- return data
             return layertreeXML;
     }
 
-    
+    /*
+     * Loads the child nodes of parentXML, using the where clause.
+     * The where clause can be of the form : "WHERE parentid=0 ORDER BY weight" or anything suitable
+     */
      
     private void loadNodes(Dbms dbms, Element parentXML, String where) throws SQLException {
-        java.util.List list = dbms.select("SELECT id, parentid, weight, isfolder, json FROM geoportal.nodes "+where).getChildren();
+        //lists child nodes
+        java.util.List list = dbms.select("SELECT id, parentid, weight, isfolder, json, lastchanged FROM geoportal.nodes "+where).getChildren();
         for (int i = 0; i < list.size(); i++) {
             Element node = (Element) list.get(i);
+            //loads the node itself
             String nodeId = node.getChildText("id"); 
-            //Element nodeXML = new Element("node").setText(node.getChildText("json")).setAttribute("id", nodeId).setAttribute("weight", node.getChildText("weight")).setAttribute("isfolder", node.getChildText("isfolder")) ;
-            //Element nodeXML = new Element("children").setAttribute("id", nodeId).setAttribute("weight", node.getChildText("weight")).setAttribute("isfolder", node.getChildText("isfolder")) ;
             Element nodeXML = new Element("children");
-            nodeXML.addContent(new Element("id").setText(node.getChildText("id")));
-            nodeXML.addContent(new Element("jsonextensions").setText(node.getChildText("json")));
+            nodeXML.addContent(new Element("id").setText(nodeId));
+            nodeXML.addContent(new Element("jsonextensions").setText(node.getChildText("json"))); //must not be the last item, as it may give way to parsing pbs (see layertree-2json.xsl)
+            nodeXML.addContent(new Element("lastchanged").setText(node.getChildText("lastchanged")));
             nodeXML.addContent(new Element("weight").setText(node.getChildText("weight")));
-            if (node.getChildText("isfolder").equalsIgnoreCase("y")) {
-                String cond = "WHERE parentid="+nodeId+" AND id<>"+nodeId+"ORDER BY weight";
-                loadNodes(dbms, nodeXML, cond);
-            } else {
-                nodeXML.addContent(new Element("leaf").setText("true"));
-            }
+            //load children if there are
+            String cond = "WHERE parentid="+nodeId+" AND id<>"+nodeId+"ORDER BY weight";
+            loadNodes(dbms, nodeXML, cond);
+            
             parentXML.addContent(nodeXML);
         }
         return;

@@ -142,7 +142,7 @@
       <xsl:with-param name="s" select="local-name()"/>
     </xsl:call-template>
     <xsl:text>:null</xsl:text>
-    <xsl:if test="following-sibling::*">,</xsl:if>
+    <xsl:if test="following-sibling::*">,&#xA;</xsl:if>
   </xsl:template>
 
   <!-- 	Jean Pommier
@@ -158,7 +158,7 @@
 
   <!-- object -->
   <xsl:template match="*" name="base">
-    <xsl:if test="not(preceding-sibling::*)">{</xsl:if>
+    <xsl:if test="not(preceding-sibling::*)">&#xA;{</xsl:if>
     <xsl:call-template name="escape-string">
       <xsl:with-param name="s" select="name()"/>
     </xsl:call-template>

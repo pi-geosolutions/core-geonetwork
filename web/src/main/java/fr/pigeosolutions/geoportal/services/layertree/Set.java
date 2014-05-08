@@ -62,10 +62,16 @@ public class Set implements Service {
      * Iterates through the tree and creates/updates the nodes in the DB
      */
     private boolean save(Dbms dbms, Element tree) throws SQLException {
-        String save_req="BEGIN;";
-        save_req+=this.saveChildren(tree);
-        save_req+="COMMIT;";
-        System.out.println(save_req);
+        dbms.execute("BEGIN;");
+        System.out.println("BEGIN;");
+        boolean ok = this.saveChildren(tree, 0, dbms);
+        if (ok) {
+            dbms.execute("COMMIT;");
+            System.out.println("COMMIT;");
+        } else {
+            dbms.execute("ROLLBACK;");
+            System.out.println("ROLLBACK;");
+        }
         /*try {
             dbms.execute(save_req);
         } catch (SQLException e) {
@@ -74,39 +80,33 @@ public class Set implements Service {
         return true ; 
     }
 
-    private String saveChildren(Element root) {
-        String req="";
+    private boolean saveChildren(Element root, int parentid, Dbms dbms ) throws SQLException {
+        int id=0;
         java.util.List list = root.getChildren("children");
 
         System.out.println(root.getChildText("id")+"has "+list.size()+" children");
         for (int i = 0; i < list.size(); i++) {
             Element node = (Element) list.get(i);
-            req += this.saveNode(root.getChildText("id"), node);
-            System.out.println(node.getChildText("id") );
+            id = this.saveNode(parentid, node, dbms);
             if (!node.getChildren("children").isEmpty()) {
-                System.out.println("nodddddeid : "+node.getChildText("id"));
-
-                System.out.println(node.getChildText("id")+"has "+node.getChildren("children").size()+" children");
-                req+=this.saveChildren((Element) node.clone());
+                this.saveChildren((Element) node.clone(), id, dbms);
             }
         }
-        return req;
+        return true;
     }
 
     /*
      * Builds the request for creating/updating the node. Will be executed as a whole in the save function
      */
-    private String saveNode(String parentid, Element node) {
+    private int saveNode(int parentid, Element node, Dbms dbms) throws SQLException {
         String req="";
         String nodeid = node.getChildText("id");
-        System.out.println("nodeid : "+nodeid );
-        if (parentid==null) {//then we assume the parent is the <tree> root node : all other node should have an id
+        System.out.println("saving node  "+nodeid );
+/*        if (parentid==null) {//then we assume the parent is the <tree> root node : all other node should have an id
             parentid=nodeid;
         }
-        String isfolder = "n";
-        if (!node.getChildren("children").isEmpty()) {
-            isfolder = "y";
-        }
+ */       
+        String isfolder = node.getChildText("isfolder");
         if (nodeid.startsWith("x")) { //it's a new node, we need to create it
             /*we'll have to get back the id of the inserted row, and use it as parentid for children 
              * of this row, if it is a folder. Like :
@@ -114,22 +114,40 @@ public class Set implements Service {
                     INSERT INTO geoportal.nodes (parentid, weight, isfolder, json) VALUES ((SELECT id FROM row),1,'n','"":"hibou"')
              */
             
-            req+= "WITH row"+nodeid+" AS (INSERT INTO geoportal.nodes ((SELECT id FROM row"+nodeid+"), weight, isfolder, json) VALUES ("
-                            +parentid+","
+            /*req = "WITH row AS (INSERT INTO geoportal.nodes (parentid, weight, isfolder, json) VALUES (?, ?, ?, ?) RETURNING id ), parentid, node.node.getChildText('weight'), isfolder "
+                            +"SELECT id from row ;";
+                            +parentid+"," 
                             +node.getChildText("weight")+","
                             +"'"+isfolder+"',"
-                            +"'"+node.getChildText("jsonextensions")+"') RETURNING id;"  ;
-            if (nodeid.startsWith("x")) {
-                req+="UPDATE geoportal.nodes SET parentid= (SELECT id FROM row"+nodeid+") WHERE id = (SELECT id FROM row"+nodeid+");"  ;
-            }
+                            +"'"+node.getChildText("jsonextensions")+"') RETURNING id ) "
+                            +"SELECT id from row ;";
+*/
+            //System.out.println(req);
+            Element output = dbms.select("WITH row AS (INSERT INTO geoportal.nodes (parentid, weight, isfolder, json) VALUES (?, ?, ?, ?) RETURNING id SELECT id from row ;)", 
+                    parentid,
+                    Integer.parseInt(node.getChildText("weight")),
+                    isfolder,
+                    node.getChildText("jsonextensions"));
+            nodeid = output.getChild(Jeeves.Elem.RECORD).getChildText("id");
+            //node= output.
+            System.out.println("recovered node id "+nodeid); 
+            
         } else { //it's an update of an existing node
-            req+= "WITH row"+nodeid+" AS (UPDATE geoportal.nodes SET ((SELECT id FROM row"+nodeid+"), weight, isfolder, json) = ("
+            /*req = "UPDATE geoportal.nodes SET (parentid, weight, isfolder, json) = ("
                     +parentid+","
                     +node.getChildText("weight")+","
                     +"'"+isfolder+"',"
-                    +"'"+node.getChildText("jsonextensions")+"') WHERE id="+nodeid+") RETURNING id;"  ;
+                    +"'"+node.getChildText("jsonextensions")+"') WHERE id="+nodeid+";" ;
+
+            System.out.println(req);*/
+            dbms.execute("UPDATE geoportal.nodes SET (parentid, weight, isfolder, json) = (?, ? ,? ,?)  WHERE id=?;", 
+                    parentid,
+                    Integer.parseInt(node.getChildText("weight")),
+                    isfolder,
+                    node.getChildText("jsonextensions"), 
+                    Integer.parseInt(nodeid)  );
         }
-        return req;
+        return Integer.parseInt(nodeid);
     }
 
     /*
