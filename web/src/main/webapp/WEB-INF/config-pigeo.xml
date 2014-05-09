@@ -31,6 +31,12 @@
 			<class name="fr.pigeosolutions.geoportal.services.layertree.Backups">
 				<param name="mode" value="get"/>
 			</class>
+			<output sheet="pigeo/geoportal/layertree-2json.xsl" contentType="text/plain; charset=UTF-8"/>
+		</service>
+		<service name="pigeo.layertree.backups.remove">
+			<class name="fr.pigeosolutions.geoportal.services.layertree.Backups">
+				<param name="mode" value="remove"/>
+			</class>
 		</service>
 		
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

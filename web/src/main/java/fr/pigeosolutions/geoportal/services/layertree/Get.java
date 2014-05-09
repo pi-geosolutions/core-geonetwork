@@ -35,13 +35,15 @@ public class Get implements Service {
 
     public Element exec(Element params, ServiceContext context) throws Exception {
             Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
-            Element layertreeXML = new Element(Jeeves.Elem.RESPONSE);
+            Element response = new Element(Jeeves.Elem.RESPONSE);
+            Element layertreeXML = new Element("tree");
+            response.addContent(layertreeXML);
             
             String whereClause = "WHERE parentid=0 ORDER BY weight";
             loadNodes(dbms, layertreeXML, whereClause);
             
             // --- return data
-            return layertreeXML;
+            return response;
     }
 
     /*

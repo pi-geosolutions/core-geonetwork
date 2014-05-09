@@ -202,7 +202,7 @@
   
   <!-- convert root element to an anonymous container -->
   <xsl:template match="/">
-    <xsl:apply-templates select="/root/response/*"/>
+    <xsl:apply-templates select="/root/response/tree/*"/>
   </xsl:template>
     
 </xsl:stylesheet>

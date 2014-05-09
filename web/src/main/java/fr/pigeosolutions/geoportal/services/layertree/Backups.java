@@ -1,17 +1,21 @@
 package fr.pigeosolutions.geoportal.services.layertree;
 
+import java.io.StringReader;
 import java.sql.SQLException;
 
 import jeeves.constants.Jeeves;
 import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
-import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
+import jeeves.utils.Util;
 
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.constants.Params;
+import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
+import org.xml.sax.InputSource;
+
 
 //=============================================================================
 
@@ -24,11 +28,14 @@ public class Backups implements Service {
     // ---
     // --------------------------------------------------------------------------
 
-    private String mode="list";
+    private enum Mode { //necessary for the switch statement since String can be used in switch statements only since 1.7
+        list, get, remove;
+    }
+    private Mode mode = Mode.list;
 
     public void init(String appPath, ServiceConfig params) throws Exception {
         String mode = params.getValue("mode");
-        if (mode!=null) this.mode=mode;
+        if (mode!=null) this.mode=Mode.valueOf(mode);
     }
 
     // --------------------------------------------------------------------------
@@ -41,13 +48,52 @@ public class Backups implements Service {
             Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
             Element response = new Element(Jeeves.Elem.RESPONSE);
             
-            if (this.mode.equalsIgnoreCase("list")) {
+            switch (this.mode){
+            case list : 
                 response.addContent(this.getBackupsList(dbms));
-            } else if (this.mode.equalsIgnoreCase("get")){
-                
+                break;
+            case get :
+                response.addContent(this.getBackup(params, dbms));
+                break;
+            case remove: 
+                boolean ok = this.removeBackup(params, dbms);
+                Element el = new Element("removed");
+                el.setText(String.valueOf(ok));
+                response.addContent(el);
+                break;
             }
             // --- return data
             return response;
+    }
+
+    private Element getBackup(Element params, Dbms dbms) throws SQLException {
+        String id = "";
+        if (params.getName()=="id") {
+            id = params.getText();
+        } else {
+            id = Util.getParam(params, "id");
+        }
+        if (id==null) return new Element("failure");
+        
+        Element row = dbms.select("SELECT id, name, layertree FROM geoportal.\"nodesBackups\" WHERE id =?;", Integer.valueOf(id));
+        String tree_text = row.getChild("record").getChildText("layertree");
+        SAXBuilder sxb = new SAXBuilder();
+        Element tree = null;
+        try  
+        {  
+            Document document=sxb.build(new InputSource(new StringReader(tree_text)));
+            tree = document.detachRootElement();
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        } 
+        return tree;
+    }
+
+    private boolean removeBackup(Element params, Dbms dbms) throws SQLException {
+        if (params.getName()!="id") return false ; //bad POST data
+        String id = params.getText();
+        dbms.execute("DELETE FROM geoportal.\"nodesBackups\" WHERE id =?;", Integer.valueOf(id));
+        return true;
     }
 
     private Element getBackupsList(Dbms dbms) throws SQLException {

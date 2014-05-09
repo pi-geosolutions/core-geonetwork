@@ -34,3 +34,9 @@
 .duplicate {
     background-image: url("../../images/default/category/dataset.png") !important;
 }
+.restore {
+    background-image: url("../../geoportal/images/edit-undo.png") !important;
+}
+.view {
+    background-image: url("../../geoportal/images/text-x-generic.png") !important;
+}

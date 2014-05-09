@@ -117,7 +117,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         this.createForm(this.nodeFormFields, this.fieldsOrder);
         
         this.backupsListGrid = this.createBackupsGrid();
-        this.detailView.add(this.backupsListGrid);
+        //this.detailView.add(this.backupsListGrid);
         window.lm = this;
     },
     /**
@@ -319,7 +319,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	                	treeConfig = jsonTree.treeConfig;//structure we get from old layertree files
 	            	}
 	            	var newtree = this.treeReload(treeConfig, true);
-	            	this.log("Loaded new tree config. Don'y forget to <i>Save to DB</i> to apply the changes");
+	            	this.log("Loaded new tree config. Don't forget to <i>Save to DB</i> to apply the changes. You can revert last saved session using Tree->reload.");
 	            	win.close();
 	            },
 	            scope:this
@@ -352,53 +352,24 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      * Restores the tree structure from DB backup table
      */
     createBackupsGrid: function() {
-    	var backupsListStore = new Ext.data.XmlStore({
-    	    // store configs
-    	    autoDestroy: true,
-    	    storeId: 'backupsList',
-    	    url: this.serviceBaseUrl + "/pigeo.layertree.backups.list", // automatically configures a HttpProxy
-    	    // reader configs
-    	    record: 'record', // records will have an "record" tag
-    	    idPath: 'id',
-    	    //totalRecords: '@TotalResults'
-    	    fields: [
-    	        'date', 'name'
-    	    ]
-    	});//not loaded on creation. Need to call backupsListGrid.getStore().load(); for that, when needed
-    	 var backupsListGrid = new Ext.grid.GridPanel({
-    	    store: backupsListStore,
-    	    columns: [
-    	              {header: "date", width: 200, dataIndex: 'date', sortable: true},
-    	              {id:'namecol', header: "name", width: 200, dataIndex: 'name', sortable: true}
-    	          ],
-            autoExpandColumn : "namecol",
-    	    width: '100%',
-    	    autoHeight:true,
-    	    hidden:true,
-    	    frame: true,
-    	    title: 'Choose the backup to restore',
-    	    iconCls: 'icon-grid',
-    	    tbar:  [
-                    // stick any markup in a menu
-                    //'<b class="menu-title">Choose a Theme</b>',
-                    {
-                        text: 'Restore'
-                    }, {
-                        text: 'View'
-                    }, {
-                        text: 'Remove'
-                    }
-                ]
+    	var backupsListGrid = new GeoNetwork.admin.BackupGridManager({
+    		serviceBaseUrl:this.serviceBaseUrl,
+    		hidden:true,
+    		parent:this
     	});
     	return backupsListGrid;
     },
     treeRestore: function() { 
     	this.nodeForm.hide(); //we hide the panel without destroying it
-    	this.backupsListGrid.getStore().load();
+    	this.backupsListGrid.load();
+    	if (!this.detailView.items.contains(this.backupsListGrid)) {
+            this.detailView.add(this.backupsListGrid); //add only once. We had to wait for its store to be loaded, before appending to parent container
+    	}
     	this.backupsListGrid.show();
+    	this.detailView.doLayout()
         return true;
     },
- 
+
     /**
      * Saves the tree structure on DB
      */
@@ -410,7 +381,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         }
         OpenLayers.Request.POST({
 		    url: serviceurl,
-		    header:{"Content-Type":"text/plain"},
+		    header:{"Content-Type":"text/xml"},
 		    data: xml,
             success: function(response){
             	var xml = response.responseXML;
@@ -495,7 +466,6 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         	xml +="<id>"+attr.id+"</id>\n";
         	delete attr["id"]; //a bit of cleanup
         	
-        	xml +="<weight>"+index+"</weight>\n";
         	var isfolder = "y";
         	if (attr.type!='folder' && attr.type!=null) {
         		isfolder = "n";
@@ -523,6 +493,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         		json = json.substr(1, json.length-2);
         	}
         	xml +="<jsonextensions>"+json+"</jsonextensions>\n";
+        	xml +="<weight>"+index+"</weight>\n";
         	
         	if (node.hasChildNodes()) {
         		xml += this.getChildrenAsXML(node, "children");
