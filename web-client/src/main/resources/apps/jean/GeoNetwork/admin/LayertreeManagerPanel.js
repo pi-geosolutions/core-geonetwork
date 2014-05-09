@@ -53,6 +53,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     consoleView : null,
     tree:null, 
     nodeForm:null,
+    backupsListGrid:null,
     nodeFormFields : {
     	'chart':['id', 'type','text', 'uuid','legend','url', 'tablenames', 'changeScales', 'charting_fields', 'other_fields', 'format', 'cls', 'qtip', 'context', 'template', 'extensions'],    	
     	'wms':['id', 'type','text', 'uuid', 'legend', 'url', 'layers', 'format', 'TILED', 'cls', 'qtip', 'extensions'],
@@ -114,6 +115,9 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         this.tree = this.loadTree(null, false);
     	this.treeView.add(this.tree);
         this.createForm(this.nodeFormFields, this.fieldsOrder);
+        
+        this.backupsListGrid = this.createBackupsGrid();
+        this.detailView.add(this.backupsListGrid);
         window.lm = this;
     },
     /**
@@ -179,7 +183,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	        layout:'fit',
 	        listeners: {
 	            click: function(node, event){
-	                this.nodeForm.editNode(node);
+	                this.editNode(node);
 	            },
 	            expandnode: function(node){
 	                node.attributes.expanded = node.isExpanded();
@@ -347,9 +351,52 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     /**
      * Restores the tree structure from DB backup table
      */
+    createBackupsGrid: function() {
+    	var backupsListStore = new Ext.data.XmlStore({
+    	    // store configs
+    	    autoDestroy: true,
+    	    storeId: 'backupsList',
+    	    url: this.serviceBaseUrl + "/pigeo.layertree.backups.list", // automatically configures a HttpProxy
+    	    // reader configs
+    	    record: 'record', // records will have an "record" tag
+    	    idPath: 'id',
+    	    //totalRecords: '@TotalResults'
+    	    fields: [
+    	        'date', 'name'
+    	    ]
+    	});//not loaded on creation. Need to call backupsListGrid.getStore().load(); for that, when needed
+    	 var backupsListGrid = new Ext.grid.GridPanel({
+    	    store: backupsListStore,
+    	    columns: [
+    	              {header: "date", width: 200, dataIndex: 'date', sortable: true},
+    	              {id:'namecol', header: "name", width: 200, dataIndex: 'name', sortable: true}
+    	          ],
+            autoExpandColumn : "namecol",
+    	    width: '100%',
+    	    autoHeight:true,
+    	    hidden:true,
+    	    frame: true,
+    	    title: 'Choose the backup to restore',
+    	    iconCls: 'icon-grid',
+    	    tbar:  [
+                    // stick any markup in a menu
+                    //'<b class="menu-title">Choose a Theme</b>',
+                    {
+                        text: 'Restore'
+                    }, {
+                        text: 'View'
+                    }, {
+                        text: 'Remove'
+                    }
+                ]
+    	});
+    	return backupsListGrid;
+    },
     treeRestore: function() { 
-        
-
+    	this.nodeForm.hide(); //we hide the panel without destroying it
+    	this.backupsListGrid.getStore().load();
+    	this.backupsListGrid.show();
+        return true;
     },
  
     /**
@@ -581,8 +628,13 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      	node.appendChild(child);
      	//selects and loads the node in the edit form
      	this.tree.getSelectionModel().select(child);
-        this.nodeForm.editNode(child);
+        this.editNode(child);
     	return true;
+    },
+    editNode:function(node) {
+    	this.backupsListGrid.hide();
+    	this.nodeForm.show();
+        this.nodeForm.editNode(node);
     },
     
     removeNode: function() {
@@ -624,7 +676,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	parent.appendChild(child);
      	//selects and loads the node in the edit form
      	this.tree.getSelectionModel().select(child);
-        this.nodeForm.editNode(child);
+        this.editNode(child);
     	
     	return true;
     },

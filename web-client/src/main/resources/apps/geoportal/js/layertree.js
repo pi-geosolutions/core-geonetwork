@@ -1,8 +1,5 @@
-/*********************************************
-*	Tree config for si-gdt 's map layers
-**********************************************/
 
-var treeConfig = [
+{treeConfig : [
 	{
 		nodeType    : 'gx_baselayercontainer'
 		,text	    : 'Fond de carte'
@@ -1229,4 +1226,4 @@ var treeConfig = [
 			}
 		]
 	}
-];
+]}
