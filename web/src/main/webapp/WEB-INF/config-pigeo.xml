@@ -6,15 +6,22 @@
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<service name="pigeo.layertree.get">
 			<class name="fr.pigeosolutions.geoportal.services.layertree.Get">
+				<param name="withGroups" value="false"/>
 			</class>
 			<output sheet="pigeo/geoportal/layertree-2json.xsl" contentType="text/plain; charset=UTF-8"/>
 		</service>
-		<service name="pigeo.layertree.set">
+		<service name="pigeo.layertree.admin.get">
+			<class name="fr.pigeosolutions.geoportal.services.layertree.Get">
+				<param name="withGroups" value="true"/>
+			</class>
+			<output sheet="pigeo/geoportal/layertree-2json.xsl" contentType="text/plain; charset=UTF-8"/>
+		</service>
+		<service name="pigeo.layertree.admin.set">
 			<class name="fr.pigeosolutions.geoportal.services.layertree.Set">
 				<param name="force" value="false"/>
 			</class>
 		</service>
-		<service name="pigeo.layertree.set_force">
+		<service name="pigeo.layertree.admin.set_force">
 			<class name="fr.pigeosolutions.geoportal.services.layertree.Set">
 				<param name="force" value="true"/>
 			</class>
@@ -22,18 +29,18 @@
 		<service name="pigeo.layertree.admin">
 			<output sheet="pigeo/geoportal/layertree-admin.xsl"/>
 		</service>
-		<service name="pigeo.layertree.backups.list">
+		<service name="pigeo.layertree.admin.backups.list">
 			<class name="fr.pigeosolutions.geoportal.services.layertree.Backups">
 				<param name="mode" value="list"/>
 			</class>
 		</service>
-		<service name="pigeo.layertree.backups.get">
+		<service name="pigeo.layertree.admin.backups.get">
 			<class name="fr.pigeosolutions.geoportal.services.layertree.Backups">
 				<param name="mode" value="get"/>
 			</class>
 			<output sheet="pigeo/geoportal/layertree-2json.xsl" contentType="text/plain; charset=UTF-8"/>
 		</service>
-		<service name="pigeo.layertree.backups.remove">
+		<service name="pigeo.layertree.admin.backups.remove">
 			<class name="fr.pigeosolutions.geoportal.services.layertree.Backups">
 				<param name="mode" value="remove"/>
 			</class>

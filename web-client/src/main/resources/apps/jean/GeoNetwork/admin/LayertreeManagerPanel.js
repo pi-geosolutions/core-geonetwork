@@ -54,6 +54,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     tree:null, 
     nodeForm:null,
     backupsListGrid:null,
+    groups:null,
     nodeFormFields : {
     	'chart':['id', 'type','text', 'uuid','legend','url', 'tablenames', 'changeScales', 'charting_fields', 'other_fields', 'format', 'cls', 'qtip', 'context', 'template', 'extensions'],    	
     	'wms':['id', 'type','text', 'uuid', 'legend', 'url', 'layers', 'format', 'TILED', 'cls', 'qtip', 'extensions'],
@@ -111,6 +112,8 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         this.add(this.detailView);
         this.add(this.consoleView);
         this.add(this.treeView);
+        
+        this.groups = this.getGroups();
         
         this.tree = this.loadTree(null, false);
     	this.treeView.add(this.tree);
@@ -206,7 +209,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      */
     getFromDB: function() {
         var request = OpenLayers.Request.GET({
-            url: this.serviceBaseUrl + "/pigeo.layertree.get",
+            url: this.serviceBaseUrl + "/pigeo.layertree.admin.get",
             async: false
         });
 
@@ -246,6 +249,17 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         this.detailView.add(this.nodeForm);
         this.detailView.doLayout();
     },
+    /**
+     * Gets the groups list, to use in the form, in order to define per-node group access rights
+     * 
+     * TODO : 
+     */
+    getGroups: function(nodeFormFields, fieldsOrder) {
+        
+    	return null;
+    },
+    
+    
     /**
      * Displays the layertree as text, in a popup window
      */
@@ -375,9 +389,9 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      */
     treeSave: function(name,force) { //if not set, 'force' is 'false' by default
         var xml = this.XMLencapsulateTree(name);
-        var serviceurl = this.serviceBaseUrl + "/pigeo.layertree.set";
+        var serviceurl = this.serviceBaseUrl + "/pigeo.layertree.admin.set";
         if (force==true) { //we pass an additional parameter telling it not to care about eventual external changes in the DB
-        	serviceurl= this.serviceBaseUrl + "/pigeo.layertree.set_force";
+        	serviceurl= this.serviceBaseUrl + "/pigeo.layertree.admin.set_force";
         }
         OpenLayers.Request.POST({
 		    url: serviceurl,

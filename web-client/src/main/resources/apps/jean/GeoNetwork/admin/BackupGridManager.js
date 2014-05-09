@@ -87,7 +87,7 @@ GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
 			// store configs
 			autoDestroy: true,
 			storeId: 'backupsList',
-			url: this.serviceBaseUrl + "/pigeo.layertree.backups.list", // automatically configures a HttpProxy
+			url: this.serviceBaseUrl + "/pigeo.layertree.admin.backups.list", // automatically configures a HttpProxy
 			// reader configs
 			record: 'record', // records will have an "record" tag
 			idPath: 'id',
@@ -139,7 +139,7 @@ GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
     	
     	var id = record.id;
     	var name = record.data.name;
-    	var serviceurl = this.serviceBaseUrl + "/pigeo.layertree.backups.get?id="+id;
+    	var serviceurl = this.serviceBaseUrl + "/pigeo.layertree.admin.backups.get?id="+id;
     	var xml = "<id>"+id+"</id>";
     	var output={};
     	
@@ -161,7 +161,7 @@ GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
     	
     	var id = record.id;
     	var name = record.data.name;
-    	var serviceurl = this.serviceBaseUrl + "/pigeo.layertree.backups.remove";
+    	var serviceurl = this.serviceBaseUrl + "/pigeo.layertree.admin.backups.remove";
     	var xml = "<id>"+id+"</id>";
     	OpenLayers.Request.POST({
 		    url: serviceurl,
