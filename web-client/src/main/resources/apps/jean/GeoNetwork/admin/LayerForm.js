@@ -43,6 +43,7 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     defaults: {width: '90%', 'hidden':true},
     autoHeight: true,
     border: false,
+    hidden:true,
     
     nodeFormFields : null, //should be initialized by constructor. See LayertreeManager class
     fieldsOrder : null, //idem
@@ -183,8 +184,10 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
      * TODO : 
      */
     editNode: function(node) {
+    	if (this.hidden) this.show();
     	//builds the form structure corresponding to the node type
     	if (node.attributes.type) {
+    		//console.log(node.attributes.type +"\t\t "+node.text);
     		this.initForm(node.attributes.type);
     	} else {
         	this.getForm().reset();

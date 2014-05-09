@@ -15,6 +15,7 @@
 		<link rel="stylesheet" type="text/css" href="{$widgetPath}/css/gnmapdefault.css"/>
 		<link rel="stylesheet" type="text/css" href="{$widgetPath}/css/gnmetadatadefault.css"/>
 		<link rel="stylesheet" type="text/css" href="{$widgetPath}/css/metadata-view.css"/>
+		<link rel="stylesheet" type="text/css" href="{$widgetPath}/geoportal/css/admin.css"/>
 	</xsl:template>
 
 	<xsl:template mode="script" match="/" priority="2">

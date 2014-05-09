@@ -11,6 +11,12 @@
 		</service>
 		<service name="pigeo.layertree.set">
 			<class name="fr.pigeosolutions.geoportal.services.layertree.Set">
+				<param name="force" value="false"/>
+			</class>
+		</service>
+		<service name="pigeo.layertree.set_force">
+			<class name="fr.pigeosolutions.geoportal.services.layertree.Set">
+				<param name="force" value="true"/>
 			</class>
 		</service>
 		<service name="pigeo.layertree.admin">

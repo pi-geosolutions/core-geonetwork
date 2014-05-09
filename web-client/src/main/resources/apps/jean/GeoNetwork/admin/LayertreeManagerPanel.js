@@ -111,7 +111,8 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         this.add(this.consoleView);
         this.add(this.treeView);
         
-        this.load();
+        this.tree = this.loadTree(null, false);
+    	this.treeView.add(this.tree);
         this.createForm(this.nodeFormFields, this.fieldsOrder);
         window.lm = this;
     },
@@ -120,32 +121,19 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      * 
      * TODO : 
      */
-    load: function() {
-    	var treeConfig = this.getFromDB();
+    loadTree: function(specificConfig,overwrite) { //default : specificConfig=null, overwrite=false
+    	var treeConfig=null;
+    	if (specificConfig!=null) {
+    		treeConfig=specificConfig;
+    	} else {
+    		treeConfig = this.getFromDB();
+    	}
     	if (treeConfig==null) return;
     	
     	var treeLoader = new Ext.tree.TreeLoader({
     		// this below is using the config attributes of the node to do
     		// some testing. The attr.has_events is coming from the loader in PHP
     		createNode: function(attr) {
-/*	    		if (attr.layer && attr.text==null) {
-	    			attr.text = attr.layer;
-	    			if (attr.TILED==null && attr.type=="wms") attr.TILED=true;
-	    		}
-	    		if (attr.type!='folder' && attr.type!=null) {
-	    			attr.leaf=true;
-	    		}
-	    		if (attr.checked==null && (attr.type!="folder" && attr.type!=null)) {
-	    			attr.checked = false;
-	    		}
-	    		if (attr.type==null && attr.leaf!=true) {
-	    			attr.type='folder';
-	    		}    	//fixes somes node values
-	    		if (attr.type=='folder' && attr.children==null) {
-	    			attr.iconCls='folder';
-	    			attr.leaf=true;
-	    		}
-*/
 				if (attr.layer && attr.text==null) { //deals with importing old-style layertree.js file
 	    			attr.text = attr.layer;
 	    			attr.leaf=true;
@@ -158,13 +146,18 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	    			attr.leaf=true;
 	    		}
 	    		if (attr.leaf!=true && attr.type==null) {
+	    			//console.log(attr);
 	    			attr.type='folder';
-	    		}    	//fixes somes node values
+	    		}    	//fixes some node values
+	    		
+	    		if (overwrite==true) {
+	    			attr.id = null;
+	    		}
 
     			return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
     		}
 		});
-	    this.tree = new Ext.tree.TreePanel({
+	    var treepanel = new Ext.tree.TreePanel({
 	        title:'layerTree',
 	        header:false,
 	        id: "geoportalLayerTree",
@@ -200,8 +193,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	            scope : this
 	        }
 	    });
-    	this.treeView.add(this.tree);
-    	//console.log(this.tree.getRootNode().childNodes[2]);
+	    return treepanel;
     },
     /**
      * Gets the layertree as json data from the DB, via pigeo services
@@ -214,15 +206,26 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
             async: false
         });
 
-        var treeConfig = null;        
+        var treeConfig = null;
+        treeConfig = [{
+			nodeType    : 'gx_baselayercontainer'
+				,text	    : 'Fond de carte'
+				,allowDrag  : false
+				,allowDrop  : false
+			},
+			
+			{
+				text        : 'Overlay folder',
+				type		: 'folder'
+			}];
         if (request.responseText) {
         	OpenLayers.Console.log("loading Layertree from database");
         	var jsonTree = new OpenLayers.Format.JSON().read( request.responseText );
         	if (jsonTree.children!=null) {
         		treeConfig = jsonTree.children; //structure we get from DB (new version)
-        	} else {
+        	} else if (jsonTree.treeConfig!=null){
             	treeConfig = jsonTree.treeConfig;//structure we get from old layertree files
-        	}
+        	} 
         } 
         return treeConfig;
     },
@@ -262,16 +265,140 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	    win.show(this);
     },
     /**
+     * Prompts for the content of a layertree.js and loads as the layertree
+     */
+    json2tree: function() {
+    	var form = new Ext.form.FormPanel({
+            baseCls: 'x-plain',
+        	labelWidth:75,
+            layout: {
+                type: 'vbox',
+                align: 'stretch'  // Child items are stretched to full width
+            },
+            labelAlign: 'left',
+            title: 'Paste json code in this field',
+            defaults: {
+                xtype: 'textfield'
+            },
+            items: {
+				xtype : 'textarea',
+				fieldLabel : "json",
+				name : "json",
+	            hideLabel: true,
+	            flex: 1  // Take up all *remaining* vertical space
+			}
+        });
+            
+        var win = new Ext.Window({
+        	title:'Import from json',
+            collapsible: true,
+            maximizable: true,
+        	layout:'fit',
+            width:'70%',
+            height:400,
+            minWidth: 300,
+            minHeight: 200,
+            modal:true,
+            closeAction:'close',
+            bodyStyle: 'padding:5px;',
+            buttonAlign: 'center',
+            plain: true,
+            items : form,
+            buttons: [{
+	            text: 'Apply',
+	            handler:function(button, event) {
+	            	var text = form.getForm().getFieldValues().json;
+	            	var jsonTree = Ext.decode( text );
+	            	if (jsonTree.children!=null) {
+	            		treeConfig = jsonTree.children; //structure we get from DB (new version)
+	            	} else {
+	                	treeConfig = jsonTree.treeConfig;//structure we get from old layertree files
+	            	}
+	            	var newtree = this.treeReload(treeConfig, true);
+	            	this.log("Loaded new tree config. Don'y forget to <i>Save to DB</i> to apply the changes");
+	            	win.close();
+	            },
+	            scope:this
+	        },{
+	            text: 'Cancel',
+	            handler: function(button, event) {
+	            	win.close();
+	            }
+	        }]
+        });
+	    win.show(this);
+    },
+    /**
+     * Reloads the tree structure from DB
+     */
+    treeReload: function(specificConfig, overwrite) { //default : specificConfig=null, overwrite=false
+    	var newtree = this.loadTree(specificConfig, overwrite);
+    	if (newtree!=null) {
+	    	this.treeView.remove(this.tree);
+	    	this.tree.destroy();
+	    	this.tree = newtree;
+	    	this.treeView.add(newtree);
+	    	this.treeView.doLayout();
+	    	this.log("Layertree successfully reloaded");
+    	} else {
+    		this.log("ERROR: couldn't reload the layertree. Please report to your administrator");
+    	}
+    },
+    /**
+     * Restores the tree structure from DB backup table
+     */
+    treeRestore: function() { 
+        
+
+    },
+ 
+    /**
      * Saves the tree structure on DB
      */
-    treeSave: function() {
-        var xml = this.XMLencapsulateTree();
+    treeSave: function(name,force) { //if not set, 'force' is 'false' by default
+        var xml = this.XMLencapsulateTree(name);
+        var serviceurl = this.serviceBaseUrl + "/pigeo.layertree.set";
+        if (force==true) { //we pass an additional parameter telling it not to care about eventual external changes in the DB
+        	serviceurl= this.serviceBaseUrl + "/pigeo.layertree.set_force";
+        }
         OpenLayers.Request.POST({
-		    url: this.serviceBaseUrl + "/pigeo.layertree.set",
+		    url: serviceurl,
 		    header:{"Content-Type":"text/plain"},
 		    data: xml,
             success: function(response){
             	var xml = response.responseXML;
+            	var status = xml.firstChild.getElementsByTagName("status")[0].textContent;
+            	var code = xml.firstChild.getElementsByTagName("code")[0].textContent;
+            	var msg = xml.firstChild.getElementsByTagName("message")[0].textContent;
+
+                this.log(msg);
+            	switch (code) { //see code values in geoportal.service.layertree.Set.java
+            	case "1" : //success
+            		this.log("Reloading the tree");
+            		this.treeReload(null, false);
+            		break;
+            	case "-1" : //a row (at least) has been changed since last load. Forcing the update would remove changes made by someone else
+            		Ext.MessageBox.show({
+            			icon: Ext.MessageBox.WARNING,
+                        title: OpenLayers.i18n("Database has changed !"), msg:
+                        	OpenLayers.i18n("<b>WARNING : the database content has changed since the last time you loaded the layertree</b><br /><b>Proceeding will overwrite some data created by another user. Do you really want to proceed ?</b><br /><br /><i>Please cancel and refer to the docs if you don't know what to do</i>"),
+                            buttons: Ext.MessageBox.YESNOCANCEL,
+                            fn: function(btn) {
+                            	if (btn=='yes') {
+                            		this.treeSave(name, true);
+                            	}
+                            },
+                            scope:this
+                    });
+            		break;
+            	default:
+            		Ext.MessageBox.show({icon: Ext.MessageBox.ERROR,
+                        title: OpenLayers.i18n("Save layertree"), msg:
+                        OpenLayers.i18n("ERROR : couldn't save the layertree. Please contact your administrator."),
+                        buttons: Ext.MessageBox.OK});
+            		break;
+            	}
+            	/*
                 if (xml.firstChild.textContent =="success") {
                 	this.log("backed up old layertree");
                     this.log("Successfully saved the layertree to DB");
@@ -283,7 +410,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
                         title: OpenLayers.i18n("Save layertree"), msg:
                         OpenLayers.i18n("ERROR : couldn't save the layertree. Please contact your administrator."),
                         buttons: Ext.MessageBox.OK});
-                }
+                }*/
             },
             failure: function(response){
             	Ext.MessageBox.show({icon: Ext.MessageBox.ERROR,
@@ -297,9 +424,10 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     /**
      * Builds the layertree as a json object, cleared of all extjs objects, just like plain old layertree.js
      */
-    XMLencapsulateTree: function() {
+    XMLencapsulateTree: function(name) {
     	var root = this.tree.getRootNode();
-    	var tree_xml = "<tree>\n";
+    	var tree_xml = '<tree>\n';
+    	tree_xml += "<name>"+name+"</name>\n";
     	tree_xml += this.getChildrenAsXML(root);
     	tree_xml += "</tree>";
     	return tree_xml;
@@ -326,9 +454,11 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         		isfolder = "n";
         	} 
         	xml +="<isfolder>"+isfolder+"</isfolder>\n";
+        	xml +="<lastchanged>"+attr.lastchanged+"</lastchanged>\n";
         	
         	delete attr["loader"]; //a bit of cleanup
         	delete attr["children"]; //a bit of cleanup
+    		delete attr.lastchanged; //a bit of cleanup
     		delete attr.leaf; //will be automatically generated
     		delete attr.weight; //will be automatically generated
     		if (attr.cls!=null) {
@@ -447,37 +577,112 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	if (node.leaf) { //we can add a node only to a folder
     		node = node.parentNode;
     	}
-     	node.appendChild(new Ext.tree.TreeNode(tpl));
-    	console.log(node);
+    	var child = new Ext.tree.TreeNode(tpl);
+     	node.appendChild(child);
+     	//selects and loads the node in the edit form
+     	this.tree.getSelectionModel().select(child);
+        this.nodeForm.editNode(child);
+    	return true;
+    },
+    
+    removeNode: function() {
+    	var node = this.tree.getSelectionModel().getSelectedNode();
+    	if (node==null) {
+    		Ext.Msg.alert('You need to select a node, first');
+    		return false;
+    	}
+    	var msg  ="You are about to delete the node "+node.text;
+    	if (node.hasChildNodes()) {
+    		msg += "<br /> <b>It will remove also all its child nodes. Be very careful !";
+    	}
+    	Ext.MessageBox.show({
+    		icon: Ext.MessageBox.WARNING,
+            title: OpenLayers.i18n("Delete node"), 
+            msg: OpenLayers.i18n(msg),
+            buttons: Ext.MessageBox.OKCANCEL,
+            fn: function(btn) {
+            	if (btn=='ok') {
+            		node.remove(true);
+            		this.log("Removed node "+node.text);
+            	}
+            },
+            scope:this
+        });
+    	return true;
+    },
+    duplicateNode: function() {
+    	var node = this.tree.getSelectionModel().getSelectedNode();
+    	if (node==null) {
+    		Ext.Msg.alert('You need to select a node, first');
+    		return false;
+    	}
+    	var parent = node.parentNode;
+    	var tpl = this.clone(node.attributes);
+    	delete tpl.id; //it needs a new id, generated by extjs will be fine (as for added nodes)
+    	tpl.text = tpl.text+" (copy)";
+    	var child = new Ext.tree.TreeNode(tpl);
+    	parent.appendChild(child);
+     	//selects and loads the node in the edit form
+     	this.tree.getSelectionModel().select(child);
+        this.nodeForm.editNode(child);
+    	
     	return true;
     },
     
     getToolbar: function() {
-    	var action_2json = new Ext.Action({
+    	//TREE actions
+       	var action_2json = new Ext.Action({
     		text:'Export as Json',
-    		iconCls:'save',
+    		iconCls:'export',
     		handler: this.tree2json,
     	    itemId: 'tree2json',
     	    scope:this
     	});
+       	var action_import = new Ext.Action({
+    		text:'Import from Json',
+    		iconCls:'import',
+    		handler: this.json2tree,
+    	    itemId: 'json2tree',
+    	    scope:this
+    	});
     	var action_save = new Ext.Action({
-    		text:'Save',
+    		text:'Save to DB',
     		iconCls:'save',
-    		handler: this.treeSave,
+    		handler: function() {
+    			Ext.MessageBox.prompt('Name', 'Please give it a name:', function(btn, text) {
+    				this.treeSave(text,false);
+    			},this);
+    		},
     	    itemId: 'treesave',
+    	    scope:this
+    	});
+    	var action_reload = new Ext.Action({
+    		text:'Reload',
+    		iconCls:'reload',
+    		handler: function() {
+    			this.treeReload(null, false);
+    		},
+    	    itemId: 'treereload',
+    	    scope:this
+    	});
+    	var action_restore = new Ext.Action({
+    		text:'Restore previous version',
+    		iconCls:'restore',
+    		handler: this.treeRestore,
+    	    itemId: 'treerestore',
     	    scope:this
     	});
         var tree_menu = new Ext.menu.Menu({
             id: 'mainMenu',
             items: [
+                    action_save,
+                    action_reload,
                     action_2json,
-                    action_save
-                    /*,{
-                    text: 'I like Ext'
-                }*/
+                    action_import,
+                    action_restore
             ]
         });
-        
+        //ADD actions
     	var action_addfolder = new Ext.Action({
     		text:'Add folder',
     		iconCls:'folder',
@@ -507,18 +712,38 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
                     action_addchart
             ]
         });
+        //REMOVE actions
+    	var action_remove = new Ext.Action({
+    		text:'Remove',
+    		iconCls:'remove',
+    		handler: this.removeNode,
+    	    itemId: 'removenode',
+    	    scope:this
+    	});
+        //DUPLICATE actions
+    	var action_duplicate = new Ext.Action({
+    		text:'Duplicate',
+    		iconCls:'duplicate',
+    		handler: this.duplicateNode,
+    	    itemId: 'duplicatenode',
+    	    scope:this
+    	});
+
 
 
         var tb = new Ext.Toolbar();
         tb.add({
-            text:'Tree',
-            iconCls: 'bmenu',  // <-- icon
-            menu: tree_menu  // assign menu by instance
-        },{
-            text:'Add',
-            iconCls: 'bmenu',  // <-- icon
-            menu: add_menu  // assign menu by instance
-        });
+	            text:'Tree',
+	            iconCls: 'tree',  // <-- icon
+	            menu: tree_menu  // assign menu by instance
+	        },{
+	            text:'Add',
+	            iconCls: 'add',  // <-- icon
+	            menu: add_menu  // assign menu by instance
+	        },
+	        action_remove,
+	        action_duplicate
+        );
         return tb;
     },
     /**
