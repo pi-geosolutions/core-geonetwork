@@ -23,7 +23,7 @@
 		<script type="text/javascript" src="{$widgetPath}/js/ext/ext-all-debug.js"/>
 		<script type="text/javascript" src="{$widgetPath}/js/proj4js-compressed.js"/>
 
-		<!-- <xsl:choose>
+		 <xsl:choose>
 			<xsl:when test="/root/request/debug">
 				<script type="text/javascript" src="{$widgetPath}/js/ext-ux/Rating/RatingItem.js"/>
 				<script type="text/javascript" src="{$widgetPath}/js/ext-ux/FileUploadField/FileUploadField.js"/>
@@ -42,10 +42,8 @@
 			<xsl:otherwise>
 				<script type="text/javascript" src="{$widgetPath}/js/GeoNetwork-mini.js"/>
 			</xsl:otherwise>
-		</xsl:choose>-->
+		</xsl:choose>
 		
-		<script type="text/javascript" src="{$widgetPath}/js/OpenLayers/lib/OpenLayers.js"/>
-		<script type="text/javascript" src="{$widgetPath}/js/GeoNetwork/lib/GeoNetwork/Util.js"/>			
     	<script type="text/javascript" src="{$widgetPath}/geoportal/js/lang/fr.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/geoportal/js/lang/en.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/LayerForm.js"></script>
@@ -67,7 +65,7 @@
 			Ext.onReady(function(){
 				Ext.QuickTips.init();
 
-/*				GeoNetwork.Util.setLang('<xsl:value-of select="/root/gui/language"/>', '<xsl:value-of select="$widgetPath"/>');
+				GeoNetwork.Util.setLang('<xsl:value-of select="/root/gui/language"/>', '<xsl:value-of select="$widgetPath"/>');
 
 				catalogue = new GeoNetwork.Catalogue({
 					statusBarId : 'info',
@@ -75,15 +73,13 @@
 					lang: '<xsl:value-of select="/root/gui/language"/>',
 					mdOverlayedCmpId : 'resultsPanel'
 				});
-				// Declare default store to be used for records and summary
-				catalogue.metadataStore = GeoNetwork.data.MetadataResultsStore();
-				catalogue.summaryStore = GeoNetwork.data.MetadataSummaryStore();
-*/
+
 				var manager = new GeoNetwork.admin.LayertreeManagerPanel({
-					renderTo: 'manager',
-					autoWidth : true,
-					serviceBaseUrl : '<xsl:value-of select="/root/gui/locService"/>',
-					height: 680
+					renderTo		: 	'manager',
+					catalogue		: 	catalogue,
+					autoWidth 		: 	true,
+					serviceBaseUrl 	: 	'<xsl:value-of select="/root/gui/locService"/>',
+					height			: 	680
 				});
 			})
 		</script>

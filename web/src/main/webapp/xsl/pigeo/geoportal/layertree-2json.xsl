@@ -175,7 +175,7 @@
 		with that name at that level is found, at which time they can be collected
 		into an array -->
  <!-- <xsl:template match="*[count(../*[name(current())=name()])&gt;1]">-->
-  <xsl:template match="*[name()='children']|*[name()='treeConfig']">
+  <xsl:template match="*[name()='children']|*[name()='treeConfig']|*[name()='group']">
     <xsl:variable name="el" select="name()"/>
     <xsl:if test="not(preceding-sibling::*)">{</xsl:if>
     <xsl:if test="not(following-sibling::*[name()=$el])">

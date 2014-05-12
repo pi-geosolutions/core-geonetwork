@@ -47,7 +47,9 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     
     nodeFormFields : null, //should be initialized by constructor. See LayertreeManager class
     fieldsOrder : null, //idem
+    groupStore : null,
     currentNode:null,
+    groupsForm:null,
     
     /** private: method[initComponent] 
      *  Initializes the form panel
@@ -89,7 +91,7 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     	var tmp = [];
 		Ext.each(this.fieldsOrder, function (fname, index) {
 			if (tmp.indexOf(fname) < 0 ) {
-				tmp.push(fname); //used to remove duplicates
+				tmp.push(fname); //used to remove eventual duplicates
 				switch(fname) {
     				case 'id': //will use the next statement
     				case 'type':
@@ -177,6 +179,51 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     	
     	this.add(items);
     },
+    
+    buildGroupsForm: function() {
+    	if (this.groupStore==null) return null;
+    	
+    	var groups = [];
+    	var checkGroup=null;
+    	this.groupStore.sort("id");
+    	this.groupStore.each( function(rec) {
+    		groups.push({
+	        	boxLabel: rec.data.name,
+	            //inputValue:true,
+	            name: "groups_"+rec.id,
+	            checked:true
+	        });
+    	}, this);
+    	checkGroup = new Ext.form.FieldSet({
+    	        xtype: 'fieldset',
+    	        title: 'Groups visibility',
+    	        autoHeight: true,
+    	        layout: 'form',
+    	        frame:true,
+    	        /*collapsed: false,   
+    	        collapsible: true,*/
+    	        hidden:false,
+    	        items: [/*{
+    	            xtype: 'textfield',
+    	            name: 'txt-test3',
+    	            fieldLabel: 'Groups : checked groups will be able to see the layer, others not',
+    	            anchor: '95%'
+    	        },*/{
+    	            // Use the default, automatic layout to distribute the
+					// controls evenly
+    	            // across a single row
+    	            xtype: 'checkboxgroup',
+    	            fieldLabel: 'Groups',
+    	            items: groups,
+    	            name:'cbgroup'
+    	        }]
+    	    });
+    	//we make the checkboxes always shown whatever the node type
+    	Ext.iterate(this.nodeFormFields, function(type, index) {
+    		this.nodeFormFields[type].push("cbgroup");
+		},this);
+    	return checkGroup;
+    },
 
     /**
      * Loads node attributes in the form
@@ -192,9 +239,19 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     	} else {
         	this.getForm().reset();
     	}
+    	//adds the groups visibility checkbox fieldset
+    	if (this.groupStore!=null && this.groupsForm==null) {
+    		this.groupsForm = this.buildGroupsForm();
+    		this.add(this.groupsForm);
+    		this.groupsForm.show();
+    		this.doLayout();
+    	}
+		this.groupsForm.items.items[0].setValue(Ext.pluck(node.attributes.group, "show"));
+    	
     	//loads the node values in the form
     	this.log("loaded parameters for layer : <i>"+node.text+"</i>");
     	this.getForm().setValues(node.attributes);
+    	//this.getForm().findField("gambia").setValue(node.attributes.group[3].show);
     	this.currentNode=node;
     },
 
@@ -209,6 +266,7 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
      	this.getForm().reset();
      	
      	Ext.each(this.getForm().items.items, function(field,index) {
+     		console.log(field.name);
      		if (this.nodeFormFields[type].indexOf(field.name)>=0) {
      			field.show();
      		} else {
@@ -239,11 +297,20 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
 			}
 			attr.layer=attr.text;
 
+			//specifics to group visibility management : 
+			var checkedGroups = Ext.pluck(lm.nodeForm.groupsForm.items.items[0].items.items, "checked");
+			Ext.each(node.attributes.group, function(grp, index) {
+				grp.show  = checkedGroups[index];
+			});
+			delete attr.cbgroup;
+			
 			//apply on node
 			Ext.apply(node.attributes,attr);
+			
 			node.setText(attr.text);
 
 	    	this.log("layer <i>"+attr.text+"</i> successfully updated. Don't forget to save the tree when you are done.");
+	    	console.log(node);
 		}
     },
     
