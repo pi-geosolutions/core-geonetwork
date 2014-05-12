@@ -266,7 +266,6 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
      	this.getForm().reset();
      	
      	Ext.each(this.getForm().items.items, function(field,index) {
-     		console.log(field.name);
      		if (this.nodeFormFields[type].indexOf(field.name)>=0) {
      			field.show();
      		} else {
@@ -310,8 +309,7 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
 			node.setText(attr.text);
 
 	    	this.log("layer <i>"+attr.text+"</i> successfully updated. Don't forget to save the tree when you are done.");
-	    	console.log(node);
-		}
+	    }
     },
     
     log: function(msg) {

@@ -188,7 +188,26 @@ public class Set implements Service {
                 }
             }
         }
+        
+        this.saveNodeGroupsRelations(nodeid, node, dbms);
         return Integer.parseInt(nodeid);
+    }
+
+    private void saveNodeGroupsRelations(String nodeid, Element node, Dbms dbms) throws SQLException {
+        //remove previous entries
+        String req = "DELETE FROM geoportal.\"iNodeGroup\" WHERE nodeid="+nodeid+";";
+        //Insert new entries
+        //beware : this table lists groupes that are excluded from node view (much less
+        //large than the contrary
+        java.util.List groups = node.getChildren("group");
+        for (int i = 0; i < groups.size(); i++) {
+            Element group = (Element) groups.get(i);
+            if (group.getChildText("show").equalsIgnoreCase("false")) {
+                req+="INSERT INTO geoportal.\"iNodeGroup\" (nodeid, groupid) VALUES ("+nodeid+","+group.getChildText("id")+");";
+            }
+        }
+        dbms.execute(req);
+        System.out.println(req); 
     }
 
     /*

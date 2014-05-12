@@ -84,7 +84,7 @@ public class Get implements Service {
                 for (int j = 0; j < groupsList.size(); j++) {
                         Element group = (Element) groupsList.get(j);
                         boolean show = true;
-                        System.out.println(node.getChildText("excludes_id"));
+                        //System.out.println(node.getChildText("excludes_id"));
                         String[] excludeIds = node.getChildText("excludes_id").split(",");
                         Arrays.sort(excludeIds);
                         int index =Arrays.binarySearch(excludeIds,  group.getChildText("id"));

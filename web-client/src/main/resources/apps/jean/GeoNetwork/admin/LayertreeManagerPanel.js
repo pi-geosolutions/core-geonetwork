@@ -365,6 +365,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	    	this.treeView.add(newtree);
 	    	this.treeView.doLayout();
 	    	this.log("Layertree successfully reloaded");
+	    	this.nodeForm.hide();
     	} else {
     		this.log("ERROR: couldn't reload the layertree. Please report to your administrator");
     	}
@@ -437,19 +438,6 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
                         buttons: Ext.MessageBox.OK});
             		break;
             	}
-            	/*
-                if (xml.firstChild.textContent =="success") {
-                	this.log("backed up old layertree");
-                    this.log("Successfully saved the layertree to DB");
-                } else if (xml.firstChild.textContent.startsWith("WARNING")) {
-                    	this.log(xml.firstChild.textContent);
-                } else {
-                    this.log(xml.firstChild.textContent);
-                    Ext.MessageBox.show({icon: Ext.MessageBox.ERROR,
-                        title: OpenLayers.i18n("Save layertree"), msg:
-                        OpenLayers.i18n("ERROR : couldn't save the layertree. Please contact your administrator."),
-                        buttons: Ext.MessageBox.OK});
-                }*/
             },
             failure: function(response){
             	Ext.MessageBox.show({icon: Ext.MessageBox.ERROR,
@@ -507,6 +495,14 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     		if (attr.type=='folder') {
     			delete attr.layer;
     		}
+    		
+    		//groups visibility management
+    		Ext.each(attr.group, function (grp, idx) {
+        		xml +="<group>\n<id>"+grp.id+"</id>\n";
+        		xml +="<name>"+grp.name+"</name>\n";
+        		xml +="<show>"+grp.show+"</show>\n</group>\n";
+    		});
+    		delete attr.group;
 
         	//remove {} for storage : we just keep the list of key:value pairs 
         	var json = new OpenLayers.Format.JSON().write(attr);
