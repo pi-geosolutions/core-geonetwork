@@ -7,6 +7,7 @@ import jeeves.constants.Jeeves;
 import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
+import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 
 import org.fao.geonet.constants.Geonet;
@@ -42,34 +43,49 @@ public class Get implements Service {
         Element response = new Element(Jeeves.Elem.RESPONSE);
         Element layertreeXML = new Element("tree");
         response.addContent(layertreeXML);
+        String selectClause="";
+        String whereClause1 = "";
+        String whereClause2 = "";
 
-        if (this.withGroups.equalsIgnoreCase("true")) {
+        UserSession usrSess = context.getUserSession();
+        String myProfile = usrSess.getProfile();
+        String myUserId = usrSess.getUserId();
+
+        if (myProfile == null) { // guest "all" user
+            selectClause = "SELECT id, parentid, weight, isfolder, json, lastchanged FROM geoportal.nodes ";
+            whereClause1 = "WHERE parentid=0 ";
+            whereClause2 =                  " AND (id NOT IN (SELECT nodeid FROM geoportal.\"iNodeGroup\" WHERE groupid=1)) ORDER BY weight;";
+            loadNodes(dbms, layertreeXML, selectClause, whereClause1, whereClause2);
+        } else if (this.withGroups.equalsIgnoreCase("true") || myProfile.equals(Geonet.Profile.ADMINISTRATOR)) {
             this.groupsXML = dbms.select("SELECT id, name FROM groups ORDER BY id;");
             this.groupsXML.setName("groupsAccessRules");
-            String selectClause ="SELECT id, parentid, weight, isfolder, json, lastchanged, excludes, excludes_id FROM geoportal.\"vNodesWithExcludes\" "; 
-            String whereClause = "WHERE parentid=0 ORDER BY weight";
-            loadNodes(dbms, layertreeXML, selectClause, whereClause);
-        } else {
-            String selectClause ="SELECT id, parentid, weight, isfolder, json, lastchanged FROM geoportal.nodes "; 
-            String whereClause = "WHERE parentid=0 ORDER BY weight";
-            loadNodes(dbms, layertreeXML, selectClause, whereClause);
-        }
+            selectClause = "SELECT id, parentid, weight, isfolder, json, lastchanged, excludes, excludes_id FROM geoportal.\"vNodesWithExcludes\" ";
+            whereClause1 = "WHERE parentid=0 ";
+            whereClause2 =                  " ORDER BY weight";
+            loadNodes(dbms, layertreeXML, selectClause, whereClause1, whereClause2);
+        } else {// logged in user
+            selectClause = "SELECT id, parentid, weight, isfolder, json, lastchanged FROM geoportal.nodes ";
+            whereClause1 = "WHERE parentid=0 ";
+            whereClause2 =                  " AND ((id NOT IN (SELECT DISTINCT nodeid FROM geoportal.\"iNodeGroup\")) OR (id IN (SELECT DISTINCT nodeid FROM geoportal.\"vNodeGroupIncludes\" WHERE groupid IN (SELECT DISTINCT id FROM Groups, UserGroups WHERE groupId=id AND userId="+myUserId+")))) ORDER BY weight;";
+            loadNodes(dbms, layertreeXML, selectClause, whereClause1, whereClause2);
 
+        }
         // --- return data
         return response;
     }
 
     /*
-     * Loads the child nodes of parentXML, using the where clause.
-     * The where clause can be of the form : "WHERE parentid=0 ORDER BY weight" or anything suitable
+     * Loads the child nodes of parentXML, using the where clause. The where clause can be of the form : "WHERE parentid=0 ORDER BY weight"
+     * or anything suitable
      */
      
-    private void loadNodes(Dbms dbms, Element parentXML, String select, String where) throws SQLException {
+    private void loadNodes(Dbms dbms, Element parentXML, String select, String where, String where_end) throws SQLException {
         //Element groupsXML = dbms.select("SELECT id, name FROM groups;");
-        
+        System.out.println(select+" "+where+" "+where_end);
         //lists child nodes
-        java.util.List list = dbms.select(select+" "+where).getChildren();
+        java.util.List list = dbms.select(select+" "+where+" "+where_end).getChildren();
         for (int i = 0; i < list.size(); i++) {
+            System.out.println(i);
             Element node = (Element) list.get(i);
             //loads the node itself
             String nodeId = node.getChildText("id"); 
@@ -78,7 +94,7 @@ public class Get implements Service {
             nodeXML.addContent(new Element("jsonextensions").setText(node.getChildText("json"))); //must not be the last item, as it may give way to parsing pbs (see layertree-2json.xsl)
             nodeXML.addContent(new Element("lastchanged").setText(node.getChildText("lastchanged")));
             nodeXML.addContent(new Element("weight").setText(node.getChildText("weight")));
-            if (this.withGroups.equalsIgnoreCase("true")) {
+            if (this.withGroups.equalsIgnoreCase("true")) { //if groupsXML==null, it's most probably we are accessing the admin interface without being logged in : abnormal situation case
                 Element groups = (Element) this.groupsXML.clone();
                 java.util.List groupsList = groups.getChildren();
                 for (int j = 0; j < groupsList.size(); j++) {
@@ -97,8 +113,11 @@ public class Get implements Service {
                 //nodeXML.addContent(groups);
             }
             //load children if there are
-            String cond = "WHERE parentid="+nodeId+" AND id<>"+nodeId+"ORDER BY weight";
-            loadNodes(dbms, nodeXML, select, cond);
+            //String cond = "WHERE parentid="+nodeId+" AND id<>"+nodeId+"ORDER BY weight";
+            String cond = "WHERE parentid="+nodeId+" ";
+            System.out.println(cond);
+            //cond = "WHERE parentid="+nodeId+" AND id<>"+nodeId+" ORDER BY weight";
+            loadNodes(dbms, nodeXML, select, cond, where_end);
             
             parentXML.addContent(nodeXML);
         }
