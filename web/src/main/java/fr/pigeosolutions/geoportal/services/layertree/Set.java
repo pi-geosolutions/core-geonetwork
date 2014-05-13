@@ -147,7 +147,7 @@ public class Set implements Service {
     private int saveNode(int parentid, Element node, Dbms dbms) throws SQLException {
         String req="";
         String nodeid = node.getChildText("id");
-        //System.out.println("saving node  "+nodeid );
+        System.out.println("saving node  "+nodeid );
 /*        if (parentid==null) {//then we assume the parent is the <tree> root node : all other node should have an id
             parentid=nodeid;
         }
@@ -207,7 +207,7 @@ public class Set implements Service {
             }
         }
         dbms.execute(req);
-        System.out.println(req); 
+        //System.out.println(req); 
     }
 
     /*
@@ -218,7 +218,7 @@ public class Set implements Service {
     private boolean backup(Dbms dbms, Element tree_xml) throws SQLException {
         String name = tree_xml.getChildText("name");
 
-        //System.out.println("BACKUP : "+name);
+        System.out.println("BACKUP : "+name);
         //transforms it to XML text (serializes the tree)
         XMLOutputter xmOut=new XMLOutputter(); 
         String tree = xmOut.outputString(tree_xml);

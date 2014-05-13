@@ -81,11 +81,11 @@ public class Get implements Service {
      
     private void loadNodes(Dbms dbms, Element parentXML, String select, String where, String where_end) throws SQLException {
         //Element groupsXML = dbms.select("SELECT id, name FROM groups;");
-        System.out.println(select+" "+where+" "+where_end);
+        //System.out.println(select+" "+where+" "+where_end);
         //lists child nodes
         java.util.List list = dbms.select(select+" "+where+" "+where_end).getChildren();
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(i);
+            //System.out.println(i);
             Element node = (Element) list.get(i);
             //loads the node itself
             String nodeId = node.getChildText("id"); 
@@ -115,7 +115,7 @@ public class Get implements Service {
             //load children if there are
             //String cond = "WHERE parentid="+nodeId+" AND id<>"+nodeId+"ORDER BY weight";
             String cond = "WHERE parentid="+nodeId+" ";
-            System.out.println(cond);
+            //System.out.println(cond);
             //cond = "WHERE parentid="+nodeId+" AND id<>"+nodeId+" ORDER BY weight";
             loadNodes(dbms, nodeXML, select, cond, where_end);
             

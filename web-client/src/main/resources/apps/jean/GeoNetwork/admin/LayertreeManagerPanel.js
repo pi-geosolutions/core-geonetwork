@@ -504,6 +504,25 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     		});
     		delete attr.group;
 
+    		//Encodes some special chars et special fields
+    		/*if (attr.legend) {
+    			attr.legend = this.encodeHTML(attr.legend);
+    		}
+    		if (attr.url) {
+    			attr.url = this.encodeHTML(attr.url);
+    		}
+    		if (attr.layer) {
+    			attr.layer = this.encodeHTML(attr.layer);
+    		}
+    		attr.text = this.encodeHTML(attr.text);
+			//attr.text = encodeURIComponent(attr.text);
+    		*/
+    		Ext.iterate(attr, function(key, value) {
+    			if ((typeof value )=="string")
+    				attr[key] = this.encodeHTML(value);
+    		}, this);
+    		
+    		
         	//remove {} for storage : we just keep the list of key:value pairs 
         	var json = new OpenLayers.Format.JSON().write(attr);
         	if (json.substr(0,1)=="{") {
@@ -800,6 +819,20 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         	this.consoleView.body.dom.innerHTML+="<br />&gt; "+msg;
         	this.consoleView.body.scroll('b', Infinity);
     	}
+    },
+    encodeHTML: function(str) {
+    	return str.replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+    },
+    decodeHTML: function(str) {
+    	return str.replace(/&apos;/g, "'")
+        .replace(/&quot;/g, '"')
+        .replace(/&gt;/g, '>')
+        .replace(/&lt;/g, '<')
+        .replace(/&amp;/g, '&');
     }
 
 });
