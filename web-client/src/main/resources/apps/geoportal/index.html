@@ -66,17 +66,12 @@
 			//MAXEXTENT 			:[-2.003750834E7,-2.003750834E7,2.0037508345578495E7,2.0037508345578495E7],
 			//MAXEXTENT 			:[-1500000,1100000,500000,3000000],
 			MAXEXTENT 			:[-1900000,1460000,-1530000,1560000],
-			/*Mask 				: {
-					    			name 	: 'Translucent mask around Gambia', 
-					        		url 	: 'http://ige.fr/geoserver-prod/wms?',
-					        		layers 	: 'gm:gm_countryMask'	
-				    			},*/
   			portalHeader 		:'<img class="catLogo" src="../images/logos/Coat_of_Arms_of_The_Gambia.svg.png"/><span class="bigger"> GAM-DRIS </span><br /><span class="smaller">Risk Management Portal for Gambia</span>',
-  			overviewWmsUrl		: 'http://gm-risk.ige.fr/geoserver-prod/wms',
+  			overviewWmsUrl		: 'http://gm-risk.pigeo.fr/geoserver-prod/wms',
   			overviewWmsLayers	: 'gm_fond_carto',
   			overviewWmsFormat	: 'image/jpeg',
   			plainMapTitle 		: "Low resolution base map",
-  			plainMapWmsUrl		: "http://gm-risk.ige.fr/geoserver-prod/wms",
+  			plainMapWmsUrl		: "http://gm-risk.pigeo.fr/geoserver-prod/wms",
   			plainMapWmsLayers 	:'gm_fond_carto',
   			plainMapWmsFormat	:'image/jpeg',
   			geonamesSearch		: {
@@ -84,67 +79,34 @@
   				zoom : 11
   			},
   			toolsPanelConfig	: {
-  				linkedLayers : ["Zonage Agro-ecologique (source PIRT)"],
+  				linkedLayers : [""],
   				disableLayersOnDeactivate : false	
- 				}/*,
-			shortcutsZAE 		: {
-					entete : 'shortcutsZaeTitle',	
-					title : 'SLMtools',
-					dashboard : {
-						openOnSelect : true,
-						options : {
-							tabNb : 3
-						}
-					},
-					items : 
-						[{
-							nom:'Zones agro-écologiques...',
-							url:'http://gm-risk.ige.fr/sigdt-config/services-ilwac/getBoundsZAE.php'
-							//,linkedLayers:["Zonage Agro-ecologique (source PIRT)"]
-					}]
-			},
+ 				},
 			shortcutsCombo 		: {
-					entete : 'shortcutsAdminTitle',
-					title : 'searchTools',
-					items : 
-						[{
-							nom:'Régions...',
-							url:'http://gm-risk.ige.fr/sigdt-config/services-ilwac/getRegions.php'
-						},{
-							nom:'Cercles...',
-							url:'http://gm-risk.ige.fr/sigdt-config/services-ilwac/getCercles.php'
-						},{
-							nom:'Communes...',
-							url:'http://gm-risk.ige.fr/sigdt-config/services-ilwac/getCommunes.php'
-					}],
-				options: {
-					header:true
-				}
-			},
-			pratiquesConf 		: {
-					//title : '<h1 class="soberH1">Carte des pratiques GDT</h1>',
-					title : 'pratiquesConfTitle',
-					items: 
-						[{
-							nom:'Familles de Pratiques GDT...',
-							url:'http://gm-risk.ige.fr/sigdt-config/services-ilwac/getFamPratiques.php?emptyRecord=true'
-						},{
-							nom:'Pratiques...',
-							url:'http://gm-risk.ige.fr/sigdt-config/services-ilwac/getPratique.php'
-						}],
-					options: {
-						header:false,
-						style:'padding-bottom:30px;'
-					},
-					mapUrl:'http://gm-risk.ige.fr/sigdt-config/services-ilwac/getPosPratique.php?id='
-			}*/
+				entete : 'shortcutsAdminTitle',
+				title : 'searchTools',
+				items : 
+					[{
+						nom:'Regions...',
+						url:'http://gm-risk.pigeo.fr/sigdt-config/services-gambie/getRegions.php'
+					},{
+						nom:'Districts...',
+						url:'http://gm-risk.pigeo.fr/sigdt-config/services-gambie/getDistricts.php'
+					},{
+						nom:'Wards...',
+						url:'http://gm-risk.pigeo.fr/sigdt-config/services-gambie/getWards.php'
+				}],
+			options: {
+				header:true
+			}
+		}
 	};
 	if (window.Geoportal.online) {
 		document.write("\<script src='http://maps.google.com/maps/api/js?sensor=false&v=3.6'\>\</script\>");
 	}
     </script>
-    <!--no more in use <script type="text/javascript" src="http://gm-risk.ige.fr/sigdt-config/config-gambie-gn2_11/layertree.js"></script>  -->
-    <script type="text/javascript" src="http://gm-risk.ige.fr/sigdt-config/config-gambie-gn2_11/infotree.js"></script>
+    <!--no more in use <script type="text/javascript" src="http://gm-risk.pigeo.fr/sigdt-config/config-gambie-gn2_11/layertree.js"></script>  -->
+    <script type="text/javascript" src="http://gm-risk.pigeo.fr/sigdt-config/config-gambie-gn2_10/infotree.js"></script>
     <script type="text/javascript" src="js/App-mini.js"></script>
   </body>
 </html>

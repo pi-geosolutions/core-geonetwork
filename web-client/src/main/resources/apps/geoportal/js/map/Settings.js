@@ -137,8 +137,8 @@ GeoNetwork.map.MAIN_MAP_OPTIONS = {
  resolutions: GeoNetwork.map.RESOLUTIONS,
  //controls: [],
  controls: [
-	           new OpenLayers.Control.MousePosition( {'prefix': 'Lon ', 'separator':'°, Lat ', 'suffix':'°','numDigits':3, displayProjection:new OpenLayers.Projection("WGS84")}),
-	           new OpenLayers.Control.OverviewMap({layers: GeoNetwork.map.ovmapLayers,maximized:true, minRatio:16,maxRatio:128,size : new OpenLayers.Size(130,100)})
+	           new OpenLayers.Control.MousePosition( {'prefix': 'Lon ', 'separator':'°, Lat ', 'suffix':'°','numDigits':3, displayProjection:new OpenLayers.Projection("WGS84")})
+	           //,new OpenLayers.Control.OverviewMap({layers: GeoNetwork.map.ovmapLayers,maximized:true, minRatio:16,maxRatio:128,size : new OpenLayers.Size(130,100)})
 	           ],
  theme:null
 };
