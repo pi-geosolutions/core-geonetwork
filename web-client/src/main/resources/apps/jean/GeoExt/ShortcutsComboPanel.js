@@ -101,6 +101,7 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
     
     manageEvents: function(combos, i, map) {
     	var me=this;
+    	var cbidx = i;
     	combos[i].on('select', function(combo, record, index) {
 		    var bbox = new OpenLayers.Bounds(
 		                                  parseFloat(record.get('xUL')),
@@ -116,12 +117,11 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
 		      map.zoomToExtent(bbox);
 		      
 		    this.selectedRecord = record; 
-		    
-		    for (var j=i+1 ; j < combos.length ; j++) {
+		    for (var j=cbidx+1 ; j < combos.length ; j++) {
 		    	combos[j].clearValue();
-		    	
 				if ((record.id!=="-1")) { //ie si on a choisi une entrée réelle
-					var indx = j-i;
+					var indx = j-cbidx;
+					combos[j].store.clearFilter(); 
 					combos[j].store.filter('up'+indx, record.id); //marche si le combo a déjà été chargé une fois (sinon, cf store_communes.on('load'... )
 				}
 		    }
@@ -133,11 +133,12 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
 		    		}
 		    	}
 		    }
-	  	});
+	  	}, this);
 	  	combos[i].store.on('load', function(store) { //sert au moment du premier chargement. Le reste du temps, c'est réalisé directement par une directive filter dans l'évènement select. Cf ci-dessus
 	  		for (l = store.storeidx ; l >0 ; l--) {
 	  			if ((this.sc_combos[l-1].selectedRecord!=null)&& (this.sc_combos[l-1].selectedRecord.id!=="-1")) {
 	  				var indx = store.storeidx - l +1;
+	  				console.log("parent combo "+indx+ "   id value "+this.sc_combos[l-1].selectedRecord.id);
 	  				store.filter('up'+indx, this.sc_combos[l-1].selectedRecord.id);
 	  				break;
   				}
