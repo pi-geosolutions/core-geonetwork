@@ -34,7 +34,7 @@ GeoNetwork.jpLang.en = {
     'ovGoogleHybrid':"Google Hybrid background map",
 	'print': 'Print',
 	'printHeader':"Please note that this isn't truly a print page but a PDF page generator. This PDF you can then print or save on your computer. "+
-		'<br /><br /><b>Warning:</b> Google-based backgrounds will not show in the printed view. This is due to Google-licence restrictions. So, take care to put some data in the background for printing, or you could get something like a white, squared area...',
+		'<br /><br /><b>Warning:</b> Google and Bing-based backgrounds will not show in the printed view. This is due to Google/Bing licence restrictions. So, take care to put some data in the background for printing, or you could get something like a white, squared area...',
 	'results': 'Search results',
 	'showLegend': 'Display the legend',
 	'horizCurtainButtonText': 'Horizontal curtain',

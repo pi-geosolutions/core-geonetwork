@@ -37,12 +37,12 @@ GeoNetwork.map.printCapabilities = "../../pdf";
 //GeoNetwork.map.MAXEXTENT = GeoNetwork.Geoportal.MAXEXTENT?GeoNetwork.Geoportal.MAXEXTENT:new OpenLayers.Bounds(-180, -90, 180, 90);
 //GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-5.1,41,9.7,51);
 var ovmapWmsURL = window.Geoportal.overviewWmsUrl?window.Geoportal.overviewWmsUrl:'http://gm-risk.ige.fr/geoserver-prod/wms';
-var ovmapWmsLayers = window.Geoportal.overviewWmsLayers?window.Geoportal.overviewWmsLayers:'ml_fond_carto';
+var ovmapWmsLayers = window.Geoportal.overviewWmsLayers?window.Geoportal.overviewWmsLayers:'gm_fond_carto';
 var ovmapWmsFormat = window.Geoportal.overviewWmsFormat?window.Geoportal.overviewWmsFormat:'image/jpeg';
 
-var plainMapTitle = window.Geoportal.plainMapTitle?window.Geoportal.plainMapTitle:'Fond générique';
+var plainMapTitle = window.Geoportal.plainMapTitle?window.Geoportal.plainMapTitle:'Low resolution base map';
 var plainMapWmsUrl = window.Geoportal.plainMapWmsUrl?window.Geoportal.plainMapWmsUrl:'http://gm-risk.ige.fr/geoserver-prod/wms';
-var plainMapWmsLayers = window.Geoportal.plainMapWmsLayers?window.Geoportal.plainMapWmsLayers:'ml_fond_carto';
+var plainMapWmsLayers = window.Geoportal.plainMapWmsLayers?window.Geoportal.plainMapWmsLayers:'gm_fond_carto';
 var plainMapWmsFormat = window.Geoportal.plainMapWmsFormat?window.Geoportal.plainMapWmsFormat:'image/jpeg';
 
 GeoNetwork.map.ovmapLayers = [new OpenLayers.Layer.WMS('ovmap', ovmapWmsURL, {layers: ovmapWmsLayers, format: ovmapWmsFormat, TILED:'true'})];
@@ -53,10 +53,41 @@ GeoNetwork.map.BACKGROUND_LAYERS = [
 	new OpenLayers.Layer.WMS(plainMapTitle, plainMapWmsUrl, {layers: plainMapWmsLayers, format: plainMapWmsFormat, TILED:'true'}, {isBaseLayer: true})
 	];
 if (window.Geoportal.online) {
-	GeoNetwork.map.BACKGROUND_LAYERS.push(new OpenLayers.Layer.Google(
-	 	      "Google Satellite",
-	 	      {type: google.maps.MapTypeId.SATELLITE, 'sphericalMercator': true, numZoomLevels: 22}
-		));
+	if (window.Geoportal.withGoogleLayers) {
+		GeoNetwork.map.BACKGROUND_LAYERS.push(new OpenLayers.Layer.Google(
+		 	      "Google Satellite",
+		 	      {type: google.maps.MapTypeId.SATELLITE, 'sphericalMercator': true, numZoomLevels: 22}
+			));
+	}
+	if (window.Geoportal.withBingLayers) {
+        // API key for http://openlayers.org. Please get your own at
+        // http://bingmapsportal.com/ and use that instead.
+        var apiKey = "AtHrMshzkRHEOelkVaRq0f7QvQ5efNeplV4rNKhTGZgO7J5lkDsz3hE5xOW39jR3";
+        var aerial = new OpenLayers.Layer.Bing({
+            name: "Bing Aerial",
+            key: apiKey,
+            type: "Aerial"
+        });
+        GeoNetwork.map.BACKGROUND_LAYERS.splice(0,1,aerial); //puts it in first place to make it the default one 
+        //added specific triggers, since roads and hybrid suck : almost sure I'll be asked to remove them
+        if (window.Geoportal.withBingRoads) {
+	        var road = new OpenLayers.Layer.Bing({
+	            name: "Bing Road",
+	            key: apiKey,
+	            type: "Road"
+	        });
+	        GeoNetwork.map.BACKGROUND_LAYERS.push(road);
+        }
+        if (window.Geoportal.withBingHybrid) {
+	        var hybrid = new OpenLayers.Layer.Bing({
+	            name: "Bing Hybrid",
+	            key: apiKey,
+	            type: "AerialWithLabels"
+	        });
+	        GeoNetwork.map.BACKGROUND_LAYERS.push(hybrid);
+        }
+	}
+	
 	GeoNetwork.map.BACKGROUND_LAYERS.push(new OpenLayers.Layer.OSM());
 }
 

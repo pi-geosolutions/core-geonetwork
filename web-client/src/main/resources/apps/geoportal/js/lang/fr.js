@@ -34,7 +34,7 @@ GeoNetwork.jpLang.fr = {
 	    'ovGoogleHybrid':"Fond de carte Hybride Google",
 		'print': 'Imprimer',
 		'printHeader':"Veuillez noter qu'il ne s'agit pas réellement d'une page d'impression mais d'un générateur de PDF. Il produit un document PDF, que vous êtes ensuite libre d'imprimer, ou de stocker sur votre ordinateur."+
-			"<br /><b>Attention :</b> Les données de fond d'origine Google ne seront pas affichées dans la vue exportée, à cause de restrictions de licence Google. Veillez donc à afficher d'autres données en guise de fond de plan.",
+			"<br /><b>Attention :</b> Les données de fond d'origine Google/Bing ne seront pas affichées dans la vue exportée, à cause de restrictions de licence Google/Bing. Veillez donc à afficher d'autres données en guise de fond de plan.",
 		'results': 'Résultats de la recherche',
 		'showLegend': 'Afficher la légende',
 		'horizCurtainButtonText': '\'Rideau\' horizontal',

@@ -169,12 +169,17 @@ GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
 		    data: xml,
             success: function(response){
             	var xml = response.responseXML;
-            	var status = xml.getElementsByTagName("removed")[0].textContent;
-            	if (status=="true") {
+            	if (Ext.isIE) {//IE sucks with getElementsByTagsName : we skip the checkings, and it will be nice
                 	this.log("removed backup entry "+id+ " ("+name+")");
                     this.store.remove(record);	
             	} else {
-            		This.log("error removing backup entry "+id+ " ("+name+")");
+	            	var status = xml.getElementsByTagName("removed")[0].textContent;
+	            	if (status=="true") {
+	                	this.log("removed backup entry "+id+ " ("+name+")");
+	                    this.store.remove(record);	
+	            	} else {
+	            		this.log("error removing backup entry "+id+ " ("+name+")");
+	            	}
             	}
             },
             failure: function(response){

@@ -103,7 +103,11 @@
     <script type="text/javascript">
     	//GeoNetwork.Geoportal.MAXEXTENT = new OpenLayers.Bounds(-17,13,-13.7,14);
     	window.Geoportal = {
-    			online				: false,
+    			online				: true,
+    			withBingLayers		: true, //defaults to only Bing Aerial, as the other seem to suck
+    				withBingHybrid		: true, //defaults to only Bing Aerial, as the other seem to suck
+    				withBingRoads		: true, //defaults to only Bing Aerial, as the other seem to suck
+    			withGoogleLayers	: false,
     			//MAXEXTENT 			:[-2.003750834E7,-2.003750834E7,2.0037508345578495E7,2.0037508345578495E7],
     			//MAXEXTENT 			:[-1500000,1100000,500000,3000000],
     			MAXEXTENT 			:[-1900000,1460000,-1530000,1560000],
@@ -116,7 +120,7 @@
     			overviewWmsUrl		: 'http://gm-risk.ige.fr/geoserver-prod/wms',
     			overviewWmsLayers	: 'gm_fond_carto',
     			overviewWmsFormat	: 'image/jpeg',
-    			plainMapTitle 		: "Fond générique",
+    			plainMapTitle 		: "Low resolution base map",
     			plainMapWmsUrl		: "http://gm-risk.ige.fr/geoserver-prod/wms",
     			plainMapWmsLayers 	:'gm_fond_carto',
     			plainMapWmsFormat	:'image/jpeg',
