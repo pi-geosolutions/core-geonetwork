@@ -47,6 +47,9 @@ public class ListFiles implements Service
         String dataName = Util.getParam(params, "dataName","NDVI");
         
         String path = geonetworkDataDir+File.separator+_basepath+File.separator+dataName;
+        if (_basepath.startsWith("/")) { //then it is an absolute URL
+            path = _basepath+File.separator+dataName;
+        } 
         String ext = _ext;
         if (path == null || ext==null)
         {

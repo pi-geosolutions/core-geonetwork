@@ -42,7 +42,12 @@ public class Initialize implements Service
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
         String geonetworkDataDir = gc.getHandlerConfig().getMandatoryValue( Geonet.Config.SYSTEM_DATA_DIR);
 
-        _fullpath = geonetworkDataDir+File.separator+_basepath;
+
+        if (_basepath.startsWith("/")) { //then it is an absolute URL
+            _fullpath = _basepath;
+        } else { //we suppose it's a subdirectory of geonetwork-data-dir
+            _fullpath = geonetworkDataDir+File.separator+_basepath;
+        }
 
         return collectInfo(_fullpath, _ext);
 

@@ -69,8 +69,12 @@ public class GetValues implements Service
             System.out.println("Bad or missing parameters. See the doc");
             return new Element(Jeeves.Elem.RESPONSE);
         }
-        fullpath = geonetworkDataDir+File.separator+_basepath+File.separator+qDataName;
-        
+        if (_basepath.startsWith("/")) { //then it is an absolute URL
+            fullpath = _basepath+File.separator+qDataName;
+        } else { //we suppose it's a subdirectory of geonetwork-data-dir
+            fullpath = geonetworkDataDir+File.separator+_basepath+File.separator+qDataName;
+        }
+       
         Element output;
         Mode mode = Mode.valueOf(qMode); //necessary since String can be used in switch statements only since 1.7
         switch (mode) {
