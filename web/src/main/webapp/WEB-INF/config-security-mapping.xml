@@ -380,7 +380,14 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 
 
                 <!-- Pi-geosolutions services -->
-                <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree!?.*" access="permitAll"></sec:intercept-url>
+                <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree.get!?.*" access="permitAll"></sec:intercept-url>
+                <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree.admin.get!?.*" access="hasRole('Administrator')"></sec:intercept-url>
+                <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree.admin.set!?.*" access="hasRole('Administrator')"></sec:intercept-url>
+                <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree.admin.set_force!?.*" access="hasRole('Administrator')"></sec:intercept-url>
+                <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree.admin!?.*" access="hasRole('Administrator')"></sec:intercept-url>
+                <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree.backups.list!?.*" access="hasRole('Administrator')"></sec:intercept-url>
+                <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree.backups.get!?.*" access="hasRole('Administrator')"></sec:intercept-url>
+                <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree.backups.remove!?.*" access="hasRole('Administrator')"></sec:intercept-url>
                 <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.ndvi!?.*" access="permitAll"></sec:intercept-url>
                 
                 <sec:intercept-url pattern="/.*" access="denyAll"></sec:intercept-url>
