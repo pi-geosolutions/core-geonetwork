@@ -188,13 +188,36 @@ GeoNetwork.Geoportal.LayerTree = function() {
                 GeoExt.tree.LayerNodeUI, new GeoExt.tree.TreeNodeUIEventMixin() 
             );
         	
-        	var mytreeloader = new Ext.tree.TreeLoader({
+        	var mytreeloader = new Ext.tree.TreeLoader({//KEEP IN SYNC WITH THE ONE IN lAYERTREEMANAGERPANEL.JS
 	            // applyLoader has to be set to false to not interfer with loaders
 	            // of nodes further down the tree hierarchy
 	            applyLoader: false,
 	            uiProviders: {
 	                "layernodeui": LayerNodeUI //Ca n'a pas l'air d'être pris en compte : on n'a pas de TreeNodeUIEventMixin (pas d'evt onRenderNode)
-	            }
+	            },
+	            // this below is using the config attributes of the node to do
+	    		// some testing. The attr.has_events is coming from the loader in PHP
+	    		createNode: function(attr) {
+					if (attr.layer && attr.text==null) { //deals with importing old-style layertree.js file
+		    			attr.text = attr.layer;
+		    			attr.leaf=true;
+		    			if (attr.TILED==null && attr.type=="wms") attr.TILED=true;
+		    		}
+		    		if (attr.checked==null && attr.leaf==true) {
+		    			attr.checked = false;
+		    		}
+		    		if (attr.type!='folder' && attr.type!=null) {
+		    			attr.leaf=true;
+		    			if (attr.nodeType==null)
+		    				attr.nodeType='gx_layer';
+		    		}
+		    		if (attr.leaf!=true && attr.type==null) {
+		    			//console.log(attr);
+		    			attr.type='folder';
+		    		}    	//fixes some node values
+		    		
+	    			return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
+	    		}
 	        });
 		    layertree = new Ext.tree.TreePanel({
 		        title:'layerTree',

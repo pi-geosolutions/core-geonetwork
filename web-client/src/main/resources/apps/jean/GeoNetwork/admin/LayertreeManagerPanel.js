@@ -52,6 +52,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     detailView:null,
     consoleView : null,
     tree:null, 
+    tb:null,
     nodeForm:null,
     backupsListGrid:null,
     groups:null,
@@ -89,13 +90,14 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
             width: '50%',
             items: []
         });
+        this.tb = this.getToolbar();
         this.treeView = new Ext.Panel({
                 region: 'center',
                 split: true,
                 autoScroll: true,
                 minHeigth: 300,
                 items: null,
-                tbar:this.getToolbar()
+                tbar:this.tb
             });
         this.consoleView = new Ext.Panel({
                 region: 'south',
@@ -137,7 +139,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	}
     	if (treeConfig==null) return;
     	
-    	var treeLoader = new Ext.tree.TreeLoader({
+    	var treeLoader = new Ext.tree.TreeLoader({ //KEEP IN SYNC WITH THE ONE IN lAYERTREE.JS
     		// this below is using the config attributes of the node to do
     		// some testing. The attr.has_events is coming from the loader in PHP
     		createNode: function(attr) {
