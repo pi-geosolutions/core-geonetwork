@@ -115,10 +115,9 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         this.add(this.detailView);
         this.add(this.consoleView);
         this.add(this.treeView);
-        
         this.tree = this.loadTree(null, false);
-    	this.treeView.add(this.tree);
-
+        if (this.tree!=null)
+        	this.treeView.add(this.tree);
         this.createForm(this.nodeFormFields, this.fieldsOrder);
         
         this.backupsListGrid = this.createBackupsGrid();
@@ -131,77 +130,89 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      * TODO : 
      */
     loadTree: function(specificConfig,overwrite) { //default : specificConfig=null, overwrite=false
-    	var treeConfig=null;
-    	if (specificConfig!=null) {
-    		treeConfig=specificConfig;
-    	} else {
-    		treeConfig = this.getFromDB();
-    	}
-    	if (treeConfig==null) return;
-    	
-    	var treeLoader = new Ext.tree.TreeLoader({ //KEEP IN SYNC WITH THE ONE IN lAYERTREE.JS
-    		// this below is using the config attributes of the node to do
-    		// some testing. The attr.has_events is coming from the loader in PHP
-    		createNode: function(attr) {
-				if (attr.layer && attr.text==null) { //deals with importing old-style layertree.js file
-	    			attr.text = attr.layer;
-	    			attr.leaf=true;
-	    			if (attr.TILED==null && attr.type=="wms") attr.TILED=true;
+		var treepanel=null;
+    	try {
+	    	var treeConfig=null;
+	    	if (specificConfig!=null) {
+	    		treeConfig=specificConfig;
+	    	} else {
+	    		treeConfig = this.getFromDB();
+	    	}
+	    	if (treeConfig==null) return;
+	    	
+	    	var treeLoader = new Ext.tree.TreeLoader({ //KEEP IN SYNC WITH THE ONE IN lAYERTREE.JS
+	    		// this below is using the config attributes of the node to do
+	    		// some testing. The attr.has_events is coming from the loader in PHP
+	    		createNode: function(attr) {
+					if (attr.layer && attr.text==null) { //deals with importing old-style layertree.js file
+		    			attr.text = attr.layer;
+		    			attr.leaf=true;
+		    			if (attr.TILED==null && attr.type=="wms") attr.TILED=true;
+		    		}
+		    		if (attr.checked==null && attr.leaf==true) {
+		    			attr.checked = false;
+		    		}
+		    		if (attr.type!='folder' && attr.type!=null) {
+		    			attr.leaf=true;
+		    		}
+		    		if (attr.leaf!=true && attr.type==null) {
+		    			//console.log(attr);
+		    			attr.type='folder';
+		    		}    	//fixes some node values
+		    		
+		    		if (overwrite==true) {
+		    			attr.id = null;
+		    		}
+	
+	    			return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
 	    		}
-	    		if (attr.checked==null && attr.leaf==true) {
-	    			attr.checked = false;
-	    		}
-	    		if (attr.type!='folder' && attr.type!=null) {
-	    			attr.leaf=true;
-	    		}
-	    		if (attr.leaf!=true && attr.type==null) {
-	    			//console.log(attr);
-	    			attr.type='folder';
-	    		}    	//fixes some node values
-	    		
-	    		if (overwrite==true) {
-	    			attr.id = null;
-	    		}
-
-    			return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
-    		}
-		});
-	    var treepanel = new Ext.tree.TreePanel({
-	        title:'layerTree',
-	        header:false,
-	        id: "geoportalLayerTree",
-	        enableDD: true,
-	        autoScroll:true,
-		    loader: treeLoader,
-        	root: {
-	            nodeType: "async",
-	            // the children property of an Ext.tree.AsyncTreeNode is used to
-	            // provide an initial set of layer nodes. We use the treeConfig
-	            // from above, that we created with OpenLayers.Format.JSON.write.
-	            children: treeConfig,
-	            expanded:true,
-	            type:'folder',
-	            id:0
-	        },
-	        rootVisible: true,
-	        border: false,
-	        layout:'fit',
-	        listeners: {
-	            click: function(node, event){
-	                this.editNode(node);
-	            },
-	            expandnode: function(node){
-	                node.attributes.expanded = node.isExpanded();
-	            },
-	            collapsenode: function(node){
-	                node.attributes.expanded = node.isExpanded();
-	            },
-	            checkchange: function(node, checked){
-	                node.attributes.checked = checked;
-	            },
-	            scope : this
-	        }
-	    });
+			});
+		    treepanel = new Ext.tree.TreePanel({
+		        title:'layerTree',
+		        header:false,
+		        id: "geoportalLayerTree",
+		        enableDD: true,
+		        autoScroll:true,
+			    loader: treeLoader,
+	        	root: {
+		            nodeType: "async",
+		            // the children property of an Ext.tree.AsyncTreeNode is used to
+		            // provide an initial set of layer nodes. We use the treeConfig
+		            // from above, that we created with OpenLayers.Format.JSON.write.
+		            children: treeConfig,
+		            expanded:true,
+		            type:'folder',
+		            id:0
+		        },
+		        rootVisible: true,
+		        border: false,
+		        layout:'fit',
+		        listeners: {
+		            click: function(node, event){
+		                this.editNode(node);
+		            },
+		            expandnode: function(node){
+		                node.attributes.expanded = node.isExpanded();
+		            },
+		            collapsenode: function(node){
+		                node.attributes.expanded = node.isExpanded();
+		            },
+		            checkchange: function(node, checked){
+		                node.attributes.checked = checked;
+		            },
+		            scope : this
+		        }
+		    }); 
+	    } catch (err) {
+	    	var errormsg = "ERROR : couldn't load the layertree. Some of the changes you recently made must cause the problem. "+
+	    					"Most likely you have used improper characters, like doublequotes, where you weren't expected to. " +
+	    					"You are advised to restore a previous backup and try again. If you can't solve it, please contact your administrator."
+        	this.log(errormsg);
+        	Ext.MessageBox.show({icon: Ext.MessageBox.ERROR,
+                title: OpenLayers.i18n("Load layertree"), msg:
+                OpenLayers.i18n(errormsg),
+                buttons: Ext.MessageBox.OK});
+        }
 	    return treepanel;
     },
     /**
@@ -361,8 +372,10 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     treeReload: function(specificConfig, overwrite) { //default : specificConfig=null, overwrite=false
     	var newtree = this.loadTree(specificConfig, overwrite);
     	if (newtree!=null) {
-	    	this.treeView.remove(this.tree);
-	    	this.tree.destroy();
+    		if (this.tree!=null) {
+    	    	this.treeView.remove(this.tree);
+    	    	this.tree.destroy();
+    		}
 	    	this.tree = newtree;
 	    	this.treeView.add(newtree);
 	    	this.treeView.doLayout();

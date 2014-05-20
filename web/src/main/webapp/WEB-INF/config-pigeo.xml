@@ -29,6 +29,8 @@
 		<service name="pigeo.layertree.admin">
 			<output sheet="pigeo/geoportal/layertree-admin.xsl"/>
 		</service>
+		
+		
 		<service name="pigeo.layertree.admin.backups.list">
 			<class name="fr.pigeosolutions.geoportal.services.layertree.Backups">
 				<param name="mode" value="list"/>

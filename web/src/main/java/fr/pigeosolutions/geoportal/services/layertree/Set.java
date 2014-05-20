@@ -147,7 +147,7 @@ public class Set implements Service {
     private int saveNode(int parentid, Element node, Dbms dbms) throws SQLException {
         String req="";
         String nodeid = node.getChildText("id");
-        System.out.println("saving node  "+nodeid );
+        //System.out.println("saving node  "+nodeid );
 /*        if (parentid==null) {//then we assume the parent is the <tree> root node : all other node should have an id
             parentid=nodeid;
         }
