@@ -1058,6 +1058,7 @@ GeoNetwork.app = function () {
 				activeTab: 0,
 				height:'100%',
 				layoutOnTabChange:true,
+				enableTabScroll : true,
 				deferredRender:false,
 				defaults:{},
 				items:[
@@ -1073,32 +1074,6 @@ GeoNetwork.app = function () {
 				    	autoScroll: true,
 				    	items:[]
 				    },
-				    {
-				    	title:OpenLayers.i18n('search'),
-				    	id:'searchTab',
-				    	autoWidth:true,
-		                //autoScroll: true,
-		                height:'100%',
-		                layout:'accordion',
-		                layoutConfig: {
-		                    animate: true
-		                },
-		                items: [{
-		                			title:OpenLayers.i18n('form'),
-		                			id:'searchFormPanel',
-		                			layout:'fit',
-		                			//height:'100%',
-		                			autoScroll: true,
-		                			items :  searchForm /*, tagCloudViewPanel,infoPanel*/
-	                			},{
-		                			title:OpenLayers.i18n('results'),
-		                			id:'searchResultsPanel',
-		                			layout:'fit',
-		                			//height:'100%',
-		                			//autoScroll: true,
-		                			items : /*breadcrumb, facetsPanel,*/resultsPanel
-	                			}]
-	                },
 	                toolsPanel
 	                ,{
 				    	title: OpenLayers.i18n('print'),
@@ -1123,7 +1098,33 @@ GeoNetwork.app = function () {
 	                        	}
 	                        }
 	                    }
-				    }
+				    },
+				    {
+				    	title:OpenLayers.i18n('geocatalogue'),
+				    	id:'searchTab',
+				    	autoWidth:true,
+		                //autoScroll: true,
+		                height:'100%',
+		                layout:'accordion',
+		                layoutConfig: {
+		                    animate: true
+		                },
+		                items: [{
+		                			title:OpenLayers.i18n('form'),
+		                			id:'searchFormPanel',
+		                			layout:'fit',
+		                			//height:'100%',
+		                			autoScroll: true,
+		                			items :  searchForm /*, tagCloudViewPanel,infoPanel*/
+	                			},{
+		                			title:OpenLayers.i18n('results'),
+		                			id:'searchResultsPanel',
+		                			layout:'fit',
+		                			//height:'100%',
+		                			//autoScroll: true,
+		                			items : /*breadcrumb, facetsPanel,*/resultsPanel
+	                			}]
+	                }
 				]
 			});
             

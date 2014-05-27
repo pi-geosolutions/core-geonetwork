@@ -22,7 +22,7 @@ GeoNetwork.jpLang.fr = {
 		//fixes
 	    'org': "Organisation",
 	    //new ones
-		'choose': 'Choisir',
+		'choose': 'Selectionner',
 		'facetsTitle':'Affiner la recherche',
 		'form': 'Formulaire de recherche',
 	    'geogCriteria': 'Critères géographiques',
@@ -30,6 +30,7 @@ GeoNetwork.jpLang.fr = {
 	    'IgeGeoserver':'Serveur cartographique IGE',
 	    'legend:':'Légende :',
 	    'organize': 'Organiser',
+	    'geocatalogue':'Géo-catalogue',
 	    'overlay:':'Calque : ',
 	    'ovGoogleHybrid':"Fond de carte Hybride Google",
 		'print': 'Imprimer',
@@ -50,7 +51,7 @@ GeoNetwork.jpLang.fr = {
 		'dash_ChooseYear':"Choisir l'année à afficher",
 		'linkedMtdWarnTitle' : 'Attention',
 		'linkedMtdWarnText' : 'Vous allez perdre tous les changements effectués depuis la dernière sauvegarde. Si vous avez changé du contenu, vous voudrez probablement enregistrer les modifications, au préalable. Voulez-vous continuer malgré tout ?',
-		'tools':'Outils',
+		'tools':'Localiser',
 		'shortcuts':'Raccourcis',
 		'pratiquesGDT':'Pratiques de Gestion Durable des Terres (GDT)',
 		'pratiquesConfTitle':'<h1 class="soberH1">Carte des pratiques GDT</h1>',

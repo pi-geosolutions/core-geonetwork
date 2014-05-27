@@ -60,7 +60,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     nodeFormFields : {
     	'chart':['gambia','id', 'type','text', 'uuid','legend','url', 'tablenames', 'changeScales', 'charting_fields', 'other_fields', 'format', 'cls', 'qtip', 'context', 'template', 'extensions'],    	
     	'wms':['gambia','id', 'type','text', 'uuid', 'legend', 'url', 'layers', 'format', 'TILED', 'cls', 'qtip', 'extensions'],
-    	'folder':['gambia','id', 'type', 'text', /*'expanded', */'extensions']
+    	'folder':['gambia','id', 'type', 'text', 'cls', /*'expanded', */'extensions']
     },
     fieldsOrder : ['id', 'type', 'uuid', 'text', 'url', 'layers', 'format', 'TILED','legend',
                    'tablenames', 'changeScales', 'charting_fields', 'other_fields','context', 'template',

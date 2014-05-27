@@ -303,11 +303,14 @@ p.abstract {
 }
 .x-tree-node .ilwac,
 .x-tree-node .ilwac + ul .x-tree-node{
-	font-weight:bold;
-	background-color:yellow;
+	font-weight:bold !important;
+	background-color:yellow !important;
 }
 .x-tree-node .important {
-	font-weight:bold;
+	font-weight:bold !important;
+}
+.x-tree-node .grey a span{
+	color:#999999 !important;
 }
 
 .selextentBTN {

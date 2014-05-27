@@ -22,7 +22,7 @@ GeoNetwork.jpLang.en = {
 	//fixes
     'org': "Organization",
     //new ones
-	'choose': 'Choose',
+	'choose': 'Select',
 	'facetsTitle':'Narrow your Search',
 	'form': 'Search form',
 	'geogCriteria': 'Geographic criteria',
@@ -30,6 +30,7 @@ GeoNetwork.jpLang.en = {
     'IgeGeoserver':'IGE\'s map server',
 	'legend:': 'Legend:',
     'organize': 'Organize',
+    'geocatalogue':'Geo-catalogue',
     'overlay:':'Overlay: ',
     'ovGoogleHybrid':"Google Hybrid background map",
 	'print': 'Print',
@@ -50,7 +51,7 @@ GeoNetwork.jpLang.en = {
 	'dash_ChooseYear':'Choose the year to display',
 	'linkedMtdWarnTitle' : 'Warning',
 	'linkedMtdWarnText' : 'You will loose the changes made since last save. If you have made significant changes, you may want to save the metadata contents first (\'Save\' button). <br /> Do you want to proceed anyway ?',
-	'tools':'Tools',
+	'tools':'Locate',
 	'shortcuts':'Shortcuts',
 	'pratiquesGDT':'<h1 class="soberH1">Map the Sustainable Land Management (SLM) practices</h1>',
 	'pratiquesConfTitle':'<h1 class="soberH1">Map of best SLM practices</h1>',
