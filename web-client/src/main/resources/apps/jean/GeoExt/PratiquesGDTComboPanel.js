@@ -110,6 +110,7 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
 		       }, map_fields),
 		    sortInfo : {field: "nom", direction: "ASC"}
         });
+    	mystore.load();
     
     	var mycombo = new Ext.form.ComboBox({
       					store: mystore,
@@ -120,6 +121,8 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
 						triggerAction: 'all',
 						emptyText:conf.nom,
 						selectOnFocus:true,
+						mode:'local', //load store only once (manually, see mystore.load())
+						lastQuery: '', //so that the first time dropdown will filter!!!!
 						disabled:(i!=0)
 				  	});
 				  	
@@ -246,18 +249,6 @@ GeoExt.PratiquesGDTComboPanel = Ext.extend(Ext.Panel, {
 		    	this.openPratiqueBtn.disable();
 		    }
 	  	},this);
-	  	
-	  	combos[i].store.on('load', function(store) { //sert au moment du premier chargement. Le reste du temps, c'est réalisé directement par une directive filter dans l'évènement select. Cf ci-dessus
-	  		for (l = store.storeidx ; l >0 ; l--) {
-	  			if ((this.sc_combos[l-1].selectedRecord!=null)&& (this.sc_combos[l-1].selectedRecord.id!=="-1")) {
-	  				var indx = store.storeidx - l +1;
-	  				store.filter('up'+indx, this.sc_combos[l-1].selectedRecord.id);
-	  				break;
-  				}
-	  		}
-	  		/*if ((combo_regions.selectedRecord!=null)&& (combo_regions.selectedRecord.id!=="0"))
-		      this.filter('up', combo_regions.selectedRecord.id);*/
-	  	}, this);
     },
     
     /** private: method[onRender]
