@@ -301,6 +301,14 @@ p.abstract {
 	clear:right;
 	padding-left : 0px !important;
 }
+
+.x-tree-node-icon.emptyFolder {
+    background-image: url("../../images/default/folder.png") !important;
+}
+.emptyFolder+a span {
+	color:#999999 !important;
+}
+
 .x-tree-node .ilwac,
 .x-tree-node .ilwac + ul .x-tree-node{
 	font-weight:bold !important;

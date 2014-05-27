@@ -208,8 +208,15 @@ GeoNetwork.Geoportal.LayerTree = function() {
 		    		}
 		    		if (attr.type!='folder' && attr.type!=null) {
 		    			attr.leaf=true;
-		    			if (attr.nodeType==null)
-		    				attr.nodeType='gx_layer';
+		    		} else {
+		    			attr.leaf=false;
+		    			if (attr.children==null) { //empty folder
+		    				console.log(attr.text);
+		    				attr.loaded=true;
+		    				attr.expanded=true;
+		    				//attr.cls='grey x-tree-node-collapsed';
+		    				attr.iconCls='emptyFolder';
+		    			}
 		    		}
 		    		if (attr.leaf!=true && attr.type==null) {
 		    			//console.log(attr);

@@ -154,17 +154,30 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 		    		}
 		    		if (attr.type!='folder' && attr.type!=null) {
 		    			attr.leaf=true;
+		    		} else {
+		    			attr.leaf=false;
+		    			if (attr.children==null) { //empty folder
+		    				console.log(attr.text);
+		    				attr.loaded=true;
+		    				attr.expanded=true;
+		    				//attr.cls='grey x-tree-node-collapsed';
+		    				attr.iconCls='emptyFolder';
+		    			}
 		    		}
 		    		if (attr.leaf!=true && attr.type==null) {
 		    			//console.log(attr);
 		    			attr.type='folder';
 		    		}    	//fixes some node values
 		    		
+		    		attr.draggable=true;
 		    		if (overwrite==true) {
 		    			attr.id = null;
 		    		}
-	
-	    			return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
+		    		
+		    		var node = Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
+		    		/*if (attr.type=='folder' && attr.children==null) //this works too
+		    			node.setCls('grey x-tree-node-collapsed');*/
+		    		return node;
 	    		}
 			});
 		    treepanel = new Ext.tree.TreePanel({
