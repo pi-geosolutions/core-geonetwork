@@ -276,11 +276,13 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
     goNdviDecadeGraph: function(month, day,config,id) {
 		if (month!==undefined && day!==undefined) {
 			var dataurl = config.chart.url+'&lat='+this.ndviAppState.lat+'&lon='+this.ndviAppState.lon+'&date='+month+day;
-			if (!config.chart.url.startsWith("http")) { 
+			if (dataurl.substring(0,4) !=="http") { 
 				// then we suppose it is a local service URL and we have to prepend the host service prefix
 				// we take the infos from the catalogue object, which is Geonetwork catalog base object, 
 				// and thus should always be available
 				dataurl = catalogue.hostUrl + '/srv/' + catalogue.lang + dataurl;
+				if (Ext.isIE) 
+					dataurl = OpenLayers.ProxyHostURL+encodeURIComponent(dataurl);
 			} else {
 				//if it starts with http, we assume it is a distant call, thus we use proxy
 				dataurl = OpenLayers.ProxyHostURL+encodeURIComponent(dataurl);
@@ -424,12 +426,14 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
 
     goNdviYearlyGraph: function(year, config, id) {
     	if (year==undefined) { return false ; }
-		var dataurl = config.chart.url+'&lat='+this.ndviAppState.lat+'&lon='+this.ndviAppState.lon+'&year='+year;
-		if (!config.chart.url.startsWith("http")) { 
+		var dataurl = ''+config.chart.url+'&lat='+this.ndviAppState.lat+'&lon='+this.ndviAppState.lon+'&year='+year;
+		if (dataurl.substring(0,4) !=="http") { 
 			// then we suppose it is a local service URL and we have to prepend the host service prefix
 			// we take the infos from the catalogue object, which is Geonetwork catalog base object, 
 			// and thus should always be available
 			dataurl = catalogue.hostUrl + '/srv/' + catalogue.lang + dataurl;
+			if (Ext.isIE) 
+				dataurl = OpenLayers.ProxyHostURL+encodeURIComponent(dataurl);
 		} else {
 			//if it starts with http, we assume it is a distant call, thus we use proxy
 			dataurl = OpenLayers.ProxyHostURL+encodeURIComponent(dataurl);
