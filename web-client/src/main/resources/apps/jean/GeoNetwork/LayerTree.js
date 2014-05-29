@@ -211,7 +211,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 		    		} else {
 		    			attr.leaf=false;
 		    			if (attr.children==null) { //empty folder
-		    				console.log(attr.text);
+		    				//console.log(attr.text);
 		    				attr.loaded=true;
 		    				attr.expanded=true;
 		    				//attr.cls='grey x-tree-node-collapsed';

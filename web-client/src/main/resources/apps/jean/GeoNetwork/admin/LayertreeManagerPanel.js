@@ -157,7 +157,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 		    		} else {
 		    			attr.leaf=false;
 		    			if (attr.children==null) { //empty folder
-		    				console.log(attr.text);
+		    				//console.log(attr.text);
 		    				attr.loaded=true;
 		    				attr.expanded=true;
 		    				//attr.cls='grey x-tree-node-collapsed';
@@ -424,7 +424,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      * Saves the tree structure on DB
      */
     treeSave: function(name,force) { //if not set, 'force' is 'false' by default
-        var xml = this.XMLencapsulateTree(name);
+        var xml = this.XMLencapsulateTree("backup "+name);
         var serviceurl = this.serviceBaseUrl + "/pigeo.layertree.admin.set";
         if (force==true) { //we pass an additional parameter telling it not to care about eventual external changes in the DB
         	serviceurl= this.serviceBaseUrl + "/pigeo.layertree.admin.set_force";
@@ -513,6 +513,8 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         	delete attr["loader"]; //a bit of cleanup
         	delete attr["children"]; //a bit of cleanup
     		delete attr.lastchanged; //a bit of cleanup
+    		delete attr.loaded; //a bit of cleanup
+    		delete attr.iconCls; //a bit of cleanup
     		delete attr.leaf; //will be automatically generated
     		delete attr.weight; //will be automatically generated
     		if (attr.cls!=null) {
