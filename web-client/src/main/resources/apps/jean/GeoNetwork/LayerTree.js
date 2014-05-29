@@ -223,6 +223,9 @@ GeoNetwork.Geoportal.LayerTree = function() {
 		    			attr.type='folder';
 		    		}    	//fixes some node values
 		    		
+		    		if (attr.type=="wms" || attr.type=="chart") {
+		    			attr.nodeType="gx_layer";
+		    		}
 	    			return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
 	    		}
 	        });
