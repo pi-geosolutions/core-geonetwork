@@ -27,7 +27,7 @@ GeoNetwork.jpLang.en = {
 	'form': 'Search form',
 	'geogCriteria': 'Geographic criteria',
     'gxBaseLayerContainer':"Base Layer",
-    'IgeGeoserver':'IGE\'s map server',
+    'PigeoGeoserver':'pi-Geosolutions\' map server',
 	'legend:': 'Legend:',
     'organize': 'Organize',
     'geocatalogue':'Geo-catalogue',

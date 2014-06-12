@@ -27,7 +27,7 @@ GeoNetwork.jpLang.fr = {
 		'form': 'Formulaire de recherche',
 	    'geogCriteria': 'Critères géographiques',
 	    'gxBaseLayerContainer':"Fond de carte",
-	    'IgeGeoserver':'Serveur cartographique IGE',
+	    'PigeoGeoserver':'Serveur cartographique pi-Geosolutions',
 	    'legend:':'Légende :',
 	    'organize': 'Organiser',
 	    'geocatalogue':'Géo-catalogue',
