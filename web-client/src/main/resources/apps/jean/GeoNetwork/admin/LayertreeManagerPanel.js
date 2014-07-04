@@ -60,11 +60,11 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     groups:null,
     useGroups:true,
     nodeFormFields : {
-    	'chart':['gambia','id', 'type','text', 'uuid','legend','source', 'tablenames', 'changeScales', 'charting_fields', 'other_fields', 'format', 'cls', 'qtip', 'context', 'template', 'extensions'],    	
-    	'wms':['gambia','id', 'type','text', 'uuid', 'legend', 'url', 'layers', 'format', 'TILED', 'cls', 'qtip', 'extensions'],
+    	'chart':['gambia','id', 'type','text', 'uuid','legend','source', 'opacity', 'tablenames', 'changeScales', 'charting_fields', 'other_fields', 'format', 'cls', 'qtip', 'context', 'template', 'extensions'],    	
+    	'wms':['gambia','id', 'type','text', 'uuid', 'legend', 'url', 'layers', 'opacity', 'format', 'TILED', 'cls', 'qtip', 'extensions'],
     	'folder':['gambia','id', 'type', 'text', 'cls', /*'expanded', */'extensions']
     },
-    fieldsOrder : ['id', 'type', 'uuid', 'text', 'url', 'source', 'layers', 'format', 'TILED','legend',
+    fieldsOrder : ['id', 'type', 'uuid', 'text', 'url', 'source', 'layers', 'opacity', 'format', 'TILED','legend',
                    'tablenames', 'changeScales', 'charting_fields', 'other_fields','context', 'template',
                    //'expanded', //suppressed : will be managed in the tree panel
                    'cls', 'qtip', 'extensions'],    	
@@ -89,7 +89,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
             collapseMode: 'mini',
             autoScroll: true,
             minWidth: 250,
-            width: '50%',
+            width: '60%',
             items: []
         });
         this.tb = this.getToolbar();
@@ -122,6 +122,12 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         this.tree = this.loadTree(null, false);
         if (this.tree!=null)
         	this.treeView.add(this.tree);
+        
+
+    	if (this.useGroups) 
+    		this.getGroups();
+        
+        
         //this.createForm(this.nodeFormFields, this.fieldsOrder);
         
         //this.backupsListGrid = this.createBackupsGrid();
@@ -147,13 +153,25 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      * 
      * TODO : 
      */
-    createForm: function(nodeFormFields, fieldsOrder) {
+    /*createForm: function(nodeFormFields, fieldsOrder) {
     	var groupStore = null;
     	if (this.useGroups) groupStore=this.getGroups();
         this.nodeForm = new GeoNetwork.admin.LayerForm({
         	'nodeFormFields':nodeFormFields, 
         	'fieldsOrder':fieldsOrder,
-        	'groupStore':groupStore});
+        	'groupStore':groupStore,
+        	'logWindow':this.consoleView});
+        this.nodeForm.parent = this;
+        this.detailView.add(this.nodeForm);
+        this.detailView.doLayout();
+    },*/
+    createForm: function() {
+    	if (this.useGroups == false) this.groups=null;
+        this.nodeForm = new GeoNetwork.admin.LayerForm({
+        	'nodeFormFields':this.nodeFormFields, 
+        	'fieldsOrder':this.fieldsOrder,
+        	'groupStore':this.groups,
+        	'logWindow':this.consoleView});
         this.nodeForm.parent = this;
         this.detailView.add(this.nodeForm);
         this.detailView.doLayout();
@@ -165,9 +183,20 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      */
     getGroups: function() {
         var lang = catalogue.lang;
-        var groupStore = GeoNetwork.data.GroupStore(catalogue.services.getGroups);
-        groupStore.load();
-        return groupStore;
+        this.groups = GeoNetwork.data.GroupStore(catalogue.services.getGroups);
+        this.groups.load({
+        	callback 	: function(r, opts, success) {
+				            	if (success) {
+				            		GeoNetwork.admin.Utils.log(this.consoleView,"Successfully loaded groups list");
+				            		this.useGroups = true;
+				            	} else {
+				            		GeoNetwork.admin.Utils.log(this.consoleView,"failed loading groups");
+				            		this.useGroups = false;
+				            		return ;
+				            	}
+				            },
+        	scope		: this
+        });
     },
     
     
@@ -272,7 +301,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     		Ext.Msg.alert('Add node', 'Please first select a parent node in the tree');
     		return false;
     	}
-    	if (node.leaf) { //we can add a node only to a folder
+    	if (node.leaf) { //we can add a node only to a folder. We will thus use its parent node (the closest folder)
     		node = node.parentNode;
     	}
     	var child = new Ext.tree.TreeNode(tpl);
@@ -286,8 +315,10 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	if (this.backupsListGrid)
     		this.backupsListGrid.hide();
     	if (!this.nodeForm)
-    		this.createForm(this.nodeFormFields, this.fieldsOrder);
+    		this.createForm();
     	
+    	
+//fix : shows an error because we load the groups asynchronously. We get to this step BEFORE we create nodeForm (see _createForm)    	
     	this.nodeForm.show();
         this.nodeForm.editNode(node);
     },

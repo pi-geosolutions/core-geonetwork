@@ -45,6 +45,7 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     border: false,
     hidden:true,
     
+    logWindow:null,
     nodeFormFields : null, //should be initialized by constructor. See LayertreeManager class
     fieldsOrder : null, //idem
     groupStore : null,
@@ -249,7 +250,7 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
 		this.groupsForm.items.items[0].setValue(Ext.pluck(node.attributes.group, "show"));
     	
     	//loads the node values in the form
-    	this.log("loaded parameters for layer : <i>"+node.text+"</i>");
+    	GeoNetwork.admin.Utils.log(this.logWindow,"loaded parameters for layer : <i>"+node.text+"</i>");
     	this.getForm().setValues(node.attributes);
     	//this.getForm().findField("gambia").setValue(node.attributes.group[3].show);
     	this.currentNode=node;
@@ -308,7 +309,7 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
 			
 			node.setText(attr.text);
 
-	    	this.log("layer <i>"+attr.text+"</i> successfully updated. Don't forget to save the tree when you are done.");
+	    	GeoNetwork.admin.Utils.log(this.logWindow,"layer <i>"+attr.text+"</i> successfully updated. Don't forget to save the tree when you are done.");
 	    }
     },
     
