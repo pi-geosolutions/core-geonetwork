@@ -35,6 +35,7 @@ Ext.namespace('GeoNetwork.admin');
 GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
     //class-specific configs
 	serviceBaseUrl:"",
+    logWindow:null, //the place where to write logging (console)
 
 	//Extjs grid-related configs
     columns: [
@@ -194,7 +195,7 @@ GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
     },
     log: function(msg) {
     	if (this.parent!=null) {
-    		this.parent.log(msg);
+    		GeoNetwork.admin.Utils.log(this.logWindow,msg);
     	}
     } 
 });

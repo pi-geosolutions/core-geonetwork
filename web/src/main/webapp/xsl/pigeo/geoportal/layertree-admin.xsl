@@ -47,8 +47,11 @@
 		
     	<script type="text/javascript" src="{$widgetPath}/geoportal/js/lang/fr.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/geoportal/js/lang/en.js"></script>
+    	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/Utils.js"></script>
+    	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/LayertreeIO.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/LayerForm.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/BackupGridManager.js"></script>
+    	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/GeoportalTreeLoader.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/LayertreeManagerPanel.js"></script>
     	
     	

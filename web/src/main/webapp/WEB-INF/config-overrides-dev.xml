@@ -4,6 +4,10 @@
                 <db.user>geonetwork</db.user>
                 <db.pass>geonetwork</db.pass>
                 <db.dbname>jdbc:postgresql://localhost:5432/gm_210</db.dbname>
+                
+                <charts-db.user>geonetwork</charts-db.user>
+                <charts-db.pass>geonetwork</charts-db.pass>
+                <charts-db.dbname>jdbc:postgresql://localhost:5432/gm_census</charts-db.dbname>
         </properties>
         
         <file name=".*/WEB-INF/config.xml">
@@ -32,6 +36,18 @@
                                   <url>${db.dbname}</url>
                                         <poolSize>10</poolSize>
                                 <validationQuery>SELECT 1</validationQuery>
+                                </config>
+                        </resource>
+                        <resource enabled="true">
+                                <name>gm_census</name>
+                                <provider>jeeves.resources.dbms.ApacheDBCPool</provider>
+                                <config>
+									<user>${charts-db.user}</user>
+									<password>${charts-db.pass}</password>
+									<driver>org.postgis.DriverWrapper</driver>
+									<url>${charts-db.dbname}</url>
+									<poolSize>10</poolSize>
+                                	<validationQuery>SELECT 1</validationQuery>
                                 </config>
                         </resource>
                 </replaceXML>   
