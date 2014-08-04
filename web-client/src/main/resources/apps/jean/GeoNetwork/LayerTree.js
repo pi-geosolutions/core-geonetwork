@@ -72,7 +72,59 @@ GeoNetwork.Geoportal.LayerTree = function() {
 	    				layers.push(layer);
 	    				break;
 	    			case "chart":
-	    				var context =  {
+	    				/*var url = "http://localhost:8080/geonetwork/srv/eng/pigeo.layers.getchartdata.json?";
+	    				url+= "source="+child.source;
+	    				url+= "&tables="+child.tablenames;
+	    				url+= "&fields="+child.charting_fields;*/
+	    				/*d3.xml(url, "application/xml", function(xml) {
+	    					console.log(xml);
+	    					return true;
+	    				});*/
+	    				var url="http://gm-risk.pigeo.fr/geoserver-prod/gm/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=gm:c_1c5_districts_pts&maxFeatures=500&outputFormat=application/json";
+	    				var overlay = new OpenLayers.Layer.Vector(child.text, {
+							visibility:false,
+							eventListeners: {
+								'visibilitychanged': function(evt) {
+					                d3.json(url, function(error, collection) {
+						                var div = d3.selectAll("#" + overlay.div.id.replace(/\./g,'\\.'));
+						                console.log(div);
+				                        div.selectAll("svg").remove();
+				                        var svg = div.append("svg");
+				                        g = svg.append("g");
+				                        
+				                        var bounds = d3.geo.bounds(collection),
+			                            path = d3.geo.path().projection(project);
+	
+				                        var feature = g.selectAll("path")
+				                            .data(collection.features)
+				                            .enter().append("path")
+				                            .attr("d", path.pointRadius(10));
+		
+				                        map.events.register("moveend", map, reset);
+				                        reset();
+				  	
+				                        function reset() {
+				                            var bottomLeft = project(bounds[0]),
+				                                topRight = project(bounds[1]);
+				                            svg.attr("width", topRight[0] - bottomLeft[0])
+				                                .attr("height", bottomLeft[1] - topRight[1])
+				                                .style("margin-left", bottomLeft[0] + "px")
+				                                .style("margin-top", topRight[1] + "px");
+				                            g.attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")");
+				                            feature.attr("d", path);
+				                        }
+		
+				                        function project(x) {
+				                            var point = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(x[0], x[1])
+				                                .transform("EPSG:4326", "EPSG:900913"));
+				                            return [point.x, point.y];
+				                        }
+					                });
+								}
+							}
+	    				});
+	    				layers.push(overlay);
+	    				/*var context =  {
 					    		                getSize: function(feature) {
 					    		                	var size = 20;
 					    		                    return size ;
@@ -127,7 +179,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 	    						protocol: new OpenLayers.Protocol.HTTP({
 	    		                    url: url
 	    		                    ,format: new OpenLayers.Format.GeoJSON()
-			    		    		//,format: OpenLayers.Format.GeoJSON*/
+			    		    		//,format: OpenLayers.Format.GeoJSON
 	    						})
 		    		    		,styleMap: m_styleMap
 		    		    		,isBaseLayer: false
@@ -137,7 +189,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 								, legend : child.legend //if set, links the layer with its legend (image)
 	    		                ,strategies: [new OpenLayers.Strategy.Fixed()]
     					});
-	    				layers.push(layer);
+	    				layers.push(layer);*/
 	    				break;
 	    			default: 
 	    				OpenLayers.Console.log("omitting invalid (non-wms, non-chart) layer : "+child.layer + ", "+child.type);
