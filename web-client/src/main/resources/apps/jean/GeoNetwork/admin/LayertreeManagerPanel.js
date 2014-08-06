@@ -260,42 +260,20 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     },
 
     addFolder: function() {
-    	var folder = {
-    			type:"folder",
-    			text:"new folder",
-    			iconCls:folder,
-    			leaf:false
-    	};
-    	this.addNode(folder);
+    	var layer = new GeoNetwork.layers.GeoportalFolderLayer();
+    	this.addNode(layer);
     },
     
     addWMS: function() {
-    	var wms = {
-    			type:"wms",
-    			text:"new wms layer",
-    			url: "/geoserver-prod/wms?",
-    			format:"image/png",
-    			TILED:true,
-    			checked:false,
-    			leaf:true
-    	};
-    	this.addNode(wms);
+    	var layer = new GeoNetwork.layers.GeoportalWMSLayer();
+    	this.addNode(layer);
     },
     
     addChart: function() {
-    	var chart = {
-			type:"chart",
-			text:"new chart layer",
-			source:"gm_census",
-			format:"geojson",
-			tablenames:'table1,table2,...',
-			changeScales:"2500000,0",
-			checked:false,
-			leaf:true
-    	};
-    	this.addNode(chart);
+    	var layer = new GeoNetwork.layers.GeoportalChartLayer();
+    	this.addNode(layer);
     },
-    addNode: function(tpl) {
+    addNode: function(lay) {
     	var node = this.tree.getSelectionModel().getSelectedNode();
     	if (node==null) {
     		Ext.Msg.alert('Add node', 'Please first select a parent node in the tree');
@@ -304,7 +282,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	if (node.leaf) { //we can add a node only to a folder. We will thus use its parent node (the closest folder)
     		node = node.parentNode;
     	}
-    	var child = new Ext.tree.TreeNode(tpl);
+    	var child = lay.getTreeNode();
      	node.appendChild(child);
      	//selects and loads the node in the edit form
      	this.tree.getSelectionModel().select(child);
