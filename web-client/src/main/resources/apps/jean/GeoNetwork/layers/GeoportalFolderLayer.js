@@ -48,9 +48,13 @@ GeoNetwork.layers.GeoportalFolderLayer = Ext.extend(GeoNetwork.layers.GeoportalA
         Ext.apply(this, config);
         Ext.applyIf(this, this.defaultConfig);
         GeoNetwork.layers.GeoportalFolderLayer.superclass.initComponent.call(this);
-                
     },
-
+    
+    getForm: function(conf) {
+    	if (this.form) this.form.destroy();
+    	this.form = new GeoNetwork.layers.GeoportalFolderLayerForm(conf);
+    	return this.form;
+    }
 });
 
 /** api: xtype = gn_layers_geoportalfolderlayer */

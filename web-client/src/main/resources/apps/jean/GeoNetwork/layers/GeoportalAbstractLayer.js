@@ -38,6 +38,7 @@ GeoNetwork.layers.GeoportalAbstractLayer = Ext.extend(Ext.util.Observable, {
     template : {}, //needs to be properly instanciated in child classes
 
     treeNode : null,
+    form	 : null,
     
     /** private: method[initComponent] 
      */
@@ -51,8 +52,55 @@ GeoNetwork.layers.GeoportalAbstractLayer = Ext.extend(Ext.util.Observable, {
     getTreeNode: function() {
     	if (this.treeNode==null) {
     		this.treeNode=new Ext.tree.TreeNode(this.template);
+    		this.treeNode.geoportalLayer=this;
     	}
 		return this.treeNode;
+    },
+    
+    getForm: function(conf) {
+    	if (this.form) this.form.destroy();
+    	this.form = new GeoNetwork.layers.GeoportalAbstractLayerForm(conf);
+    	return this.form;
+    },
+    
+    fixNodeConfig: function(attr) {
+    	//deal with importing old-style layertree.js file
+    	if (attr.layer && attr.text==null) { 
+			attr.text = attr.layer;
+			attr.leaf=true;
+			if (attr.TILED==null && attr.type=="wms") attr.TILED=true;
+		}
+		if (attr.checked==null && attr.leaf==true) {
+			attr.checked = false;
+		}
+		if (attr.type!='folder' && attr.type!=null) {
+			attr.leaf=true;
+		} else {
+			attr.leaf=false;
+			if (attr.children==null) { //empty folder
+				//console.log(attr.text);
+				attr.loaded=true;
+				attr.expanded=true;
+				//attr.cls='grey x-tree-node-collapsed';
+				attr.iconCls='emptyFolder';
+			}
+		}
+		if (attr.leaf!=true && attr.type==null) {
+			//console.log(attr);
+			attr.type='folder';
+		}    	//fixes some node values
+		
+		attr.draggable=true;
+		if (this.overwrite==true) {
+			attr.id = null;
+		}
+		if (!attr.opacity) {
+			attr.opacity=1;
+		}
+		if (attr.qtip) {
+			attr.qcktip = attr.qtip;
+		}
+		return attr;
     }
 });
 

@@ -43,7 +43,23 @@ GeoNetwork.admin.GeoportalTreeLoader = Ext.extend(Ext.tree.TreeLoader, {
     // this below is using the config attributes of the node to do
 	// some testing. The attr.has_events is coming from the loader in PHP
 	createNode: function(attr) {
-		if (attr.layer && attr.text==null) { //deals with importing old-style layertree.js file
+		var geoplayer=null;
+		switch(attr.type) {
+			case 'folder':
+				geoplayer = new GeoNetwork.layers.GeoportalFolderLayer();
+				break;
+			case 'wms': 
+				geoplayer = new GeoNetwork.layers.GeoportalWMSLayer();
+				break;
+			case 'chart':
+				geoplayer = new GeoNetwork.layers.GeoportalChartLayer();
+				break;
+			default:
+				geoplayer = new GeoNetwork.layers.GeoportalAbstractLayer();
+		}
+		var config = geoplayer.fixNodeConfig(attr);
+		
+/*		if (attr.layer && attr.text==null) { //deals with importing old-style layertree.js file
 			attr.text = attr.layer;
 			attr.leaf=true;
 			if (attr.TILED==null && attr.type=="wms") attr.TILED=true;
@@ -72,8 +88,11 @@ GeoNetwork.admin.GeoportalTreeLoader = Ext.extend(Ext.tree.TreeLoader, {
 		if (this.overwrite==true) {
 			attr.id = null;
 		}
-		
-		var node = Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
+*/		
+		var node = Ext.tree.TreeLoader.prototype.createNode.call(this, config);
+		//we set a bidirectional link
+		geoplayer.treeNode = node;
+		node.geoportalLayer=geoplayer;
 		/*if (attr.type=='folder' && attr.children==null) //this works too
 			node.setCls('grey x-tree-node-collapsed');*/
 		return node;

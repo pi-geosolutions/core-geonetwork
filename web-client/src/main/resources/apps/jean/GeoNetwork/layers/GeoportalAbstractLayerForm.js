@@ -17,41 +17,86 @@
  * 
  * Contact: jean.pommier@pi-geosolutions.fr
  */
-Ext.namespace('GeoNetwork.admin');
+Ext.namespace('GeoNetwork.layers');
 
 
 /** api: (define)
- *  module = GeoNetwork.admin
- *  class = LayerForm
+ *  module = GeoNetwork.layers
+ *  class = GeoportalAbstractLayerForm
  *  base_link = `Ext.Panel <http://extjs.com/deploy/dev/docs/?class=Ext.Panel>`_
  */
 /** api: constructor 
- *  .. class:: LayerForm(config)
+ *  .. class:: GeoportalAbstractLayerForm(config)
  *
  *  Creates an specific form, for node attributes edition 
  *  (layer parameters' edition, actually)
  *
  */
 
-GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
-    id: 'node-form',
-    labelWidth:75,
+GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
+    labelWidth:100,
     frame:true,
     labelAlign: 'left',
-    title: 'node details', 
+    title: 'Node details', 
     defaultType: 'textfield',
-    defaults: {width: '90%', 'hidden':true},
+    defaults: {width: '90%', 'hidden':false},
     autoHeight: true,
     border: false,
-    hidden:true,
-    
+
     logWindow:null,
-    nodeFormFields : null, //should be initialized by constructor. See LayertreeManager class
+    nodeFormFields : [{
+        xtype: 'fieldset',
+        title: 'General features',
+        autoHeight: true,
+        layout: 'form',
+        //border:false,
+        collapsible:false,
+        defaults: {width: '90%', 'hidden':false,xtype : 'textfield'},
+        //frame:true,
+    	items	: 	[{
+    		fieldLabel : 'ID',
+    		name : 'id',
+            disabled:true
+    	},{
+    		fieldLabel : 'Type',
+    		name : 'type',
+            disabled:true
+    	},{
+    		fieldLabel : 'Text',
+    		name : 'text'
+    	},{
+    		fieldLabel : 'Opacity',
+    		xtype : 'numberfield',
+    		name : 'opacity',
+    		value : 1.0,
+    		maxValue : 1.0,
+    		minValue : 0
+    	},{
+    		fieldLabel : 'CSS class',
+    		name : 'cls'
+    	},{
+    		fieldLabel : 'Comments',
+    		xtype : 'textarea',
+    		name : 'qcktip',
+    		height:20,
+    		grow:true,
+    		growMin:20,
+    		growMax:200
+    	},{
+    		fieldLabel : 'Extensions',
+    		xtype : 'textarea',
+    		name : 'extensions',
+    		height:20,
+    		grow:true,
+    		growMin:20,
+    		growMax:200
+    	}]
+    }],
     fieldsOrder : null, //idem
     groupStore : null,
     currentNode:null,
     groupsForm:null,
-    
+
     /** private: method[initComponent] 
      *  Initializes the form panel
      *  
@@ -75,7 +120,7 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     	
         Ext.apply(this, config);
         Ext.applyIf(this, this.defaultConfig);
-        GeoNetwork.admin.LayerForm.superclass.initComponent.call(this);
+        GeoNetwork.layers.GeoportalAbstractLayerForm.superclass.initComponent.call(this);
                 
         if (this.nodeFormFields!=null) {
         	this.Build();
@@ -88,97 +133,11 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
      *  TODO : 
      */
     Build: function() {
-    	var items = [];
-    	var tmp = [];
-		Ext.each(this.fieldsOrder, function (fname, index) {
-			if (tmp.indexOf(fname) < 0 ) {
-				tmp.push(fname); //used to remove eventual duplicates
-				switch(fname) {
-    				case 'id': //will use the next statement
-    				case 'type':
-    					items.push({
-	    		            fieldLabel: fname,
-	    		            name: fname,
-	    		            disabled:true
-	    		        });
-    					break;
-    				case 'checked': //will use the next statement
-    				//case 'expanded': //will use the next statement
-    				case 'leaf': 
-    					items.push({
-    			        	xtype: 'checkbox',
-    			            fieldLabel: fname,
-    			            //inputValue:true,
-    			            name: fname,
-    			            value:false
-    			        });
-    					break;
-    				case 'TILED':
-    					items.push({
-    			        	xtype: 'checkbox',
-    			            fieldLabel: fname,
-    			            //inputValue:false,
-    			            name: fname,
-    			            value:true
-    			        });
-    					/*items.push({
-		            	xtype: 'combo',
-		                fieldLabel: fname,
-		                name: fname,
-		                typeAhead: true,
-		                triggerAction: 'all',
-		                lazyRender:true,
-		                mode: 'local',
-		                store: new Ext.data.ArrayStore({
-		                    id: 0,
-		                    fields: [
-		                        'value',
-		                        'text'
-		                    ],
-		                    data: [[true, 'Yes'],[false, 'No']]
-		                }),
-		                valueField: 'value',
-		                displayField: 'text'
-		            });*/
-    					break;
-					case 'extensions':
-						items.push({
-							xtype : 'textarea',
-							fieldLabel : fname,
-							name : fname
-						});
-						break;
-					case 'format':
-						items.push({
-				            xtype: 'radiogroup',
-				            columns: 'auto',
-				            fieldLabel: 'Image format',
-				            name:'format', //necessary for hide/show procedures
-				            items: [{
-				                name: 'format',
-				                inputValue: 'image/png',
-				                boxLabel: 'PNG'
-				            }, {
-				                name: 'format',
-				                inputValue: 'image/jpg',
-				                boxLabel: 'JPG'
-				            }, {
-				                name: 'format',
-				                inputValue: 'geojson',
-				                boxLabel: 'GeoJSON'
-				            }]
-				        });
-						break;
-					default:
-        				items.push({
-    			            fieldLabel: fname,
-    			            name: fname
-    			        });
-				}
-			}
-		}, this);
-    	
-    	this.add(items);
+    	Ext.each(this.nodeFormFields, function (set, index) {
+        	var fset = new Ext.form.FieldSet(set);
+        	this.add(fset);
+    	}, this);
+    	window.fm = this;
     },
     
     buildGroupsForm: function() {
@@ -186,7 +145,7 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     	
     	var groups = [];
     	var checkGroup=null;
-    	this.groupStore.sort("id");
+    	//this.groupStore.sort("id");
     	this.groupStore.each( function(rec) {
     		groups.push({
 	        	boxLabel: rec.data.name,
@@ -199,30 +158,20 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     	        xtype: 'fieldset',
     	        title: 'Groups visibility',
     	        autoHeight: true,
+    	        collapsible:false,
     	        layout: 'form',
-    	        frame:true,
-    	        /*collapsed: false,   
-    	        collapsible: true,*/
-    	        hidden:false,
-    	        items: [/*{
-    	            xtype: 'textfield',
-    	            name: 'txt-test3',
-    	            fieldLabel: 'Groups : checked groups will be able to see the layer, others not',
-    	            anchor: '95%'
-    	        },*/{
+    	    	defaults: {width: '90%', 'hidden':false, xtype : 'textfield'},
+    	        items: [{
     	            // Use the default, automatic layout to distribute the
 					// controls evenly
     	            // across a single row
+    	        	id:'groupscbg',
     	            xtype: 'checkboxgroup',
     	            fieldLabel: 'Groups',
     	            items: groups,
     	            name:'cbgroup'
     	        }]
     	    });
-    	//we make the checkboxes always shown whatever the node type
-    	Ext.iterate(this.nodeFormFields, function(type, index) {
-    		this.nodeFormFields[type].push("cbgroup");
-		},this);
     	return checkGroup;
     },
 
@@ -231,15 +180,9 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
      * 
      * TODO : 
      */
-    editNode: function(node) {
+    editNode: function(geoplayer) {
+    	var node = geoplayer.getTreeNode();
     	if (this.hidden) this.show();
-    	//builds the form structure corresponding to the node type
-    	if (node.attributes.type) {
-    		//console.log(node.attributes.type +"\t\t "+node.text);
-    		this.initForm(node.attributes.type);
-    	} else {
-        	this.getForm().reset();
-    	}
     	//adds the groups visibility checkbox fieldset
     	if (this.groupStore!=null && this.groupsForm==null) {
     		this.groupsForm = this.buildGroupsForm();
@@ -259,21 +202,12 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     /**
      * Resets the form : 
      * - resets the content
-     * - hides/shows the fields depending on the node type
      * 
      * TODO : 
      */
     initForm: function(type) {
      	this.getForm().reset();
-     	
-     	Ext.each(this.getForm().items.items, function(field,index) {
-     		if (this.nodeFormFields[type].indexOf(field.name)>=0) {
-     			field.show();
-     		} else {
-         		field.hide();
-     		}
-     	}, this);
-    },
+     },
     
     /**
      * Applies the changes in the form to the node attributes & display in the tree
@@ -286,11 +220,13 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
 			var values = this.getForm().getFieldValues();
 			//collect the relevant data
 			var attr={};
-			Ext.iterate(values, function(key, value) {
+			window.galf = this;
+			Ext.apply(attr, this.getForm().getFieldValues());
+			/*Ext.iterate(values, function(key, value) {
 				if (this.nodeFormFields[node.attributes.type].indexOf(key)>=0) {
 					attr[key]=value;
 				}
-			}, this)
+			}, this)*/
 			//specifics
 			if (attr.format!=null) {
 				attr.format = attr.format.inputValue;
@@ -304,6 +240,8 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
 			});
 			delete attr.cbgroup;
 			
+			attr.qtip = attr.qcktip;
+			
 			//apply on node
 			Ext.apply(node.attributes,attr);
 			
@@ -314,11 +252,11 @@ GeoNetwork.admin.LayerForm = Ext.extend(Ext.form.FormPanel, {
     },
     
     log: function(msg) {
-    	if (this.parent!=null) {
-    		this.parent.log(msg);
+    	if (this.logHandler!=null) {
+    		this.logHandler.log(msg);
     	}
     }
 });
 
-/** api: xtype = gn_admin_LayerForm */
-Ext.reg('gn_admin_layerform', GeoNetwork.admin.LayerForm);
+/** api: xtype = gn_layers_geoportalabstractlayerform */
+Ext.reg('gn_layers_geoportalabstractlayerform', GeoNetwork.layers.GeoportalAbstractLayerForm);

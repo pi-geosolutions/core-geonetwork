@@ -59,16 +59,16 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     backupsListGrid:null,
     groups:null,
     useGroups:true,
-    nodeFormFields : {
+/*    nodeFormFields : {
     	'chart':['gambia','id', 'type','text', 'uuid','legend','source', 'opacity', 'tablenames', 'changeScales', 'charting_fields', 'other_fields', 'format', 'cls', 'qtip', 'context', 'template', 'extensions'],    	
     	'wms':['gambia','id', 'type','text', 'uuid', 'legend', 'url', 'layers', 'opacity', 'format', 'TILED', 'cls', 'qtip', 'extensions'],
-    	'folder':['gambia','id', 'type', 'text', 'cls', /*'expanded', */'extensions']
+    	'folder':['gambia','id', 'type', 'text', 'cls', 'extensions']
     },
     fieldsOrder : ['id', 'type', 'uuid', 'text', 'url', 'source', 'layers', 'opacity', 'format', 'TILED','legend',
                    'tablenames', 'changeScales', 'charting_fields', 'other_fields','context', 'template',
                    //'expanded', //suppressed : will be managed in the tree panel
                    'cls', 'qtip', 'extensions'],    	
-    
+  */  
     /** private: method[initComponent] 
      *  Initializes the layertree manager panel.
      *  
@@ -127,11 +127,6 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	if (this.useGroups) 
     		this.getGroups();
         
-        
-        //this.createForm(this.nodeFormFields, this.fieldsOrder);
-        
-        //this.backupsListGrid = this.createBackupsGrid();
-        //this.detailView.add(this.backupsListGrid);
         window.lm = this;
     },
     /**
@@ -153,27 +148,19 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      * 
      * TODO : 
      */
-    /*createForm: function(nodeFormFields, fieldsOrder) {
-    	var groupStore = null;
-    	if (this.useGroups) groupStore=this.getGroups();
-        this.nodeForm = new GeoNetwork.admin.LayerForm({
-        	'nodeFormFields':nodeFormFields, 
-        	'fieldsOrder':fieldsOrder,
-        	'groupStore':groupStore,
-        	'logWindow':this.consoleView});
-        this.nodeForm.parent = this;
-        this.detailView.add(this.nodeForm);
-        this.detailView.doLayout();
-    },*/
-    createForm: function() {
+    loadForm: function(layer) {
+    	//clear
+    	this.detailView.remove(this.nodeForm);
+    	if (this.nodeForm) this.nodeForm.destroy();
+    	
+    	//then replace
     	if (this.useGroups == false) this.groups=null;
-        this.nodeForm = new GeoNetwork.admin.LayerForm({
-        	'nodeFormFields':this.nodeFormFields, 
-        	'fieldsOrder':this.fieldsOrder,
-        	'groupStore':this.groups,
-        	'logWindow':this.consoleView});
-        this.nodeForm.parent = this;
-        this.detailView.add(this.nodeForm);
+    	this.nodeForm = layer.getForm({
+    		groupStore : this.groups,
+    		logHandler:this
+    	});
+    	//console.log(this.nodeForm);
+    	this.detailView.add(this.nodeForm);
         this.detailView.doLayout();
     },
     /**
@@ -197,6 +184,8 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 				            },
         	scope		: this
         });
+
+    	this.groups.sort("id");
     },
     
     
@@ -286,19 +275,27 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      	node.appendChild(child);
      	//selects and loads the node in the edit form
      	this.tree.getSelectionModel().select(child);
-        this.editNode(child);
+        this.editNode(lay);
     	return true;
     },
-    editNode:function(node) {
+    editNode:function(source) {
+    	var geoplayer=null;
     	if (this.backupsListGrid)
     		this.backupsListGrid.hide();
-    	if (!this.nodeForm)
-    		this.createForm();
-    	
-    	
-//fix : shows an error because we load the groups asynchronously. We get to this step BEFORE we create nodeForm (see _createForm)    	
-    	this.nodeForm.show();
-        this.nodeForm.editNode(node);
+    	if (source instanceof Ext.tree.TreeNode) {
+    		console.log("this is a Treenode source that we edit. Getting its geoportalNode parent:");
+    		geoplayer = source.geoportalLayer;
+    		console.log(geoplayer);
+    	} else { //we assume source is already GeoportalAbstractLayer object
+    		console.log("editing a geoplayer directly:");
+    		geoplayer = source;
+    		console.log(geoplayer);
+    	}
+    	if (geoplayer!=null) {
+    		this.loadForm(geoplayer);
+        	this.nodeForm.show();
+            this.nodeForm.editNode(geoplayer);
+    	}
     },
     
     removeNode: function() {

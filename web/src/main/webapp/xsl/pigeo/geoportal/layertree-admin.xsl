@@ -17,6 +17,7 @@
 		<link rel="stylesheet" type="text/css" href="{$widgetPath}/css/metadata-view.css"/>
 		<link rel="stylesheet" type="text/css" href="{$widgetPath}/geoportal/css/admin.css"/>
 		<link rel="stylesheet" type="text/css" href="{$widgetPath}/geoportal/css/gnjp.css"/>
+		<link rel="stylesheet" type="text/css" href="{$widgetPath}/geoportal/css/Spinner.css"/>
 	</xsl:template>
 
 	<xsl:template mode="script" match="/" priority="2">
@@ -45,15 +46,20 @@
 			</xsl:otherwise>
 		</xsl:choose>
 		
+				<script type="text/javascript" src="{$widgetPath}/jean/Ext/SpinnerField/Spinner.js"/>
+				<script type="text/javascript" src="{$widgetPath}/jean/Ext/SpinnerField/SpinnerField.js"/>
     	<script type="text/javascript" src="{$widgetPath}/geoportal/js/lang/fr.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/geoportal/js/lang/en.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/layers/GeoportalAbstractLayer.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/layers/GeoportalFolderLayer.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/layers/GeoportalWMSLayer.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/layers/GeoportalChartLayer.js"></script>
+    	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/layers/GeoportalAbstractLayerForm.js"></script>
+    	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/layers/GeoportalFolderLayerForm.js"></script>
+    	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/layers/GeoportalWMSLayerForm.js"></script>
+    	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/layers/GeoportalChartLayerForm.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/Utils.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/LayertreeIO.js"></script>
-    	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/LayerForm.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/BackupGridManager.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/GeoportalTreeLoader.js"></script>
     	<script type="text/javascript" src="{$widgetPath}/jean/GeoNetwork/admin/LayertreeManagerPanel.js"></script>
@@ -72,7 +78,13 @@
 
 			Ext.onReady(function(){
 				Ext.QuickTips.init();
-
+				// Apply a set of config properties to the singleton
+				Ext.apply(Ext.QuickTips.getQuickTip(), {
+				    maxWidth: 200,
+				    minWidth: 100,
+				    showDelay: 50,      // Show 50ms after entering target
+				    trackMouse: true
+				});
 				GeoNetwork.Util.setLang('<xsl:value-of select="/root/gui/language"/>', '<xsl:value-of select="$widgetPath"/>');
 
 				catalogue = new GeoNetwork.Catalogue({
@@ -86,8 +98,7 @@
 					renderTo		: 	'manager',
 					catalogue		: 	catalogue,
 					autoWidth 		: 	true,
-					serviceBaseUrl 	: 	'<xsl:value-of select="/root/gui/locService"/>',
-					height			: 	680
+					serviceBaseUrl 	: 	'<xsl:value-of select="/root/gui/locService"/>'
 				});
 			})
 		</script>

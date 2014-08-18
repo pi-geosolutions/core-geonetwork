@@ -54,6 +54,11 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
         GeoNetwork.layers.GeoportalChartLayer.superclass.initComponent.call(this);
                 
     },
+    getForm: function(conf) {
+    	if (this.form) this.form.destroy();
+    	this.form = new GeoNetwork.layers.GeoportalChartLayerForm(conf);
+    	return this.form;
+    }
 
 });
 

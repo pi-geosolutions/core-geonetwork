@@ -48,6 +48,18 @@
 			</class>
 		</service>
 		
+		
+		<service name="pigeo.layers.getchartdata">
+			<class name="fr.pigeosolutions.geoportal.services.layers.GetChartData">
+			</class>
+		</service>
+		
+		<service name="pigeo.layers.getchartdata.json">
+			<class name="fr.pigeosolutions.geoportal.services.layers.GetChartData">
+			</class>
+			<output sheet="pigeo/geoportal/tojson.xsl" contentType="text/plain; charset=UTF-8"/>
+		</service>
+		
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <!-- Dashboard services                                           -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

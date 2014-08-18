@@ -51,9 +51,13 @@ GeoNetwork.layers.GeoportalWMSLayer = Ext.extend(GeoNetwork.layers.GeoportalAbst
         Ext.apply(this, config);
         Ext.applyIf(this, this.defaultConfig);
         GeoNetwork.layers.GeoportalWMSLayer.superclass.initComponent.call(this);
-                
     },
-
+    
+    getForm: function(conf) {
+    	if (this.form) this.form.destroy();
+    	this.form = new GeoNetwork.layers.GeoportalWMSLayerForm(conf);
+    	return this.form;
+    }
 });
 
 /** api: xtype = gn_layers_geoportalwmslayer */

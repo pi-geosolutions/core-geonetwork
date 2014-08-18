@@ -42,7 +42,8 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
     
     /**
      * Load layertree data in an Ext.tree
-     * 
+     * Params : specificConfig : default value should be null. Used if we want to load the tree from elsewhere than the DB (set it to the tree config you wanted)
+     * 			doOverwrite : should default to false. If true, the nodes IDs are reset, causing the complete overwrite in the DB
      * TODO : 
      */
     loadTree: function(specificConfig,doOverwrite) { //default : specificConfig=null, overwrite=false
