@@ -37,21 +37,36 @@ GeoNetwork.layers.GeoportalWMSLayer = Ext.extend(GeoNetwork.layers.GeoportalAbst
     template : {
 		type:"wms",
 		text:"new wms layer",
-		url: "/geoserver-prod/wms?",
+		opacity:1,
+		cls:'',
+		qcktip : 'here come your comments about the layer',
+		url: "http://gm-risk.pigeo.fr/geoserver-prod/gm/wms?",
 		format:"image/png",
 		TILED:true,
 		checked:false,
 		leaf:true
     },
+    form:null,
+    treeNode:null,
+    gpid:1,
+    type: 'wms',
       
 	
-	/** private: method[initComponent] 
+	/** private: method[constructor] 
      */
-    initComponent: function(config){
+    constructor: function(config) {
+    	GeoNetwork.layers.GeoportalWMSLayer.superclass.constructor.call(this, config);
         Ext.apply(this, config);
+        this.gpid = Math.round(Math.random() * 100000);
+    },
+    
+    //Unused because it's no graphic component !
+   /* initComponent: function(){
+        Ext.apply(this, this.config);
         Ext.applyIf(this, this.defaultConfig);
         GeoNetwork.layers.GeoportalWMSLayer.superclass.initComponent.call(this);
-    },
+    },*/
+
     
     getForm: function(conf) {
     	if (this.form) this.form.destroy();

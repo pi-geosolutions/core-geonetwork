@@ -366,6 +366,7 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
         	var xml = "<children>\n";
         	var attr = GeoNetwork.admin.Utils.clone(node.attributes); //to avoid affecting the layertree
 
+        	//console.log(attr);
         	xml +="<id>"+attr.id+"</id>\n";
         	delete attr["id"]; //a bit of cleanup
         	
@@ -400,6 +401,7 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
     		});
     		delete attr.group;
 
+        	//console.log(attr);
     		Ext.iterate(attr, function(key, value) {
     			if ((typeof value )=="string")
     				attr[key] = GeoNetwork.admin.Utils.encodeHTML(value);

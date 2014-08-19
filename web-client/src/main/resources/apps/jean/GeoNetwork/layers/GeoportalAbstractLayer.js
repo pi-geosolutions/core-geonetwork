@@ -39,19 +39,21 @@ GeoNetwork.layers.GeoportalAbstractLayer = Ext.extend(Ext.util.Observable, {
 
     treeNode : null,
     form	 : null,
+    gpid:0,
+    type: 'abstract',
     
-    /** private: method[initComponent] 
+    /** private: method[constructor] 
      */
-    initComponent: function(config){
+    constructor: function(config) {
+    	GeoNetwork.layers.GeoportalAbstractLayer.superclass.constructor.call(this, config);
         Ext.apply(this, config);
-        Ext.applyIf(this, this.defaultConfig);
-        GeoNetwork.layers.GeoportalWMSLayer.superclass.initComponent.call(this);
-                
+        this.gpid = Math.round(Math.random() * 100);
     },
     
-    getTreeNode: function() {
+    //conf should normally be null. Used for cloning
+    getTreeNode: function(conf) {
     	if (this.treeNode==null) {
-    		this.treeNode=new Ext.tree.TreeNode(this.template);
+    		this.treeNode=new Ext.tree.TreeNode(GeoNetwork.admin.Utils.clone(conf||this.template));
     		this.treeNode.geoportalLayer=this;
     	}
 		return this.treeNode;
@@ -101,6 +103,24 @@ GeoNetwork.layers.GeoportalAbstractLayer = Ext.extend(Ext.util.Observable, {
 			attr.qcktip = attr.qtip;
 		}
 		return attr;
+    },
+    
+    cloneConfig: function(overrides) {
+    	overrides = overrides || {};
+	    var id = overrides.id || Ext.id();
+	    var cfg = Ext.applyIf(overrides, this.initialConfig);
+	    cfg.id = id; // prevent dup id
+	    var clone = new this.constructor(cfg);
+	    if (this.form) {
+	    	clone.form = this.form.cloneConfig();
+	    }
+	    if (this.treeNode) {
+	    	var attr = GeoNetwork.admin.Utils.clone(this.treeNode.attributes);
+	    	delete attr.id;
+	    	attr.text = attr.text+" (copy)";
+	    	clone.getTreeNode(attr);
+	    }
+	    return clone;
     }
 });
 

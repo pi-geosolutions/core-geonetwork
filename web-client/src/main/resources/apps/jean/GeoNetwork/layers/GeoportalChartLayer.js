@@ -37,23 +37,48 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
     template : {
 		type:"chart",
 		text:"new chart layer",
-		source:"gm_census",
+		opacity:1,
+		cls:'',
+		qcktip : 'here come your comments about the layer',
+		extensions: '',
+		url:'http://gm-risk.pigeo.fr/geoserver-prod/gm/ows?service=WFS&version=1.0.0&request=GetFeature&maxFeatures=500&outputFormat=application/json&typeName=',
+		layers:'region_layer,district_layer,local_layer',
+		changescales : '250000,100000,0',
 		format:"geojson",
-		tablenames:'table1,table2,...',
-		changeScales:"2500000,0",
+		legend : '',
+		join_geofield : '',
+		dbname : 'gm_risk_geodata',
+		dbtables : 'reg_table,district_table,local_table',
+		join_dbfield : '',
+		values_dbfield : '',
+		labels_dbfield : '',
+		charttype : 'pie',
+		colorcodes : '',
+		chartsize : 30,
 		checked:false,
 		leaf:true
     },
+
+    gpid:3,
+    type: 'chart',
       
+	
+	/** private: method[constructor] 
+     */
+    constructor: function(config) {
+    	GeoNetwork.layers.GeoportalChartLayer.superclass.constructor.call(this, config);
+        Ext.apply(this, config);
+        this.gpid = Math.round(Math.random() * 10000000);
+    },
 	
 	/** private: method[initComponent] 
      */
-    initComponent: function(config){
+   /* initComponent: function(config){
         Ext.apply(this, config);
         Ext.applyIf(this, this.defaultConfig);
         GeoNetwork.layers.GeoportalChartLayer.superclass.initComponent.call(this);
                 
-    },
+    },*/
     getForm: function(conf) {
     	if (this.form) this.form.destroy();
     	this.form = new GeoNetwork.layers.GeoportalChartLayerForm(conf);

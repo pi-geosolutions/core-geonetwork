@@ -175,17 +175,7 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
     		fieldLabel : 'Chart size',
     		name : 'chartsize'
     	}]
-	}],/*    nodeFormFields : {
-    	}
-	'chart':['gambia','id', 'type','text', 'uuid','legend','source', 'opacity', 'tablenames', 'changeScales', 'charting_fields', 'other_fields', 'format', 'cls', 'qtip', 'context', 'template', 'extensions'],    	
-	'wms':['gambia','id', 'type','text', 'uuid', 'legend', 'url', 'layers', 'opacity', 'format', 'TILED', 'cls', 'qtip', 'extensions'],
-	'folder':['gambia','id', 'type', 'text', 'cls', 'extensions']
-},
-fieldsOrder : ['id', 'type', 'uuid', 'text', 'url', 'source', 'layers', 'opacity', 'format', 'TILED','legend',
-               'tablenames', 'changeScales', 'charting_fields', 'other_fields','context', 'template',
-               //'expanded', //suppressed : will be managed in the tree panel
-               'cls', 'qtip', 'extensions'],    	
-*/  
+	}],
     
     /** private: method[initComponent] 
      *  Initializes the form panel
@@ -198,87 +188,6 @@ fieldsOrder : ['id', 'type', 'uuid', 'text', 'url', 'source', 'layers', 'opacity
         GeoNetwork.layers.GeoportalChartLayerForm.superclass.initComponent.call(this);
     }
     
-    /** private: method[Build] 
-     *  Builds the form itself
-     *  
-     *  TODO : 
-     */
-/*    Build: function() {
-    	var items = [];
-    	var tmp = [];
-		Ext.each(this.fieldsOrder, function (fname, index) {
-			if (tmp.indexOf(fname) < 0 ) {
-				tmp.push(fname); //used to remove eventual duplicates
-				switch(fname) {
-    				case 'id': //will use the next statement
-    				case 'type':
-    					items.push({
-	    		            fieldLabel: fname,
-	    		            name: fname,
-	    		            disabled:true
-	    		        });
-    					break;
-    				case 'checked': //will use the next statement
-    				//case 'expanded': //will use the next statement
-    				case 'leaf': 
-    					items.push({
-    			        	xtype: 'checkbox',
-    			            fieldLabel: fname,
-    			            //inputValue:true,
-    			            name: fname,
-    			            value:false
-    			        });
-    					break;
-    				case 'TILED':
-    					items.push({
-    			        	xtype: 'checkbox',
-    			            fieldLabel: fname,
-    			            //inputValue:false,
-    			            name: fname,
-    			            value:true
-    			        });
-    					break;
-					case 'extensions':
-						items.push({
-							xtype : 'textarea',
-							fieldLabel : fname,
-							name : fname
-						});
-						break;
-					case 'format':
-						items.push({
-				            xtype: 'radiogroup',
-				            columns: 'auto',
-				            fieldLabel: 'Image format',
-				            name:'format', //necessary for hide/show procedures
-				            items: [{
-				                name: 'format',
-				                inputValue: 'image/png',
-				                boxLabel: 'PNG'
-				            }, {
-				                name: 'format',
-				                inputValue: 'image/jpg',
-				                boxLabel: 'JPG'
-				            }, {
-				                name: 'format',
-				                inputValue: 'geojson',
-				                boxLabel: 'GeoJSON'
-				            }]
-				        });
-						break;
-					default:
-        				items.push({
-    			            fieldLabel: fname,
-    			            name: fname
-    			        });
-				}
-			}
-		}, this);
-    	
-    	this.add(items);
-    },
-    */
-
 });
 
 /** api: xtype = gn_layers_geoportalchartlayerform */

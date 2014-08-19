@@ -102,7 +102,7 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
      *  
      *  TODO : 
      */
-    initComponent: function(config){
+    initComponent: function(){
     	var me=this;
     	this.buttons = [{
             text: 'Apply',
@@ -118,7 +118,7 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
         }];
     	
     	
-        Ext.apply(this, config);
+        Ext.apply(this, this.config);
         Ext.applyIf(this, this.defaultConfig);
         GeoNetwork.layers.GeoportalAbstractLayerForm.superclass.initComponent.call(this);
                 
@@ -180,7 +180,17 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
      * 
      * TODO : 
      */
-    editNode: function(geoplayer) {
+    editNode: function(source) { //accepts a treenode or a geoportail*Layer object
+    	var geoplayer=null;
+    	if (source instanceof Ext.tree.TreeNode) {
+    		//console.log("this is a Treenode source that we edit. Getting its geoportalNode parent:");
+    		geoplayer = source.geoportalLayer;
+    		//console.log(geoplayer);
+    	} else { //we assume source is already GeoportalAbstractLayer object
+    		//console.log("editing a geoplayer directly:");
+    		geoplayer = source;
+    		//console.log(geoplayer);
+    	}
     	var node = geoplayer.getTreeNode();
     	if (this.hidden) this.show();
     	//adds the groups visibility checkbox fieldset
@@ -231,6 +241,9 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
 			if (attr.format!=null) {
 				attr.format = attr.format.inputValue;
 			}
+			if (attr.charttype!=null) {
+				attr.charttype = attr.charttype.inputValue;
+			}
 			attr.layer=attr.text;
 
 			//specifics to group visibility management : 
@@ -249,12 +262,6 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
 
 	    	GeoNetwork.admin.Utils.log(this.logWindow,"layer <i>"+attr.text+"</i> successfully updated. Don't forget to save the tree when you are done.");
 	    }
-    },
-    
-    log: function(msg) {
-    	if (this.logHandler!=null) {
-    		this.logHandler.log(msg);
-    	}
     }
 });
 

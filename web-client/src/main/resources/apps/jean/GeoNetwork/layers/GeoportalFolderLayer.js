@@ -40,15 +40,26 @@ GeoNetwork.layers.GeoportalFolderLayer = Ext.extend(GeoNetwork.layers.GeoportalA
 		iconCls:'folder',
 		leaf:false
     },
+
+    gpid:2,
+    type: 'folder',
       
+	
+	/** private: method[constructor] 
+     */
+    constructor: function(config) {
+    	GeoNetwork.layers.GeoportalFolderLayer.superclass.constructor.call(this, config);
+        Ext.apply(this, config);
+        this.gpid = Math.round(Math.random() * 1000000);
+    },
 	
 	/** private: method[initComponent] 
      */
-    initComponent: function(config){
+   /* initComponent: function(config){
         Ext.apply(this, config);
         Ext.applyIf(this, this.defaultConfig);
         GeoNetwork.layers.GeoportalFolderLayer.superclass.initComponent.call(this);
-    },
+    },*/
     
     getForm: function(conf) {
     	if (this.form) this.form.destroy();
