@@ -53,6 +53,11 @@
 			<class name="fr.pigeosolutions.geoportal.services.layers.GetChartData">
 			</class>
 		</service>
+		<service name="pigeo.layers.listchartingdbs">
+			<output sheet="pigeo/geoportal/listChartingDBs.xsl" contentType="text/xml; charset=UTF-8">
+				<xml name="charts" file="WEB-INF/config-pigeo-charts.xml" localized="false" />
+			</output>
+		</service>
 		
 		<service name="pigeo.layers.getchartdata.json">
 			<class name="fr.pigeosolutions.geoportal.services.layers.GetChartData">

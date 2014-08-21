@@ -131,8 +131,25 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
         defaults: {width: '90%', 'hidden':false, xtype : 'textfield'},
         //frame:true,
     	items	: 	[{
+    		xtype:'combo',
     		fieldLabel : 'Database',
-    		name : 'dbname'
+    		name : 'dbname',
+            //forceSelection: true,
+            editable:       false,
+            displayField:   'label',
+            valueField:     'id',
+            store: new Ext.data.XmlStore({
+                // store configs
+                //autoDestroy: true,
+                //autoLoad: true,
+                storeId: 'chartDbsStore',
+                url: 'pigeo.layers.listchartingdbs', // automatically configures a HttpProxy
+                // reader configs
+                record: 'db', // records will have an "Item" tag
+                idProperty: 'id',
+                fields: [{name: 'id'},
+      		           {name: 'label'}]
+            })
     	},{
     		fieldLabel : 'Table(s) name(s)',
     		name : 'dbtables'
