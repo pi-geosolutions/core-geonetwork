@@ -168,6 +168,7 @@ public class Set implements Service {
             System.out.println("recovered node id "+nodeid); 
             
         } else { //it's an update of an existing node. We check if the node hasn't been changed meanwhile. If yes, we abort the commit
+
             Element output =dbms.select("SELECT id, lastchanged FROM geoportal.nodes WHERE id=?;", Integer.parseInt(nodeid));
             dbms.select("WITH row AS (UPDATE geoportal.nodes SET (parentid, weight, isfolder, json, lastchanged) = (?, ? ,? ,?, (SELECT now()))  WHERE id=? RETURNING lastchanged ) SELECT lastchanged from row ;", 
                     parentid,

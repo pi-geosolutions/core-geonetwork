@@ -111,6 +111,7 @@ GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
     	} else {
         	treeConfig = jsonTree.treeConfig;//structure we get from old layertree files
     	}
+    	this.alterIDs(treeConfig);
     	var newtree = this.parent.treeReload(treeConfig, true);
     	this.log("Loaded new tree config. Don't forget to <i>Save to DB</i> to apply the changes. You can revert last saved session using Tree->reload.");
 
@@ -192,6 +193,16 @@ GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
             scope : this
     	});
 
+    },
+    /*
+     * Function alterIDs : alters the ids of all the nodes of the tree, in order for the node to be considered as plain new nodes 
+     * and properly saved in the DB (will not try to make an update, of a node that may not exist)
+     */
+    alterIDs: function(treeconf) {
+    	Ext.each(treeconf, function(node, index) {
+    		node.id = "x-backup-"+node.id;
+    		if (node.children)	this.alterIDs(node.children);
+    	}, this);
     },
     log: function(msg) {
     	if (this.parent!=null) {

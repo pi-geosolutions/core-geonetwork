@@ -137,9 +137,22 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
      */
     loadTree: function(specificConfig,doOverwrite) { //default : specificConfig=null, overwrite=false
 		var treepanel=this.getLayertreeIO().loadTree(specificConfig, false);
-		treepanel.addListener('click', function(node, event){
+		if (treepanel==null) {
+			var errmsg = "ERROR : couldn't load the layertree. Some of the changes you recently made must cause the problem. "+
+			"Most likely you have used improper characters, like doublequotes, where you weren't expected to. " +
+			"You are advised to restore a previous backup and try again. If you can't solve it, please contact your administrator.\n";
+			//console.log(errmsg);
+			treepanel = new Ext.Panel({
+		        border: false,
+		        layout:'fit',
+                html: errmsg
+            });
+			//setTimeout(function() {GeoNetwork.admin.Utils.log(this.consoleView, errmsg);}, 3000);
+		} else {
+			treepanel.addListener('click', function(node, event){
 								                this.editNode(node);
 								            }, this);
+		}
 	    return treepanel;
     },
     

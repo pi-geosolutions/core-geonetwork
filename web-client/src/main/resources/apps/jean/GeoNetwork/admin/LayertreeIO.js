@@ -55,7 +55,10 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
 	    	} else {
 	    		treeConfig = this.getFromDB();
 	    	}
-	    	if (treeConfig==null) return;
+	    	if (treeConfig==null) {
+	    		throw "tree config is null. Can't load from DB";
+	    		return;
+	    	}
 	    	
 	    	treepanel = new Ext.tree.TreePanel({
 		        title:'layerTree',
@@ -93,16 +96,17 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
 		            scope : this
 		        }
 		    });
+	    	
     	} catch (err) {
 	    	if (this.verbose) {
 	    		var errormsg = "ERROR : couldn't load the layertree. Some of the changes you recently made must cause the problem. "+
 				"Most likely you have used improper characters, like doublequotes, where you weren't expected to. " +
-				"You are advised to restore a previous backup and try again. If you can't solve it, please contact your administrator."
+				"You are advised to restore a previous backup and try again. If you can't solve it, please contact your administrator.\n" +err
 				GeoNetwork.admin.Utils.log(this.logWindow,errormsg);
 				Ext.MessageBox.show({
 					icon: Ext.MessageBox.ERROR,
-					title: OpenLayers.i18n("Load layertree"), msg:
-					OpenLayers.i18n(errormsg),
+					title: OpenLayers.i18n("Load layertree"), 
+					msg: OpenLayers.i18n(errormsg),
 					buttons: Ext.MessageBox.OK
 				});
 	    	}
