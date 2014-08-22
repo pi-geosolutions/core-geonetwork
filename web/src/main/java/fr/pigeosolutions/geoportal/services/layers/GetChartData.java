@@ -40,7 +40,7 @@ public class GetChartData implements Service {
         String db = Util.getParam(params, "source",null);
         String tableslist = Util.getParam(params, "tables",null);
         String fields = Util.getParam(params, "fields",null);
-        String geom_field = Util.getParam(params, "geom_field","the_geom");
+        String where = Util.getParam(params, "where",null);
         
         if (db==null || tableslist==null || fields==null )
             return new Element(Jeeves.Elem.RESPONSE);
@@ -55,7 +55,7 @@ public class GetChartData implements Service {
             Element table = new Element("table");
             table.addContent(new Element("id").setText(Integer.toString(i)));
             table.addContent(new Element("name").setText(tables[i]));
-            Element features = this.getFeatures(dbms, tables[i], fields, geom_field);
+            Element features = this.getFeatures(dbms, tables[i], fields, where);
             table.addContent(features);
             list.addContent(table);
         }
@@ -64,10 +64,12 @@ public class GetChartData implements Service {
         return resp;
     } 
 
-    private Element getFeatures(Dbms dbms, String table, String fields, String geom_field) throws SQLException {
-        String req = "SELECT "+this.quote(fields)+", ST_X(ST_Transform(ST_Centroid(\""+geom_field+"\"),4326)) AS lon, "
-                + "ST_Y(ST_Transform(ST_Centroid(\""+geom_field+"\"),4326)) AS lat, "
-                + "ST_AsGeojson(ST_Transform(ST_Centroid(\""+geom_field+"\"),4326)) AS the_geom FROM \""+table+"\"; ";
+    private Element getFeatures(Dbms dbms, String table, String fields, String where) throws SQLException {
+        String req = "SELECT "+this.quote(fields)+" FROM \""+table+"\" ";
+        if (where!="") {
+            req += "WHERE " +where;
+        }
+        req+=";";
         System.out.println(req);
         Element features = dbms.select(req);
         /*

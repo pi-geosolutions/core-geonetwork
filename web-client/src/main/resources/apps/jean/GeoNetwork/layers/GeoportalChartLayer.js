@@ -52,6 +52,7 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 		join_dbfield : '',
 		values_dbfield : '',
 		labels_dbfield : '',
+		dbwhere : '',
 		charttype : 'pie',
 		colorcodes : '',
 		chartsize : 30,

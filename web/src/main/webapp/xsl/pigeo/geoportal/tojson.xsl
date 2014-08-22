@@ -32,7 +32,7 @@
   jean.pommier@pi-geosolutions.fr
 -->
 
-  <xsl:output indent="no" omit-xml-declaration="yes" method="text" encoding="UTF-8" media-type="text/x-json"/>
+  <xsl:output indent="yes" omit-xml-declaration="yes" method="html" encoding="UTF-8" media-type="text/x-json"/>
 	<xsl:strip-space elements="*"/>
   <!--contant-->
   <xsl:variable name="d">0123456789</xsl:variable>
@@ -194,7 +194,6 @@
   <!-- convert root element to an anonymous container -->
   <xsl:template match="/">
     <xsl:apply-templates select="/root/response/list/*"/>
-    coucou
   </xsl:template>
     
 </xsl:stylesheet>

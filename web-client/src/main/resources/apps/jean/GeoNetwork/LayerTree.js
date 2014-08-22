@@ -99,6 +99,8 @@ GeoNetwork.Geoportal.LayerTree = function() {
 	 */
 	function loadChart(overlay) {
 		console.log("loading chart");
+		var params  =overlay.gpconfig;
+		console.log(params);
 		
 		var color = d3.scale.ordinal()
 		.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
@@ -106,22 +108,26 @@ GeoNetwork.Geoportal.LayerTree = function() {
 
 		var pie = d3.layout.pie()
 		.sort(null)
-		.value(function(d) { return d.area; });
+		.value(function(d) { return d[params.values_dbfield]; });
 
+		
+		var geo_url = params.url + params.layers;
+		var data_url = "http://localhost:8080/geonetwork/srv/eng/pigeo.layers.getchartdata.json?source="+params.dbname+"&tables="+params.dbtables+"&where="+params.dbwhere+"&fields="+params.values_dbfield+","+params.join_dbfield+","+params.labels_dbfield;
 		queue()
-		.defer(d3.json, "http://gm-risk.pigeo.fr/geoserver-prod/gm/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=gm:c_1c5_districts_pts&maxFeatures=500&outputFormat=application/json")
-		.defer(d3.json, "http://localhost/d3dev/data_json.php")
-		.await(function (error, geo, data){
+		.defer(d3.json, geo_url)
+		.defer(d3.json, data_url)
+		.await(function (error, geo, dataset){
 			if (error) return console.log("there was an error loading the data: " + error);
 
 			//console.log(overlay);
 			//console.log(geo);
 			//console.log(data);
-
+			data = dataset.table[0].features.record;
+			
 			data.forEach(function(d) {
-				d.ocsol_code = +d.ocsol_code;
-				d.code = +d.code;
-				d.area = +d.area;
+				d[params.values_dbfield] = +d[params.values_dbfield];
+				d[params.labels_dbfield] = +d[params.labels_dbfield];
+				d[params.join_dbfield] = +d[params.join_dbfield];
 			});
 			var div = d3.selectAll("#" + overlay.div.id.replace(/\./g,'\\.'));
 			div.selectAll("svg").remove();
@@ -135,7 +141,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 			                      [bounds[1][0] + 0.5*(bounds[1][0] - bounds[0][0]), bounds[1][1] + 0.5*(bounds[1][1] - bounds[0][1])]];
 			bounds = bufferedBounds;
 			var features = g.selectAll("g.pie")
-							.data(geo.features, function(d) {return d.properties.DCODE;});
+							.data(geo.features, function(d) {return d.properties[params.join_geofield];});
 
 			var graphics = features.enter()
 									.append("g") 
@@ -174,61 +180,29 @@ GeoNetwork.Geoportal.LayerTree = function() {
 				.data(pie(data.filter(function(d) {
 					//console.log(d);
 					//console.log(parent);
-					return d.code==geo.properties.DCODE})))
+					return d[params.join_dbfield]==geo.properties[params.join_geofield]})))
 					.enter().append("g")
 					.attr("class", "arc");
 
 				g.append("path")
 				.attr("d", d3.svg.arc()
 						.outerRadius(function (d) {
-							return Math.round(Math.sqrt(100 + geo.properties.SUM_HHS / 50))
+							//return params.chartsize //Math.round(Math.sqrt(100 + geo.properties.SUM_HHS / 50))
+							var size=10;
+							try {
+								size = eval(params.chartsize);
+								if (isNaN(size)) throw "The expression could be resolved without explicit error but the result is NaN. Probably the fields used in the expression are not correctly specified";
+							} catch (err) {
+								size=30;
+								console.log("error calculating 'size' expression : "+params.chartsize+"\nError msg: "+err);
+							}
+							return size;
 						})
 						.innerRadius(0))
-						.style("fill", function(d) { return color(d.data.ocsol_code); });
+						.style("fill", function(d) { return color(d.data[params.labels_dbfield]); });
 			};
 
 		});
-
-
-
-		/*var url="http://gm-risk.pigeo.fr/geoserver-prod/gm/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=gm:c_1c5_districts_pts&maxFeatures=500&outputFormat=application/json";
-		d3.json(url, function(error, collection) {
-            var div = d3.selectAll("#" + overlay.div.id.replace(/\./g,'\\.'));
-            console.log(div);
-            div.selectAll("svg").remove();
-            var svg = div.append("svg");
-            g = svg.append("g");
-
-            var bounds = d3.geo.bounds(collection),
-            path = d3.geo.path().projection(project);
-
-            var feature = g.selectAll("path")
-                .data(collection.features)
-                .enter().append("path")
-                .attr("d", path.pointRadius(10));
-
-            map.events.register("moveend", map, reset);
-            reset();
-
-            function reset() {
-                var bottomLeft = project(bounds[0]),
-                    topRight = project(bounds[1]);
-                svg.attr("width", topRight[0] - bottomLeft[0])
-                    .attr("height", bottomLeft[1] - topRight[1])
-                    .style("margin-left", bottomLeft[0] + "px")
-                    .style("margin-top", topRight[1] + "px");
-                g.attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")");
-                feature.attr("d", path);
-            }
-
-            function project(x) {
-                var point = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(x[0], x[1])
-                    .transform("EPSG:4326", "EPSG:900913"));
-                return [point.x, point.y];
-            }
-
-            overlay.gpconfig.loaded=true;
-        });*/
 	}
 
 	/*

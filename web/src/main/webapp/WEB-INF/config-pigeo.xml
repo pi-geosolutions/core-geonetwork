@@ -62,7 +62,7 @@
 		<service name="pigeo.layers.getchartdata.json">
 			<class name="fr.pigeosolutions.geoportal.services.layers.GetChartData">
 			</class>
-			<output sheet="pigeo/geoportal/tojson.xsl" contentType="text/plain; charset=UTF-8"/>
+			<output sheet="pigeo/geoportal/tojson.xsl" contentType="application/json; charset=UTF-8"/>
 		</service>
 		
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

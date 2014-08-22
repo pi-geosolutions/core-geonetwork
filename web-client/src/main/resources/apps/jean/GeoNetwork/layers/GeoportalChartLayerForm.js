@@ -162,6 +162,9 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
     	},{
     		fieldLabel : 'Labels field',
     		name : 'labels_dbfield'
+    	},{
+    		fieldLabel : 'WHERE clause',
+    		name : 'dbwhere'
     	}]
 	},{
         xtype: 'fieldset',
