@@ -61,21 +61,26 @@ GeoNetwork.Geoportal.LayerTree = function() {
 							{
 								isBaseLayer: false
 								, transitionEffect: 'resize'
-									, buffer: 0
-									, visibility:checked
-									, opacity : (child.opacity===null?'1.0':child.opacity)
-									, isGeoportalNativeLayer : true
-									, uuid : child.uuid //if set, links the layer with its metadata
-									, legend : child.legend //if set, links the layer with an image legend
+								, buffer: 0
+								, visibility:checked
+								, opacity : (child.opacity===null?'1.0':child.opacity)
+								, isGeoportalNativeLayer : true
+								, uuid : child.uuid //if set, links the layer with its metadata
+								, legend : child.legend //if set, links the layer with an image legend
 							}
 					);
 					layers.push(layer);
 					break;
 				case "chart":
 					var overlay = new OpenLayers.Layer.Vector(child.text, {
-						visibility:false,
-						gpconfig:child,
-						eventListeners: {
+						visibility:false
+						, gpconfig:child
+						, visibility:checked
+						, opacity : (child.opacity===null?'1.0':child.opacity)
+						, isGeoportalNativeLayer : true
+						, uuid : child.uuid //if set, links the layer with its metadata
+						, legend : child.legend //if set, links the layer with an image legend
+						, eventListeners: {
 							'visibilitychanged': function(evt) {
 								if ((this.visibility) && (!this.gpconfig.loaded))
 									loadChart(this);
@@ -102,8 +107,26 @@ GeoNetwork.Geoportal.LayerTree = function() {
 		var params  =overlay.gpconfig;
 		console.log(params);
 		
-		var color = d3.scale.ordinal()
-		.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+		/*var color = d3.scale.ordinal()
+		.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);*/
+		
+		var color = d3.scale.category20();
+		var colorcodes=null;
+		if (params.colorcodes!="") {
+			if (params.colorcodes.substring(0,1)!="(") { //an object must be surrounded by parenthesis to be properly eval(ed)
+				if (params.colorcodes.substring(0,1)!="{") { //an object must be surrounded by parenthesis to be properly eval(ed)
+					params.colorcodes = "{"+params.colorcodes+"}";
+				}
+				params.colorcodes = "("+params.colorcodes+")";
+			}
+			try {
+				colorcodes = eval(params.colorcodes);
+				console.log(colorcodes);
+				
+			} catch (err) {
+				console.log(err);
+			}
+		}
 
 
 		var pie = d3.layout.pie()
@@ -199,8 +222,18 @@ GeoNetwork.Geoportal.LayerTree = function() {
 							return size;
 						})
 						.innerRadius(0))
-						.style("fill", function(d) { return color(d.data[params.labels_dbfield]); });
+						.style("fill", function(d) { return getColor(d.data[params.labels_dbfield]); });
 			};
+			
+			function getColor(idx) {
+				if (colorcodes) {
+					if (colorcodes[idx]) {
+						return colorcodes[idx];
+					}
+				}
+				//default
+				return color(idx)
+			}
 
 		});
 	}
