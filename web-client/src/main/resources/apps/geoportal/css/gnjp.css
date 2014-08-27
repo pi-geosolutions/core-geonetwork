@@ -317,6 +317,10 @@ p.abstract {
 }
 .x-tree-node .important {
 	font-weight:bold !important;
+	/*fix some style collisions in the admin section : */
+	border : none;
+	margin : 0;
+	padding : 0;
 }
 .x-tree-node .grey a span{
 	color:#999999 !important;

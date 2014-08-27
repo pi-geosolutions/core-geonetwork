@@ -72,7 +72,10 @@ GeoNetwork.Geoportal.LayerTree = function() {
 					layers.push(layer);
 					break;
 				case "chart":
-					var overlay = new OpenLayers.Layer.Vector(child.text, {
+					var chart = new GeoNetwork.layers.GeoportalChartLayer();
+					chart.setMap(map);
+					var overlay = chart.getOverlay(child);
+					/*var overlay = new OpenLayers.Layer.Vector(child.text, {
 						visibility:false
 						, gpconfig:child
 						, visibility:checked
@@ -87,7 +90,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 
 							}
 						}
-					});
+					});*/
 					layers.push(overlay);
 					break;
 				default: 
@@ -105,7 +108,6 @@ GeoNetwork.Geoportal.LayerTree = function() {
 	function loadChart(overlay) {
 		console.log("loading chart");
 		var params  =overlay.gpconfig;
-		console.log(params);
 		
 		/*var color = d3.scale.ordinal()
 		.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);*/
@@ -121,7 +123,6 @@ GeoNetwork.Geoportal.LayerTree = function() {
 			}
 			try {
 				colorcodes = eval(params.colorcodes);
-				console.log(colorcodes);
 				
 			} catch (err) {
 				console.log(err);
@@ -141,17 +142,11 @@ GeoNetwork.Geoportal.LayerTree = function() {
 		.defer(d3.json, data_url)
 		.await(function (error, geo, dataset){
 			if (error) return console.log("there was an error loading the data: " + error);
-
+			
 			//console.log(overlay);
 			//console.log(geo);
 			//console.log(data);
-			data = dataset.table[0].features.record;
 			
-			data.forEach(function(d) {
-				d[params.values_dbfield] = +d[params.values_dbfield];
-				d[params.labels_dbfield] = +d[params.labels_dbfield];
-				d[params.join_dbfield] = +d[params.join_dbfield];
-			});
 			var div = d3.selectAll("#" + overlay.div.id.replace(/\./g,'\\.'));
 			div.selectAll("svg").remove();
 			var svg = div.append("svg");
@@ -163,21 +158,79 @@ GeoNetwork.Geoportal.LayerTree = function() {
 			var bufferedBounds = [[bounds[0][0] + 0.5*(bounds[0][0] - bounds[1][0]), bounds[0][1] + 0.5*(bounds[0][1] - bounds[1][1])],
 			                      [bounds[1][0] + 0.5*(bounds[1][0] - bounds[0][0]), bounds[1][1] + 0.5*(bounds[1][1] - bounds[0][1])]];
 			bounds = bufferedBounds;
-			var features = g.selectAll("g.pie")
-							.data(geo.features, function(d) {return d.properties[params.join_geofield];});
+			
+			var layers = params.layers.split(",");
+			geo.mlfeatures = new Array();
+			var features=new Array();
+			var graphics=new Array();
+			layers.forEach(function(layer,idx) {
+				//filter the geojson features depending on the layer they come from (they came all together)
+				var l = layer.replace("gm:",""); //trim the gm: prefix
+				var fts = geo.features.filter(function(el, i, arr) {
+					return (el.id.substr(0,l.length) == l);
+				});
+				geo.mlfeatures[layer] = fts;
+				
+				/*
+				 * prepare the datasets
+				 */
+				var data = dataset.table[idx].features.record;
+				//console.log(data);
+				
+				data.forEach(function(d) {
+					d[params.values_dbfield] = +d[params.values_dbfield];
+					d[params.labels_dbfield] = +d[params.labels_dbfield];
+					d[params.join_dbfield] = +d[params.join_dbfield];
+				});
+				
+				features[layer] = g.selectAll("g.pie#"+layer)
+					.data(geo.mlfeatures[layer], function(d) {return d.properties[params.join_geofield];});
+				graphics[layer] = features[layer].enter()
+					.append("g") 
+					.attr("class", "pie")
+					.attr("id", layer)
+					.attr("transform", function(d) { return "translate("+project(d.geometry.coordinates)[0]+","+project(d.geometry.coordinates)[1]+")"; })
+					.each(makePies);
+			});
+			console.log(geo);
+			/*console.log(layers);
+			geo.mlfeatures = new Array();
+			
+			geo.features.forEach(function (feat, idx) {
+				var 
+				switch feat.id
+				console.log(feat);
+			});
+			
+			for (var index = 0 ; index < layers.length ; index++) {
+				var data = dataset.table[index].features.record;
+				//console.log(data);
+				
+				data.forEach(function(d) {
+					d[params.values_dbfield] = +d[params.values_dbfield];
+					d[params.labels_dbfield] = +d[params.labels_dbfield];
+					d[params.join_dbfield] = +d[params.join_dbfield];
+				});
+				console.log(geo.features);
 
-			var graphics = features.enter()
-									.append("g") 
-									.attr("class", "pie")
-									.attr("transform", function(d) { return "translate("+project(d.geometry.coordinates)[0]+","+project(d.geometry.coordinates)[1]+")"; })
-									.each(makePies);
+				var features = g.selectAll("g.pie")
+								.data(geo.features, function(d) {return d.properties[params.join_geofield];});
 
+				var graphics = features.enter()
+										.append("g") 
+										.attr("class", "pie")
+										.attr("transform", function(d) { return "translate("+project(d.geometry.coordinates)[0]+","+project(d.geometry.coordinates)[1]+")"; })
+										.each(makePies);
 
-			map.events.register("moveend", map, reset);
+			};*/
+			
 
-			reset();
+			//map.events.register("moveend", map, reset);
+
+			//reset();
 
 			function reset() {
+				//console.log("reset");
 
 				var bottomLeft = project(bounds[0]),
 				topRight = project(bounds[1]);
@@ -200,10 +253,10 @@ GeoNetwork.Geoportal.LayerTree = function() {
 
 			function makePies(geo) {
 				var g = d3.select(this).selectAll(".arc")
-				.data(pie(data.filter(function(d) {
-					//console.log(d);
-					//console.log(parent);
-					return d[params.join_dbfield]==geo.properties[params.join_geofield]})))
+					.data(pie(data.filter(function(d) {
+						//console.log(d);
+						//console.log(parent);
+						return d[params.join_dbfield]==geo.properties[params.join_geofield]})))
 					.enter().append("g")
 					.attr("class", "arc");
 
