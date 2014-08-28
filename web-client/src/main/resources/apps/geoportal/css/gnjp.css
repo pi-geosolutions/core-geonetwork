@@ -326,6 +326,14 @@ p.abstract {
 	color:#999999 !important;
 }
 
+.piesvisible {
+	display:block;
+}
+
+.pieshidden {
+	display:none;
+}
+
 .selextentBTN {
 	float:left;
 	margin : 10px;

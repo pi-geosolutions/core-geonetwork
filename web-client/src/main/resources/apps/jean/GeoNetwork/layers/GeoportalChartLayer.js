@@ -186,18 +186,6 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 	},
 	
 	buildCharts: function (error, geo, dataset){
-		var params = this.chartconfig;
-		//console.log(this);
-		
-		var layers = params.layers.split(",");
-		if (layers.length==1) {
-			this.buildChartsSingle(error,geo,dataset);
-			return true;
-		}
-		
-		
-		
-		
 		var me=this;
 		if (error) return console.log("there was an error loading the data: " + error);
 
@@ -218,6 +206,8 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 		bounds = bufferedBounds;
 		this.bounds = bufferedBounds;
 
+		var params = this.chartconfig;
+		var layers = params.layers.split(",");
 		this.chart_levels = new Array();
 		layers.forEach(function(layer,idx) {
 			//filter the geojson features depending on the layer they come from (they came all together)
@@ -294,12 +284,13 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 			.style("margin-top", topRight[1] + "px");
 		
 		g.attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")");
-		console.log(this.chart_levels);
-		
+
 		this.chart_levels.forEach( function (level, idx) {
 			var me = this;
 			level.svg_graphics.attr("transform", function(d) { var xy = me.project(d.geometry.coordinates); return "translate("+xy[0]+","+xy[1]+")"; });
 		}, this)
+		
+		this.setVisibleLevel();
 	},
 	
 	project: function(x) {
@@ -307,101 +298,26 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 						.transform("EPSG:4326", "EPSG:900913"));
 		return [point.x, point.y];
 	},
-
 	
-	buildChartsSingle: function (error, geo, dataset){
-		console.log("loading single level chart");
-		var me=this;
-		if (error) return console.log("there was an error loading the data: " + error);
-
-		var pie = d3.layout.pie()
-		.sort(null)
-		.value(function(d) { return d[params.values_dbfield]; });
-
-		var params = this.chartconfig;
-		console.log(this);
-		//console.log(overlay);
-		//console.log(geo);
-		//console.log(data);
-		data = dataset.table[0].features.record;
-		
-		data.forEach(function(d) {
-			d[params.values_dbfield] = +d[params.values_dbfield];
-			d[params.labels_dbfield] = +d[params.labels_dbfield];
-			d[params.join_dbfield] = +d[params.join_dbfield];
+	setVisibleLevel: function() {
+		//console.log(this.chartconfig);
+		if (this.chartconfig.changescales==="") return; //no scales, no visibility management
+		var chScales = this.chartconfig.changescales.split(",");
+		if (chScales.length==this.chartconfig.layers.split(",").length) {
+			//we will set a max scale, for convenience
+			chScales=[Infinity].concat(chScales);
+		}
+		chScales.forEach(function(val, i) {
+			chScales[i] = +val;
 		});
-		var div = d3.selectAll("#" + this.overlay.div.id.replace(/\./g,'\\.'));
-		div.selectAll("svg").remove();
-		var svg = div.append("svg");
-		g = svg.append("g")
-				.attr("class", "pies")
-
-		var bounds = d3.geo.bounds(geo),
-		path = d3.geo.path().projection(project);
-		var bufferedBounds = [[bounds[0][0] + 0.5*(bounds[0][0] - bounds[1][0]), bounds[0][1] + 0.5*(bounds[0][1] - bounds[1][1])],
-		                      [bounds[1][0] + 0.5*(bounds[1][0] - bounds[0][0]), bounds[1][1] + 0.5*(bounds[1][1] - bounds[0][1])]];
-		bounds = bufferedBounds;
-		var features = g.selectAll("g.pie")
-						.data(geo.features, function(d) {return d.properties[params.join_geofield];});
-
-		var graphics = features.enter()
-								.append("g") 
-								.attr("class", "pie")
-								.attr("transform", function(d) { return "translate("+project(d.geometry.coordinates)[0]+","+project(d.geometry.coordinates)[1]+")"; })
-								.each(makePies);
-
-
-		this.map.events.register("moveend", this.map, reset);
-
-		reset();
-
-		function reset() {
-
-			var bottomLeft = project(bounds[0]),
-			topRight = project(bounds[1]);
-
-			svg.attr("width", topRight[0] - bottomLeft[0])
-				.attr("height", bottomLeft[1] - topRight[1])
-				.style("margin-left", bottomLeft[0] + "px")
-				.style("margin-top", topRight[1] + "px");
-
-			g.attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")");
-
-			graphics.attr("transform", function(d) { return "translate("+project(d.geometry.coordinates)[0]+","+project(d.geometry.coordinates)[1]+")"; });
+		var mapScale = this.map.getScale();
+		for (var i = 0 ; i < chScales.length-1 ; i++) {
+			if ((mapScale<chScales[i]) && (mapScale > chScales[i+1])) {
+				this.chart_levels[i].svg_level.attr("class", "pieslevel piesvisible");
+			} else{
+				this.chart_levels[i].svg_level.attr("class", "pieslevel pieshidden");
+			}
 		}
-		function project(x) {
-			var point = me.map.getViewPortPxFromLonLat(new OpenLayers.LonLat(x[0], x[1])
-							.transform("EPSG:4326", "EPSG:900913"));
-			return [point.x, point.y];
-		}
-
-
-		function makePies(geo) {
-			var g = d3.select(this).selectAll(".arc")
-			.data(pie(data.filter(function(d) {
-				//console.log(d);
-				//console.log(parent);
-				return d[params.join_dbfield]==geo.properties[params.join_geofield]})))
-				.enter().append("g")
-				.attr("class", "arc");
-
-			g.append("path")
-			.attr("d", d3.svg.arc()
-					.outerRadius(function (d) {
-						//return params.chartsize //Math.round(Math.sqrt(100 + geo.properties.SUM_HHS / 50))
-						var size=10;
-						try {
-							size = eval(params.chartsize);
-							if (isNaN(size)) throw "The expression could be resolved without explicit error but the result is NaN. Probably the fields used in the expression are not correctly specified";
-						} catch (err) {
-							size=30;
-							console.log("error calculating 'size' expression : "+params.chartsize+"\nError msg: "+err);
-						}
-						return size;
-					})
-					.innerRadius(0))
-					.style("fill", function(d) { return me.getColor(d.data[params.labels_dbfield]); });
-		};
 	}
 
 });
