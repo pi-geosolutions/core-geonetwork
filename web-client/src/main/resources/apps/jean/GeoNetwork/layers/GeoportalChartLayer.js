@@ -186,6 +186,7 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 	},
 	
 	buildCharts: function (error, geo, dataset){
+		var params = this.chartconfig;
 		var me=this;
 		if (error) return console.log("there was an error loading the data: " + error);
 
@@ -198,6 +199,7 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 		this.svg = div.append("svg");
 		g = this.svg.append("g")
 				.attr("class", "pies")
+				.attr("style","opacity:"+this.chartconfig.opacity);
 
 		var bounds = d3.geo.bounds(geo),
 		path = d3.geo.path().projection(this.project);
@@ -206,7 +208,6 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 		bounds = bufferedBounds;
 		this.bounds = bufferedBounds;
 
-		var params = this.chartconfig;
 		var layers = params.layers.split(",");
 		this.chart_levels = new Array();
 		layers.forEach(function(layer,idx) {
@@ -290,6 +291,8 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 			level.svg_graphics.attr("transform", function(d) { var xy = me.project(d.geometry.coordinates); return "translate("+xy[0]+","+xy[1]+")"; });
 		}, this)
 		
+    	this.overlay.setOpacity(this.chartconfig.opacity);
+		console.log(this.overlay);
 		this.setVisibleLevel();
 	},
 	

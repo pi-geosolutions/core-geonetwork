@@ -334,6 +334,11 @@ p.abstract {
 	display:none;
 }
 
+path:hover {
+  //fill: red;
+  fill-opacity: .5;
+}
+
 .selextentBTN {
 	float:left;
 	margin : 10px;
