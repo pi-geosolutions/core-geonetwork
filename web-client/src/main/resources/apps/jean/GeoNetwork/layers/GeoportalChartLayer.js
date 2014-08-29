@@ -94,6 +94,7 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
      * OpenLayers (client) section : display the charts
      */
     svg:null,
+    svg_g:null,
     color : null,
     colorcodes : null,
     bounds:null,
@@ -187,6 +188,7 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 	
 	buildCharts: function (error, geo, dataset){
 		var params = this.chartconfig;
+		//console.log(params);
 		var me=this;
 		if (error) return console.log("there was an error loading the data: " + error);
 
@@ -197,9 +199,9 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 		var div = d3.selectAll("#" + this.overlay.div.id.replace(/\./g,'\\.'));
 		div.selectAll("svg").remove();
 		this.svg = div.append("svg");
-		g = this.svg.append("g")
+		this.svg_g = this.svg.append("g")
 				.attr("class", "pies")
-				.attr("style","opacity:"+this.chartconfig.opacity);
+				.style({'opacity':this.chartconfig.opacity});
 
 		var bounds = d3.geo.bounds(geo),
 		path = d3.geo.path().projection(this.project);
@@ -230,49 +232,92 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 				d[params.labels_dbfield] = +d[params.labels_dbfield];
 				d[params.join_dbfield] = +d[params.join_dbfield];
 			});
-			svgSublayer.svg_level = g.append("g")
+			svgSublayer.svg_level = this.svg_g.append("g")
 				.attr("class", "pieslevel")
 				.attr("id", l);
 			svgSublayer.svg_features = svgSublayer.svg_level.selectAll("g.pie")
 				.data(svgSublayer.geofeatures, function(d) {return d.properties[params.join_geofield];});
 			
-			svgSublayer.svg_graphics = svgSublayer.svg_features.enter()
+			if (params.charttype=="pie") {
+				svgSublayer.svg_graphics = svgSublayer.svg_features.enter()
 				.append("g") 
 				.attr("class", "pie")
 				.attr("transform", function(d) { var xy = me.project(d.geometry.coordinates); return "translate("+xy[0]+","+xy[1]+")"; })
 				.each(makePies);
+			} else if (params.charttype=="bar") {
+				svgSublayer.svg_graphics = svgSublayer.svg_features.enter()
+				.append("g") 
+				.attr("class", "bar")
+				.attr("transform", function(d) { var xy = me.project(d.geometry.coordinates); return "translate("+xy[0]+","+xy[1]+")"; })
+				.each(makeBars);
+			} 
+			
 			
 			function makePies(geo) {
 				var g = d3.select(this).selectAll(".arc")
 					.data(pie(svgSublayer.data.filter(function(d) {
-						//console.log(d);
-						//console.log(parent);
 						return d[params.join_dbfield]==geo.properties[params.join_geofield]})))
 					.enter().append("g")
 						.attr("class", "arc");
 
 				g.append("path")
 					.attr("d", d3.svg.arc()
-						.outerRadius(function (d) {
-							//return params.chartsize //Math.round(Math.sqrt(100 + geo.properties.SUM_HHS / 50))
-							var size=10;
-							try {
-								size = eval(params.chartsize);
-								if (isNaN(size)) throw "The expression could be resolved without explicit error but the result is NaN. Probably the fields used in the expression are not correctly specified";
-							} catch (err) {
-								size=30;
-								console.log("error calculating 'size' expression : "+params.chartsize+"\nError msg: "+err);
-							}
-							return size;
-						})
+						.outerRadius(function (d) {	getSize(params.chartsize); })
 						.innerRadius(0))
 						.style("fill", function(d) { return me.getColor(d.data[params.labels_dbfield]); });
+			};
+			function makeBars(geo) {
+				var width = getSize(params.chartsize);
+			    	height = width;
+
+				var y = d3.scale.linear()
+				    .range([height, 0]);
+	
+				var chart = d3.select(".chart")
+				    .attr("width", width)
+				    .attr("height", height);
+				
+				var bardata = svgSublayer.data.filter(function(d) {	return d[params.join_dbfield]==geo.properties[params.join_geofield]});
+				
+				y.domain([0, d3.max( bardata
+										, function(d) { return d.area; })]);
+				var barWidth = width / bardata.length;
+				
+				var g = d3.select(this).selectAll(".chart")
+				.data(bardata)
+				.enter().append("g")
+					.attr("class", "chart")
+					.attr("transform", function(d, i) { return "translate(" + i * barWidth + ",-"+height+")"; });
+
+				g.append("rect")
+			      .attr("y", function(d) { return y(d.area); })
+			      .attr("height", function(d) { return height - y(d.area); })
+			      .attr("width", barWidth - 1)
+			      .style("fill", function(d) { return me.getColor(d[params.labels_dbfield]); });
+				/*g.append("text")
+			      .attr("x", barWidth / 2)
+			      .attr("y", function(d) { return y(d.area) + 3; })
+			      .attr("dy", ".75em")
+			      .text(function(d) { return d.ocsol_code; });*/
+			};
+			function getSize(exp) {
+				//return params.chartsize //e.g. Math.round(Math.sqrt(100 + geo.properties.SUM_HHS / 50))
+				var size=10;
+				try {
+					size = eval(exp);
+					if (isNaN(size)) throw "The expression could be resolved without explicit error but the result is NaN. Probably the fields used in the expression are not correctly specified";
+				} catch (err) {
+					size=30;
+					console.log("error calculating 'size' expression : "+params.chartsize+"\nError msg: "+err);
+				}
+				return size;
 			};
 		}, this);
 
 		this.map.events.register("moveend", this.map, this.reset.bind(this));
 
 		this.reset();
+		this.chartconfig.loaded=true;
 	},	
 
 	reset: function () {
@@ -284,15 +329,11 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 			.style("margin-left", bottomLeft[0] + "px")
 			.style("margin-top", topRight[1] + "px");
 		
-		g.attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")");
-
+		this.svg_g.attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")");
 		this.chart_levels.forEach( function (level, idx) {
 			var me = this;
 			level.svg_graphics.attr("transform", function(d) { var xy = me.project(d.geometry.coordinates); return "translate("+xy[0]+","+xy[1]+")"; });
 		}, this)
-		
-    	this.overlay.setOpacity(this.chartconfig.opacity);
-		console.log(this.overlay);
 		this.setVisibleLevel();
 	},
 	
