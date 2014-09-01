@@ -187,6 +187,7 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 	},
 	
 	buildCharts: function (error, geo, dataset){
+		this.done=false;
 		var params = this.chartconfig;
 		//console.log(params);
 		var me=this;
@@ -262,12 +263,12 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 
 				g.append("path")
 					.attr("d", d3.svg.arc()
-						.outerRadius(function (d) {	getSize(params.chartsize); })
+						.outerRadius(function (d) {	return getSize(params.chartsize, geo, svgSublayer.data, d); })
 						.innerRadius(0))
 						.style("fill", function(d) { return me.getColor(d.data[params.labels_dbfield]); });
 			};
 			function makeBars(geo) {
-				var width = getSize(params.chartsize);
+				var width = getSize(params.chartsize, geo, svgSublayer.data, null);
 			    	height = width;
 
 				var y = d3.scale.linear()
@@ -300,9 +301,15 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 			      .attr("dy", ".75em")
 			      .text(function(d) { return d.ocsol_code; });*/
 			};
-			function getSize(exp) {
+			function getSize(exp, geo, data, d) {
 				//return params.chartsize //e.g. Math.round(Math.sqrt(100 + geo.properties.SUM_HHS / 50))
 				var size=10;
+				/*if (!me.done) {
+					console.log(geo);
+					console.log(data);
+					console.log(d);
+					me.done=true;
+				}*/
 				try {
 					size = eval(exp);
 					if (isNaN(size)) throw "The expression could be resolved without explicit error but the result is NaN. Probably the fields used in the expression are not correctly specified";
