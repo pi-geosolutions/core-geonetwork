@@ -99,7 +99,7 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
     		fieldLabel : 'WMS server URL',
     		name : 'url'
     	},{
-    		fieldLabel : 'Layer\'s name',
+    		fieldLabel : 'Layer(s) name(s)',
     		name : 'layers'
     	},{
             xtype: 'radiogroup',
@@ -124,6 +124,19 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
     	},{
     		fieldLabel : 'Legend URL',
     		name : 'legend'
+    	}]
+	},{
+        xtype: 'fieldset',
+        title: 'Metadata reference',
+        autoHeight: true,
+        layout: 'form',
+        //border:false,
+        collapsible:true,
+        defaults: {width: '90%', 'hidden':false, xtype : 'textfield'},
+        //frame:true,
+    	items	: 	[{
+    		fieldLabel : 'UUID',
+    		name : 'uuid'
     	}]
 	}],
     

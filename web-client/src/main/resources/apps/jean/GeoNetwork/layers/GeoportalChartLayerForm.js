@@ -96,7 +96,7 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
         defaults: {width: '90%', 'hidden':false, xtype : 'textfield'},
         //frame:true,
     	items	: 	[{
-    		fieldLabel : 'WMS server URL',
+    		fieldLabel : 'WFS server URL',
     		name : 'url'
     	},{
     		fieldLabel : 'Layer(s) name(s)',
@@ -194,6 +194,19 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
     	},{
     		fieldLabel : 'Chart size',
     		name : 'chartsize'
+    	}]
+	},{
+        xtype: 'fieldset',
+        title: 'Metadata reference',
+        autoHeight: true,
+        layout: 'form',
+        //border:false,
+        collapsible:true,
+        defaults: {width: '90%', 'hidden':false, xtype : 'textfield'},
+        //frame:true,
+    	items	: 	[{
+    		fieldLabel : 'UUID',
+    		name : 'uuid'
     	}]
 	}],
     

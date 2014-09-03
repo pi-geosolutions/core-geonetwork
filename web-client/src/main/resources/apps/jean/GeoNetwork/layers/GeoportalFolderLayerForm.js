@@ -34,7 +34,7 @@ Ext.namespace('GeoNetwork.layers');
  */
 
 GeoNetwork.layers.GeoportalFolderLayerForm = Ext.extend(GeoNetwork.layers.GeoportalAbstractLayerForm, {
-    title: 'WMS node details', 
+    title: 'Folder node details', 
     nodeFormFields : [{
         xtype: 'fieldset',
         title: 'General features',
