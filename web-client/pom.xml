@@ -547,6 +547,17 @@
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/LayerInfoPanel.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/DashBoard.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/jpSearchFormTools.js</include>
+                
+                
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/layers/GeoportalAbstractLayer.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/layers/GeoportalFolderLayer.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/layers/GeoportalWMSLayer.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/layers/GeoportalChartLayer.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/layers/GeoportalAbstractLayerForm.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/layers/GeoportalFolderLayerForm.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/layers/GeoportalWMSLayerForm.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/admin/Utils.js</include>
+                
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/LayerTree.js</include>
                 <include>${project.build.directory}/classes/apps/geoportal/js/Settings.js</include>
                 <include>${project.build.directory}/classes/apps/geoportal/js/Templates.js</include>
