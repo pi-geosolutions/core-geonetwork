@@ -43,7 +43,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         title: OpenLayers.i18n('Manage Layertree'),
         defaultViewMode: 'simple',
         border: false,
-        height: 1100,
+        height: 800,
         layout:'border',
         autoWidth : true
     },

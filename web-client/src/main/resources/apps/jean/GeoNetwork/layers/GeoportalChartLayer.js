@@ -179,7 +179,7 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
     	//console.log(this.chartconfig);
 				
 		var geo_url = params.url + params.layers;
-		var data_url = "http://localhost:8080/geonetwork/srv/eng/pigeo.layers.getchartdata.json?source="+params.dbname+"&tables="+params.dbtables+"&where="+params.dbwhere+"&fields="+params.values_dbfield+","+params.join_dbfield+","+params.labels_dbfield;
+		var data_url = window.catalogue.URL+"/srv/eng/pigeo.layers.getchartdata.json?source="+params.dbname+"&tables="+params.dbtables+"&where="+params.dbwhere+"&fields="+params.values_dbfield+","+params.join_dbfield+","+params.labels_dbfield;
 		queue()
 		.defer(d3.json, geo_url)
 		.defer(d3.json, data_url)
