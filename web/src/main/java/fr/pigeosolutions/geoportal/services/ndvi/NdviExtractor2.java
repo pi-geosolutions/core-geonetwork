@@ -8,9 +8,9 @@ import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.GridFormatFinder;
-import org.geotools.geometry.DirectPosition2D;
+/*import org.geotools.geometry.DirectPosition2D;
 import org.geotools.referencing.CRS;
-import org.opengis.geometry.DirectPosition;
+import org.opengis.geometry.DirectPosition;*/
 
 public class NdviExtractor2 {
 
@@ -56,7 +56,7 @@ public class NdviExtractor2 {
 
     
     private void getValue(File rasterFile, double lat, double lon) throws Exception {
-        AbstractGridFormat format = GridFormatFinder.findFormat( rasterFile );        
+/*        AbstractGridFormat format = GridFormatFinder.findFormat( rasterFile );        
         reader = format.getReader(rasterFile);
         GridCoverage2D cov = null;
         try {
@@ -68,7 +68,7 @@ public class NdviExtractor2 {
         double[] val = cov.evaluate(pos, (double[]) null);
         //System.out.println("Coverage CRS: \n"+cov.getCoordinateReferenceSystem());
         //System.out.println("Pos. CRS:\n"+pos.getCoordinateReferenceSystem());
-        System.out.println("value:"+val[0]);
+        System.out.println("value:"+val[0]);*/
         
     }
     

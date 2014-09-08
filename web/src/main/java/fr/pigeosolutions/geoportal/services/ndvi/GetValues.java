@@ -34,7 +34,7 @@ public class GetValues implements Service
     private String _basepath;
     private String _ext;
     //vars defined as GET params while calling the service
-    private String qDataName, qSuffix, qMode, qLat, qLon;
+    private String qDataName, qMode, qLat, qLon;
     //other global vars
     private String fullpath;
     private enum Mode { //necessary for the switch statement since String can be used in switch statements only since 1.7
@@ -60,7 +60,6 @@ public class GetValues implements Service
         String geonetworkDataDir = gc.getHandlerConfig().getMandatoryValue( Geonet.Config.SYSTEM_DATA_DIR);
 
         qDataName = Util.getParam(params, "data","NDVI");
-        qSuffix = Util.getParam(params, "suffix","DV");
         qMode = Util.getParam(params, "mode");
         qLat = Util.getParam(params, "lat");
         qLon = Util.getParam(params, "lon");
@@ -69,12 +68,8 @@ public class GetValues implements Service
             System.out.println("Bad or missing parameters. See the doc");
             return new Element(Jeeves.Elem.RESPONSE);
         }
-        if (_basepath.startsWith("/")) { //then it is an absolute URL
-            fullpath = _basepath+File.separator+qDataName;
-        } else { //we suppose it's a subdirectory of geonetwork-data-dir
-            fullpath = geonetworkDataDir+File.separator+_basepath+File.separator+qDataName;
-        }
-       
+        fullpath = geonetworkDataDir+File.separator+_basepath+File.separator+qDataName;
+        
         Element output;
         Mode mode = Mode.valueOf(qMode); //necessary since String can be used in switch statements only since 1.7
         switch (mode) {
@@ -119,7 +114,7 @@ public class GetValues implements Service
                     for (int j = 0; j <= 2; j++) {//iterate through the decades
                         //Create a filter
                         String filter = year + String.format("%02d", i) +String.format("%02d", j*10+1);
-                        System.out.println("filter "+filter);
+                        //System.out.println("filter "+filter);
                         File[] listOfFiles = folder.listFiles((FilenameFilter) new PrefixFileFilter(filter));
                         switch (listOfFiles.length) {
                         case 1 : 
@@ -131,7 +126,6 @@ public class GetValues implements Service
                             break;
                         case 0 : //no file found, we return value 0
                             rowXML.addContent(new Element("value").setText("0"));
-
                             break;
                         default: //means we have more than 1
                             System.err.println("multiple files when only one should fit to the filter " + filter);
@@ -228,5 +222,4 @@ public class GetValues implements Service
 
 
 }
-
 
