@@ -263,12 +263,12 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 
 				g.append("path")
 					.attr("d", d3.svg.arc()
-						.outerRadius(function (d) {	return getSize(params.chartsize, geo, svgSublayer.data, d); })
+						.outerRadius(function (d) {	return getSize(params.chartsize, geo.properties, svgSublayer.data, d); })
 						.innerRadius(0))
 						.style("fill", function(d) { return me.getColor(d.data[params.labels_dbfield]); });
 			};
 			function makeBars(geo) {
-				var width = getSize(params.chartsize, geo, svgSublayer.data, null);
+				var width = getSize(params.chartsize, geo.properties, svgSublayer.data, null);
 			    	height = width;
 
 				var y = d3.scale.linear()
