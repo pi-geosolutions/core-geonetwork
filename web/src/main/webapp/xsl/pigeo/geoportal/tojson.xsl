@@ -159,7 +159,7 @@
     <xsl:if test="not(following-sibling::*)">}</xsl:if>
   </xsl:template>
 
-  <!-- array  : will work only for 'children' tags-->
+  <!-- array  : will work only for 'table' of 'record' tags-->
   <!-- TODO : make this more generic while keepin the 'children will always 
   		give an array not matter how many are inside' special case-->
   <!-- defer processing siblings with the same name until the last element

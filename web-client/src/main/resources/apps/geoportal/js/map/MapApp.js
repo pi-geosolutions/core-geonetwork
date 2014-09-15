@@ -605,6 +605,17 @@ GeoNetwork.mapApp = function() {
         
         toolbar.push(action);
         
+        action = new GeoExt.Action({
+            iconCls: 'loadanimation',
+            //tooltip: {title: OpenLayers.i18n("loadanimationTooltipTitle"), text: OpenLayers.i18n("loadanimationTooltipText")},
+            handler: function() {
+                GeoNetwork.WindowManager.showWindow("animations");
+            }
+        });
+
+        toolbar.push(action);
+
+        
 
         // create split button for measure controls
 
@@ -1476,6 +1487,7 @@ var processLayersSuccess = function(response) {
             GeoNetwork.WindowManager.registerWindow("loadwmc", GeoNetwork.LoadWmcWindow, {map: map, id:"loadwmc"});
             GeoNetwork.WindowManager.registerWindow("featureinfo", GeoNetwork.FeatureInfoWindow, {map: map, id:"featureinfo", control: featureinfo});
             GeoNetwork.WindowManager.registerWindow("dashBoard", GeoNetwork.DashBoardWindow, {id:"dashBoard", control: dashBoard});
+            GeoNetwork.WindowManager.registerWindow("animations", GeoNetwork.AnimationsWindow, {map:map,id:"animations"});
             
             map.addLayer(featureinfolayer);
             map.addLayer(dashBoardLayer);

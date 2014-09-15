@@ -98,6 +98,29 @@
 			</class>
 			<output sheet="pigeo/geoportal/XMLdata2tsv.xsl" contentType="text/plain; charset=UTF-8"/>
 		</service>
+
+		<!-- - - - - Animations services - - - -->
+		
+		<service name="pigeo.animations.listfiles">
+			<class name="fr.pigeosolutions.geoportal.services.animations.ListFiles">
+				<param name="basePath" value="geoportal/animations/"/>
+				<param name="ext" value="png"/>
+			</class>
+		</service>
+		<service name="pigeo.animations.listfiles.json">
+			<class name="fr.pigeosolutions.geoportal.services.animations.ListFiles">
+				<param name="basePath" value="geoportal/animations/"/>
+				<param name="ext" value="png"/>
+			</class>
+			<output sheet="pigeo/geoportal/tojson.xsl" contentType="application/json; charset=UTF-8"/>
+		</service>
+		
+		
+		<service name="pigeo.animations.list">
+			<output sheet="pigeo/geoportal/listAnimations.xsl" contentType="text/xml; charset=UTF-8">
+				<xml name="animations" file="WEB-INF/config-pigeo-animations.xml" localized="false" />
+			</output>
+		</service>
 		
     </services>
 </geonet>

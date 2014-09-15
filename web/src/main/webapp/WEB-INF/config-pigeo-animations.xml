@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Define here parameters specific for animations application (weather animations)
+ Use <timeextent> and <timeunit> to define the temporal extent to use in animation.
+ 
+-->
+<animations>
+ <!-- List of the available DBs (connection must be properly defined in config-override-dev/prod.xml -->
+ <datasets>
+ 	<dataset>
+ 		<id>eumetsat</id> <!-- must match the data folder name-->
+ 		<label>Eumetsat meteo</label>
+ 		<info>©Eumetsat</info>
+ 		<timeextent>12</timeextent>
+ 		<timeunit>h</timeunit>
+ 	</dataset>
+ </datasets>
+</animations>

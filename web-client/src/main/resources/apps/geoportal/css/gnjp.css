@@ -422,6 +422,9 @@ path:hover {
 .vertCurtainMenu {
 	background-image: url("../../images/vslice.png") !important;
 }
+.loadanimation {
+	background-image: url("../images/animation.png") !important;
+}
 
 .geonamesComboList h1 {
 	font-size: 100%;
