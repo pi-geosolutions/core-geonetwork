@@ -7,6 +7,7 @@ Administration
     :maxdepth: 2
 
     configuration/index.rst
+    layertreemanager/index.rst
     authentication/index.rst
     csw-configuration/index.rst
     advanced-configuration/index.rst
