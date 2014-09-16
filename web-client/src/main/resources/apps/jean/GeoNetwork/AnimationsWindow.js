@@ -50,6 +50,20 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 	
 	config:null,
 	closeAction: 'hide', 
+	loader: {
+		panel:null
+	},
+	progress: {
+		panel:null,
+		bar:null,
+		emptyText: 'No dataset chosen...',
+		steps:0,
+		step:0
+	},
+	animator: {
+		panel:null
+	},
+	selectedDataset:null, //will be affected an extjs record, issued from the combobox
 	
 
     /**
@@ -79,9 +93,21 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
         });
     	this.add(content);
     	this.doLayout();
-        
-    	content.add(this.buildLoader({height:80}));
-    	content.add(this.buildAnimator({flex:1}));
+    	this.loader.panel=this.buildLoader({height:80});
+    	content.add(this.loader.panel);
+
+    	this.progress.bar = new Ext.ProgressBar({
+        	text:this.progress.emptyText
+	    });
+    	this.progress.panel=new Ext.Panel({
+		    		height:50,
+		    		border:false,
+			        bodyStyle:'padding:10px 10px',
+			        items : this.progress.bar
+    			});
+    	content.add(this.progress.panel);
+    	this.animator.panel = this.buildAnimator({flex:1});
+    	content.add(this.animator.panel);
     },
     /*
      * TODO : 
@@ -118,6 +144,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
     	mystore.load();
     	//console.log(mystore);
     	
+    	var me=this;
 		var loader = new Ext.FormPanel({
 	        labelWidth: 75, // label settings here cascade unless overridden
 	        autoScroll:true,
@@ -125,40 +152,60 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 	        bodyStyle:'padding:10px 5px 0',
 	        items: [{
 	        		xtype:'combo',
+	        		id:'anim_cb_selector',
 					store: mystore,
 				  	displayField:'label',
+				    valueField: 'id',
 				  	width:300,
 				  	listWidth:300,
+				  	allowBlank:false,
 					forceSelection: true,
+					autoSelect:true,
 					triggerAction: 'all',
 					emptyText:'Select source of animation',
 					selectOnFocus:true,
 					mode:'local',//load store only once (manually, see mystore.load())
-					lastQuery: '' //so that the first time dropdown will filter!!!!
+					lastQuery: '', //so that the first time dropdown will filter!!!!
+					listeners : {
+						'select' : function(combo, record, index) {
+							me.selectedDataset = record;
+						}
+					},
+					scope:this
 			  	}
 	        ],
 
 	        buttons: [{
-	            text: 'Load'
-	        },{
+	            text: 'Load',
+	            handler : this.loadAnimation.bind(me)
+	        }/*,{
 	            text: 'Cancel'
-	        }]
+	        }*/]
 	    });
 		Ext.apply(loader,config);
 		return loader;
 	},
 	buildAnimator: function(config) {
+		var timeslider = new Ext.Slider({
+	        width: '95%',
+	        minValue: 0,
+	        maxValue: 100
+	    });
 		var form = new Ext.form.FormPanel({
 	        autoScroll:true,
 	        //title   : 'Composite Fields',
 	        autoHeight: true,
+	        disabled:true,
+	        border:false,
+	        bodyStyle:'padding:20px 5px 0',
 	        items   : [
-	            {
-	                xtype     : 'textfield',
-	                name      : 'email',
-	                fieldLabel: 'Email Address',
-	                anchor    : '-20'
-	            },
+	   	            timeslider,
+		            {
+		                xtype     : 'textfield',
+		                name      : 'email',
+		                fieldLabel: 'Email Address',
+		                anchor    : '-20'
+		            },
 	            {
 	                xtype: 'compositefield',
 	                fieldLabel: 'Date Range',
@@ -333,6 +380,88 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 		});
 		Ext.apply(form,config);
 		return form;
+	},
+	
+	loadAnimation: function(btn) {	
+		console.log(this.selectedDataset);	
+		var URL = "http://localhost:8080/geonetwork/srv/eng/pigeo.animations.listfiles.json?dataName="+this.selectedDataset.data.id;
+		var request = OpenLayers.Request.GET({
+            url: URL,
+            async: false
+        });
+		if (request.responseText) {
+			var fileslist = new OpenLayers.Format.JSON().read( request.responseText );
+			var imgs = new Array();
+			console.log(fileslist);
+			for (var i = 0 ; i < fileslist.record.length ; i++) {
+				imgs.push("http://localhost:8080/geonetwork/srv/eng/pigeo.animations.getimage?path="+fileslist.path+"&name="+fileslist.record[i].name); //imgs will be an array of absolute paths to the images
+			};
+			//console.log(imgs);
+			
+			//initialize the progress bar if necessary
+			this.progress.steps = fileslist.record.length;
+			this.progress.step = 0;
+			this.progress.bar.updateProgress(0,this.progress.emptyText);
+			
+			imageCache.pushArray(imgs, this.loadImageEvent.bind(this), this.loadAllEvent.bind(this));
+        } 
+		
+	},
+	loadImageEvent: function(e) {
+		this.progress.step += 1/this.progress.steps;
+		this.progress.bar.updateProgress(this.progress.step,Math.floor(this.progress.step *100)+"%");
+		console.log(this.progress.step);
+	},
+	loadAllEvent: function() {
+		this.progress.bar.updateProgress(1,"100%, ready to play!");
+		this.animator.panel.enable();
 	}
 
 });
+
+
+/**
+ * imageCache.js - image caching framework.
+ * Zoltan Hawryluk - http://www.useragentman.com/
+ * MIT License.
+ */
+var imageCache = new function () {
+	var me = this;
+	var cache = [];
+	var root = document.location.href.split('/');
+	root.pop();
+	root = root.join('/') + '/';
+	me.push = function (src, loadEvent) {
+		if (!src.match(/^http/)) {
+			src = root + src;
+		}
+		var item = new Image();
+		if (cache[src] && loadEvent) {
+			loadEvent(src);
+		} else {
+			if (loadEvent) {
+				item.onload = loadEvent;
+				item.onerror = loadEvent;
+			}
+			cache[src]=item;
+		}
+		item.src = src;
+	}
+	me.pushArray = function (array, imageLoadEvent, imagesLoadEvent) {
+		var numLoaded = 0;
+		var arrayLength = array.length;
+		for (var i=0; i<arrayLength; i++) {
+			me.push(array[i], function (e) {
+				if (imageLoadEvent) {
+					imageLoadEvent(e);
+				}
+				numLoaded++;
+				if (numLoaded == arrayLength) {
+					setTimeout(function () {
+						imagesLoadEvent(e);
+					}, 1)
+				}
+			})
+		}
+	}
+}

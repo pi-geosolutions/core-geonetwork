@@ -14,5 +14,12 @@
  		<timeextent>12</timeextent>
  		<timeunit>h</timeunit>
  	</dataset>
+ 	<dataset>
+ 		<id>fires</id> <!-- must match the data folder name-->
+ 		<label>Early Fires</label>
+ 		<info>©</info>
+ 		<timeextent>24</timeextent>
+ 		<timeunit>h</timeunit>
+ 	</dataset>
  </datasets>
 </animations>

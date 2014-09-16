@@ -198,6 +198,15 @@ padding : 5px;
 	height : 60px;
 }
 
+/*
+ * Styles for the animation window
+ */
+ 
+#Anim_contentPanel .ext-el-mask {
+	background-color:#f4f4f4;
+	opacity : 1;
+}
+
 /************************************************************
 		Bricolages sur l'affichage des résultats
 		 (bricolages sur templates à peine modifiés
