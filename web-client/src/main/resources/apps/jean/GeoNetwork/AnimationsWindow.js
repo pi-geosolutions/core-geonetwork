@@ -45,11 +45,14 @@ GeoNetwork.AnimationsWindow = function(config) {
 };
 
 Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
-
-	maximizable:false,
-	
+	map:null,
 	config:null,
+	width:500,
+	height:270,
+	
+	maximizable:false,
 	closeAction: 'hide', 
+	content:null,
 	loader: {
 		panel:null
 	},
@@ -61,7 +64,25 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 		step:0
 	},
 	animator: {
-		panel:null
+		panel:null,
+		imgs:null,
+		files:null,
+		path:'',
+		layer:null,
+		layerindex:0,
+		buttons:{
+			fb : null,
+			b: null,
+			p:null,
+			l:null,
+			f:null,
+			ff:null
+		},
+		playforward:false,
+		playbackward:false,
+		timeslider:null,
+		timetext:null,
+		loop:false
 	},
 	selectedDataset:null, //will be affected an extjs record, issued from the combobox
 	
@@ -74,12 +95,10 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
         GeoNetwork.AnimationsWindow.superclass.initComponent.call(this);
 
         window.dashboard = this;
-        this.title = this.title || OpenLayers.i18n("dash_AnimationsWindow.windowTitle");
+        this.title = this.title || OpenLayers.i18n("anim_AnimationsWindow.windowTitle");
 
-        this.width = 500;
-        this.height = 400;
         this.layout ='fit';
-        var content = new Ext.Panel({
+        this.content = new Ext.Panel({
         	id:'Anim_contentPanel',
         	layout:'vbox',
         	layoutConfig: {
@@ -91,35 +110,46 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
         	    {id:'AnimPanel2',html:'panel 3', flex:1}*/
         	]
         });
-    	this.add(content);
-    	this.doLayout();
-    	this.loader.panel=this.buildLoader({height:80});
-    	content.add(this.loader.panel);
-
-    	this.progress.bar = new Ext.ProgressBar({
-        	text:this.progress.emptyText
-	    });
-    	this.progress.panel=new Ext.Panel({
-		    		height:50,
-		    		border:false,
-			        bodyStyle:'padding:10px 10px',
-			        items : this.progress.bar
-    			});
-    	content.add(this.progress.panel);
-    	this.animator.panel = this.buildAnimator({flex:1});
-    	content.add(this.animator.panel);
+    	this.add(this.content);
+    	this.on('show', function() {
+    		if (this.loader.panel==null) {//then it's the first time we show the window : we must create the components
+	    		this.loader.panel=this.buildLoader({height:80});
+	    		this.content.add(this.loader.panel);
+	
+	        	this.progress.bar = new Ext.ProgressBar({
+	            	text:this.progress.emptyText
+	    	    });
+	        	this.progress.panel=new Ext.Panel({
+	    		    		height:50,
+	    		    		border:false,
+	    			        bodyStyle:'padding:10px 10px',
+	    			        items : this.progress.bar
+	        			});
+	        	this.content.add(this.progress.panel);
+	        	this.animator.panel = this.buildAnimator({flex:1});
+	        	this.content.add(this.animator.panel);
+    		}
+        	this.doLayout();
+		},this);
     },
     /*
      * TODO : 
      * 	- defer store loading at the moment we first open the window, not at page load
-     * 	- build dynamically the URL
      */
 	buildLoader: function(config) {
-		var URL = "http://localhost:8080/geonetwork/srv/eng/pigeo.animations.list";
+		var URL = window.catalogue.URL+"/srv/eng/pigeo.animations.list";
 		var map_fields = [
 				           // set up the fields mapping into the xml doc
 				           {name: 'id'},
 				           {name: 'label'},
+				           {name: 'SRS'},
+				           {name: 'minlon', mapping: 'geographicbounds > minlon'},
+				           {name: 'minlat', mapping: 'geographicbounds > minlat'},
+				           {name: 'maxlon', mapping: 'geographicbounds > maxlon'},
+				           {name: 'maxlat', mapping: 'geographicbounds > maxlat'},
+				           {name: 'imagewidth', mapping: 'imagesize > width'},
+				           {name: 'imageheight', mapping: 'imagesize > height'},
+				           {name: 'timestampformatter'},
 				           {name: 'info'},
 				           {name: 'timeextent'},
 				           {name: 'timeunit'}
@@ -186,11 +216,119 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 		return loader;
 	},
 	buildAnimator: function(config) {
-		var timeslider = new Ext.Slider({
+		var btnwidth = 60;
+		this.animator.timeslider = new Ext.Slider({
 	        width: '95%',
 	        minValue: 0,
-	        maxValue: 100
+	        maxValue: 100,
+	        listeners: {
+	        	'change': function(slider,newval,oldval) {
+	        		//console.log(newval);
+	        		this.animator.layerindex = newval;
+	        		this.setTimeText(this.animator.files[this.animator.layerindex].name);
+	            	//this.animator.timetext.setValue(this.animator.files[this.animator.layerindex].name);
+	        	},
+	        	scope:this
+	        }
 	    });
+		this.animator.timetext  =new Ext.form.TextField({
+            name      : 'Date',
+            fieldLabel: 'Date',
+            anchor    : '-20'
+        });
+		this.animator.buttons.fb = new Ext.Button({
+			width:btnwidth,
+            text   : '|<',
+            tooltip: OpenLayers.i18n('anim_btn_first'),
+            handler: function(btn) {
+            	this.setImage( 0 );
+            },
+            scope:this
+        });
+		this.animator.buttons.b = new Ext.Button({
+			width:btnwidth,
+            text   : '<',
+            tooltip: OpenLayers.i18n('anim_btn_previous'),
+            handler: function(btn) {
+            	this.setImage( this.animator.layerindex-1 );
+            },
+            scope:this
+        });
+		this.animator.buttons.p = new Ext.Button({
+			width:btnwidth,
+            text   : '| |',
+            tooltip: OpenLayers.i18n('anim_btn_pause'),
+            handler: function(btn) {
+            	this.animator.playforward=false;
+            	this.animator.playbackward=false;
+            },
+            scope:this
+        });
+		this.animator.buttons.l = new Ext.Button({
+			width:btnwidth,
+            text   : ' ',
+            iconCls: 'anim_loopforward',
+            tooltip: OpenLayers.i18n('anim_btn_loopforward'),
+            handler: function(btn) {
+            	var me = this;
+            	this.animator.playforward=true;
+            	this.animator.playbackward=false;
+            	var next = function(scope) {
+            		if (scope.animator.playforward) {
+            			scope.animator.layerindex +=1;
+	            		if (scope.animator.layerindex==scope.animator.imgs.length) scope.animator.layerindex=0;
+	            		scope.setImage( scope.animator.layerindex );
+                    	
+            			setTimeout(function() {next(scope)}, 1000);
+            		}
+            	}
+            	next(me);
+            },
+            scope:this
+        });
+
+		this.animator.buttons.lb = new Ext.Button({
+			width:btnwidth,
+            text   : ' ',
+            iconCls: 'anim_loopbackward',
+            tooltip: OpenLayers.i18n('anim_btn_loopbackward'),
+            handler: function(btn) {
+            	var me = this;
+            	this.animator.playforward=false;
+            	this.animator.playbackward=true;
+            	var next = function(scope) {
+            		if (scope.animator.playbackward) {
+	            		if (scope.animator.layerindex==0) scope.animator.layerindex=scope.animator.imgs.length;
+            			scope.animator.layerindex -=1;
+	            		scope.setImage( scope.animator.layerindex );
+                    	
+            			setTimeout(function() {next(scope)}, 1000);
+            		}
+            	}
+            	next(me);
+            },
+            scope:this
+        });
+		this.animator.buttons.f = new Ext.Button({
+			width:btnwidth,
+            text   : '>',
+            tooltip: OpenLayers.i18n('anim_btn_next'),
+            disabled:true,
+            handler: function(btn) {
+            	this.setImage( this.animator.layerindex+1);
+            },
+            scope:this
+        });
+		this.animator.buttons.ff = new Ext.Button({
+			width:btnwidth,
+            text   : '>|',
+            tooltip: OpenLayers.i18n('anim_btn_last'),
+            disabled:true,
+            handler: function(btn) {
+            	this.setImage( this.animator.imgs.length-1);
+            },
+            scope:this
+        });
 		var form = new Ext.form.FormPanel({
 	        autoScroll:true,
 	        //title   : 'Composite Fields',
@@ -199,202 +337,63 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 	        border:false,
 	        bodyStyle:'padding:20px 5px 0',
 	        items   : [
-	   	            timeslider,
-		            {
-		                xtype     : 'textfield',
-		                name      : 'email',
-		                fieldLabel: 'Email Address',
-		                anchor    : '-20'
-		            },
-	            {
-	                xtype: 'compositefield',
-	                fieldLabel: 'Date Range',
-	                msgTarget : 'side',
-	                anchor    : '-20',
-	                defaults: {
-	                    flex: 1
-	                },
-	                items: [
-	                    {
-	                        xtype: 'datefield',
-	                        name : 'startDate'
-	                    },
-	                    {
-	                        xtype: 'datefield',
-	                        name : 'endDate'
-	                    }
-	                ]
-	            },
-	            {
-	                xtype: 'fieldset',
-	                title: 'Details',
-	                collapsible: true,
-	                items: [
-	                    {
-	                        xtype: 'compositefield',
-	                        fieldLabel: 'Phone',
-	                        // anchor    : '-20',
-	                        // anchor    : null,
-	                        msgTarget: 'under',
-	                        items: [
-	                            {xtype: 'displayfield', value: '('},
-	                            {xtype: 'textfield',    name: 'phone-1', width: 29, allowBlank: false},
-	                            {xtype: 'displayfield', value: ')'},
-	                            {xtype: 'textfield',    name: 'phone-2', width: 29, allowBlank: false, margins: '0 5 0 0'},
-	                            {xtype: 'textfield',    name: 'phone-3', width: 48, allowBlank: false}
-	                        ]
-	                    },
-	                    {
-	                        xtype: 'compositefield',
-	                        fieldLabel: 'Time worked',
-	                        combineErrors: false,
-	                        items: [
-	                           {
-	                               name : 'hours',
-	                               xtype: 'numberfield',
-	                               width: 48,
-	                               allowBlank: false
-	                           },
-	                           {
-	                               xtype: 'displayfield',
-	                               value: 'hours'
-	                           },
-	                           {
-	                               name : 'minutes',
-	                               xtype: 'numberfield',
-	                               width: 48,
-	                               allowBlank: false
-	                           },
-	                           {
-	                               xtype: 'displayfield',
-	                               value: 'mins'
-	                           }
-	                        ]
-	                    },
-	                    {
-	                        xtype : 'compositefield',
-	                        anchor: '-20',
-	                        msgTarget: 'side',
-	                        fieldLabel: 'Full Name',
-	                        items : [
-	                            {
-	                                //the width of this field in the HBox layout is set directly
-	                                //the other 2 items are given flex: 1, so will share the rest of the space
-	                                width:          50,
-
-
-	                                xtype:          'combo',
-	                                mode:           'local',
-	                                value:          'mrs',
-	                                triggerAction:  'all',
-	                                forceSelection: true,
-	                                editable:       false,
-	                                fieldLabel:     'Title',
-	                                name:           'title',
-	                                hiddenName:     'title',
-	                                displayField:   'name',
-	                                valueField:     'value',
-	                                store:          new Ext.data.JsonStore({
-	                                    fields : ['name', 'value'],
-	                                    data   : [
-	                                        {name : 'Mr',   value: 'mr'},
-	                                        {name : 'Mrs',  value: 'mrs'},
-	                                        {name : 'Miss', value: 'miss'}
-	                                    ]
-	                                })
-	                            },
-	                            {
-	                                xtype: 'textfield',
-	                                flex : 1,
-	                                name : 'firstName',
-	                                fieldLabel: 'First',
-	                                allowBlank: false
-	                            },
-	                            {
-	                                xtype: 'textfield',
-	                                flex : 1,
-	                                name : 'lastName',
-	                                fieldLabel: 'Last',
-	                                allowBlank: false
-	                            }
-	                        ]
-	                    }
-	                ]
-	            }
+	   	            this.animator.timeslider,
+	   	            this.animator.timetext
 	        ],
 	        buttons: [
-	            {
-	                text   : 'Load test data',
-	                handler: function() {
-	                    var Record = Ext.data.Record.create([
-	                       {name: 'email',     type: 'string'},
-	                       {name: 'title',     type: 'string'},
-	                       {name: 'firstName', type: 'string'},
-	                       {name: 'lastName',  type: 'string'},
-	                       {name: 'phone-1',   type: 'string'},
-	                       {name: 'phone-2',   type: 'string'},
-	                       {name: 'phone-3',   type: 'string'},
-	                       {name: 'hours',     type: 'number'},
-	                       {name: 'minutes',   type: 'number'},
-	                       {name: 'startDate', type: 'date'},
-	                       {name: 'endDate',   type: 'date'}
-	                    ]);
-	                    
-	                    form.form.loadRecord(new Record({
-	                        'email'    : 'ed@extjs.com',
-	                        'title'    : 'mr',
-	                        'firstName': 'Abraham',
-	                        'lastName' : 'Elias',
-	                        'startDate': '01/10/2003',
-	                        'endDate'  : '12/11/2009',
-	                        'phone-1'  : '555',
-	                        'phone-2'  : '123',
-	                        'phone-3'  : '4567',
-	                        'hours'    : 7,
-	                        'minutes'  : 15
-	                    }));
-	                }
-	            },
-	            {
-	                text   : 'Save',
-	                handler: function() {
-	                    if (form.form.isValid()) {
-	                        var s = '';
-	                    
-	                        Ext.iterate(form.form.getValues(), function(key, value) {
-	                            s += String.format("{0} = {1}<br />", key, value);
-	                        }, this);
-	                    
-	                        Ext.example.msg('Form Values', s);                        
-	                    }
-	                }
-	            },
-	            
-	            {
-	                text   : 'Reset',
-	                handler: function() {
-	                    form.form.reset();
-	                }
-	            }
+	                  this.animator.buttons.fb,
+	                  this.animator.buttons.b,
+	                  this.animator.buttons.lb,
+	                  this.animator.buttons.p,
+	                  this.animator.buttons.l,
+	                  this.animator.buttons.f,
+	                  this.animator.buttons.ff
 	        ]
 		});
 		Ext.apply(form,config);
 		return form;
 	},
+	setTimeText: function(filename) {
+		var stamp = "";
+		try {
+			stamp = eval(this.selectedDataset.data.timestampformatter);
+		} catch (err) {
+			stamp=filename;
+			console.log("error calculating 'timestamp' expression (animation window) : "+this.selectedDataset.data.timestampformatter+"\nError msg: "+err);
+		}
+		
+		this.animator.timetext.setValue(stamp);
+	},
+	
+	setImage: function(index) {
+		this.animator.layerindex = index;
+    	this.animator.layer.url = this.animator.imgs[this.animator.layerindex];
+    	this.animator.layer.redraw();
+
+    	this.animator.buttons.f.setDisabled(this.animator.layerindex ==this.animator.imgs.length-1);
+    	this.animator.buttons.ff.setDisabled(this.animator.layerindex ==this.animator.imgs.length-1);
+    	this.animator.buttons.b.setDisabled(this.animator.layerindex ==0);
+    	this.animator.buttons.fb.setDisabled(this.animator.layerindex ==0);
+    	
+    	this.setTimeText(this.animator.files[this.animator.layerindex].name);
+    	this.animator.timeslider.setValue(this.animator.layerindex);
+	},
 	
 	loadAnimation: function(btn) {	
 		console.log(this.selectedDataset);	
-		var URL = "http://localhost:8080/geonetwork/srv/eng/pigeo.animations.listfiles.json?dataName="+this.selectedDataset.data.id;
+		var URL = window.catalogue.URL+"/srv/eng/pigeo.animations.listfiles.json?dataName="+this.selectedDataset.data.id;
 		var request = OpenLayers.Request.GET({
             url: URL,
             async: false
         });
 		if (request.responseText) {
 			var fileslist = new OpenLayers.Format.JSON().read( request.responseText );
-			var imgs = new Array();
-			console.log(fileslist);
+			this.animator.files = fileslist.record;
+			this.animator.path = fileslist.path;
+			this.animator.imgs = new Array();
+			//console.log(fileslist);
 			for (var i = 0 ; i < fileslist.record.length ; i++) {
-				imgs.push("http://localhost:8080/geonetwork/srv/eng/pigeo.animations.getimage?path="+fileslist.path+"&name="+fileslist.record[i].name); //imgs will be an array of absolute paths to the images
+				this.animator.imgs.push(window.catalogue.URL+"/srv/eng/pigeo.animations.getimage?path="+fileslist.path+"&name="+fileslist.record[i].name); //imgs will be an array of absolute paths to the images
 			};
 			//console.log(imgs);
 			
@@ -403,18 +402,44 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 			this.progress.step = 0;
 			this.progress.bar.updateProgress(0,this.progress.emptyText);
 			
-			imageCache.pushArray(imgs, this.loadImageEvent.bind(this), this.loadAllEvent.bind(this));
+			imageCache.pushArray(this.animator.imgs, this.loadImageEvent.bind(this), this.loadAllEvent.bind(this));
         } 
 		
 	},
 	loadImageEvent: function(e) {
 		this.progress.step += 1/this.progress.steps;
 		this.progress.bar.updateProgress(this.progress.step,Math.floor(this.progress.step *100)+"%");
-		console.log(this.progress.step);
 	},
 	loadAllEvent: function() {
-		this.progress.bar.updateProgress(1,"100%, ready to play!");
+		var params  =this.selectedDataset.data;
+		//console.log(this);
+		this.progress.bar.updateProgress(1,OpenLayers.i18n('anim_ready'));
 		this.animator.panel.enable();
+		//console.log('done');
+		//console.log(this);
+		
+		var bounds = new OpenLayers.Bounds(params.minlon,params.minlat,params.maxlon,params.maxlat);
+		//var bounds = new OpenLayers.Bounds(-1900000,1460000,-1530000,1560000);
+		var size = new OpenLayers.Size(params.width,params.height);
+		this.animator.layerindex = this.animator.imgs.length-1;
+		this.animator.layer = new OpenLayers.Layer.Image(params.label +" (animation)",this.animator.imgs[this.animator.layerindex] , 
+				bounds.transform(new OpenLayers.Projection(params.SRS), this.map.getProjectionObject()), 
+				size, 
+				{
+					isBaseLayer:false,
+		            maxResolution: "auto",
+		            resolutions: this.map.resolutions,
+		            projection: new OpenLayers.Projection(params.SRS),
+		            strategies: [new OpenLayers.Strategy.Fixed()],
+		            displayInLayerSwitcher: true
+	            });
+		
+		//console.log(this.animator.layer);
+		this.map.addLayer(this.animator.layer);
+
+		this.animator.timeslider.setMaxValue(this.animator.imgs.length-1);
+		this.animator.timeslider.setValue(this.animator.imgs.length-1);
+		this.setTimeText(this.animator.files[this.animator.imgs.length-1].name);
 	}
 
 });

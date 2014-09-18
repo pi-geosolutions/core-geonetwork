@@ -434,6 +434,12 @@ path:hover {
 .loadanimation {
 	background-image: url("../images/animation.png") !important;
 }
+.anim_loopforward {
+	background-image: url("../images/anim_loop_forward.png") !important;
+}
+.anim_loopbackward {
+	background-image: url("../images/anim_loop_backward.png") !important;
+}
 
 .geonamesComboList h1 {
 	font-size: 100%;

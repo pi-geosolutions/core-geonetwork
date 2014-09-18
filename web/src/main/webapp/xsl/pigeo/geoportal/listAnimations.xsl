@@ -15,6 +15,10 @@
 				<dataset>
 					<xsl:copy-of select="id"/>
 					<xsl:copy-of select="label"/>
+					<xsl:copy-of select="SRS"/>
+					<xsl:copy-of select="geographicbounds"/>
+					<xsl:copy-of select="imagesize"/>
+					<xsl:copy-of select="timestampformatter"/>
 					<xsl:copy-of select="info"/>
 					<xsl:copy-of select="timeextent"/>
 					<xsl:copy-of select="timeunit"/>

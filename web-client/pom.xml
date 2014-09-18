@@ -546,6 +546,7 @@
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/PratiquesGDTPanel.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/LayerInfoPanel.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/DashBoard.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/AnimationsWindow.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/jpSearchFormTools.js</include>
                 
                 
