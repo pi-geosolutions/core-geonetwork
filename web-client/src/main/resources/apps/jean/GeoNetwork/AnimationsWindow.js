@@ -367,6 +367,8 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 	
 	setImage: function(index) {
 		this.animator.layerindex = index;
+		if (!this.animator.layer.map) //could happen if someone removed the layer from the Organize tab
+			this.map.addLayer(this.animator.layer);
     	this.animator.layer.setUrl(this.animator.imgs[this.animator.layerindex]);
     	//this.animator.layer.redraw();
 

@@ -67,6 +67,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 								, isGeoportalNativeLayer : true
 								, uuid : child.uuid //if set, links the layer with its metadata
 								, legend : child.legend //if set, links the layer with an image legend
+								, hideFromLayertreeIfUnchecked:true
 							}
 					);
 					layers.push(layer);

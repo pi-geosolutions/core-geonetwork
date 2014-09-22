@@ -157,6 +157,7 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 				, isGeoportalNativeLayer : true
 				, uuid : config.uuid //if set, links the layer with its metadata
 				, legend : config.legend //if set, links the layer with an image legend
+				, hideFromLayertreeIfUnchecked:true
 				, eventListeners: {
 					'visibilitychanged': function(evt) {
 						if ((this.visibility) && (!this.gpconfig.loaded))
