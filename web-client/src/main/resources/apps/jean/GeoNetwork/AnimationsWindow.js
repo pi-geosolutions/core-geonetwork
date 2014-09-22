@@ -367,8 +367,8 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 	
 	setImage: function(index) {
 		this.animator.layerindex = index;
-    	this.animator.layer.url = this.animator.imgs[this.animator.layerindex];
-    	this.animator.layer.redraw();
+    	this.animator.layer.setUrl(this.animator.imgs[this.animator.layerindex]);
+    	//this.animator.layer.redraw();
 
     	this.animator.buttons.f.setDisabled(this.animator.layerindex ==this.animator.imgs.length-1);
     	this.animator.buttons.ff.setDisabled(this.animator.layerindex ==this.animator.imgs.length-1);
@@ -380,7 +380,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 	},
 	
 	loadAnimation: function(btn) {	
-		console.log(this.selectedDataset);	
+		//console.log(this.selectedDataset);	
 		var URL = window.catalogue.URL+"/srv/eng/pigeo.animations.listfiles.json?dataName="+this.selectedDataset.data.id;
 		var request = OpenLayers.Request.GET({
             url: URL,
@@ -422,7 +422,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 		//var bounds = new OpenLayers.Bounds(-1900000,1460000,-1530000,1560000);
 		var size = new OpenLayers.Size(params.width,params.height);
 		this.animator.layerindex = this.animator.imgs.length-1;
-		this.animator.layer = new OpenLayers.Layer.Image(params.label +" (animation)",this.animator.imgs[this.animator.layerindex] , 
+		this.animator.layer = new OpenLayers.Layer.AnimImage(params.label +" (animation)",this.animator.imgs[this.animator.layerindex] , 
 				bounds.transform(new OpenLayers.Projection(params.SRS), this.map.getProjectionObject()), 
 				size, 
 				{
@@ -431,7 +431,8 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 		            resolutions: this.map.resolutions,
 		            projection: new OpenLayers.Projection(params.SRS),
 		            strategies: [new OpenLayers.Strategy.Fixed()],
-		            displayInLayerSwitcher: true
+		            displayInLayerSwitcher: true,
+		            transitionEffect: 'resize'
 	            });
 		
 		//console.log(this.animator.layer);
