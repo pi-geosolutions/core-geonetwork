@@ -434,9 +434,10 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 		            projection: new OpenLayers.Projection(params.SRS),
 		            strategies: [new OpenLayers.Strategy.Fixed()],
 		            displayInLayerSwitcher: true,
-		            transitionEffect: 'resize'
+		            transitionEffect: 'resize',
+		            imageRemanence:100
 	            });
-		
+		window.animatorlayer = this.animator.layer;
 		//console.log(this.animator.layer);
 		this.map.addLayer(this.animator.layer);
 

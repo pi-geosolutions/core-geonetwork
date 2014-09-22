@@ -534,6 +534,7 @@
               <includes>
                 <include>../../js/GeoNetwork-mini.js</include>
                 <include>${project.build.directory}/classes/apps/jean/OpenLayers/GetCoordsAtClickPoint.js</include>
+                <include>${project.build.directory}/classes/apps/jean/OpenLayers/Layer/AnimImage.js</include>
                 <include>${project.build.directory}/classes/apps/jean/Ext/Fixes.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoExt/FoldableLegendPlugin.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoExt/ShowOnlyVisibleLayersPlugin.js</include>

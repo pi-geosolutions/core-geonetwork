@@ -58,7 +58,7 @@ GeoExt.plugins.ShowOnlyVisibleLayersPlugin = Ext.extend(Ext.util.Observable, {
             var ui = node.getUI();
             //console.log('ui',ui);
            //console.log('layervis',layer.getVisibility());
-            console.log(layer);
+            //console.log(layer);
 		    if ((!layer.isBaseLayer) && (!layer.getVisibility()) &&(layer.hideFromLayertreeIfUnchecked==true)) {
 		    	
            //console.log('hide');

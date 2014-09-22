@@ -29,6 +29,20 @@ OpenLayers.Layer.AnimImage = OpenLayers.Class(OpenLayers.Layer.Image, {
     isBaseLayer: false,
     
     /**
+     * Property: imageRemanence
+     * {integer} in animations, when you change the image url, there is a small time 
+     * when the previous image is removed and the new one doesn't show yet.
+     * It results in some jerky animation. 
+     * One solution is to use this imageRemanence parameter : it is the time (in 
+     * milliseconds) between when we call the new image and when we remove the old
+     * one.
+     * A too large imageRemanence param will give something weird since the 2 images 
+     * will superpose for some time. A too small one will just reduce the jerkiness.
+     * Around 50 to 100 seems quite fine.
+     */
+    imageRemanence: 100,
+    
+    /**
      * Constructor: OpenLayers.Layer.Image
      * Create a new image layer
      *
@@ -74,7 +88,7 @@ OpenLayers.Layer.AnimImage = OpenLayers.Class(OpenLayers.Layer.Image, {
         this.url = newUrl;
         this.tile.draw();
         var me=this;
-        setTimeout(function() {me.div.removeChild(oldNode)},100);
+        setTimeout(function() {me.div.removeChild(oldNode)},this.imageRemanence);
         
     },
 
