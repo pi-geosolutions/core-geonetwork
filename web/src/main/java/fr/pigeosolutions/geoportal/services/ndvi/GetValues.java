@@ -69,7 +69,10 @@ public class GetValues implements Service
             return new Element(Jeeves.Elem.RESPONSE);
         }
         fullpath = geonetworkDataDir+File.separator+_basepath+File.separator+qDataName;
-        
+        if (_basepath.startsWith("/")) { //then it is an absolute file path
+            fullpath = _basepath+File.separator+qDataName;
+            System.out.println("Using absolute file path to get the NDVI & like dataset: "+fullpath);
+        } 
         Element output;
         Mode mode = Mode.valueOf(qMode); //necessary since String can be used in switch statements only since 1.7
         switch (mode) {
