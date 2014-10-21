@@ -70,6 +70,7 @@ GeoNetwork.mapApp = function() {
             restrictedExtent: new OpenLayers.Bounds(-180,-90,180,90),
             controls: []
         };
+        console.log(options);
         
         if (GeoNetwork.map.CONTEXT) {
             // Load map context
@@ -101,7 +102,7 @@ GeoNetwork.mapApp = function() {
         }
 
         /*<jp>*/
-        bounds=options.restrictedExtent;
+        bounds=options.maxExtent;
         /*</jp>*/
         fixedScales = scales;
     };
@@ -412,6 +413,7 @@ GeoNetwork.mapApp = function() {
 	    action = new GeoExt.Action({
 	        iconCls: 'zoomfull',
 	    	handler: function() {
+	    		//console.log(bounds);
 	    		map.zoomToExtent(bounds, true);
 	        },
 	        scope:this,

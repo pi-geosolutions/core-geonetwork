@@ -232,8 +232,9 @@ GeoNetwork.app = function () {
             if (urlParameters.bounds) {
                 //iMap.getMap().zoomToExtent(urlParameters.bounds);
             	iMap.setMaxBounds(urlParameters.bounds);
-            	iMap.zoomToFullExtent();
+            	//iMap.zoomToFullExtent();
             }
+            iMap.zoomToFullExtent();
             /*<jp>*/
             //iMap.addWMSLayer([['mask', 'http://ige.fr/geoserver-prod/wms?','gm_countryMask',null]])
             var lt = iMap.getTree();
@@ -1320,54 +1321,7 @@ GeoNetwork.app = function () {
          * @return
          */
         switchMode: function (mode, force) {
-            /*var ms = Ext.getCmp('ms'),
-                e = Ext.getCmp('east'),
-                c = Ext.getCmp('center'),
-                w = Ext.getCmp('west'),
-                currentMode;
-            
-            // Set discovery mode as default if undefined
-            if (mode === null) {
-                currentMode = ms.getValue().getGroupValue();
-                if (currentMode === '0') {
-                    ms.onSetValue(Ext.getCmp('visualizationMode'), true);
-                } else {
-                    ms.onSetValue(Ext.getCmp('discoveryMode'), true);
-                }
-                mode = currentMode = ms.getValue().getGroupValue();
-            }
-            
-            if (force) {
-                if (mode === '1') {
-                    ms.onSetValue(Ext.getCmp('visualizationMode'), true);
-                } else {
-                    ms.onSetValue(Ext.getCmp('discoveryMode'), true);
-                }
-            }
-            
-            if (mode === '1' && !visualizationModeInitialized) {
-                initMap();
-            }
-            
-            if (mode === '1' && iMap) {
-                c.add(iMap.getViewport());
-                c.doLayout();
-                if (c.collapsed) {
-                    c.toggleCollapse();
-                }
-                if (!w.collapsed) {
-                    w.toggleCollapse();
-                }
-                
-                Ext.getCmp('vp').syncSize();
-            } else {
-                if (!c.collapsed) {
-                    c.toggleCollapse();
-                }
-                if (w.collapsed) {
-                    w.toggleCollapse();
-                }
-            }*/
+            /*removed*/
         }
     };
 };
