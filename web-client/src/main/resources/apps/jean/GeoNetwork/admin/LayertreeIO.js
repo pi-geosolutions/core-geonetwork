@@ -113,6 +113,65 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
 		}
 	    return treepanel;
     },
+    
+    loadGrid : function() {
+    	var grid = null;
+    	try {
+	    	console.log("layertreeIO : load grid");
+	    	var store = new Ext.data.JsonStore({
+	    	    // store configs
+	    	    autoDestroy: true,
+	    	    url: this.serviceBaseUrl + "/pigeo.featureinfos.admin.listnodes",
+	    	    storeId: 'myStore',
+	    	    // reader configs
+	    	    root: 'nodes',
+	    	    idProperty: 'id',
+	    	    fields: ['id', 'text', 'layers', 'type', 'url', {name:'lastchanged', type:'date'}]
+	    	});
+
+	    	store.load();
+	    	
+	    	// create the Grid
+	        grid = new Ext.grid.GridPanel({
+		        layout:'fit',
+	            store: store,
+	            columns: [
+	                {
+	                    id       :'id',
+	                    header   : 'ID', 
+	                    dataIndex: 'id',
+	                    width : 100
+	                },
+	                {
+	                    id: 'text',
+	                    header   : 'Name', 
+	                    sortable : true, 
+	                    dataIndex: 'text',
+	                    width : 500
+	                }
+	            ],
+	            stripeRows: true,
+	            autoExpandColumn: 'text',
+	            title: 'Geoportal Layers (grid view)'
+	        });
+	    	
+    	} catch (err) {
+	    	if (this.verbose) {
+	    		var errormsg = "ERROR : couldn't load the layers' grid. Please contact your administrator.\n" +err
+				GeoNetwork.admin.Utils.log(this.logWindow,errormsg);
+				Ext.MessageBox.show({
+					icon: Ext.MessageBox.ERROR,
+					title: OpenLayers.i18n("Load layers' grid"), 
+					msg: OpenLayers.i18n(errormsg),
+					buttons: Ext.MessageBox.OK
+				});
+	    	}
+		}
+    	window.grid = grid;
+    	
+	    return grid;
+    },
+    
     /**
      * Gets the layertree as json data from the DB, via pigeo services
      * 

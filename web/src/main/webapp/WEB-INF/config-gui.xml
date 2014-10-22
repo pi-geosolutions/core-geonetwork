@@ -29,7 +29,7 @@
  <!-- Comment out languages to hide them
  from language selector. -->
  <languages>
-     <ara/>
+<!--      <ara/>
      <cat/>
      <chi/>
      <dut/>
@@ -43,7 +43,9 @@
      <por/>
      <rus/>
      <spa/>
-     <tur/>
+     <tur/> -->
+     <eng/>
+     <fre/>
  </languages>
  
  

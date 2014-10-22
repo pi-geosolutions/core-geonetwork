@@ -49,6 +49,21 @@
 		</service>
 		
 		
+		
+		
+		<service name="pigeo.featureinfos.admin">
+			<output sheet="pigeo/geoportal/featureinfos-admin.xsl"/>
+		</service>
+		
+		<service name="pigeo.featureinfos.admin.listnodes">
+			<class name="fr.pigeosolutions.geoportal.services.featureinfos.ListNodes" />
+			<output sheet="pigeo/geoportal/nodes-2json.xsl" contentType="text/plain; charset=UTF-8"/>
+		</service>
+		
+		
+		
+		
+		
 		<service name="pigeo.layers.getchartdata">
 			<class name="fr.pigeosolutions.geoportal.services.layers.GetChartData">
 			</class>
@@ -69,31 +84,38 @@
         <!-- Dashboard services                                           -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-		<!-- - - - - Ndvi extractor service - - - -->
+		<!-- - - - - Ndvi extractor service - - - 
+						- basePath param can be either relative or absolute path. If relative, it is relative to geonetwork data dir
+						  It must point to the root directory, containing the NDVI, SM, etc folders (those are listed in the infotree.js config file)
+		-->
 		
 		<!-- - - -  unused for now. Object : collect info about which datasets are 
 					available and their boundaries (time interval, etc)- - - -->
 		<service name="pigeo.ndvi.initialize">
 			<class name="fr.pigeosolutions.geoportal.services.ndvi.Initialize">
-				<param name="basePath" value="geoportal/NDVIlikes/"/>
+<!-- 				<param name="basePath" value="geoportal/NDVIlikes/"/> -->
+				<param name="basePath" value="/home/large/geoserver-prod-datadir/data/afo/rast/5_ndvi/"/>
 				<param name="ext" value="tif"/>
 			</class>
 		</service>
 		<service name="pigeo.ndvi.listfiles">
 			<class name="fr.pigeosolutions.geoportal.services.ndvi.ListFiles">
-				<param name="basePath" value="geoportal/NDVIlikes/"/>
+<!-- 				<param name="basePath" value="geoportal/NDVIlikes/"/> -->
+				<param name="basePath" value="/home/large/geoserver-prod-datadir/data/afo/rast/5_ndvi/"/>
 				<param name="ext" value="tif"/>
 			</class>
 		</service>
 		<service name="pigeo.ndvi.getvalues">
 			<class name="fr.pigeosolutions.geoportal.services.ndvi.GetValues">
-				<param name="basePath" value="geoportal/NDVIlikes/"/>
+<!-- 				<param name="basePath" value="geoportal/NDVIlikes/"/> -->
+				<param name="basePath" value="/home/large/geoserver-prod-datadir/data/afo/rast/5_ndvi/"/>
 				<param name="ext" value="tif"/>
 			</class>
 		</service>
 		<service name="pigeo.ndvi.getvalues_tsv">
 			<class name="fr.pigeosolutions.geoportal.services.ndvi.GetValues">
-				<param name="basePath" value="geoportal/NDVIlikes/"/>
+<!-- 				<param name="basePath" value="geoportal/NDVIlikes/"/> -->
+				<param name="basePath" value="/home/large/geoserver-prod-datadir/data/afo/rast/5_ndvi/"/>
 				<param name="ext" value="tif"/>
 			</class>
 			<output sheet="pigeo/geoportal/XMLdata2tsv.xsl" contentType="text/plain; charset=UTF-8"/>

@@ -388,6 +388,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
                 <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree.admin.backups.list!?.*" access="hasRole('Administrator')"></sec:intercept-url>
                 <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree.admin.backups.get!?.*" access="hasRole('Administrator')"></sec:intercept-url>
                 <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layertree.admin.backups.remove!?.*" access="hasRole('Administrator')"></sec:intercept-url>
+                <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.featureinfos.admin!?.*" access="hasRole('Administrator')"></sec:intercept-url>
                 <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.ndvi!?.*" access="permitAll"></sec:intercept-url>
                 <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.layers!?.*" access="permitAll"></sec:intercept-url>
                 <sec:intercept-url pattern="/srv/[a-z]{2,3}/pigeo.animations!?.*" access="permitAll"></sec:intercept-url>

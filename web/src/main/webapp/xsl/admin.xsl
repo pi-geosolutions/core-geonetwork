@@ -111,14 +111,18 @@
                     <xsl:variable name="geoportalServices">
                        <xsl:call-template name="addrow">
                             <xsl:with-param name="service" select="'pigeo.layertree.get'"/>
-                            <xsl:with-param name="title"
-                                            select="'Show layertree (JSON)'"/>
+                            <xsl:with-param name="title" select="'Show layertree (JSON)'"/>
                             <xsl:with-param name="desc" select="'Displays the layertree as JSON file'"/>
                       	</xsl:call-template>	
                         <xsl:call-template name="addrow">
                             <xsl:with-param name="service" select="'pigeo.layertree.admin'"/>
                             <xsl:with-param name="title" select="'Manage layertree'"/>
                             <xsl:with-param name="desc" select="'View, reorganize, add nodes to the layertree'"/>
+                        </xsl:call-template>
+                        <xsl:call-template name="addrow">
+                            <xsl:with-param name="service" select="'pigeo.featureinfos.admin'"/>
+                            <xsl:with-param name="title" select="'Translate features names'"/>
+                            <xsl:with-param name="desc" select="'Translate '"/>
                         </xsl:call-template>
                     </xsl:variable>
                     

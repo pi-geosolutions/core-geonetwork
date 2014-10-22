@@ -298,13 +298,13 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	if (this.backupsListGrid)
     		this.backupsListGrid.hide();
     	if (source instanceof Ext.tree.TreeNode) {
-    		console.log("this is a Treenode source that we edit. Getting its geoportalNode parent:");
+    		//console.log("this is a Treenode source that we edit. Getting its geoportalNode parent:");
     		geoplayer = source.geoportalLayer;
-    		console.log(geoplayer);
+    		//console.log(geoplayer);
     	} else { //we assume source is already GeoportalAbstractLayer object
-    		console.log("editing a geoplayer directly:");
+    		//console.log("editing a geoplayer directly:");
     		geoplayer = source;
-    		console.log(geoplayer);
+    		//console.log(geoplayer);
     	}
     	if (geoplayer!=null) {
     		this.loadForm(geoplayer);
