@@ -96,7 +96,7 @@ GeoNetwork.map.PROJECTION = "EPSG:900913";
 ////GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-550000, 5000000, 1200000, 7000000);
 GeoNetwork.map.EXTENT = window.Geoportal.EXTENT?new OpenLayers.Bounds(window.Geoportal.EXTENT):new OpenLayers.Bounds(-2.003750834E7,-2.003750834E7,2.0037508345578495E7,2.0037508345578495E7);
 GeoNetwork.map.RESTRICTEDEXTENT = window.Geoportal.RESTRICTEDEXTENT?new OpenLayers.Bounds(window.Geoportal.RESTRICTEDEXTENT):new OpenLayers.Bounds(-2.003750834E7,-2.003750834E7,2.0037508345578495E7,2.0037508345578495E7);
-GeoNetwork.map.MAXEXTENT = window.Geoportal.MAXEXTENT?new OpenLayers.Bounds(window.Geoportal.MAXEXTENT):new OpenLayers.Bounds(-2.003750834E7,-2.003750834E7,2.0037508345578495E7,2.0037508345578495E7);
+GeoNetwork.map.MAXEXTENT = new OpenLayers.Bounds(-2.003750834E7,-2.003750834E7,2.0037508345578495E7,2.0037508345578495E7);
 //GeoNetwork.map.BACKGROUND_LAYERS = [
 //    new OpenLayers.Layer.OSM()
 //    //new OpenLayers.Layer.Google("Google Streets");
@@ -134,6 +134,7 @@ GeoNetwork.map.MAP_OPTIONS = {
 
 GeoNetwork.map.MAIN_MAP_OPTIONS = {
  projection: GeoNetwork.map.PROJECTION,
+ extent: GeoNetwork.map.EXTENT,
  maxExtent: GeoNetwork.map.MAXEXTENT,
  restrictedExtent: GeoNetwork.map.RESTRICTEDEXTENT,
  resolutions: GeoNetwork.map.RESOLUTIONS,

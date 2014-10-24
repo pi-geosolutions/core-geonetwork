@@ -101,7 +101,7 @@ GeoNetwork.mapApp = function() {
         }
 
         /*<jp>*/
-        bounds=options.maxExtent;
+        bounds=options.extent;
         /*</jp>*/
         fixedScales = scales;
     };
