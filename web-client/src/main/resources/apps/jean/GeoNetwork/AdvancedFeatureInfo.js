@@ -46,7 +46,8 @@ GeoNetwork.AdvancedFeatureInfoWindow = function(config) {
 
 Ext.extend(GeoNetwork.AdvancedFeatureInfoWindow, GeoNetwork.BaseWindow, {
 
-		control: null,
+		control: null,    
+
 
     /**
      * Method: init
@@ -70,7 +71,19 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoWindow, GeoNetwork.BaseWindow, {
     },
 
     setFeatures: function(featureList) {
+        this.loadTranslations();
         this.items.items[0].showFeatures(featureList);
+    },
+    
+    loadTranslations: function() {
+    	if (window.Geoportal.featureinfos==null)
+        	window.Geoportal.featureinfos={};
+    	
+		if (window.Geoportal.featureinfos.translations!=null)
+			return; //already loaded
+    	
+    	var fieldsIO = new GeoNetwork.admin.FeatureInfoManagerIO({'serviceBaseUrl':catalogue.services.rootUrl});
+    	window.Geoportal.featureinfos.translations = fieldsIO.pull();
     },
 
     setMap: function(map) {

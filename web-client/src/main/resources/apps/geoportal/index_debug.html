@@ -60,8 +60,8 @@
      
     </div>
     
-    <script type="text/javascript" src="../js/ext/adapter/ext/ext-base-debug.js"></script>
-    <script type="text/javascript" src="../js/ext/ext-all-debug.js"></script>
+    <script type="text/javascript" src="../js/ext/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../js/ext/ext-all.js"></script>
     <script type="text/javascript" src="../js/ext-ux/Rating/RatingItem.js"></script>
     <script type="text/javascript" src="../js/ext-ux/FileUploadField/FileUploadField.js"></script>
     <script type="text/javascript" src="../js/ext-ux/TwinTriggerComboBox/TwinTriggerComboBox.js"></script>
@@ -111,7 +111,8 @@
     <script type="text/javascript" src="../jean/GeoNetwork/LayerInfoPanel.js"></script>
     <script type="text/javascript" src="../jean/GeoNetwork/DashBoard.js"></script>
     <script type="text/javascript" src="../jean/GeoNetwork/AnimationsWindow.js"></script>
-    <script type="text/javascript" src="../jean/GeoNetwork/FieldsManager.js"></script>
+    <script type="text/javascript" src="../jean/GeoNetwork/admin/FeatureInfoManagerIO.js"></script>
+    <script type="text/javascript" src="../jean/GeoNetwork/FeatureInfoManager.js"></script>
     <script type="text/javascript" src="../jean/GeoNetwork/AdvancedFeatureInfo.js"></script>
     <script type="text/javascript" src="../jean/GeoNetwork/AdvancedFeatureInfoPanel.js"></script>
     <script type="text/javascript" src="../jean/OpenLayers/GetCoordsAtClickPoint.js"></script>
@@ -181,19 +182,21 @@
 					options: {
 						header:true
 					}
-				},
+				}/*,
 				featureinfos: {
 					translations : {
-						'fre' : null,
-						'eng': {
-							'abn:abn_3c2_hydro_prin' : {
+						'abn:abn_3c2_hydro_prin' : {
+							'eng' : {
+
 								'RIVIERE' : 'River',
 								'RIVIERE_CO' : 'River code',
 								'BASSIN' : 'watershed',
 								'ORDRE' : 'order',
 								'PERENNE' : 'permanent'
-							},
-							'gm:gm_1e1_topo_parks' : {
+							}
+						},
+						'gm:gm_1e1_topo_parks' : {
+							'eng' : {
 								'NAME' : '<b>Name</b>',
 								'LAYER': 'Type',
 								'PERIMETER' : 'Perimeter',
@@ -201,7 +204,7 @@
 							}
 						}
 					}
-				}
+				}*/
     			
     			/*,
 				pratiquesConf 		: {

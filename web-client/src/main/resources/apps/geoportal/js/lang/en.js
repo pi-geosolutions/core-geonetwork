@@ -75,17 +75,15 @@ GeoNetwork.jpLang.en = {
 	'openPratiqueSheet' : 'Open sheet',
 	'legend': 'Legend',
 	'openLegendButtonText':'Open legend in popup',
-
-	"fieldsManager.windowTitle":'Fields Manager',
-	"fieldsManager.langGrid.code":'Code',
-	"fieldsManager.langGrid.name":'Name',
-	"fieldsManager.langGrid.title":'Select active language',
-	'fieldsManager.fieldsGrid.title':'Fields list',
-	'fieldsManager.fieldsGrid.field':'Field ID',
-	'fieldsManager.fieldsGrid.label':'Field label',
-	'fieldsManager.fieldsGrid.show':'Show ?',
-	'fieldsManager.fieldsGrid.save':'Apply (non-persistent)',
-	'fieldsManager.fieldsGrid.save':'Save changes',
+	'featureInfoTitle':'Selected features:',
+	'fi_manageFields':'Manage fields',
+	"featureInfoManager.windowTitle":'Fields Manager',
+	"featureInfoManager.langGrid.code":'Code',
+	"featureInfoManager.langGrid.name":'Name',
+	"featureInfoManager.langGrid.title":'Select active language',
+	'featureInfoManager.fieldsGrid.title':'Fields list',
+	'featureInfoManager.fieldsGrid.save':'Save for this layer only',
+	'featureInfoManager.fieldsGrid.saveall':'Save all changes',
 	
 	'zz':'zz'
 };

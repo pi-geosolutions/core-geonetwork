@@ -464,6 +464,12 @@ h1.soberH1 {
 	float:left;
 	margin : 4px;
 }
+
+/*FeatureInfo rendering*/
+.olFeatureInfoTable td.olFeatureInfoColumn {
+	padding-right:10px;
+}
+
 /************************************************************
 		Customization of the map
 ************************************************************/

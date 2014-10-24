@@ -78,13 +78,12 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoPanel, Ext.Panel, {
     	feature:null
     },
     
-    
     /**
-     * APIProperty: fieldsManager
-     * {<Ext.Window>} the window for fields management (rename, show, etc)
+     * APIProperty: hideValue
+     * {String} value of a field label saying we don't want to display its information
      */
-    fieldsManager: null,
-    
+	hideValue : "#hide#",
+	
 
     /**
      * Method: initComponent
@@ -106,7 +105,7 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoPanel, Ext.Panel, {
         var center = {region: 'center', items: [this.treePanel], layout:'fit',split: true,
             minWidth: 100};
 
-        this.infoPanel = new Ext.Panel();
+        this.infoPanel = new Ext.Panel({frame:false});
         this.infoPanel.on('render', function() {
             if (this.features) {
                 this.showFeatures(this.features);
@@ -125,7 +124,7 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoPanel, Ext.Panel, {
 	       ]
         });
         
-        var east = {region: 'east', items: [this.infoPanel], tbar:this.toolBar, split: true,
+        var east = {region: 'east', layout:'fit', items: [this.infoPanel], tbar:this.toolBar, split: true,
             plain: true, cls: 'popup-variant1', width: 400,
             autoScroll: true};
      
@@ -137,8 +136,8 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoPanel, Ext.Panel, {
         this.add(east);
         
         this.doLayout();
-        
-        GeoNetwork.WindowManager.registerWindow("fieldsmanager", GeoNetwork.FieldsManager, {id:"fieldsmanager",current : this.current, fieldRename:this.getTranslated});
+                
+        GeoNetwork.WindowManager.registerWindow("featureinfomanager", GeoNetwork.FeatureInfoManager, {id:"featureinfomanager",current : this.current, fieldRename:this.getTranslated});
 
     },
 
@@ -166,6 +165,10 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoPanel, Ext.Panel, {
             'cellpadding="1"><tbody>';
         for (var attr in feature.attributes) {
             if (attr) {
+            	var transl = this.getTranslated(attr, feature,layerid);
+            	if (transl == this.hideValue )
+            		continue;
+            	
                 tplstring += '<tr class="olFeatureInfoRow">' +
                     '<td width="50%" class="olFeatureInfoColumn">' + this.getTranslated(attr, feature,layerid) +
                     '</td><td width="50%" class="olFeatureInfoValue">' +
@@ -196,8 +199,8 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoPanel, Ext.Panel, {
     getTranslated: function(attr, feature, layerid, lang) {
     	if (lang==null)
     		lang=window.catalogue.LANG;
-    	if (window.Geoportal.featureinfos.translations[lang] && window.Geoportal.featureinfos.translations[lang][layerid]) {
-    		var translations = window.Geoportal.featureinfos.translations[lang][layerid];
+    	if (window.Geoportal.featureinfos.translations[layerid] && window.Geoportal.featureinfos.translations[layerid][lang]) {
+    		var translations = window.Geoportal.featureinfos.translations[layerid][lang];
     		if (translations[attr])
     			return translations[attr];
     	}
@@ -207,13 +210,8 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoPanel, Ext.Panel, {
     
     
     manageFields: function() {
-    	/*if (this.fieldsManager==null) {
-    		this.fieldsManager = new GeoNetwork.FieldsManager();
-    	}
-    	this.fieldsManager.manage(this.current.layerid, this.current.feature)
-    	this.fieldsManager.show();*/
-    	GeoNetwork.WindowManager.getWindow("fieldsmanager").manage(this.current);
-        GeoNetwork.WindowManager.showWindow("fieldsmanager");
+    	GeoNetwork.WindowManager.getWindow("featureinfomanager").manage(this.current);
+        GeoNetwork.WindowManager.showWindow("featureinfomanager");
     },
 
     /**

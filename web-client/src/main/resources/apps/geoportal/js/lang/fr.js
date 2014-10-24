@@ -67,6 +67,16 @@ GeoNetwork.jpLang.fr = {
 		'openPratiqueSheet' : 'Ouvrir la fiche',
 		'legend': 'Legende',
 		'openLegendButtonText':'Ouvrir la légende dans un popup',
+		'featureInfoWindow.windowTitle':'Interrogation de couches cartographiques',
+		'featureInfoTitle':'Eléments interrogés:',
+		'fi_manageFields':'Gérer les attributs',
+		"featureInfoManager.windowTitle":'Gestionnaire d\'attributs',
+		"featureInfoManager.langGrid.code":'Code',
+		"featureInfoManager.langGrid.name":'Nom',
+		"featureInfoManager.langGrid.title":'Choisir le langage actif',
+		'featureInfoManager.fieldsGrid.title':'Liste des attributs',
+		'featureInfoManager.fieldsGrid.save':'Sauver pour cette couche seulement',
+		'featureInfoManager.fieldsGrid.saveall':'Sauver tous les changements',
 		'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.jpLang.fr);

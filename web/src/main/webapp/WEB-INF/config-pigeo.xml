@@ -51,6 +51,14 @@
 		
 		
 		
+		<service name="pigeo.featureinfos.set">
+			<class name="fr.pigeosolutions.geoportal.services.featureinfos.Set" />
+		</service>
+		<service name="pigeo.featureinfos.get">
+			<class name="fr.pigeosolutions.geoportal.services.featureinfos.Get" />
+			<output sheet="pigeo/geoportal/fiLabels-2json.xsl" contentType="text/plain; charset=UTF-8"/>
+		</service>
+		
 		<service name="pigeo.featureinfos.admin">
 			<output sheet="pigeo/geoportal/featureinfos-admin.xsl"/>
 		</service>
