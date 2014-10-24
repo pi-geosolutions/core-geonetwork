@@ -30,7 +30,6 @@
 			<output sheet="pigeo/geoportal/layertree-admin.xsl"/>
 		</service>
 		
-		
 		<service name="pigeo.layertree.admin.backups.list">
 			<class name="fr.pigeosolutions.geoportal.services.layertree.Backups">
 				<param name="mode" value="list"/>
@@ -48,9 +47,9 @@
 			</class>
 		</service>
 		
-		
-		
-		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- FeatureInfoManager services                                           -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<service name="pigeo.featureinfos.set">
 			<class name="fr.pigeosolutions.geoportal.services.featureinfos.Set" />
 		</service>
@@ -59,19 +58,10 @@
 			<output sheet="pigeo/geoportal/fiLabels-2json.xsl" contentType="text/plain; charset=UTF-8"/>
 		</service>
 		
-		<service name="pigeo.featureinfos.admin">
-			<output sheet="pigeo/geoportal/featureinfos-admin.xsl"/>
-		</service>
 		
-		<service name="pigeo.featureinfos.admin.listnodes">
-			<class name="fr.pigeosolutions.geoportal.services.featureinfos.ListNodes" />
-			<output sheet="pigeo/geoportal/nodes-2json.xsl" contentType="text/plain; charset=UTF-8"/>
-		</service>
-		
-		
-		
-		
-		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Chart services                                           -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<service name="pigeo.layers.getchartdata">
 			<class name="fr.pigeosolutions.geoportal.services.layers.GetChartData">
 			</class>
@@ -129,8 +119,9 @@
 			<output sheet="pigeo/geoportal/XMLdata2tsv.xsl" contentType="text/plain; charset=UTF-8"/>
 		</service>
 
-		<!-- - - - - Animations services - - - -->
-		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Animation services                                           -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<service name="pigeo.animations.listfiles">
 			<class name="fr.pigeosolutions.geoportal.services.animations.ListFiles">
 				<param name="basePath" value="geoportal/animations/"/>

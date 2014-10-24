@@ -1486,7 +1486,7 @@ var processLayersSuccess = function(response) {
             GeoNetwork.WindowManager.registerWindow("addwms", GeoNetwork.AddWmsLayerWindow, {map: map, id:"addwms"});
             GeoNetwork.WindowManager.registerWindow("wmsinfo", GeoNetwork.WmsLayerMetadataWindow, {map: map, id:"wmsinfo"});
             GeoNetwork.WindowManager.registerWindow("loadwmc", GeoNetwork.LoadWmcWindow, {map: map, id:"loadwmc"});
-            GeoNetwork.WindowManager.registerWindow("featureinfo", GeoNetwork.AdvancedFeatureInfoWindow, {map: map, id:"featureinfo", control: featureinfo});
+            GeoNetwork.WindowManager.registerWindow("featureinfo", GeoNetwork.FeatureInfo.AdvancedFeatureInfoWindow, {map: map, id:"featureinfo", control: featureinfo});
             GeoNetwork.WindowManager.registerWindow("dashBoard", GeoNetwork.DashBoardWindow, {id:"dashBoard", control: dashBoard});
             GeoNetwork.WindowManager.registerWindow("animations", GeoNetwork.AnimationsWindow, {map:map,id:"animations"});
             

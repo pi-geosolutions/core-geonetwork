@@ -550,7 +550,13 @@
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/AnimationsWindow.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/jpSearchFormTools.js</include>
                 
+                <!-- Advanced, fancy featureinfo classes -->
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/featureinfo/FeatureInfoManagerIO.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/featureinfo/FeatureInfoManager.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/featureinfo/AdvancedFeatureInfo.js</include>
+                <include>${project.build.directory}/classes/apps/jean/GeoNetwork/featureinfo/AdvancedFeatureInfoPanel.js</include>                
                 
+                <!-- Layers classes -->
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/layers/GeoportalAbstractLayer.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/layers/GeoportalFolderLayer.js</include>
                 <include>${project.build.directory}/classes/apps/jean/GeoNetwork/layers/GeoportalWMSLayer.js</include>

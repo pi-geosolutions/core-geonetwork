@@ -21,10 +21,10 @@
  * @requires GeoNetwork/windows/BaseWindow.js
  */ 
 
-Ext.namespace('GeoNetwork');
+Ext.namespace('GeoNetwork.FeatureInfo');
 
 /**
- * Class: GeoNetwork.FeatureInfoManager
+ * Class: GeoNetwork.FeatureInfo.FeatureInfoManager
  *      Window to manage a layer's fields (rename, show/hide them).
  *
  * Inherits from:
@@ -32,19 +32,18 @@ Ext.namespace('GeoNetwork');
  */
 
 /**
- * Constructor: GeoNetwork.FeatureInfoManager
- * Create an instance of GeoNetwork.FeatureInfoManager
+ * Constructor: GeoNetwork.FeatureInfo.FeatureInfoManager
+ * Create an instance of GeoNetwork.FeatureInfo.FeatureInfoManager
  *
  * Parameters:
- * config - {Object} A config object used to set the addwmslayer
- *     window's properties.
+ * config - {Object} 
  */
-GeoNetwork.FeatureInfoManager = function(config) {
+GeoNetwork.FeatureInfo.FeatureInfoManager = function(config) {
     Ext.apply(this, config);
-    GeoNetwork.FeatureInfoManager.superclass.constructor.call(this);
+    GeoNetwork.FeatureInfo.FeatureInfoManager.superclass.constructor.call(this);
 };
 
-Ext.extend(GeoNetwork.FeatureInfoManager, GeoNetwork.BaseWindow, {
+Ext.extend(GeoNetwork.FeatureInfo.FeatureInfoManager, GeoNetwork.BaseWindow, {
 
 		current: null,
 		
@@ -62,7 +61,7 @@ Ext.extend(GeoNetwork.FeatureInfoManager, GeoNetwork.BaseWindow, {
      *     Initialize this component.
      */
     initComponent: function() {
-        GeoNetwork.FeatureInfoManager.superclass.initComponent.call(this);
+        GeoNetwork.FeatureInfo.FeatureInfoManager.superclass.initComponent.call(this);
 
         this.title = this.title || OpenLayers.i18n("featureInfoManager.windowTitle");
 
@@ -71,18 +70,13 @@ Ext.extend(GeoNetwork.FeatureInfoManager, GeoNetwork.BaseWindow, {
 
         this.cls = 'popup-variant1';
 
-       	//var fp = new GeoNetwork.FeatureInfoManagerPanel();
-
-        //this.add(fp);
         this.layout='border';
         this.fieldsPanel = new Ext.Panel({
         	region:'center',
-        	//title: OpenLayers.i18n("featureInfoManager.fieldsPanel"),
         	layout:'fit'
         });
         this.langPanel = new Ext.Panel({
         	region:'north',
-        	//title: OpenLayers.i18n("featureInfoManager.langPanel"),
         	height:100,
         	collapsible:false,
         	layout:'fit'
@@ -246,22 +240,8 @@ Ext.extend(GeoNetwork.FeatureInfoManager, GeoNetwork.BaseWindow, {
     
     pushToDB: function(data) {
     	if (!this.featureInfoManagerIO) {
-    		this.featureInfoManagerIO = new GeoNetwork.admin.FeatureInfoManagerIO({'serviceBaseUrl':catalogue.services.rootUrl});
+    		this.featureInfoManagerIO = new GeoNetwork.FeatureInfo.FeatureInfoManagerIO({'serviceBaseUrl':catalogue.services.rootUrl});
     	}
         this.featureInfoManagerIO.push(data);
-        
-    	/*var serviceurl = catalogue.services.rootUrl + "/pigeo.featureinfos.set";
-    	OpenLayers.Request.POST({
-		    url: serviceurl,
-		    header:{"Content-Type":"text/xml"},
-		    data: data,
-            success: function(response){
-            	console.log('OK');
-            },
-            failure: function(response){
-            	console.error('[FeatureInfoManager.js] Error trying to save fields information to DB');
-            },
-            scope : this
-        });*/
     },
 });

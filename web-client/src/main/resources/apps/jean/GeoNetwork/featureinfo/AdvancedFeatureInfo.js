@@ -21,7 +21,7 @@
  * @requires GeoNetwork/windows/BaseWindow.js
  */ 
 
-Ext.namespace('GeoNetwork');
+Ext.namespace('GeoNetwork.FeatureInfo');
 
 /**
  * Class: GeoNetwork.AdvancedFeatureInfoWindow
@@ -32,19 +32,18 @@ Ext.namespace('GeoNetwork');
  */
 
 /**
- * Constructor: GeoNetwork.AdvancedFeatureInfoWindow
- * Create an instance of GeoNetwork.AdvancedFeatureInfoWindow
+ * Constructor: GeoNetwork.FeatureInfo.AdvancedFeatureInfoWindow
+ * Create an instance of GeoNetwork.FeatureInfo.AdvancedFeatureInfoWindow
  *
  * Parameters:
- * config - {Object} A config object used to set the addwmslayer
- *     window's properties.
+ * config - {Object} 
  */
-GeoNetwork.AdvancedFeatureInfoWindow = function(config) {
+GeoNetwork.FeatureInfo.AdvancedFeatureInfoWindow = function(config) {
     Ext.apply(this, config);
-    GeoNetwork.AdvancedFeatureInfoWindow.superclass.constructor.call(this);
+    GeoNetwork.FeatureInfo.AdvancedFeatureInfoWindow.superclass.constructor.call(this);
 };
 
-Ext.extend(GeoNetwork.AdvancedFeatureInfoWindow, GeoNetwork.BaseWindow, {
+Ext.extend(GeoNetwork.FeatureInfo.AdvancedFeatureInfoWindow, GeoNetwork.BaseWindow, {
 
 		control: null,    
 
@@ -54,7 +53,7 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoWindow, GeoNetwork.BaseWindow, {
      *     Initialize this component.
      */
     initComponent: function() {
-        GeoNetwork.AdvancedFeatureInfoWindow.superclass.initComponent.call(this);
+        GeoNetwork.FeatureInfo.AdvancedFeatureInfoWindow.superclass.initComponent.call(this);
 
         this.title = this.title || OpenLayers.i18n("featureInfoWindow.windowTitle");
 
@@ -63,7 +62,7 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoWindow, GeoNetwork.BaseWindow, {
 
         this.cls = 'popup-variant1';
 
-       	var fp = new GeoNetwork.AdvancedFeatureInfoPanel();
+       	var fp = new GeoNetwork.FeatureInfo.AdvancedFeatureInfoPanel();
 
         this.add(fp);
 
@@ -82,7 +81,7 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoWindow, GeoNetwork.BaseWindow, {
 		if (window.Geoportal.featureinfos.translations!=null)
 			return; //already loaded
     	
-    	var fieldsIO = new GeoNetwork.admin.FeatureInfoManagerIO({'serviceBaseUrl':catalogue.services.rootUrl});
+    	var fieldsIO = new GeoNetwork.FeatureInfo.FeatureInfoManagerIO({'serviceBaseUrl':catalogue.services.rootUrl});
     	window.Geoportal.featureinfos.translations = fieldsIO.pull();
     },
 

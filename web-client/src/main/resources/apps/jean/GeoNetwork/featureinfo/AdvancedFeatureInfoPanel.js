@@ -17,10 +17,10 @@
  * along with GeoNetwork.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-Ext.namespace('GeoNetwork');
+Ext.namespace('GeoNetwork.FeatureInfo');
 
 /**
- * Class: GeoNetwork.AdvancedFeatureInfoPanel
+ * Class: GeoNetwork.FeatureInfo.AdvancedFeatureInfoPanel
  * AdvancedFeatureInfoPanel is an Ext.Panel that displays a listview for all
  * the results returned by the FeatureInfo control. When the user clicks
  * on an item the attributes and values will be shown.
@@ -30,19 +30,19 @@ Ext.namespace('GeoNetwork');
  */
 
 /**
- * Constructor: GeoNetwork.AdvancedFeatureInfoPanel
- * Create an instance of GeoNetwork.AdvancedFeatureInfoPanel
+ * Constructor: GeoNetwork.FeatureInfo.AdvancedFeatureInfoPanel
+ * Create an instance of GeoNetwork.FeatureInfo.AdvancedFeatureInfoPanel
  *
  * Parameters:
  * config - {Object} A config object used to set the featureinfo
  *     panel's properties.
  */
-GeoNetwork.AdvancedFeatureInfoPanel = function(config){
+GeoNetwork.FeatureInfo.AdvancedFeatureInfoPanel = function(config){
     Ext.apply(this, config);
-    GeoNetwork.AdvancedFeatureInfoPanel.superclass.constructor.call(this);
+    GeoNetwork.FeatureInfo.AdvancedFeatureInfoPanel.superclass.constructor.call(this);
 };
 
-Ext.extend(GeoNetwork.AdvancedFeatureInfoPanel, Ext.Panel, {
+Ext.extend(GeoNetwork.FeatureInfo.AdvancedFeatureInfoPanel, Ext.Panel, {
 
     /**
      * APIProperty: features
@@ -91,7 +91,7 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoPanel, Ext.Panel, {
      */
     initComponent: function() {
 
-        GeoNetwork.AdvancedFeatureInfoPanel.superclass.initComponent.call(this);
+        GeoNetwork.FeatureInfo.AdvancedFeatureInfoPanel.superclass.initComponent.call(this);
 
         this.layout = 'border';
 
@@ -137,7 +137,7 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoPanel, Ext.Panel, {
         
         this.doLayout();
                 
-        GeoNetwork.WindowManager.registerWindow("featureinfomanager", GeoNetwork.FeatureInfoManager, {id:"featureinfomanager",current : this.current, fieldRename:this.getTranslated});
+        GeoNetwork.WindowManager.registerWindow("featureinfomanager", GeoNetwork.FeatureInfo.FeatureInfoManager, {id:"featureinfomanager",current : this.current, fieldRename:this.getTranslated});
 
     },
 
@@ -329,4 +329,4 @@ Ext.extend(GeoNetwork.AdvancedFeatureInfoPanel, Ext.Panel, {
 
 });
 
-Ext.reg('gn_advfeatureinfo', GeoNetwork.AdvancedFeatureInfoPanel);
+Ext.reg('gn_advfeatureinfo', GeoNetwork.FeatureInfo.AdvancedFeatureInfoPanel);

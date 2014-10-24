@@ -17,7 +17,7 @@
  * 
  * Contact: jean.pommier@pi-geosolutions.fr
  */
-Ext.namespace('GeoNetwork.admin');
+Ext.namespace('GeoNetwork.FeatureInfo');
 
 
 /** api: (define)
@@ -30,13 +30,13 @@ Ext.namespace('GeoNetwork.admin');
  *  Input/output features for layertree
  *
  */
-GeoNetwork.admin.FeatureInfoManagerIO = Ext.extend(Object, {
+GeoNetwork.FeatureInfo.FeatureInfoManagerIO = Ext.extend(Object, {
     serviceBaseUrl : null,
     verbose:false,//displays error and info messages : set it true on the admin side, false on the client side
 
     
     constructor: function(config){
-    	GeoNetwork.admin.FeatureInfoManagerIO.superclass.constructor.call(this, config);
+    	GeoNetwork.FeatureInfo.FeatureInfoManagerIO.superclass.constructor.call(this, config);
         Ext.apply(this, config);
     },
     
@@ -80,10 +80,10 @@ GeoNetwork.admin.FeatureInfoManagerIO = Ext.extend(Object, {
 		    header:{"Content-Type":"text/xml"},
 		    data: data,
             success: function(response){
-            	console.log('OK');
+            	//console.log('OK');
             },
             failure: function(response){
-            	console.error('[FieldsManager.js] Error trying to save fields information to DB');
+            	console.error('[FeatureInfoManager.js] Error trying to save fields information to DB');
             },
             scope : this
         });
