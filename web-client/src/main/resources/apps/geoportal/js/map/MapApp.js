@@ -234,7 +234,8 @@ GeoNetwork.mapApp = function() {
                 Ext.getCmp("tbRemoveButton").enable();
             }
             //Ext.getCmp("tbMetadataButton").setDisabled(!(node.layer instanceof OpenLayers.Layer.WMS));
-            Ext.getCmp("tbMetadataButton").setDisabled(node.attributes.layer.uuid==null);
+            var hide = (node.attributes.layer.uuid==null)||(node.attributes.layer.uuid=="")
+            Ext.getCmp("tbMetadataButton").setDisabled(hide);
             Ext.getCmp("btnZoomToExtent").enable();
         } else {
             Ext.getCmp("tbRemoveButton").disable();
@@ -1054,8 +1055,11 @@ GeoNetwork.mapApp = function() {
                             c.items.get("metadataMenu").show();
                             //c.items.get("openLegendMenu").show();
                             //c.items.get("metadataMenu").enable();	
-                            c.items.get("metadataMenu").setDisabled(node.attributes.layer.uuid==null);	
-                            c.items.get("openLegendMenu").setVisible(node.attributes.layer.legend!=null);	
+                            var hide = (node.attributes.layer.uuid==null)||(node.attributes.layer.uuid=="")
+                            c.items.get("metadataMenu").setDisabled(hide);	
+
+                            var showLegend = (node.attributes.layer.legend==null)||(node.attributes.layer.legend=="")
+                            c.items.get("openLegendMenu").setVisible(showLegend);	
                             //console.log(node.attributes.layer);
                             
                             //sync to layer opacity value
