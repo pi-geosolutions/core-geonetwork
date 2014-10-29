@@ -141,11 +141,12 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
         if (this.withPaging) {
             cmp.push(this.createPaging());
         }
-        cmp.push(['->']);
+        //cmp.push(['->']);
         var sortOption = this.getSortByCombo();
         cmp.push(OpenLayers.i18n('sortBy'), sortOption);
-        cmp.push(['|']);
-        cmp.push(this.createTemplateMenu());
+        //cmp.push(['|']);
+        cmp.push(['->']);
+        //cmp.push(this.createTemplateMenu());
         cmp.push(this.createSelectionToolBar());
         cmp.push(this.createOtherActionMenu());
         
