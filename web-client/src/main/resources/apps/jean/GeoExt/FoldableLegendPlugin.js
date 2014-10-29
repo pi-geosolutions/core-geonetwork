@@ -49,6 +49,7 @@ GeoExt.plugins.FoldableLegendPlugin = Ext.extend(Ext.util.Observable, {
         var a = node.attributes;
         if (node.layer) {a.layer=node.layer;}
 	    if (a.layer && ((a.layer.params && a.layer.params.LAYERS) || a.layer.legend)) {
+	    	//console.log(node.ui);
 			var emplacement = node.ui.iconNode;
 			/**************Ajoute interactivité sur le clic / icone de la couche : si l'uuid geonetwork est connu, on ouvre la fiche de mtd en guise d'infos sur la donnée *******/
 			/*Ext.fly(node.ui.iconNode).on({

@@ -184,6 +184,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 					return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
 				}
 			});
+
 			layertree = new Ext.tree.TreePanel({
 				title:'layerTree',
 				header:false,
@@ -191,8 +192,10 @@ GeoNetwork.Geoportal.LayerTree = function() {
 				enableDD: false,
 				autoScroll:true,
 				loader: mytreeloader,
-				//plugins don't work because UIEventMixin won't work properly for this tree (think it is a matter of not having found how to use 
-				// "layernodeui" as uiprovider for the nodes, while loading them
+				/* plugins don't work because UIEventMixin won't work properly for this tree (probably it is a matter of timing:
+				 * layernodeui seems OK, UIEventMixin looks loaded, when performing a console.log(mytreeloader.uiProviders["layernodeui"])
+				 * but nothing happens. Maybe th nodes are rendered too early or them to be caught by UIEventMixin
+				 */
 				/*
 		        plugins: [
 		            		new GeoExt.plugins.FoldableLegendPlugin({}),
@@ -204,11 +207,13 @@ GeoNetwork.Geoportal.LayerTree = function() {
 					// provide an initial set of layer nodes. We use the treeConfig
 					// from above, that we created with OpenLayers.Format.JSON.write.
 					children: Ext.decode(jsontree)
-				},
+				},     
 				rootVisible: false,
 				border: false,
 				region: 'center'			
 			});
+			
+			
 		},
 
 		getTree: function() {
