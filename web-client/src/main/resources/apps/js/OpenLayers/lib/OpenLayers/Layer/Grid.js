@@ -1022,6 +1022,7 @@ OpenLayers.Layer.Grid = OpenLayers.Class(OpenLayers.Layer.HTTPRequest, {
             var colidx = 0;
  
             do {
+            	if(!colidx) tileoffsetlon = startLon;
                 var tileBounds = 
                     new OpenLayers.Bounds(tileoffsetlon, 
                                           tileoffsetlat, 
