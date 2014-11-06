@@ -138,6 +138,88 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
     		fieldLabel : 'UUID',
     		name : 'uuid'
     	}]
+	},{
+        xtype: 'fieldset',
+        title: 'Enable Polygon Query ? (available only for raster-type source data)',
+        checkboxToggle:true,
+        checkboxName:'pq_enable',
+        autoHeight: true,
+        layout: 'form',
+        //border:false,
+        //collapsible:false,
+        collapsed: true,
+        defaults: {width: '90%', hidden:false, xtype : 'textfield'},
+        //frame:true,
+    	items	: 	[{/*
+        	xtype: 'checkbox',
+        	id:'pq.form.enable',
+    		fieldLabel : 'Enable Polygon Query ?',
+    		name : 'pq.enable',
+            value:false
+    	},{
+            xtype: 'fieldset',
+        	id:'pq.form.settings',
+            hidden:true,
+            title: 'Polygon Query settings',
+            autoHeight: true,
+            layout: 'form',
+            //border:false,
+            collapsible:false,
+            defaults: {width: '90%', hidden:false, xtype : 'textfield'},
+            //frame:true,
+        	items	: 	[{*/
+        		fieldLabel : 'WMS Layer to query',
+        		name : 'pq_layer'
+        	}/*,{
+                xtype: 'radiogroup',
+                columns: [300],
+                fieldLabel: 'Layer type',
+                name:'pq.layertype', //necessary for hide/show procedures
+                items: [{
+                    name: 'pq.layertype',
+                    inputValue: 'raster',
+                    boxLabel: 'Raster'
+                }, {
+                    name: 'pq.layertype',
+                    inputValue: 'polygons',
+                    boxLabel: 'Vector (polygons)',
+                    disabled:true
+                }, {
+                    name: 'pq.layertype',
+                    inputValue: 'points',
+                    boxLabel: 'Vector (points)',
+                    disabled:true
+                }]
+            }*/,{
+                xtype: 'checkboxgroup',
+                columns: 3,
+                fieldLabel: 'Stats to recover: ',
+                name:'pq_rastertype_fields', //necessary for hide/show procedures
+                items: [{
+                    name: 'pq_rastertype_fields_count',
+                    boxLabel: 'Nb of pixels covered'
+                }, {
+                    name: 'pq_rastertype_fields_min',
+                    boxLabel: 'Min value', 
+                    checked: true
+                }, {
+                    name: 'pq_rastertype_fields_max',
+                    boxLabel: 'Max value', 
+                    checked: true
+                }, {
+                    name: 'pq_rastertype_fields_sum',
+                    boxLabel: 'Sum', 
+                    checked: true
+                }, {
+                    name: 'pq_rastertype_fields_avg',
+                    boxLabel: 'Average value', 
+                    checked: true
+                }, {
+                    name: 'pq_rastertype_fields_stddev',
+                    boxLabel: 'Standard dev.', 
+                    checked: true
+                }]
+    	}]
 	}],
     
     /** private: method[initComponent] 
@@ -149,7 +231,18 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
         Ext.apply(this, this.config);
         Ext.applyIf(this, this.defaultConfig);
         GeoNetwork.layers.GeoportalWMSLayerForm.superclass.initComponent.call(this);
-    }
+        /*
+        Ext.getCmp("pq.form.enable").on("change", this.togglePolygonqueryForm, this);
+        console.log(Ext.getCmp("pq.form.enable"));*/
+    }/*,
+    
+    togglePolygonqueryForm: function(scope, newval, oldval) {
+    	console.log(newval);
+    	var fieldset = Ext.getCmp("pq.form.settings");
+    	console.log(fieldset);
+    	fieldset.setVisible(newval);
+    	this.doLayout();
+    }*/
 });
 
 /** api: xtype = gn_layers_geoportalwmslayerform */
