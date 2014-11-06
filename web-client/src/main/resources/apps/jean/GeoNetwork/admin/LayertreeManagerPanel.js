@@ -171,7 +171,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	if (this.useGroups == false) this.groups=null;
     	this.nodeForm = layer.getForm({
     		groupStore : this.groups,
-    		logHandler:this
+    	    logWindow:this.consoleView
     	});
     	//console.log(this.nodeForm);
     	this.detailView.add(this.nodeForm);
