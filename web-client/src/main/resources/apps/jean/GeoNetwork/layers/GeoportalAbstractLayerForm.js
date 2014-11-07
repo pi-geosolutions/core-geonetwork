@@ -37,6 +37,7 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
     labelWidth:100,
     frame:true,
     labelAlign: 'left',
+    labelWidth: 150,
     title: 'Node details', 
     defaultType: 'textfield',
     defaults: {width: '90%', 'hidden':false},
@@ -181,16 +182,7 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
      * TODO : 
      */
     editNode: function(source) { //accepts a treenode or a geoportail*Layer object
-    	var geoplayer=null;
-    	if (source instanceof Ext.tree.TreeNode) {
-    		//console.log("this is a Treenode source that we edit. Getting its geoportalNode parent:");
-    		geoplayer = source.geoportalLayer;
-    		//console.log(geoplayer);
-    	} else { //we assume source is already GeoportalAbstractLayer object
-    		//console.log("editing a geoplayer directly:");
-    		geoplayer = source;
-    		//console.log(geoplayer);
-    	}
+    	var geoplayer=this.getGeoplayer(source);
     	var node = geoplayer.getTreeNode();
     	if (this.hidden) this.show();
     	//adds the groups visibility checkbox fieldset
@@ -207,6 +199,26 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
     	this.getForm().setValues(node.attributes);
     	//this.getForm().findField("gambia").setValue(node.attributes.group[3].show);
     	this.currentNode=node;
+    },
+    
+    /**
+     * accepts a treenode or a geoportail*Layer object and 
+     * returns a geoportail*layer object
+     * 
+     * TODO : 
+     */
+    getGeoplayer: function(source) {
+    	var geoplayer=null;
+    	if (source instanceof Ext.tree.TreeNode) {
+    		//console.log("this is a Treenode source that we edit. Getting its geoportalNode parent:");
+    		geoplayer = source.geoportalLayer;
+    		//console.log(geoplayer);
+    	} else { //we assume source is already GeoportalAbstractLayer object
+    		//console.log("editing a geoplayer directly:");
+    		geoplayer = source;
+    		//console.log(geoplayer);
+    	}
+    	return geoplayer;
     },
 
     /**

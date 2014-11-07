@@ -140,7 +140,8 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
     	}]
 	},{
         xtype: 'fieldset',
-        title: 'Enable Polygon Query ? (available only for raster-type source data)',
+    	id:'pq_form',
+        title: 'Enable Polygon Query ? (available only for raster-type source data, hosted on a Geoserver WPS-enabled)',
         checkboxToggle:true,
         checkboxName:'pq_enable',
         autoHeight: true,
@@ -150,6 +151,22 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
         collapsed: true,
         defaults: {width: '90%', hidden:false, xtype : 'textfield'},
         //frame:true,
+        listeners: {
+            collapse: function(p) {
+            	//console.log("collapsed");
+                p.items.each(function(i) {
+                    i.disable();
+                },
+                this);
+            },
+            expand: function(p) {
+            	//console.log("expand");
+                p.items.each(function(i) {
+                    i.enable();
+                },
+                this);
+            }
+        },
     	items	: 	[{/*
         	xtype: 'checkbox',
         	id:'pq.form.enable',
@@ -168,9 +185,14 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
             defaults: {width: '90%', hidden:false, xtype : 'textfield'},
             //frame:true,
         	items	: 	[{*/
-        		fieldLabel : 'WMS Layer to query',
-        		name : 'pq_layer'
-        	}/*,{
+    		fieldLabel : 'WMS Layer to query',
+    		name : 'pq_layer'
+    	},{
+    		xtype: 'numberfield',
+    		fieldLabel : 'Band nb used to compute stats (integer)',
+    		value:0,
+    		name : 'pq_bandnb'
+    	}/*,{
                 xtype: 'radiogroup',
                 columns: [300],
                 fieldLabel: 'Layer type',
@@ -194,28 +216,29 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
                 xtype: 'checkboxgroup',
                 columns: 3,
                 fieldLabel: 'Stats to recover: ',
+                id:'pq_rastertype_fields', 
                 name:'pq_rastertype_fields', //necessary for hide/show procedures
                 items: [{
-                    name: 'pq_rastertype_fields_count',
+                    name: 'count',
                     boxLabel: 'Nb of pixels covered'
                 }, {
-                    name: 'pq_rastertype_fields_min',
+                    name: 'min',
                     boxLabel: 'Min value', 
                     checked: true
                 }, {
-                    name: 'pq_rastertype_fields_max',
+                    name: 'max',
                     boxLabel: 'Max value', 
                     checked: true
                 }, {
-                    name: 'pq_rastertype_fields_sum',
+                    name: 'sum',
                     boxLabel: 'Sum', 
                     checked: true
                 }, {
-                    name: 'pq_rastertype_fields_avg',
+                    name: 'avg',
                     boxLabel: 'Average value', 
                     checked: true
                 }, {
-                    name: 'pq_rastertype_fields_stddev',
+                    name: 'stddev',
                     boxLabel: 'Standard dev.', 
                     checked: true
                 }]
@@ -231,6 +254,7 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
         Ext.apply(this, this.config);
         Ext.applyIf(this, this.defaultConfig);
         GeoNetwork.layers.GeoportalWMSLayerForm.superclass.initComponent.call(this);
+        
         /*
         Ext.getCmp("pq.form.enable").on("change", this.togglePolygonqueryForm, this);
         console.log(Ext.getCmp("pq.form.enable"));*/
@@ -242,7 +266,61 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
     	console.log(fieldset);
     	fieldset.setVisible(newval);
     	this.doLayout();
-    }*/
+    }*/,
+    
+	/**
+	 * Loads node attributes in the form
+	 * 
+	 * TODO : 
+	 */
+	editNode: function(source) { 
+        GeoNetwork.layers.GeoportalWMSLayerForm.superclass.editNode.call(this, source);
+        this.loadPQData(source);
+	},
+	/**
+     * Applies the changes in the form to the node attributes & display in the tree
+     * 
+     * TODO : 
+     */
+    applyChanges: function(button, event) {
+        GeoNetwork.layers.GeoportalWMSLayerForm.superclass.applyChanges.call(this, button, event);
+        
+        
+    	var node = this.currentNode;
+    	var values= this.getForm().getFieldValues();
+    	
+		delete node.attributes.pq_rastertype_fields; //we'll set them by hand
+		if (node!=null && values['pq_layer']!=null && values['pq_layer']!="") {
+			//apply values for Polygon Query checkboxes, if it is set: 
+			node.attributes.pq_rastertype_fields = {};
+			
+			Ext.each(Ext.getCmp("pq_rastertype_fields").items.items, function(item, index) {
+				node.attributes.pq_rastertype_fields[item.name]=item.checked;
+			});
+		}
+    },
+    
+	loadPQData: function(source) {
+		var geoplayer = this.getGeoplayer(source);
+		if (geoplayer==null) return;
+		
+		var node = geoplayer.getTreeNode();
+		if (node==null) return;
+		if (node.attributes.pq_layer==null || node.attributes.pq_layer=="") return;
+		else  {
+			//console.log("here goes the real stuff");
+			//check the fieldset 
+			window.pqfs = Ext.getCmp("pq_form");
+			try {
+				Ext.getCmp("pq_form").expand();
+			} catch (err) {
+				//The expand command will throw an error: probably a bug in the checkbox-fieldset thing
+				//Doesn't seem to matter much
+			}
+			//console.log(node.attributes);
+			var cbGroup = Ext.getCmp("pq_rastertype_fields").setValue(node.attributes.pq_rastertype_fields);
+		}
+	}
 });
 
 /** api: xtype = gn_layers_geoportalwmslayerform */
