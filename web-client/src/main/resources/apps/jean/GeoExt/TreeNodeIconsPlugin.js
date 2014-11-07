@@ -54,10 +54,10 @@ GeoExt.plugins.TreeNodeIconsPlugin = Ext.extend(Ext.util.Observable, {
         }
         */
         //console.log(node);
-        if (node.attributes.checked) 
+        /*if (node.attributes.checked) 
     	{
         	console.log(node);
-    	}
+    	}*/
 		var emplacement = node.ui.iconNode;
 
 		//Layer type icon

@@ -73,6 +73,13 @@ GeoNetwork.layers.GeoportalWMSLayer = Ext.extend(GeoNetwork.layers.GeoportalAbst
     	if (this.form) this.form.destroy();
     	this.form = new GeoNetwork.layers.GeoportalWMSLayerForm(conf);
     	return this.form;
+    },
+
+    fixNodeConfig: function(attr) {
+    	//hack due to indrocution of new qureyable parameter : it is better if initialized to true.
+    	if (attr.queryable==undefined) attr.queryable=true;
+    	var att = GeoNetwork.layers.GeoportalWMSLayer.superclass.fixNodeConfig.call(this, attr);
+    	return att;
     }
 });
 

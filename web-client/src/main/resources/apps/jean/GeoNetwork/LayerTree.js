@@ -160,7 +160,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 				// this below is using the config attributes of the node to do
 				// some testing. The attr.has_events is coming from the loader in PHP
 				createNode: function(attr) {
-					console.log(attr);
+					//console.log(attr);
 					if (attr.layer && attr.text==null) { //deals with importing old-style layertree.js file
 						attr.text = attr.layer;
 						attr.leaf=true;
@@ -201,6 +201,10 @@ GeoNetwork.Geoportal.LayerTree = function() {
 				enableDD: false,
 				autoScroll:true,
 				loader: mytreeloader,
+
+		        plugins: [
+		                  new GeoExt.plugins.TreeNodeIconsPlugin({})
+		                  ],
 				/* plugins don't work because UIEventMixin won't work properly for this tree (probably it is a matter of timing:
 				 * layernodeui seems OK, UIEventMixin looks loaded, when performing a console.log(mytreeloader.uiProviders["layernodeui"])
 				 * but nothing happens. Maybe th nodes are rendered too early or them to be caught by UIEventMixin

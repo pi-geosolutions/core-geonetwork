@@ -102,6 +102,7 @@ GeoNetwork.layers.GeoportalAbstractLayer = Ext.extend(Ext.util.Observable, {
 		if (attr.qtip) {
 			attr.qcktip = attr.qtip;
 		}
+		attr.iconCls="x-tree-node-icon-"+attr.type;
 		return attr;
     },
     
