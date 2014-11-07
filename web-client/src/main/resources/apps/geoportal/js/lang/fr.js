@@ -77,6 +77,10 @@ GeoNetwork.jpLang.fr = {
 		'featureInfoManager.fieldsGrid.title':'Liste des attributs',
 		'featureInfoManager.fieldsGrid.save':'Sauver pour cette couche seulement',
 		'featureInfoManager.fieldsGrid.saveall':'Sauver tous les changements',
+
+		'hasMtd':"Métadonnées présentes dans le catalogue. Pour les voir, cliquer droit sur la couche, et choisir 'Métadonnées'.",
+		'isQueryable': 'Vous pouvez effectuer des interrogations sur cette couche cartographique',
+		'isPQueryable': 'Vous pouvez utiliser l\'outil Polygon Query sur cette couche cartographique',
 		'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.jpLang.fr);

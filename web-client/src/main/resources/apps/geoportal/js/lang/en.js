@@ -85,6 +85,9 @@ GeoNetwork.jpLang.en = {
 	'featureInfoManager.fieldsGrid.save':'Save for this layer only',
 	'featureInfoManager.fieldsGrid.saveall':'Save all changes',
 	
+	'hasMtd':"Metadata available in the catalog. To see them, right-click on the layer and choose 'Metadata'",
+	'isQueryable': 'You can perform queries on this layer',
+	'isPQueryable': 'You can use the Polygon Query tool on this layer',
 	'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.jpLang.en);

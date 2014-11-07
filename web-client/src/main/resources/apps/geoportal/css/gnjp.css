@@ -319,6 +319,15 @@ p.abstract {
 	color:#999999 !important;
 }
 
+.x-tree-node-icon-wms {
+	background-image: url("../../images/default/map/map_go.png") !important;
+	display: inline  !important;
+}
+.x-tree-node-icon-chart {
+	background-image: url("../images/chart.png") !important;
+	display: inline  !important;
+}
+
 .x-tree-node .ilwac,
 .x-tree-node .ilwac + ul .x-tree-node{
 	font-weight:bold !important;
@@ -468,6 +477,41 @@ h1.soberH1 {
 /*FeatureInfo rendering*/
 .olFeatureInfoTable td.olFeatureInfoColumn {
 	padding-right:10px;
+}
+
+
+.treenodeIconsPlugin_hasMtd {
+	float:right;
+	width:16px;
+	height:16px;
+	background-image:url("../../images/default/map/wmsinfo.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	margin-right:4px;
+}
+.treenodeIconsPlugin_isPQueryable {
+	float:right;
+	width:16px;
+	height:16px;
+	background-image:url("../../images/default/map/draw_polygon_off.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	margin-right:4px;
+}
+.treenodeIconsPlugin_isQueryable {
+	float:right;
+	width:16px;
+	height:16px;
+	background-image:url("../../images/default/map/icon_featureinfo.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	margin-right:4px;
+}
+.treenodeIconsPlugin_none {
+	float:right;
+	width:16px;
+	height:16px;
+	margin-right:4px;
 }
 
 /************************************************************

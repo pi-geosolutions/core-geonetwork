@@ -43,6 +43,7 @@ GeoNetwork.layers.GeoportalWMSLayer = Ext.extend(GeoNetwork.layers.GeoportalAbst
 		url: "http://gm-risk.pigeo.fr/geoserver-prod/gm/wms?",
 		format:"image/png",
 		TILED:true,
+		queryable:true,
 		checked:false,
 		leaf:true
     },

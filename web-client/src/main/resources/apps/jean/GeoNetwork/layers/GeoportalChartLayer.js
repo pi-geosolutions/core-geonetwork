@@ -151,6 +151,7 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
     	if (this.overlay==null) {
 	    	this.overlay = new OpenLayers.Layer.Vector(config.text, {
 				visibility:false
+				, type:"chart"
 				, gpconfig:config
 				, visibility:(config.checked==true?true:false)
 				, opacity : (config.opacity===null?'1.0':config.opacity)

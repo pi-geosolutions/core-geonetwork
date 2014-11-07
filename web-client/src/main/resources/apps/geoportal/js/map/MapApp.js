@@ -1012,7 +1012,8 @@ GeoNetwork.mapApp = function() {
             plugins: [
                     	/*<jp>*///added
                     	new GeoExt.plugins.FoldableLegendPlugin({}),
-                      	new GeoExt.plugins.ShowOnlyVisibleLayersPlugin({})
+                      	new GeoExt.plugins.ShowOnlyVisibleLayersPlugin({}),
+                      	new GeoExt.plugins.TreeNodeIconsPlugin({})
 //                      new GeoExt.plugins.TreeNodeRadioButton({
 //        	              listeners: {
 //        	                  "radiochange": function(node) {

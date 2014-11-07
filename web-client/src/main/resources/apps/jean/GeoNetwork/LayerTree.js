@@ -64,9 +64,16 @@ GeoNetwork.Geoportal.LayerTree = function() {
 								, buffer: 0
 								, visibility:checked
 								, opacity : (child.opacity===null?'1.0':child.opacity)
+								, type:"wms"
+								, queryable:child.queryable
 								, isGeoportalNativeLayer : true
 								, uuid : child.uuid //if set, links the layer with its metadata
 								, legend : child.legend //if set, links the layer with an image legend
+								, pq: {
+									pq_layer: child.pq_layer,
+									pq_bandnb : child.pq_bandnb,
+									pq_rastertype_fields : child.pq_rastertype_fields
+								}
 								, hideFromLayertreeIfUnchecked:true
 							}
 					);
@@ -153,6 +160,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 				// this below is using the config attributes of the node to do
 				// some testing. The attr.has_events is coming from the loader in PHP
 				createNode: function(attr) {
+					console.log(attr);
 					if (attr.layer && attr.text==null) { //deals with importing old-style layertree.js file
 						attr.text = attr.layer;
 						attr.leaf=true;
@@ -181,6 +189,7 @@ GeoNetwork.Geoportal.LayerTree = function() {
 					if (attr.type=="wms" || attr.type=="chart") {
 						attr.nodeType="gx_layer";
 					}
+					attr.iconCls="x-tree-node-icon-"+attr.type;
 					return Ext.tree.TreeLoader.prototype.createNode.call(this, attr);
 				}
 			});

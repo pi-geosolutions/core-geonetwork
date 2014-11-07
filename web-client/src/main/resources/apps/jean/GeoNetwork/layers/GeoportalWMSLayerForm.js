@@ -122,6 +122,12 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
             name: 'TILED',
             value:true
     	},{
+        	xtype: 'checkbox',
+            fieldLabel: 'Queryable ?',
+            //inputValue:false,
+            name: 'queryable',
+            value:true
+    	},{
     		fieldLabel : 'Legend URL',
     		name : 'legend'
     	}]
