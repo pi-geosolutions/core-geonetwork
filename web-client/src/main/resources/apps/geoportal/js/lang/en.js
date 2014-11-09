@@ -88,6 +88,12 @@ GeoNetwork.jpLang.en = {
 	'hasMtd':"Metadata available in the catalog. To see them, right-click on the layer and choose 'Metadata'",
 	'isQueryable': 'You can perform queries on this layer',
 	'isPQueryable': 'You can use the Polygon Query tool on this layer',
+	'polygonQueryWindow.windowTitle':'Polygon Query',
+	'polygonQueryWindow.header.title':'Presentation',
+	'polygonQueryWindow.header.text':'The <i>Polygon Query</i> tool is currently active. You can draw on the map the polygon on which you want to collect information'+
+		'<br />When done, the panel below will update accordingly with the newly collected information. The information available in the panel below is always in correspondance with the polygon drawn on the map and the layer mentioned below this.'+
+		'<br />To quit the <i>Polygon Query</i> mode, simply select another tool on the map\'s toolbar. Default tool is the pan tool (<i>hand</i> icon)',
+	'polygonQueryWindow.target' :"Target Layer: ",
 	'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.jpLang.en);

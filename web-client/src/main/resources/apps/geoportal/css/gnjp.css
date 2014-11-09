@@ -79,6 +79,10 @@
 	display:none;
 }
 
+.x-tool {
+    float: right !important;
+}
+
 .Go {
     background : url(../../images/default/cog.png);
 }
@@ -516,10 +520,18 @@ h1.soberH1 {
 
 
 .icon-pquery {
-	
 	background-image: url("../images/polygon_query_22px.png") !important;
     height: 20px !important;
     padding-left: 22px !important;
+}
+
+
+.pqwindow .x-layout-collapsed {
+    width: auto !important;
+}
+.pqwindow .pqTargetName {
+    background-color:yellow;
+    font-size:larger;
 }
 /************************************************************
 		Customization of the map

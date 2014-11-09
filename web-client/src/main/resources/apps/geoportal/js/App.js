@@ -1056,7 +1056,7 @@ GeoNetwork.app = function () {
             //Tab panel
             dataTabPanel = new Ext.TabPanel({
             	id:'westTabPanel',
-				activeTab: 4,
+				activeTab: 0,
 				height:'100%',
 				layoutOnTabChange:true,
 				enableTabScroll : true,

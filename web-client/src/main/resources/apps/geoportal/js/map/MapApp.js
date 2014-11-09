@@ -54,6 +54,7 @@ GeoNetwork.mapApp = function() {
     var alwaysOnTopLayers = [];
     // dash board is the info panel that will give information about NDVI & al on a clicked point
     var dashBoard, dashBoardLayer;
+    var polygonQueryManager;
     /*</jp>*/
     
     // private functions
@@ -242,8 +243,9 @@ GeoNetwork.mapApp = function() {
             Ext.getCmp("tbMetadataButton").disable(); 
             //Ext.getCmp("btnZoomToExtent").disable();
         }
-       Ext.getCmp("btnPolygonQuery").setDisabled(!((node) && (node.attributes.layer) && (node.attributes.layer.pq) && (node.attributes.layer.pq.pq_layer)));
-    };
+       
+       if (this.polygonQueryManager!=null) this.polygonQueryManager.onNodeChange(node);
+   };
 	var createPrintPanel = function() {
         // The printProvider that connects us to the print service
 	    printProvider = new GeoExt.data.PrintProvider({
@@ -501,6 +503,7 @@ GeoNetwork.mapApp = function() {
             control: new OpenLayers.Control.DragPan({
                     isDefault: true
                 }),
+        	id: "btnPan",
             toggleGroup: "move",
             allowDepress: true,
             pressed: true,
@@ -575,7 +578,7 @@ GeoNetwork.mapApp = function() {
             group: "move",
             allowDepress: false,
             map: map,
-            control: createPolygonQueryControl()
+            control: createPolygonQueryControl("btnPolygonQuery", "btnPan")
         });
         
         
@@ -984,10 +987,12 @@ GeoNetwork.mapApp = function() {
      * Creates the polygon query control
      *
      */
-    var createPolygonQueryControl = function() {
+    var createPolygonQueryControl = function(btnName, fallbackBtnName) {
     	if (this.polygonQueryManager==null) {
     		this.polygonQueryManager = new GeoNetwork.PolygonQuery.PolygonQueryManager({
-    			map:map
+    			map:map,
+    			button:btnName,
+    			fallbackButton:fallbackBtnName
     		});
     	}
     	return this.polygonQueryManager.getControl();

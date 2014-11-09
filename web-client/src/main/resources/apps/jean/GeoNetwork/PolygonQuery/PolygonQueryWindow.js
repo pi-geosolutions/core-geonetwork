@@ -44,6 +44,10 @@ GeoNetwork.PolygonQuery.PolygonQueryWindow = function(config) {
 };
 
 Ext.extend(GeoNetwork.PolygonQuery.PolygonQueryWindow, GeoNetwork.BaseWindow, {
+	headerPanel:null,
+	resultsPanel:null,
+	
+	closeAction:'hide',
 
     /**
      * Method: init
@@ -52,22 +56,67 @@ Ext.extend(GeoNetwork.PolygonQuery.PolygonQueryWindow, GeoNetwork.BaseWindow, {
     initComponent: function() {
         GeoNetwork.PolygonQuery.PolygonQueryWindow.superclass.initComponent.call(this);
 
-        this.title = this.title || OpenLayers.i18n("featureInfoWindow.windowTitle");
+        this.title = this.title || OpenLayers.i18n("polygonQueryWindow.windowTitle");
 
         this.x=10;
         this.y = 10;
         this.width = 300;
         this.height = 600;
 
-        this.cls = 'popup-variant1';
+        this.cls = 'pqwindow';
 
-       	/*var fp = new GeoNetwork.PolygonQuery.PolygonQueryPanel();
-
-        this.add(fp);*/
+       	var pq = new Ext.Panel({
+       		//layout:'border',
+       		layout:'vbox',
+       		layoutConfig: {
+       		    align : 'stretch',
+       		    pack  : 'start',
+       		},
+       		items: [
+       		        this.getHeaderPanel(),
+       		        this.getResultsPanel()
+	        ]
+       	});
+        this.add(pq);
+        
 
         this.doLayout();
+        console.log(this);
     },
 
-  
+    getHeaderPanel: function() {
+  	  if (this.headerPanel==null) {
+  		  this.headerPanel = new Ext.Panel({
+  			  title: OpenLayers.i18n('polygonQueryWindow.header.title'),
+  			  //region: 'north',
+  			  collapsible:false,
+  			  autoScroll:true,
+  			  height: 220,
+  			  html: OpenLayers.i18n('polygonQueryWindow.header.text')
+  		  });
+  	  }
+	  return this.headerPanel;
+    },
+
+    getResultsPanel: function() {
+  	  if (this.resultsPanel==null) {
+  		  this.resultsPanel = new Ext.Panel({
+  			  //region:'center',
+  			  flex:1,
+  			  html: OpenLayers.i18n('polygonQueryWindow.resText')
+  		  });
+  	  }
+	  return this.resultsPanel
+    },
+    
+    setTargetName: function(name) {
+    	var dest = this.getHeaderPanel();
+    	dest.update(OpenLayers.i18n('polygonQueryWindow.header.text') +
+    			"<br /><br /><b>"+
+    			OpenLayers.i18n('polygonQueryWindow.target')+
+    			"<br /><span class='pqTargetName'>"+
+    			name+
+    			"</span></b>");
+    }
 
 });
