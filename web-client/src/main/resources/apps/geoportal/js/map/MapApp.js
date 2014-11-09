@@ -236,12 +236,13 @@ GeoNetwork.mapApp = function() {
             //Ext.getCmp("tbMetadataButton").setDisabled(!(node.layer instanceof OpenLayers.Layer.WMS));
             var hide = (node.attributes.layer.uuid==null)||(node.attributes.layer.uuid=="")
             Ext.getCmp("tbMetadataButton").setDisabled(hide);
-            Ext.getCmp("btnZoomToExtent").enable();
+            //Ext.getCmp("btnZoomToExtent").enable();
         } else {
             Ext.getCmp("tbRemoveButton").disable();
             Ext.getCmp("tbMetadataButton").disable(); 
-            Ext.getCmp("btnZoomToExtent").disable();
+            //Ext.getCmp("btnZoomToExtent").disable();
         }
+       Ext.getCmp("btnPolygonQuery").setDisabled(!((node) && (node.attributes.layer) && (node.attributes.layer.pq) && (node.attributes.layer.pq.pq_layer)));
     };
 	var createPrintPanel = function() {
         // The printProvider that connects us to the print service
@@ -424,7 +425,7 @@ GeoNetwork.mapApp = function() {
 
         toolbar.push("-");
 
-        action = new GeoExt.Action({
+        /*action = new GeoExt.Action({
             iconCls: 'zoomlayer',
             id: 'btnZoomToExtent',
             //tooltip: {title: OpenLayers.i18n("zoomlayerTooltipTitle"), text: OpenLayers.i18n("zoomlayerTooltipText")},
@@ -469,7 +470,7 @@ GeoNetwork.mapApp = function() {
 
         toolbar.push(action);
         
-        toolbar.push("-");
+        toolbar.push("-");*/
         
         action = new GeoExt.Action({
             control: new OpenLayers.Control.ZoomBox(),
@@ -562,6 +563,21 @@ GeoNetwork.mapApp = function() {
             iconCls: 'query'
             //tooltip: {title: OpenLayers.i18n('featureInfoTooltipTitle'), text: OpenLayers.i18n('featureInfoTooltipText') }
         });
+        
+        toolbar.push(action);
+        
+        action = new GeoExt.Action({
+        	id: "btnPolygonQuery",
+            text: "Polygon Query",
+            iconCls: "icon-pquery",
+            autoWidth:true,
+            toggleGroup: "move",
+            group: "move",
+            allowDepress: false,
+            map: map,
+            control: createPolygonQueryControl()
+        });
+        
         
         toolbar.push(action);
         
@@ -963,6 +979,20 @@ GeoNetwork.mapApp = function() {
 
         return measureControl;
     };
+    
+    /**
+     * Creates the polygon query control
+     *
+     */
+    var createPolygonQueryControl = function() {
+    	if (this.polygonQueryManager==null) {
+    		this.polygonQueryManager = new GeoNetwork.PolygonQuery.PolygonQueryManager({
+    			map:map
+    		});
+    	}
+    	return this.polygonQueryManager.getControl();
+    };
+
 
     
     /**
