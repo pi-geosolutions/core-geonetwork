@@ -493,7 +493,7 @@ h1.soberH1 {
 	float:right;
 	width:16px;
 	height:16px;
-	background-image:url("../../images/default/map/draw_polygon_off.png");
+	background-image:url("../images/polygon_query_16px.png");
 	background-repeat: no-repeat;
 	background-position: center center;
 	margin-right:4px;
@@ -514,6 +514,13 @@ h1.soberH1 {
 	margin-right:4px;
 }
 
+
+.icon-pquery {
+	
+	background-image: url("../images/polygon_query_22px.png") !important;
+    height: 20px !important;
+    padding-left: 22px !important;
+}
 /************************************************************
 		Customization of the map
 ************************************************************/
