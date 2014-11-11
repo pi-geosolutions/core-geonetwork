@@ -80,7 +80,25 @@ GeoNetwork.jpLang.fr = {
 
 		'hasMtd':"Métadonnées présentes dans le catalogue. Pour les voir, cliquer droit sur la couche, et choisir 'Métadonnées'.",
 		'isQueryable': 'Vous pouvez effectuer des interrogations sur cette couche cartographique',
-		'isPQueryable': 'Vous pouvez utiliser l\'outil Polygon Query sur cette couche cartographique',
+		'isPQueryable': 'Vous pouvez utiliser l\'outil Interrogation Polygonale sur cette couche cartographique',
+		'polygonQueryWindow.windowTitle':'Interrogation Polygonale',
+		'polygonQueryWindow.header.title':'Présentation',
+		'polygonQueryWindow.header.text':'L\'outil <i>Interrogation Polygonale</i> est actif. Vous pouvez dessiner sur la carte le '+
+			'polygone définissant la surface sur laquelle vous voulez collecter les informations. Clore le dessin par un double-clic.'+
+			'<br />Une fois le polygone terminé, le panneau ci-dessous va s\'actualiser automatiquement et afficher les informations'+
+			'collectées. Les informations affichées dans le panneau ci-dessous correspondent à tout moment au polygone dessiné sur la'+
+			'carte et à la couche cartographique stipulée ci-dessous.'+
+			'<br />Pour sortir du mode <i>Interrogation polygonale</i>, sélectionnez un autre outil dans la barre d\'outils de la carte.'+
+			'L\'outil par défault est l\'outil déplacement (icône <i>main</i>).',
+		'polygonQueryWindow.target' :"Couche cible : ",
+		'polygonQueryWindow.resText.empty':'Pas encore de résultat.',
+		'polygonQuery.count': 'Nb de pixels',
+		'polygonQuery.min': 'Min',
+		'polygonQuery.max': 'Max',
+		'polygonQuery.avg': 'Moyenne',
+		'polygonQuery.sum': 'Total',
+		'polygonQuery.stdev': 'Ecart type',
+		'polygonQuery.resultsHeader': 'Statistiques collectées : ',
 		'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.jpLang.fr);

@@ -529,9 +529,20 @@ h1.soberH1 {
 .pqwindow .x-layout-collapsed {
     width: auto !important;
 }
-.pqwindow .pqTargetName {
+.pqwindow .pqTarget .pqTargetName {
     background-color:yellow;
     font-size:larger;
+    font-weight:bold;
+    padding:5px;
+}
+
+.pqwindow .pqTarget h3,
+.pqwindow .statsResults h3 {
+	margin:5px;
+}
+
+.pqwindow .statsResults .stats {
+	margin:10px 0 10px 30px;
 }
 /************************************************************
 		Customization of the map

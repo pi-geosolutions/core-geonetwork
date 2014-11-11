@@ -94,6 +94,15 @@ GeoNetwork.jpLang.en = {
 		'<br />When done, the panel below will update accordingly with the newly collected information. The information available in the panel below is always in correspondance with the polygon drawn on the map and the layer mentioned below this.'+
 		'<br />To quit the <i>Polygon Query</i> mode, simply select another tool on the map\'s toolbar. Default tool is the pan tool (<i>hand</i> icon)',
 	'polygonQueryWindow.target' :"Target Layer: ",
+	'polygonQueryWindow.resText.empty':'No result yet.',
+	'polygonQuery.count': 'Count',
+	'polygonQuery.min': 'Min',
+	'polygonQuery.max': 'Max',
+	'polygonQuery.avg': 'Average',
+	'polygonQuery.sum': 'Sum',
+	'polygonQuery.stdev': 'Standard dev.',
+	'polygonQuery.resultsHeader': 'Collected Statistics: ',
+	
 	'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.jpLang.en);

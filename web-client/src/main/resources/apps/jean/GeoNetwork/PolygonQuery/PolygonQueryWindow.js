@@ -92,6 +92,7 @@ Ext.extend(GeoNetwork.PolygonQuery.PolygonQueryWindow, GeoNetwork.BaseWindow, {
   			  collapsible:false,
   			  autoScroll:true,
   			  height: 220,
+  			  border:false,
   			  html: OpenLayers.i18n('polygonQueryWindow.header.text')
   		  });
   	  }
@@ -103,7 +104,8 @@ Ext.extend(GeoNetwork.PolygonQuery.PolygonQueryWindow, GeoNetwork.BaseWindow, {
   		  this.resultsPanel = new Ext.Panel({
   			  //region:'center',
   			  flex:1,
-  			  html: OpenLayers.i18n('polygonQueryWindow.resText')
+  			  border:false,
+  			  html: OpenLayers.i18n('polygonQueryWindow.resText.empty')
   		  });
   	  }
 	  return this.resultsPanel
@@ -112,11 +114,16 @@ Ext.extend(GeoNetwork.PolygonQuery.PolygonQueryWindow, GeoNetwork.BaseWindow, {
     setTargetName: function(name) {
     	var dest = this.getHeaderPanel();
     	dest.update(OpenLayers.i18n('polygonQueryWindow.header.text') +
-    			"<br /><br /><b>"+
+    			'<br /><br /><div class="pqTarget"> <h3>'+
     			OpenLayers.i18n('polygonQueryWindow.target')+
-    			"<br /><span class='pqTargetName'>"+
+    			"</h3><p class='pqTargetName'>"+
     			name+
-    			"</span></b>");
+    			"</p></div>");
+    },
+    
+    setResults: function(content) {
+    	var dest = this.getResultsPanel();
+    	dest.update(content);
     }
 
 });

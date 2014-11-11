@@ -45,12 +45,12 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
 	control:null,
 	window:null,
 	targetNode:null,
+	query_tpl:null,
+	rasterResult_tpl:null,
     
     constructor: function(config){
     	GeoNetwork.PolygonQuery.PolygonQueryManager.superclass.constructor.call(this, config);
         Ext.apply(this, config);
-        
-        this.initializeTemplates();
     },
     
     queryRaster: function() {
@@ -64,7 +64,7 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     		var poly_geojsontxt = geojson.write(this.layer.features,false);
     		//hack to add the crs definition... found no clean way to do it
     		poly_geojsontxt = poly_geojsontxt.replace(/"type":"FeatureCollection"/g, "$&, \"crs\":{\"type\":\"EPSG\",\"properties\":{\"code\":\"3857\"}}");
-    		var data = this.query_tpl.apply([poly_geojsontxt]);
+    		var data = this.getQueryTpl().apply([poly_geojsontxt]);
     		//builds the URL from the wms one
     		var url = node.attributes.layer.url.slice(0,node.attributes.layer.url.lastIndexOf("wms"))+"wps";
     		
@@ -73,11 +73,13 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     		    header:{"Content-Type":"text/xml"},
     		    data: data,
                 success: function(response){
-                	console.log('OK');
+                	if (response.status==200) {
+                		this.onQuerySuccess(response, pq);
+                	} else {
+                		this.onQueryFailure(response);
+                	}
                 },
-                failure: function(response){
-                	console.error('[PolygonQueryManager.js] Error trying to get stats for layer ' + node.text);
-                },
+                failure: this.onQueryFailure,
                 scope : this
             });
     		
@@ -175,49 +177,77 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     		btn.disable();
     		Ext.getCmp(this.fallbackButton).toggle(true);
     	}
+    	this.resetTemplates();
+    },
+    onQueryFailure: function(response) {
+    	console.error('[PolygonQueryManager.js] Error trying to get stats for layer ' + this.targetNode.text);
+    },
+    onQuerySuccess: function(response, pq) {
+    	var tpl = this.getRasterResultsTpl(pq.pq_rastertype_fields);
+    	console.log(tpl);
+    	var json = Ext.util.JSON.decode(response.responseText);
+    	console.log(json.features[0].properties);
+    	console.log(tpl.apply(json.features[0].properties));
+    	this.window.setResults(tpl.apply(json.features[0].properties));
+    },
+
+    getQueryTpl: function() {
+    	if (this.query_tpl==null) {
+	        this.query_tpl = new Ext.Template(
+	        		'<?xml version="1.0" encoding="UTF-8"?><wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd">'+ 
+	        		'  <ows:Identifier>ras:RasterZonalStatistics</ows:Identifier>'+ 
+	        		'  <wps:DataInputs>'+ 
+	        		'    <wps:Input>'+ 
+	        		'      <ows:Identifier>data</ows:Identifier>'+ 
+	        		'      <wps:Reference mimeType="image/tiff" xlink:href="http://geoserver/wcs" method="POST">'+ 
+	        		'        <wps:Body>'+ 
+	        		'          <wcs:GetCoverage service="WCS" version="1.1.1">'+ 
+	        		'            <ows:Identifier>gm:gm_1c1_afripop</ows:Identifier>'+ 
+	        		'            <wcs:DomainSubset>'+ 
+	        		'              <gml:BoundingBox crs="http://www.opengis.net/gml/srs/epsg.xml#4326">'+ 
+	        		'                <ows:LowerCorner>-16.825306042689 13.064180511176</ows:LowerCorner>'+ 
+	        		'                <ows:UpperCorner>-13.797093842689 13.826650011176</ows:UpperCorner>'+ 
+	        		'              </gml:BoundingBox>'+ 
+	        		'            </wcs:DomainSubset>'+ 
+	        		'            <wcs:Output format="image/tiff"/>'+ 
+	        		'          </wcs:GetCoverage>'+ 
+	        		'        </wps:Body>'+ 
+	        		'      </wps:Reference>'+ 
+	        		'    </wps:Input>'+ 
+	        		'    <wps:Input>'+ 
+	        		'      <ows:Identifier>zones</ows:Identifier>'+ 
+	        		'      <wps:Data>'+ 
+	        		'        <wps:ComplexData mimeType="application/json">'+
+	        		'			<![CDATA[{0}]]>' +
+	        		'		 </wps:ComplexData>'+ 
+	        		'      </wps:Data>'+ 
+	        		'    </wps:Input>'+ 
+	        		'  </wps:DataInputs>'+ 
+	        		'  <wps:ResponseForm>'+ 
+	        		'    <wps:RawDataOutput mimeType="application/json">'+ 
+	        		'      <ows:Identifier>statistics</ows:Identifier>'+ 
+	        		'    </wps:RawDataOutput>'+ 
+	        		'  </wps:ResponseForm>'+ 
+	        		'</wps:Execute>'
+	        );
+    	}
+    	return this.query_tpl;
+    },
+    getRasterResultsTpl: function(fields) {
+    	if (this.rasterResults_tpl==null) {
+    		var tpl_string = '<div class="statsResults"> <h3>'+OpenLayers.i18n('polygonQuery.resultsHeader')+'</h3><div class="stats">';
+    		Ext.iterate(fields, function (key, value , fields) {
+    			if (value)
+    				tpl_string += "<p><b>"+OpenLayers.i18n('polygonQuery.'+key)+":</b> {"+key+"} </p>";
+        	}, this);
+    		tpl_string += '</div></div>';
+    		this.rasterResults_tpl = new Ext.Template(tpl_string);
+    	}
+    	return this.rasterResults_tpl;
     },
     
-
-    initializeTemplates: function() {
-        this.query_tpl = new Ext.Template(
-        		'<?xml version="1.0" encoding="UTF-8"?><wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd">'+ 
-        		'  <ows:Identifier>ras:RasterZonalStatistics</ows:Identifier>'+ 
-        		'  <wps:DataInputs>'+ 
-        		'    <wps:Input>'+ 
-        		'      <ows:Identifier>data</ows:Identifier>'+ 
-        		'      <wps:Reference mimeType="image/tiff" xlink:href="http://geoserver/wcs" method="POST">'+ 
-        		'        <wps:Body>'+ 
-        		'          <wcs:GetCoverage service="WCS" version="1.1.1">'+ 
-        		'            <ows:Identifier>gm:gm_1c1_afripop</ows:Identifier>'+ 
-        		'            <wcs:DomainSubset>'+ 
-        		'              <gml:BoundingBox crs="http://www.opengis.net/gml/srs/epsg.xml#4326">'+ 
-        		'                <ows:LowerCorner>-16.825306042689 13.064180511176</ows:LowerCorner>'+ 
-        		'                <ows:UpperCorner>-13.797093842689 13.826650011176</ows:UpperCorner>'+ 
-        		'              </gml:BoundingBox>'+ 
-        		'            </wcs:DomainSubset>'+ 
-        		'            <wcs:Output format="image/tiff"/>'+ 
-        		'          </wcs:GetCoverage>'+ 
-        		'        </wps:Body>'+ 
-        		'      </wps:Reference>'+ 
-        		'    </wps:Input>'+ 
-        		'    <wps:Input>'+ 
-        		'      <ows:Identifier>zones</ows:Identifier>'+ 
-        		'      <wps:Data>'+ 
-        		'        <wps:ComplexData mimeType="application/json">'+
-        		'			<![CDATA[{0}]]>' +
-        		'		 </wps:ComplexData>'+ 
-        		'      </wps:Data>'+ 
-        		'    </wps:Input>'+ 
-        		'  </wps:DataInputs>'+ 
-        		'  <wps:ResponseForm>'+ 
-        		'    <wps:RawDataOutput mimeType="application/json">'+ 
-        		'      <ows:Identifier>statistics</ows:Identifier>'+ 
-        		'    </wps:RawDataOutput>'+ 
-        		'  </wps:ResponseForm>'+ 
-        		'</wps:Execute>'
-        );
-        
-        
+    resetTemplates: function() {
+    	this.rasterResults_tpl=null;
+    	this.query_tpl=null;
     }
-    
 });
