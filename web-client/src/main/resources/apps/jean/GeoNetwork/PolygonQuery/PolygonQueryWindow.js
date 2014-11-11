@@ -44,10 +44,16 @@ GeoNetwork.PolygonQuery.PolygonQueryWindow = function(config) {
 };
 
 Ext.extend(GeoNetwork.PolygonQuery.PolygonQueryWindow, GeoNetwork.BaseWindow, {
+	
 	headerPanel:null,
 	resultsPanel:null,
 	
 	closeAction:'hide',
+	/*
+	 * Internal vars. Don't use directly
+	 */
+	targetName:null,
+	resultsText:null,
 
     /**
      * Method: init
@@ -65,65 +71,58 @@ Ext.extend(GeoNetwork.PolygonQuery.PolygonQueryWindow, GeoNetwork.BaseWindow, {
 
         this.cls = 'pqwindow';
 
-       	var pq = new Ext.Panel({
-       		//layout:'border',
-       		layout:'vbox',
-       		layoutConfig: {
-       		    align : 'stretch',
-       		    pack  : 'start',
-       		},
-       		items: [
-       		        this.getHeaderPanel(),
-       		        this.getResultsPanel()
-	        ]
+       	this.mainPanel = new Ext.Panel({
+       		autoScroll:true,
+			html: this.getContent()
        	});
-        this.add(pq);
+        this.add(this.mainPanel);
         
-
         this.doLayout();
-        console.log(this);
+    },
+    
+    getContent: function() {
+    	var content = this.getHeaderText();
+    	content += this.getTargetNameText();
+    	content += this.getResultsText();
+    	return content;
     },
 
-    getHeaderPanel: function() {
-  	  if (this.headerPanel==null) {
-  		  this.headerPanel = new Ext.Panel({
-  			  title: OpenLayers.i18n('polygonQueryWindow.header.title'),
-  			  //region: 'north',
-  			  collapsible:false,
-  			  autoScroll:true,
-  			  height: 220,
-  			  border:false,
-  			  html: OpenLayers.i18n('polygonQueryWindow.header.text')
-  		  });
-  	  }
-	  return this.headerPanel;
+    getHeaderText: function() {
+    	return OpenLayers.i18n('polygonQueryWindow.header.text');
     },
+    
+    getTargetNameText: function()  {
+    	var text="";
+    	if (this.targetName) {
+    		text =  '<br /><br /><div class="pqTarget"> <h3>'+
+						OpenLayers.i18n('polygonQueryWindow.target')+
+						"</h3><p class='pqTargetName'>"+
+							this.targetName+
+						"</p></div>";
+        
+    	}
+    	return text;
+	},
 
-    getResultsPanel: function() {
-  	  if (this.resultsPanel==null) {
-  		  this.resultsPanel = new Ext.Panel({
-  			  //region:'center',
-  			  flex:1,
-  			  border:false,
-  			  html: OpenLayers.i18n('polygonQueryWindow.resText.empty')
-  		  });
-  	  }
-	  return this.resultsPanel
+    getResultsText: function() {
+    	var text=OpenLayers.i18n('polygonQueryWindow.resText.empty');
+    	if (this.resultsText) {
+    		text = this.resultsText;
+    	}
+    	return text;
     },
     
     setTargetName: function(name) {
-    	var dest = this.getHeaderPanel();
-    	dest.update(OpenLayers.i18n('polygonQueryWindow.header.text') +
-    			'<br /><br /><div class="pqTarget"> <h3>'+
-    			OpenLayers.i18n('polygonQueryWindow.target')+
-    			"</h3><p class='pqTargetName'>"+
-    			name+
-    			"</p></div>");
+    	this.targetName = name;
+    	this.updateContent();
     },
     
     setResults: function(content) {
-    	var dest = this.getResultsPanel();
-    	dest.update(content);
+    	this.resultsText = content;
+    	this.updateContent();
+    },
+    
+    updateContent: function() {
+    	this.mainPanel.update(this.getContent());
     }
-
 });

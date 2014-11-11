@@ -83,13 +83,13 @@ GeoNetwork.jpLang.fr = {
 		'isPQueryable': 'Vous pouvez utiliser l\'outil Interrogation Polygonale sur cette couche cartographique',
 		'polygonQueryWindow.windowTitle':'Interrogation Polygonale',
 		'polygonQueryWindow.header.title':'Présentation',
-		'polygonQueryWindow.header.text':'L\'outil <i>Interrogation Polygonale</i> est actif. Vous pouvez dessiner sur la carte le '+
+		'polygonQueryWindow.header.text':'<h3>Présentation</h3> <p>L\'outil <i>Interrogation Polygonale</i> est actif. Vous pouvez dessiner sur la carte le '+
 			'polygone définissant la surface sur laquelle vous voulez collecter les informations. Clore le dessin par un double-clic.'+
 			'<br />Une fois le polygone terminé, le panneau ci-dessous va s\'actualiser automatiquement et afficher les informations'+
-			'collectées. Les informations affichées dans le panneau ci-dessous correspondent à tout moment au polygone dessiné sur la'+
+			'collectées. Les informations affichées dans le panneau ci-dessous correspondent au polygone dessiné en rouge sur la'+
 			'carte et à la couche cartographique stipulée ci-dessous.'+
 			'<br />Pour sortir du mode <i>Interrogation polygonale</i>, sélectionnez un autre outil dans la barre d\'outils de la carte.'+
-			'L\'outil par défault est l\'outil déplacement (icône <i>main</i>).',
+			'L\'outil par défault est l\'outil déplacement (icône <i>main</i>).</p>',
 		'polygonQueryWindow.target' :"Couche cible : ",
 		'polygonQueryWindow.resText.empty':'Pas encore de résultat.',
 		'polygonQuery.count': 'Nb de pixels',

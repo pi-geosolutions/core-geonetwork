@@ -47,10 +47,27 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
 	targetNode:null,
 	query_tpl:null,
 	rasterResult_tpl:null,
+	styleMap: null,
     
     constructor: function(config){
     	GeoNetwork.PolygonQuery.PolygonQueryManager.superclass.constructor.call(this, config);
         Ext.apply(this, config);
+        
+        this.styleMap = new OpenLayers.StyleMap({
+            "default": new OpenLayers.Style(null, {
+                rules: [new OpenLayers.Rule({
+                    symbolizer: {
+                        "Polygon": {
+                            strokeWidth: 2,
+                            strokeOpacity: 1,
+                            strokeColor: "#FF0000",
+                            fillColor: "white",
+                            fillOpacity: 0.5
+                        }
+                    }
+                })]
+            })
+        });
     },
     
     queryRaster: function() {
@@ -105,6 +122,7 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     	{
     		this.layer = new OpenLayers.Layer.Vector(OpenLayers.i18n('pqLayer'), {
     			visibility: true, 
+    			styleMap: this.styleMap,
     			displayInLayerSwitcher:false,
     			eventListeners : {
     				beforefeatureadded : this.onFeatureAdded,
@@ -112,6 +130,8 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
                     scope: this
     			}
 			});
+
+        	//this.map.setLayerIndex(this.layer,  this.map.layers.length-1);
     		this.map.addLayer(this.layer);
     	}
 		return this.layer
@@ -162,6 +182,8 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     		this.window.setTargetName(this.targetNode.text);
 
     	this.window.show(this.button);
+    	
+    	this.map.setLayerIndex(this.layer,  this.map.layers.length-3);
     },
     
     afterFeatureAdded: function(event) {
