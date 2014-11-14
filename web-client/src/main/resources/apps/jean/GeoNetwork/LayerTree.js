@@ -71,7 +71,11 @@ GeoNetwork.Geoportal.LayerTree = function() {
 								, legend : child.legend //if set, links the layer with an image legend
 								, pq: {
 									pq_layer: child.pq_layer,
+									pq_header: child.pq_header,
+									pq_multiplyByArea: child.pq_multiplyByArea,
+									pq_multiplyRatio : child.pq_multiplyRatio,
 									pq_bandnb : child.pq_bandnb,
+									pq_round : child.pq_round,
 									pq_rastertype_fields : child.pq_rastertype_fields
 								}
 								, hideFromLayertreeIfUnchecked:true

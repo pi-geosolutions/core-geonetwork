@@ -198,6 +198,26 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
     		fieldLabel : 'Band nb used to compute stats (integer)',
     		value:0,
     		name : 'pq_bandnb'
+    	},{
+    		fieldLabel : 'Header',
+    		name : 'pq_header'
+    	},{
+        	xtype: 'checkbox',
+    		fieldLabel : 'Multiply values by polygon area (density cases) ?',
+    		id : 'pq_multiplyByArea',
+    		name : 'pq_multiplyByArea',
+            value:false,
+            listeners: {
+                check: function(event, checked) {
+                	Ext.getCmp('pq_multiplyRatio').setVisible(checked);
+                }
+            }
+    	},{
+    		xtype: 'numberfield',
+    		fieldLabel : 'Ratio (base unit is /km²)',
+    		hidden:true,
+    		id : 'pq_multiplyRatio',
+    		name : 'pq_multiplyRatio'
     	}/*,{
                 xtype: 'radiogroup',
                 columns: [300],
@@ -248,7 +268,11 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
                     boxLabel: 'Standard dev.', 
                     checked: true
                 }]
-    	}]
+            },{
+	    		xtype: 'numberfield',
+	    		fieldLabel : 'Round values ? (nb of decimals)',
+	    		name : 'pq_round'
+    	},]
 	}],
     
     /** private: method[initComponent] 
@@ -280,6 +304,7 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
 	 * TODO : 
 	 */
 	editNode: function(source) { 
+		console.log(source);
         GeoNetwork.layers.GeoportalWMSLayerForm.superclass.editNode.call(this, source);
         this.loadPQData(source);
 	},

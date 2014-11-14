@@ -74,6 +74,7 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
                 })]
             })
         });
+        window.pqm = this;
     },
     
     queryRaster: function() {
@@ -215,10 +216,26 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     },
     onQuerySuccess: function(response, pq) {
     	var tpl = this.getRasterResultsTpl(pq.pq_rastertype_fields);
-    	//console.log(tpl);
+    	console.log(pq);
     	var json = Ext.util.JSON.decode(response.responseText);
-    	//console.log(json.features[0].properties);
-    	//console.log(tpl.apply(json.features[0].properties));
+    	console.log(json);
+    	//apply multiplication factors, in density-like cases (pq_multiplyByArea is set to true)
+		var multiplyFactor = 1;
+		if (pq.pq_multiplyByArea) {
+			var area = this.layer.features[0].geometry.getGeodesicArea(this.layer.projection)/1e6; //in km²
+			var ratio = 1;
+			if (pq.pq_multiplyRatio)
+				ratio = pq.pq_multiplyRatio;
+			
+			multiplyFactor = ratio * area;
+		}
+		Ext.iterate(json.features[0].properties, function(key, value, props) {
+			props[key] = value * multiplyFactor;
+			if (pq.pq_round && pq.pq_round!="")
+				props[key] = +props[key].toFixed(pq.pq_round);
+		});
+
+
     	this.window.setResults(tpl.apply(json.features[0].properties));
     },
 
@@ -266,12 +283,29 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     },
     getRasterResultsTpl: function(fields) {
     	if (this.rasterResults_tpl==null) {
-    		var tpl_string = '<div class="statsResults"> <h3>'+OpenLayers.i18n('polygonQuery.resultsHeader')+'</h3><div class="stats">';
+    		var header = OpenLayers.i18n('polygonQuery.resultsHeader');
+    		var pq = this.targetNode.attributes.layer.pq;
+    		if (pq.pq_header) {
+    			header = pq.pq_header;
+    		}
+    		var tpl_string = '<div class="statsResults"> <h3>'+header+'</h3><div class="stats">';
+    		// count and uniqueValue vars will be used to detect if only one field is checked. In that case, 
+    		// we don't display the label, assuming the header will replace it
+    		var count = 0;
+    		var uniquevalue = "";
+    		var tpl_content="";
     		Ext.iterate(fields, function (key, value , fields) {
-    			if (value)
-    				tpl_string += "<p><b>"+OpenLayers.i18n('polygonQuery.'+key)+":</b> {"+key+"} </p>";
+    			if (value) {
+    				count++;
+    				uniquevalue = key;
+    				tpl_content += "<p><b>"+OpenLayers.i18n('polygonQuery.'+key)+":</b> {"+key+"} </p>";
+    			}
         	}, this);
-    		tpl_string += '</div></div>';
+    		if (count == 1) {
+    			tpl_content = "<p>{"+uniquevalue+"} </p>";
+    		}
+    			
+    		tpl_string += tpl_content + '</div></div>';
     		this.rasterResults_tpl = new Ext.Template(tpl_string);
     	}
     	return this.rasterResults_tpl;
