@@ -48,6 +48,12 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
 	query_tpl:null,
 	rasterResult_tpl:null,
 	styleMap: null,
+	queryParams: {
+		llcorner : '-16.825306042689 13.064180511176',
+		urcorner : '-13.797093842689 13.826650011176',
+		name:"",
+		polygon : ""
+	},
     
     constructor: function(config){
     	GeoNetwork.PolygonQuery.PolygonQueryManager.superclass.constructor.call(this, config);
@@ -72,16 +78,18 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     
     queryRaster: function() {
     	var node = this.targetNode;
+    	console.log(node);
     	if (((node) && (node.attributes.layer) && (node.attributes.layer.pq) 
     			&& (node.attributes.layer.pq.pq_layer) && (node.attributes.layer.pq.pq_rastertype_fields))) {
     		var pq = node.attributes.layer.pq;
     		
-    		console.log("let's query the raster for stats !");
+    		//console.log("let's query the raster for stats !");
     		var geojson = new OpenLayers.Format.GeoJSON();
     		var poly_geojsontxt = geojson.write(this.layer.features,false);
     		//hack to add the crs definition... found no clean way to do it
     		poly_geojsontxt = poly_geojsontxt.replace(/"type":"FeatureCollection"/g, "$&, \"crs\":{\"type\":\"EPSG\",\"properties\":{\"code\":\"3857\"}}");
-    		var data = this.getQueryTpl().apply([poly_geojsontxt]);
+    		Ext.apply(this.queryParams, { polygon : poly_geojsontxt, name : pq.pq_layer});
+    		var data = this.getQueryTpl().apply(this.queryParams);
     		//builds the URL from the wms one
     		var url = node.attributes.layer.url.slice(0,node.attributes.layer.url.lastIndexOf("wms"))+"wps";
     		
@@ -174,7 +182,6 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     },
     
     onFeatureAdded: function(event) {
-    	console.log(event.feature.geometry.toString());
 		window.feat=event.feature;
 		event.object.removeAllFeatures();
 
@@ -182,6 +189,7 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     		this.window.setTargetName(this.targetNode.text);
 
     	this.window.show(this.button);
+    	this.window.setResults('<div class="loading-indicator">'+OpenLayers.i18n('polygonQuery.loading')+'</div>');
     	
     	this.map.setLayerIndex(this.layer,  this.map.layers.length-3);
     },
@@ -202,14 +210,15 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     	this.resetTemplates();
     },
     onQueryFailure: function(response) {
-    	console.error('[PolygonQueryManager.js] Error trying to get stats for layer ' + this.targetNode.text);
+    	this.window.setResults('<div class="errorMsg">'+OpenLayers.i18n('polygonQuery.queryFailure')+'</div>');
+    	//console.error('[PolygonQueryManager.js] Error trying to get stats for layer ' + this.targetNode.text);
     },
     onQuerySuccess: function(response, pq) {
     	var tpl = this.getRasterResultsTpl(pq.pq_rastertype_fields);
-    	console.log(tpl);
+    	//console.log(tpl);
     	var json = Ext.util.JSON.decode(response.responseText);
-    	console.log(json.features[0].properties);
-    	console.log(tpl.apply(json.features[0].properties));
+    	//console.log(json.features[0].properties);
+    	//console.log(tpl.apply(json.features[0].properties));
     	this.window.setResults(tpl.apply(json.features[0].properties));
     },
 
@@ -224,11 +233,11 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
 	        		'      <wps:Reference mimeType="image/tiff" xlink:href="http://geoserver/wcs" method="POST">'+ 
 	        		'        <wps:Body>'+ 
 	        		'          <wcs:GetCoverage service="WCS" version="1.1.1">'+ 
-	        		'            <ows:Identifier>gm:gm_1c1_afripop</ows:Identifier>'+ 
+	        		'            <ows:Identifier>{name}</ows:Identifier>'+ 
 	        		'            <wcs:DomainSubset>'+ 
 	        		'              <gml:BoundingBox crs="http://www.opengis.net/gml/srs/epsg.xml#4326">'+ 
-	        		'                <ows:LowerCorner>-16.825306042689 13.064180511176</ows:LowerCorner>'+ 
-	        		'                <ows:UpperCorner>-13.797093842689 13.826650011176</ows:UpperCorner>'+ 
+	        		'                <ows:LowerCorner>{llcorner}</ows:LowerCorner>'+ 
+	        		'                <ows:UpperCorner>{urcorner}</ows:UpperCorner>'+ 
 	        		'              </gml:BoundingBox>'+ 
 	        		'            </wcs:DomainSubset>'+ 
 	        		'            <wcs:Output format="image/tiff"/>'+ 
@@ -240,7 +249,7 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
 	        		'      <ows:Identifier>zones</ows:Identifier>'+ 
 	        		'      <wps:Data>'+ 
 	        		'        <wps:ComplexData mimeType="application/json">'+
-	        		'			<![CDATA[{0}]]>' +
+	        		'			<![CDATA[{polygon}]]>' +
 	        		'		 </wps:ComplexData>'+ 
 	        		'      </wps:Data>'+ 
 	        		'    </wps:Input>'+ 

@@ -94,14 +94,16 @@ GeoNetwork.jpLang.en = {
 		'<br />To quit the <i>Polygon Query</i> mode, simply select another tool on the map\'s toolbar. Default tool is the pan tool (<i>hand</i> icon)</p>',
 	'polygonQueryWindow.target' :"Target Layer: ",
 	'polygonQueryWindow.resText.empty':'No result yet.',
-	'polygonQuery.count': 'Count',
+	'polygonQuery.count': 'Nb of pixels covered',
 	'polygonQuery.min': 'Min',
 	'polygonQuery.max': 'Max',
 	'polygonQuery.avg': 'Average',
 	'polygonQuery.sum': 'Sum',
-	'polygonQuery.stdev': 'Standard dev.',
+	'polygonQuery.stddev': 'Standard dev.',
 	'polygonQuery.resultsHeader': 'Collected Statistics: ',
-	
+	'polygonQuery.loading':'Loading...',
+	'polygonQuery.queryFailure':'Error trying to retrieve the stats. You may be experiencing network failures. If this error '+
+		'persists, please contact the portal\'s administrator',
 	'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.jpLang.en);

@@ -432,7 +432,7 @@ path:hover {
 	background-image: url("../../images/default/map/delete_layer.png") !important;
 }
 .metadataMenu {
-	background-image: url("../../images/default/map/wmsinfo.png") !important;
+	background-image:url("../images/icon_metadata_16px.png") !important;
 }
 .opacityMenu {
 	background-image: url("../../images/default/map/opacity.png") !important;
@@ -488,10 +488,14 @@ h1.soberH1 {
 	float:right;
 	width:16px;
 	height:16px;
-	background-image:url("../../images/default/map/wmsinfo.png");
+	background-image:url("../images/icon_metadata_16px.png");
 	background-repeat: no-repeat;
 	background-position: center center;
 	margin-right:4px;
+}
+
+button.wmsInfo {
+	background-image:url("../images/icon_metadata_16px.png") !important;
 }
 .treenodeIconsPlugin_isPQueryable {
 	float:right;
@@ -506,7 +510,7 @@ h1.soberH1 {
 	float:right;
 	width:16px;
 	height:16px;
-	background-image:url("../../images/default/map/icon_featureinfo.png");
+	background-image:url("../images/icon_featureinfo_16px.png");
 	background-repeat: no-repeat;
 	background-position: center center;
 	margin-right:4px;
@@ -526,18 +530,23 @@ h1.soberH1 {
 }
 
 
-.pqwindow .x-layout-collapsed {
-    width: auto !important;
+.pqwindow  p {
+    margin : 5px;
 }
 .pqwindow .pqTarget .pqTargetName {
     background-color:yellow;
     font-size:larger;
     font-weight:bold;
     padding:5px;
+	margin:0px;
 }
 
 .pqwindow h3 {
-	margin:5px;
+	margin:15px;
+}
+
+.pqwindow .loading-indicator {
+	margin:15px;
 }
 
 .pqwindow .statsResults .stats {

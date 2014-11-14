@@ -97,8 +97,12 @@ GeoNetwork.jpLang.fr = {
 		'polygonQuery.max': 'Max',
 		'polygonQuery.avg': 'Moyenne',
 		'polygonQuery.sum': 'Total',
-		'polygonQuery.stdev': 'Ecart type',
+		'polygonQuery.stddev': 'Ecart type',
 		'polygonQuery.resultsHeader': 'Statistiques collectées : ',
+		'polygonQuery.loading':'Interrogation en cours...',
+		'polygonQuery.queryFailure':'Une erreur est survenue lors de la récupération des statistiques. Il est possible que cela '+
+			'soit dû à une instabilité de votre connexion internet. Si le problème persiste, merci de contacter l\'administrateur'+
+			'du géoportail.',
 		'zz':'zz'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.jpLang.fr);

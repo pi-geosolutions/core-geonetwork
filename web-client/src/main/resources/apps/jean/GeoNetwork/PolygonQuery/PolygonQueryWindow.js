@@ -94,7 +94,7 @@ Ext.extend(GeoNetwork.PolygonQuery.PolygonQueryWindow, GeoNetwork.BaseWindow, {
     getTargetNameText: function()  {
     	var text="";
     	if (this.targetName) {
-    		text =  '<br /><br /><div class="pqTarget"> <h3>'+
+    		text =  '<br /><div class="pqTarget"> <h3>'+
 						OpenLayers.i18n('polygonQueryWindow.target')+
 						"</h3><p class='pqTargetName'>"+
 							this.targetName+
