@@ -12,6 +12,7 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
      */
     constructor: function(config) {
     	GeoNetwork.NDVIPanel.superclass.constructor.call(this, config);
+        Ext.apply(this, config);
     },
     
     initComponent: function(){
@@ -150,7 +151,7 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
     	if (!button.pressed) {
     		this.reset();
     	} else {this.reset();
-	    	var chartid = 'd3_ndvi_chart_place_'+idx;
+	    	var chartid = 'd3_ndvi_chart_place_'+this.tabindex+'_'+idx;
 			var tpl = new Ext.XTemplate(
 		            '<h1>{text}</h1>',
 		            '<p class="text_intro">{text_intro}</p>',
@@ -170,18 +171,6 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
 					this.reset();
 					break;
 			}
-			//this.loadNdviOptions("ndvi_options_"+idx);
-			
-			
-			/*if (action.chart) {
-				var type = action.chart.type;
-				switch (type) {
-					case "graph":
-						break;
-					default:
-						break;
-				}
-			}*/
     	}
     },
     
@@ -329,11 +318,13 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
 	    //  y.domain([0, d3.max(data, function(d) { return d.decade1; })]);
 	      y.domain([0, 255 ]);
 	
-	      svg.append("g")
+	      var ax = svg.append("g")
 	          .attr("class", "x d3_axis")
 	          .attr("transform", "translate(0," + height + ")")
-	          .call(xAxis)
-	          .selectAll("text") 
+	          .call(xAxis);
+	         ax.selectAll(".major line")
+	          	.attr("transform", "translate("+x.rangeBand()/2+",0)");
+	         ax.selectAll("text") 
 	            .style("text-anchor", "end")
 	            .attr("dx", "-3")
 	            .attr("dy", ".35em")
@@ -438,8 +429,6 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
 			//if it starts with http, we assume it is a distant call, thus we use proxy
 			dataurl = OpenLayers.ProxyHostURL+encodeURIComponent(dataurl);
 		}
-    	//var dataurl = OpenLayers.ProxyHostURL+encodeURIComponent(config.chart.url+'&lat='+this.ndviAppState.lat+'&lon='+this.ndviAppState.lon+'&year='+year);
-    	//var dataurl = config.chart.url;
     	
     	//we remove the element if already there (ie already created, and we APPEND the element...
     	if (d3.select("#"+id).select("svg")) {d3.select("#"+id).select("svg").remove();}
@@ -484,6 +473,8 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
 	          .attr("class", "x d3_axis")
 	          .attr("transform", "translate(0," + height + ")")
 	          .call(xAxis)
+	          .selectAll(".major line")
+	          .attr("transform", "translate("+x.rangeBand()/2+",0)")
 		      /*.append("text")
 				    .attr("x", width)
 				    .attr("y", 6)

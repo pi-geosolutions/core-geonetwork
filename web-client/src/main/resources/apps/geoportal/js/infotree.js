@@ -26,7 +26,7 @@ window.Geoportal.DashBoard = {
 	   		    	}*/
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=ndvi&mode=yearByMonths'
+	   		    		url			: 'http://gm-risk.pigeo.fr/gm-risk-gn2_10/srv/eng/pigeo.ndvi.getvalues_tsv?data=ndvi&mode=yearByMonths'
 	   		    	}
 	   		    },
 	   		    {
@@ -36,7 +36,7 @@ window.Geoportal.DashBoard = {
 	   		    	text_body	: "",
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=ndvi&mode=decade'
+	   		    		url			: 'http://gm-risk.pigeo.fr/gm-risk-gn2_10/srv/eng/pigeo.ndvi.getvalues_tsv?data=ndvi&mode=decade'
 	   		    	}
 	   		    }
 	   	    ] 
@@ -62,7 +62,7 @@ window.Geoportal.DashBoard = {
 	   		    	}*/
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=sm&mode=yearByMonths'
+	   		    		url			: 'http://gm-risk.pigeo.fr/gm-risk-gn2_10/srv/eng/pigeo.ndvi.getvalues_tsv?data=sm&mode=yearByMonths'
 	   		    	}
 	   		    },
 	   		    {
@@ -72,7 +72,7 @@ window.Geoportal.DashBoard = {
 	   		    	text_body	: "",
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=sm&mode=decade'
+	   		    		url			: 'http://gm-risk.pigeo.fr/gm-risk-gn2_10/srv/eng/pigeo.ndvi.getvalues_tsv?data=sm&mode=decade'
 	   		    	}
 	   		    }
 	   	    ] 
@@ -98,7 +98,7 @@ window.Geoportal.DashBoard = {
 	   		    	}*/
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=vci&mode=yearByMonths'
+	   		    		url			: 'http://gm-risk.pigeo.fr/gm-risk-gn2_10/srv/eng/pigeo.ndvi.getvalues_tsv?data=vci&mode=yearByMonths'
 	   		    	}
 	   		    },
 	   		    {
@@ -108,7 +108,7 @@ window.Geoportal.DashBoard = {
 	   		    	text_body	: "",
 	   		    	chart		: {
 	   		    		type		: "column",
-	   		    		url			: '/pigeo.ndvi.getvalues_tsv?data=vci&mode=decade'
+	   		    		url			: 'http://gm-risk.pigeo.fr/gm-risk-gn2_10/srv/eng/pigeo.ndvi.getvalues_tsv?data=vci&mode=decade'
 	   		    	}
 	   		    }
 	   	    ] 
