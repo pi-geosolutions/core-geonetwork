@@ -79,7 +79,6 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     
     queryRaster: function() {
     	var node = this.targetNode;
-    	console.log(node);
     	if (((node) && (node.attributes.layer) && (node.attributes.layer.pq) 
     			&& (node.attributes.layer.pq.pq_layer) && (node.attributes.layer.pq.pq_rastertype_fields))) {
     		var pq = node.attributes.layer.pq;
@@ -99,7 +98,7 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     		    header:{"Content-Type":"text/xml"},
     		    data: data,
                 success: function(response){
-                	if (response.status==200) {
+                	if (response.status==200 && response.responseXML==null) {
                 		this.onQuerySuccess(response, pq);
                 	} else {
                 		this.onQueryFailure(response);
@@ -216,24 +215,21 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     },
     onQuerySuccess: function(response, pq) {
     	var tpl = this.getRasterResultsTpl(pq.pq_rastertype_fields);
-    	console.log(pq);
     	var json = Ext.util.JSON.decode(response.responseText);
-    	console.log(json);
     	//apply multiplication factors, in density-like cases (pq_multiplyByArea is set to true)
 		var multiplyFactor = 1;
-		if (pq.pq_multiplyByArea) {
+		//Remove this multiply thing !!
+		/*if (pq.pq_multiplyByArea) {
 			var area = this.layer.features[0].geometry.getGeodesicArea(this.layer.projection)/1e6; //in km²
 			var ratio = 1;
 			if (pq.pq_multiplyRatio)
 				ratio = pq.pq_multiplyRatio;
 			
 			multiplyFactor = ratio * area;
-		}
+		}*/
 		Ext.iterate(json.features[0].properties, function(key, value, props) {
-			props[key] = value * multiplyFactor;
-			if (pq.pq_round && pq.pq_round!="")
-				props[key] = +props[key].toFixed(pq.pq_round);
-		});
+			props[key] = this.roundVal(value * multiplyFactor, pq.pq_round);
+		}, this);
 
 
     	this.window.setResults(tpl.apply(json.features[0].properties));
@@ -314,5 +310,15 @@ GeoNetwork.PolygonQuery.PolygonQueryManager = Ext.extend(Object, {
     resetTemplates: function() {
     	this.rasterResults_tpl=null;
     	this.query_tpl=null;
+    },
+    
+    roundVal: function(val, decimals) {
+    	if (decimals==0) {
+    		return Math.round(val);
+    	} else if (decimals > 0 ) {
+    		return val.toFixed(decimals);
+    	} else {
+    		return val;
+    	}
     }
 });
