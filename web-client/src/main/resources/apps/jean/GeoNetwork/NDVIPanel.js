@@ -7,6 +7,8 @@
 Ext.namespace("GeoNetwork");
 
 GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
+	tickValues: [0, 50, 100,150,200,255],
+	
     /** private: method[constructor]
      *  Construct the component.
      */
@@ -307,7 +309,8 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
 	
 	    var yAxis = d3.svg.axis()
 	        .scale(y)
-	        .orient("left");
+	        .orient("left")
+	        .tickValues(this.tickValues);
 	
 	    d3.tsv(dataurl, function(error, data) {
 	      data.forEach(function(d) {
@@ -317,30 +320,7 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
 	      x.domain(data.map(function(d) { return d.year; }));
 	    //  y.domain([0, d3.max(data, function(d) { return d.decade1; })]);
 	      y.domain([0, 255 ]);
-	
-	      var ax = svg.append("g")
-	          .attr("class", "x d3_axis")
-	          .attr("transform", "translate(0," + height + ")")
-	          .call(xAxis);
-	         ax.selectAll(".major line")
-	          	.attr("transform", "translate("+x.rangeBand()/2+",0)");
-	         ax.selectAll("text") 
-	            .style("text-anchor", "end")
-	            .attr("dx", "-3")
-	            .attr("dy", ".35em")
-	            .attr("transform", function(d) {
-	                return "rotate(-65)" 
-	                });
-		
-	      svg.append("g")
-	          .attr("class", "y d3_axis")
-	          .call(yAxis)
-	        /*.append("text")
-	          .attr("transform", "rotate(-90)")
-	          .attr("y", 6)
-	          .attr("dy", ".71em")
-	          .style("text-anchor", "middle")
-	          .text("NDVI")*/;
+
 	      svg.selectAll(".d3_bar")
 	          .data(data)
 	        .enter().append("rect")
@@ -350,6 +330,37 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
 	          .attr("y", function(d) {return y(d.value); })
 	          .attr("height", function(d) { return height - y(d.value); })
 	    	.text(function(d) { return d.value; });
+	      
+	      var xax = svg.append("g")
+	          .attr("class", "x d3_axis")
+	          .attr("transform", "translate(0," + height + ")")
+	          .call(xAxis);
+	      xax.selectAll(".major line")
+	          	.attr("transform", "translate("+x.rangeBand()/2+",0)");
+	      xax.selectAll("text") 
+	            .style("text-anchor", "end")
+	            .attr("dx", "-3")
+	            .attr("dy", "0em")
+	            .attr("transform", function(d) {
+	                return "rotate(-65)" 
+	                });
+
+	      xax.append("text")
+			    .attr("x", width)
+			    .attr("y", 0)
+			    .attr("dy", "-.5em")
+			    .style("text-anchor", "middle")
+			    .text("years");
+		
+	      svg.append("g")
+	          .attr("class", "y d3_axis")
+	          .call(yAxis)
+	         .append("text")
+	          .attr("transform", "rotate(-90)")
+	          .attr("y", 6)
+	          .attr("dy", ".71em")
+	          .style("text-anchor", "middle")
+	          .text("index");
 	    });
     },
     
@@ -433,9 +444,9 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
     	//we remove the element if already there (ie already created, and we APPEND the element...
     	if (d3.select("#"+id).select("svg")) {d3.select("#"+id).select("svg").remove();}
     	
-    	var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    	var margin = {top: 70, right: 20, bottom: 30, left: 40},
         width = 400 - margin.left - margin.right,
-        height = 200 - margin.top - margin.bottom;
+        height = 250 - margin.top - margin.bottom;
 
 	    var svg = d3.select("#"+this.id+" #"+id).append("svg")
 	        .attr("width", width + margin.left + margin.right)
@@ -456,7 +467,8 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
 	
 	    var yAxis = d3.svg.axis()
 	        .scale(y)
-	        .orient("left");
+	        .orient("left")
+	        .tickValues(this.tickValues);
 	
 	    d3.tsv(dataurl, function(error, data) {
 	      data.forEach(function(d) {
@@ -469,28 +481,7 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
 	    //  y.domain([0, d3.max(data, function(d) { return d.decade1; })]);
 	      y.domain([0, 255 ]);
 	
-	      svg.append("g")
-	          .attr("class", "x d3_axis")
-	          .attr("transform", "translate(0," + height + ")")
-	          .call(xAxis)
-	          .selectAll(".major line")
-	          .attr("transform", "translate("+x.rangeBand()/2+",0)")
-		      /*.append("text")
-				    .attr("x", width)
-				    .attr("y", 6)
-				    .attr("dy", ".71em")
-				    .style("text-anchor", "middle")
-				    .text("months")*/;
-	
-	      svg.append("g")
-	          .attr("class", "y d3_axis")
-	          .call(yAxis)
-	       /* .append("text")
-	          .attr("transform", "rotate(-90)")
-	          .attr("y", 6)
-	          .attr("dy", ".71em")
-	          .style("text-anchor", "middle")
-	          .text("NDVI")*/;
+
 	
 	      svg.selectAll(".d3_bar")
 	          .data(data)
@@ -522,53 +513,74 @@ GeoNetwork.NDVIPanel = Ext.extend(Ext.Panel, {
 	          .attr("height", function(d) { return height - y(d.decade3); })
 	    	.text(function(d) { return d.decade3; });
 	  	// add legend   
-	  	/*var legend = svg.append("g")
+	  	var legend = svg.append("g")
 	  	  .attr("class", "legend")
 	  	  .attr("x", width - 65)
 	  	  .attr("y", 25)
 	  	  .attr("height", 100)
 	  	  .attr("width", 100);
 	  	
-	    var g = d3.select(".legend");
-	    g.append("rect")
+	  	legend.append("rect")
 	      .attr("x", width - 65)
-	      .attr("y", -40)
+	      .attr("y", -55)
 	      .attr("width", 10)
 	      .attr("height", 10)
-	      .style("fill", "#00D455");
-	    g.append("text")
+          .attr("class", "d3_bar");
+	  	legend.append("text")
 	      .attr("x", width - 50)
-	      .attr("y", 8)
+	      .attr("y", -47)
 	      .attr("height",30)
 	      .attr("width",100)
-	      .style("fill", "#00D455")
+          .attr("class", "d3_bar")
 	      .text("Decade 1");
-	    g.append("rect")
+	  	legend.append("rect")
 	      .attr("x", width - 65)
-	      .attr("y", 20)
+	      .attr("y", -35)
 	      .attr("width", 10)
 	      .attr("height", 10)
-	      .style("fill", "#00FF66");
-	    g.append("text")
+          .attr("class", "d3_bar2");
+	  	legend.append("text")
 	      .attr("x", width - 50)
-	      .attr("y", 28)
+	      .attr("y", -27)
 	      .attr("height",30)
 	      .attr("width",100)
-	      .style("fill", "#00FF66")
+          .attr("class", "d3_bar2")
 	      .text("Decade 2");
-	    g.append("rect")
+	  	legend.append("rect")
 	      .attr("x", width - 65)
-	      .attr("y", 40)
+	      .attr("y", -15)
 	      .attr("width", 10)
 	      .attr("height", 10)
-	      .style("fill", "#55FF99");
-	    g.append("text")
+          .attr("class", "d3_bar3");
+	  	legend.append("text")
 	      .attr("x", width - 50)
-	      .attr("y", 48)
+	      .attr("y", -7)
 	      .attr("height",30)
 	      .attr("width",100)
-	      .style("fill", "#55FF99")
-	      .text("Decade 3");*/
+          .attr("class", "d3_bar3")
+	      .text("Decade 3");
+      var xax = svg.append("g")
+          .attr("class", "x d3_axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+      xax.selectAll(".major line")
+  			.attr("transform", "translate("+x.rangeBand()/2+",0)");
+      xax.append("text")
+		    .attr("x", width)
+		    .attr("y", 0)
+		    .attr("dy", "-.5em")
+		    .style("text-anchor", "middle")
+		    .text("months");
+
+      svg.append("g")
+          .attr("class", "y d3_axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "middle")
+          .text("index");
 	    });
     },
     
