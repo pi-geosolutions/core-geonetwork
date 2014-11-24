@@ -226,6 +226,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 	        		//console.log(newval);
 	        		this.animator.layerindex = newval;
 	        		this.setTimeText(this.animator.files[this.animator.layerindex].name);
+	        		this.setImage( this.animator.layerindex);
 	            	//this.animator.timetext.setValue(this.animator.files[this.animator.layerindex].name);
 	        	},
 	        	scope:this
