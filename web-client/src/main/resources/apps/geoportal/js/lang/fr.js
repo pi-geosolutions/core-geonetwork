@@ -78,6 +78,10 @@ GeoNetwork.jpLang.fr = {
 		'featureInfoManager.fieldsGrid.save':'Sauver pour cette couche seulement',
 		'featureInfoManager.fieldsGrid.saveall':'Sauver tous les changements',
 
+		'animationTooltipTitle':'Animations',
+		'animationTooltipText':"Permet d'explorer des données disponibles à plusieurs dates (exemple : données météo)<br />" +
+				" Des boutons vous permettront de jouer une animation en continu, afficher la donnée date après date, etc.",
+
 		'hasMtd':"Métadonnées présentes dans le catalogue. Pour les voir, cliquer droit sur la couche, et choisir 'Métadonnées'.",
 		'isQueryable': 'Vous pouvez effectuer des interrogations sur cette couche cartographique',
 		'isPQueryable': 'Vous pouvez utiliser l\'outil Interrogation Polygonale sur cette couche cartographique',

@@ -84,7 +84,11 @@ GeoNetwork.jpLang.en = {
 	'featureInfoManager.fieldsGrid.title':'Fields list',
 	'featureInfoManager.fieldsGrid.save':'Save for this layer only',
 	'featureInfoManager.fieldsGrid.saveall':'Save all changes',
-	
+
+	'animationTooltipTitle':'Animations',
+	'animationTooltipText':"Explore datasets available at several dates (e.g. meteo data)<br />" +
+			"Controls will give you the possibility to play a continuous animation (forward or backward), display the data date-after-date, etc.",
+
 	'hasMtd':"Metadata available in the catalog. To see them, right-click on the layer and choose 'Metadata'",
 	'isQueryable': 'You can perform queries on this layer',
 	'isPQueryable': 'You can use the Polygon Query tool on this layer',

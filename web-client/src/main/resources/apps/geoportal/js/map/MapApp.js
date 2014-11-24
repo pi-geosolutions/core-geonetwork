@@ -631,7 +631,11 @@ GeoNetwork.mapApp = function() {
             //tooltip: {title: OpenLayers.i18n("loadanimationTooltipTitle"), text: OpenLayers.i18n("loadanimationTooltipText")},
             handler: function() {
                 GeoNetwork.WindowManager.showWindow("animations");
-            }
+            },
+            tooltip: {
+            	title: OpenLayers.i18n('animationTooltipTitle'), 
+            	text: OpenLayers.i18n('animationTooltipText') 
+            	}
         });
 
         toolbar.push(action);
