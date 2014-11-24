@@ -1,26 +1,48 @@
 .. _stopandstart:
 .. include:: ../../substitutions.txt
 
-TT   Démarrer et arrêter le catalogue
-================================
+Start/stop the catalog
+======================
 
-Sous windows, des menus sont normalement disponibles pour les actions de lancement et d'arrêt
+Start and open the catalog
+--------------------------
 
-- Cliquer Start\>Programs\>|project_name| \>Start server pour lancer |project_name|  Web server (ie. Jetty par défaut).
+If you are running Windows, menus should be available for start and stop actions:
 
-- Cliquer Start\>Programs\>|project_name| \>Open |project_name|  pour ouvrir votre navigateur sur la page d'accueil de |project_name|, ou lancer votre navigateur sur la page `http://localhost:8080/|project_name|/ <http://localhost:8080/|project_name|/>`_
+- Go to Start\>All Programs\> |project_name| \>Start server to start |project_name|  Web server (named Jetty).
+
+- Go to Start\>All Programs\> |project_name| \>Open |project_name|  to open |project_name|'s home page in your browser. 
+Or just open the following page with your browser: `http://localhost:8080/geonetwork/ <http://localhost:8080/geonetwork/>`_
 
 
-Sinon, il également possible d'aller dans **le répertoire bin** d'installation du catalogue, 
-puis de cliquer sur start-|project_name|.bat sous Windows, start-|project_name|.sh sous Mac ou Linux.
+Alternatively, you can also start it manually, by going in the catalog's installation folder, **bin subfolder**, 
+and execute start-|project_name|.bat if your are running Windows,
+or start-|project_name|.sh if you are running Mac or Linux.
 
 
-*Exemple : lancement en ligne de commande*
+*Example : start geonetwork using the command line*
 
 ::
 
-    cd /repertoire/d/installation/de/|project_name|
+    cd /installation/folder/of/geonetwork
     cd bin
-    ./start-|project_name|.sh
-    
+    ./start-geonetwork.sh
 
+
+**Tips:**    
+
+- Your firewall may ask if you agree Oracle Java to execute some code. It is very likely that it is your server starting, so say yes !
+
+- A console will run in the background (you can see it in the programs bar). D'ont close it, since it is your server running.
+
+
+Stop the catalog
+----------------
+
+The recommended way to stop the catalog is to go to Start\>All Programs\> |project_name| \>Stop server.
+
+Alternatively, you can also stop it manually, by going in the catalog's installation folder, **bin subfolder**, 
+and execute stop-|project_name|.bat if your are running Windows,
+or stop-|project_name|.sh if you are running Mac or Linux.
+
+Closing the console window should also work.

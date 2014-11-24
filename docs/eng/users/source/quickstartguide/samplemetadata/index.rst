@@ -2,14 +2,13 @@
 
 .. _samplemetadata:
 
-TT    Charger des exemples de métadonnées
-===================================
+Load sample metadata
+====================
 
-À partir de la page d'accueil, s'authentifier avec le nom d'utilisateur et mot de passe par défaut : admin/admin.
+From the home page, identify yourself using the default administrator name and password: admin/admin.
 
-Allez dans la page d'administration, sélectionnez les standards de métadonnées pour lesquels vous souhaitez charger
-les modèles et exemples, puis actionnez les boutons *Ajouter les modèles* et *Ajouter les exemples* :
+Go to the admin page, select the metadata standards you wish to use, and then run the buttons *Add templates* and *Add sample metadata*:
 
 .. figure:: add_samples.png
 
-   Ajout des modèles et des exemples de métadonnées
+   Add metadata templates and samples

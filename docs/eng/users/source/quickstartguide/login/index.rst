@@ -2,52 +2,53 @@
 
 .. include:: ../../substitutions.txt
 
-TT    Accéder au catalogue et s'identifier
+Accessing the catalog and logging in
 ====================================
 
-Accès au catalogue
-------------------
+Accessing the catalog
+---------------------
 
-Si vous avez installé et démarré |project_name| sur votre ordinateur, l'adresse par défaut
-de la page d'accueil est http://localhost:8080/|project_name|. Sinon, utilisez l'adresse qui vous a été fournie par l'administrateur du catalogue.
-
+If you have performed a standard install on your computer, the default address of the home page is 
+`http://localhost:8080/geonetwork/ <http://localhost:8080/geonetwork/>`_. 
+Otherwise, you should use the address provided by the catalog's administrator.
 
 .. _how_to_login:
 
-Identification
---------------
+About user profiles
+-------------------
 
-Vous pouvez utiliser le catalogue sans être identifié. Un utilisateur non identifié (utilisateur anonyme) 
-peut effectuer des recherches et accéder à toutes les informations publiques contenues dans le catalogue. 
+You can use the catalog without being registered. An unregistered user (anonymous user) can perform searches
+and access all the public information available in the catalog.
 
-Pour accéder aux informations non publiques et aux fonctions avancées du catalogue
-vous devez disposer de privilèges adéquates. Ces privilèges sont gérés sous la forme de profils 
-et de groupes d'utilisateurs. Les profils d'utilisateurs définis dans |project_name| sont décrits brièvements
-ci-dessous (dans l'ordre décroissant du nombre de privilèges) :
+To access to the non-public and the advanced functions of the catalog, you need to be granted some privileges.
+Those privileges are handled in users and group profiles.
+Here is a short list of the user profiles used by |project_name| (from the more privileged to the lesser):
 
-- Administrateur (administre le catalogue - dispose de tous les droits)
-- Administrateur d'utilisateurs (administre un groupe d'utilisateurs)
-- Relecteur (dispose des droits pour rendre public des fiches de métadonnées)
-- Editeur (crée, modifie et supprime des fiches de métadonnées; les publie pour les groupes auxquels il appartient)
-- Utilisateur Enregistré (peut télécharger des données en accès restreint)
-- Utilisateur Anonyme (utilisateur non identifié)
+- Administrator (administers the catalog - has all rights)
+- Users administrator (administers a users' group)
+- Reviewer (has the rights to publish -publicly- metadata sheets)
+- Editor (can create, modify et remove his metadata sheets; he can publish them for the groups he belongs to)
+- Registered user (can view restricted metadata and download restricted data)
+- Anonymous user (unregistered : has access to all public information)
 
-Les droits/privilèges associés aux profils d'utilisateurs sont décrits de manière plus approfondie dans le chapitre Administration (cf. :ref:`user_profiles`).
+The rights/privileges attributed to each user profile are explored more in-depth in the administration chapter (cf. :ref:`user_profiles`).
 
-Pour se connecter, il suffit de se rendre sur la page d'accueil, de saisir son nom
-d'utilisateur et son mot de passe dans l'angle en haut à droite et de cliquer sur le
-bouton de connexion.
+Logging in
+----------
+
+To log in, one has to visit the home page and enter his user name and password in the login form 
+on the top-right area, then click on the *Login* button.
 
 .. figure:: login.png
 
-   Bouton de connexion au catalogue
+   Logging form
 
-Chaque utilisateur inscrit dans le catalogue est membre d'un ou plusieurs groupes d'utilisateurs
-ce qui lui donne accès aux ressources particulières de ces groupes.
+Every user registered in the catalog belongs to one or more user groups, which gives him access
+to the ressources that are specific to these groups.
 
 
-Compte administrateur par défaut
---------------------------------
+Default administrator account
+-----------------------------
 
-Par défaut, une version fraichement installée de |project_name| dispose d'un compte administrateur dont le nom et le mot de passe sont "admin".
-Pour une question de sécurité, il est très important de modifier le mot de passe de ce compte dans la page Administration après s'être identifié sous ce compte.
+By default on a freshly installed |project_name| instance, a default administrator account is created, which name and password are both "admin".
+For security reasons, you really should change its password as soon as possible. You can do it in the Administration page.
