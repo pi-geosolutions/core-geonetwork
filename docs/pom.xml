@@ -32,7 +32,68 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.1</version>
         <executions>
-			<!-- English user documentation -->
+			<!-- English geoportal (© Jean Pommier, jean.pommier@pi-gesoloutions.fr) documentation -->
+            <execution>
+              <id>geoportal-docs-clean</id>
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>exec</goal>
+              </goals>
+              <configuration>
+                <executable>make</executable>
+                  <arguments>
+                    <argument>clean</argument>
+                  </arguments>
+                <workingDirectory>${basedir}/eng/geoportal</workingDirectory>
+              </configuration>
+            </execution>
+
+            <execution>
+             <id>geoportal-docs-build-html</id>
+             <phase>prepare-package</phase>
+             <goals>
+               <goal>exec</goal>
+             </goals>
+             <configuration>
+               <executable>make</executable>
+                 <arguments>
+                   <argument>html</argument>
+                 </arguments>
+               <workingDirectory>${basedir}/eng/geoportal</workingDirectory>
+             </configuration>
+           </execution>
+
+            <execution>
+             <id>geoportal-docs-build-latex</id>
+             <phase>prepare-package</phase>
+             <goals>
+               <goal>exec</goal>
+             </goals>
+             <configuration>
+               <executable>make</executable>
+                 <arguments>
+                   <argument>latex</argument>
+                 </arguments>
+               <workingDirectory>${basedir}/eng/geoportal</workingDirectory>
+             </configuration>
+           </execution>
+
+            <execution>
+             <id>geoportal-docs-build-all-pdf</id>
+             <phase>prepare-package</phase>
+             <goals>
+               <goal>exec</goal>
+             </goals>
+             <configuration>
+               <executable>make</executable>
+                 <arguments>
+                   <argument>all-pdf</argument>
+                 </arguments>
+               <workingDirectory>${basedir}/eng/geoportal/build/latex</workingDirectory>
+             </configuration>
+           </execution>
+
+					<!-- English user documentation -->
             <execution>
               <id>user-docs-clean</id>
               <phase>prepare-package</phase>
