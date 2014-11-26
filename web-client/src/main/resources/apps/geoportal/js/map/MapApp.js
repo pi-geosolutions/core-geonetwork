@@ -480,7 +480,7 @@ GeoNetwork.mapApp = function() {
             toggleGroup: "move",
             allowDepress: false,
             iconCls: 'zoomin'
-            //tooltip: {title: OpenLayers.i18n("zoominTooltipTitle"), text: OpenLayers.i18n("zoominTooltipText")}
+            ,tooltip: {title: OpenLayers.i18n("zoominTooltipTitle"), text: OpenLayers.i18n("zoominTooltipText")}
         });
 
         toolbar.push(action);
@@ -494,7 +494,7 @@ GeoNetwork.mapApp = function() {
             allowDepress: false,
             map: map,
             iconCls: 'zoomout'
-            //tooltip:  {title: OpenLayers.i18n("zoomoutTooltipTitle"), text: OpenLayers.i18n("zoomoutTooltipText")}
+            ,tooltip:  {title: OpenLayers.i18n("zoomoutTooltipTitle"), text: OpenLayers.i18n("zoomoutTooltipText")}
         });
 
         toolbar.push(action);
@@ -509,12 +509,12 @@ GeoNetwork.mapApp = function() {
             pressed: true,
             map: map,
             iconCls: 'pan'
-            //tooltip:  {title: OpenLayers.i18n("dragTooltipTitle"), text: OpenLayers.i18n("dragTooltipText")}
+            ,tooltip:  {title: OpenLayers.i18n("dragTooltipTitle"), text: OpenLayers.i18n("dragTooltipText")}
         });
 
         toolbar.push(action);
         
-        toolbar.push("-");
+        //toolbar.push("-");
 
         featureinfo = new OpenLayers.Control.WMSGetFeatureInfo({drillDown: true, queryVisible:true,infoFormat: 'application/vnd.ogc.gml'});
 
@@ -534,7 +534,10 @@ GeoNetwork.mapApp = function() {
 
         featureinfolayer = new OpenLayers.Layer.Vector("Feature info", {displayInLayerSwitcher: false,
             styleMap: new OpenLayers.StyleMap({
-                externalGraphic: OpenLayers.Util.getImagesLocation() + "marker.png",
+                //externalGraphic: OpenLayers.Util.getImagesLocation() + "marker.png",
+            	externalGraphic: "images/query.png",
+            	graphicWidth:40,
+            	graphicHeight:40,
                 pointRadius: 12
             })
         });
@@ -564,7 +567,7 @@ GeoNetwork.mapApp = function() {
             pressed: false,
             map: map,
             iconCls: 'query'
-            //tooltip: {title: OpenLayers.i18n('featureInfoTooltipTitle'), text: OpenLayers.i18n('featureInfoTooltipText') }
+            ,tooltip: {title: OpenLayers.i18n('featureInfoTooltipTitle'), text: OpenLayers.i18n('featureInfoTooltipText') }
         });
         
         toolbar.push(action);
@@ -626,22 +629,6 @@ GeoNetwork.mapApp = function() {
         
         toolbar.push(action);
         
-        action = new GeoExt.Action({
-            iconCls: 'loadanimation',
-            //tooltip: {title: OpenLayers.i18n("loadanimationTooltipTitle"), text: OpenLayers.i18n("loadanimationTooltipText")},
-            handler: function() {
-                GeoNetwork.WindowManager.showWindow("animations");
-            },
-            tooltip: {
-            	title: OpenLayers.i18n('animationTooltipTitle'), 
-            	text: OpenLayers.i18n('animationTooltipText') 
-            	}
-        });
-
-        toolbar.push(action);
-
-        
-
         // create split button for measure controls
 
         var measureSplit = new Ext.SplitButton({
@@ -715,7 +702,24 @@ GeoNetwork.mapApp = function() {
         });
         
         toolbar.push(measureSplit);
-        
+
+        toolbar.push("-");
+
+        action = new GeoExt.Action({
+            iconCls: 'loadanimation',
+            text: OpenLayers.i18n('animationTooltipTitle'), 
+            //tooltip: {title: OpenLayers.i18n("loadanimationTooltipTitle"), text: OpenLayers.i18n("loadanimationTooltipText")},
+            handler: function() {
+                GeoNetwork.WindowManager.showWindow("animations");
+            },
+            tooltip: {
+            	title: OpenLayers.i18n('animationTooltipTitle'), 
+            	text: OpenLayers.i18n('animationTooltipText') 
+            	}
+        });
+
+        toolbar.push(action);
+
         toolbar.push("-");
 
         // Navigation history - two "button" controls
@@ -727,7 +731,7 @@ GeoNetwork.mapApp = function() {
             disabled: true,
             map: map,
             iconCls: 'back'
-            //tooltip: {title: OpenLayers.i18n("previousTooltipTitle"), text: OpenLayers.i18n("previosTooltipText")}
+            ,tooltip: {title: OpenLayers.i18n("previousTooltipTitle"), text: OpenLayers.i18n("previosTooltipText")}
         });
         toolbar.push(action);
 
@@ -736,7 +740,7 @@ GeoNetwork.mapApp = function() {
             disabled: true,
             map: map,
             iconCls: 'next'
-            //tooltip: {title: OpenLayers.i18n("nextTooltipTitle"), text: OpenLayers.i18n("nextTooltipText")}
+            ,tooltip: {title: OpenLayers.i18n("nextTooltipTitle"), text: OpenLayers.i18n("nextTooltipText")}
         });
         toolbar.push(action);
 
@@ -744,7 +748,7 @@ GeoNetwork.mapApp = function() {
         
         action = new GeoExt.Action({
             iconCls: 'savewmc',
-            //tooltip: {title: OpenLayers.i18n("savewmcTooltipTitle"), text: OpenLayers.i18n("savewmcTooltipText")},
+            tooltip: {title: OpenLayers.i18n("savewmcTooltipTitle"), text: OpenLayers.i18n("savewmcTooltipText")},
             handler: function() {
                 GeoNetwork.WMCManager.saveContext(map);
             }
@@ -754,7 +758,7 @@ GeoNetwork.mapApp = function() {
         
         action = new GeoExt.Action({
             iconCls: 'loadwmc',
-            //tooltip: {title: OpenLayers.i18n("loadwmcTooltipTitle"), text: OpenLayers.i18n("loadwmcTooltipText")},
+            tooltip: {title: OpenLayers.i18n("loadwmcTooltipTitle"), text: OpenLayers.i18n("loadwmcTooltipText")},
             handler: function() {
                 GeoNetwork.WindowManager.showWindow("loadwmc");
             }
@@ -1097,8 +1101,8 @@ GeoNetwork.mapApp = function() {
                             //c.items.get("metadataMenu").enable();	
                             var hide = (node.attributes.layer.uuid==null)||(node.attributes.layer.uuid=="")
                             c.items.get("metadataMenu").setDisabled(hide);	
-
-                            var showLegend = (node.attributes.layer.legend==null)||(node.attributes.layer.legend=="")
+                            console.log(node.attributes.layer);
+                            var showLegend = !((node.attributes.layer.legend==null)||(node.attributes.layer.legend==""))
                             c.items.get("openLegendMenu").setVisible(showLegend);	
                             //console.log(node.attributes.layer);
                             

@@ -21,6 +21,7 @@ Ext.namespace('GeoNetwork', 'GeoNetwork.jpLang');
 GeoNetwork.jpLang.en = {
 	//fixes
     'org': "Organization",
+    "mf.print.generatingPDF": "Generate PDF",
     //new ones
 	'choose': 'Select',
 	'facetsTitle':'Narrow your Search',
@@ -30,7 +31,7 @@ GeoNetwork.jpLang.en = {
     'PigeoGeoserver':'pi-Geosolutions\' map server',
 	'legend:': 'Legend:',
     'organize': 'Organize',
-    'geocatalogue':'Geo-catalogue',
+    'geocatalogue':'Geo-catalog',
     'overlay:':'Overlay: ',
     'ovGoogleHybrid':"Google Hybrid background map",
 	'print': 'Print',

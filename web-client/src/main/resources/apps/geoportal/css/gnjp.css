@@ -50,6 +50,12 @@
 #mn-top #help-link a:hover{
 	border : 1px dotted white;
 }
+#mn-top a.help_link {
+	color:white;
+}
+#mn-top img.help_picture {
+	width : 60px;
+}
 
 #mn-top .pipe {
 	border-left : 0px;

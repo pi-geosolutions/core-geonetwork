@@ -38,6 +38,7 @@ GeoNetwork.layers.GeoportalFolderLayer = Ext.extend(GeoNetwork.layers.GeoportalA
 		type:"folder",
 		text:"new folder",
 		iconCls:'folder',
+		qcktip : '',
 		leaf:false
     },
 

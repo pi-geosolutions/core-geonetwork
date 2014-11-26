@@ -59,6 +59,14 @@ GeoNetwork.layers.GeoportalFolderLayerForm = Ext.extend(GeoNetwork.layers.Geopor
     		fieldLabel : 'CSS class',
     		name : 'cls'
     	},{
+    		fieldLabel : 'Comments',
+    		xtype : 'textarea',
+    		name : 'qcktip',
+    		height:20,
+    		grow:true,
+    		growMin:20,
+    		growMax:200
+    	},{
     		fieldLabel : 'Extensions',
     		xtype : 'textarea',
     		name : 'extensions',
