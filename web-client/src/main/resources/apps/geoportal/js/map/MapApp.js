@@ -1101,7 +1101,7 @@ GeoNetwork.mapApp = function() {
                             //c.items.get("metadataMenu").enable();	
                             var hide = (node.attributes.layer.uuid==null)||(node.attributes.layer.uuid=="")
                             c.items.get("metadataMenu").setDisabled(hide);	
-                            console.log(node.attributes.layer);
+                            //console.log(node.attributes.layer);
                             var showLegend = !((node.attributes.layer.legend==null)||(node.attributes.layer.legend==""))
                             c.items.get("openLegendMenu").setVisible(showLegend);	
                             //console.log(node.attributes.layer);
