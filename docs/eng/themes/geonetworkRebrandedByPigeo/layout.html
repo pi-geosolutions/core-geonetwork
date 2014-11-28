@@ -2,7 +2,7 @@
 {%- set reldelim = reldelim is not defined and '|' or reldelim %}
 {%- macro breadcrumbs() %}
 <ul id="breadcrumbs">
-  <li><a href="http://geonetwork-opensource.org">Home</a>{{ breadcrumbdelim }}</li>
+  <li><!-- <a href="http://geonetwork-opensource.org">Home</a> -->{{ breadcrumbdelim }}</li>
   {% if pagename != 'index' %}
   {%- block rootrellink %}
   <li><a href="{{ pathto('index') }}">{{ shorttitle }}</a>{{ breadcrumbdelim }}</li>
@@ -78,10 +78,10 @@
       <!-- <div class="section">
         <a href="http://geonetwork-opensource.org/Documentation" title="We're still porting content over to our new documentation. If it's not here, try the legacy GeoNetwork documentation">Legacy Documentation</a>
       </div> -->
-  		<div class="section">
+ <!-- 		<div class="section">
         <a href="http://osgeo.org" title="Open Source Geospatial Foundation project"><img src="{{ pathto('_static/osgeo.png', 1) }}" alt="OSGeo project" /></a>
       </div>
- <!--     <div class="section">
+      <div class="section">
       	<a href="{{ pathto('acknowledgements/acknowledgements.html', 1) }}"><h3 style="margin-bottom: 5px;">Acknowledgements</h3></a>
       	<div class="acklogo">
 	 	<a href="http://geocat.net" alt="GeoCat bv" target="_blank"><img src="{{ pathto('_static/GeoCat.png', 1) }}" width="135px" /></a>
@@ -183,7 +183,10 @@
       <div id="logo"><a href="http://geonetwork-opensource.org">{{ shorttitle }}</a></div>
       <ul id="top-nav">
         <!--<li class="first"><a href="http://www.geonetwork-opensource.org/news.html">News</a></li>-->
-        <li><a href="{{ pathto('index') }}">Documentation</a></li>
+        <li><a href="http://gm-risk.pigeo.fr/geoportal">&lt;&lt; Geoportal</a></li>
+        <li><a href="http://gm-risk.pigeo.fr/docs/userdoc/html/index.html">User Manual</a></li>
+        <li><a href="http://gm-risk.pigeo.fr/docs/admindoc/html/index.html">Editor/Administrator Manual</a></li>
+        <li><a href="http://www.geonetwork-opensource.org/manuals/2.10.3/eng/users/index.html">GeoNetwork documentation</a></li>
        <!-- <li><a href="http://www.geonetwork-opensource.org/downloads.html">Download</a></li>
         <li><a href="http://www.geonetwork-opensource.org/community.html">Community</a></li>
         <li><a href="http://geonetwork-opensource.org/gallery/gallery.html">Gallery</a></li>

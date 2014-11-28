@@ -10,7 +10,7 @@
 .. |pquery| image:: polygon_query_16px.png
 .. |rm| image:: delete_layer.png
 
-
+.. index:: Overlay, Layer
 
 
 Building a map
@@ -21,10 +21,13 @@ Most of the geoportal is about mapping: :ref:`select overlays <select_overlays>`
 
 .. _select_overlays:
 
+.. index:: pair: WMS; Layer
+.. index:: pair: Chart; Layer
+
 Select overlays
 ---------------
 
-This happens in the :ref:`side_panel`, first tab. Every checked layer is added to the map.
+This happens in the :ref:`left panel<left_panel>`, first tab. Every checked layer is added to the map.
 
 It is hierarchically organized, in a tree-like structure: unfold a folder to see what's inside. It can contain several kinds of *nodes*:
 
@@ -60,6 +63,8 @@ When in the right place, release the mouse's button.
    
    
 .. _change_background_map:
+   
+.. index:: pair: Background; Layer
    
 Change the background map
 -------------------------
@@ -121,16 +126,27 @@ actions will be trigged in their own way (see further).
    Here, all the layers are queryable, Population density and Elevation are enabled for Polygon Query and have a metadata sheet available. 
    Road Network too, has a metadata sheet.
 
-
-Query the layer
-***************
-
-
 View Metadata
 *************
 
+A layer having metadata will be represented with the |M| indicator. When selected (left-click on it), the |M| button on the panel's top toolbar will be activated. 
+On the layer's context menu (right-click on the layer), the *Metadata* entry will be activated too.
+
+Clicking on one of those will open the metadata sheet, if you have access rights to this metadata. Otherwise, a message will tell you don't have the access rights 
+(meaning the access is restricted to some registered users: you have to log in).
+
+.. figure:: openMtd.png
+   :scale: 50 %
+
+   Opening the metadata sheet (on the right)
+   
+See also the :ref:`geocatalog` section about metadata.
+
 Use transparency / curtain ('*swipe*') controls
 ```````````````````````````````````````````````
+
+.. index:: pair: Transparency; Control
+
 Transparency
 ************
 
@@ -144,9 +160,11 @@ elevation effect on the map.
 A right-click on a layer opens a contextual menu, with some actions available for this layer. One of these actions is called '*opacity*', and opens a slider. 
 By moving this slider, on can change the layer's opacity from 1 (completely opaque) to 0 (invisible). 
 
-.. note:: Setting the opacity to 0 (invisible) will automatically uncheck the layer. It is important o remember it, since unchecked layers are automatically 'cleaned' 
+.. note:: Setting the opacity to 0 (invisible) will automatically uncheck the layer. It is important to remember it, since unchecked layers are automatically 'cleaned' 
           from the Organize tab.
           
+.. index:: pair: Curtain; Control
+
 Curtain ('*swipe*') controls
 ****************************
 

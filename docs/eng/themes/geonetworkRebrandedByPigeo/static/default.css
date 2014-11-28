@@ -173,7 +173,7 @@ Header
 -----------------------*/
 #header .wrap {
 position: relative;
-height: 112px;
+height: 130px;
 padding: 1px 0 0;
 overflow: hidden;
 }
@@ -181,10 +181,10 @@ overflow: hidden;
 #logo a {
 margin: 15px 0 0 15px;
 float: left;
-width: 433px;
+width: 800px;
 overflow: hidden;
 text-indent: -9999em;
-background: url(./chrome/geonetwork-logo.png) no-repeat;
+background: url(logos.png) no-repeat;
 	height: 95px;
 	z-index: auto;
 }
@@ -220,7 +220,6 @@ padding: 0 0 0 0.8em;
 #top-nav {
 position: absolute;
 bottom: 14px;
-right: 0;
 list-style: none;
 margin: 0;
 }

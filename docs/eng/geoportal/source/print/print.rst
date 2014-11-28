@@ -1,6 +1,9 @@
 .. _print:
 .. include:: ../substitutions.txt
 
+
+.. index:: PDF, Print
+
 Printing
 ========
 

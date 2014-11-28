@@ -32,11 +32,11 @@ The header panel is the simplest part. It contains:
 
 - The site's name
 
-- The login form, for registered users and administrators
+- The :index:`login form`, for registered users and administrators
 
 - The language switcher: the site is available in English and French
 
-- The help link: gives access to some helpful links, including this documentation.
+- The :index:`help` link: gives access to some helpful links, including this documentation.
 
 .. _central_panel:
 

@@ -21,8 +21,11 @@ Using the map
 
 Manipulating the map is mostly done using the mouse and the map's top toolbar.
 
-Zoom in, zoom out, pan the map
-------------------------------
+|zoomfull| |zoomin| |zoomout| |pan| Zoom in, zoom out, pan the map
+------------------------------------------------------------------
+
+
+.. index:: pair: Zoom; Control
 
 Zoom
 ````
@@ -40,6 +43,9 @@ It can also be done using the three first buttons on the map's top toolbar:
 One last way to zoom in is to press the *shift* key, click with the mouse and draw a rectangle. This can be one while in *pan* mode, and is simpler than 
 switching to *zoom in* mode.
 
+.. index:: pair: Pan; Control
+.. index:: pair: Move; Control
+
 Pan
 ```
 
@@ -51,8 +57,11 @@ Select |pan| to switch to *pan* mode. In this mode, to move the map, click on th
 
 .. _query_layers:
 
-Query layers
-------------
+.. index:: pair: Query; Control
+.. index:: pair: Query; Layer
+
+|featureinfo| Query layers
+--------------------------
 
 Select |featureinfo| to switch to *query* mode. While in *query* mode, click somewhere on the map to retrieve the layers' values on this point.
 Only queryable layers (see :ref:`layers_icons`) will be queried.
@@ -75,8 +84,10 @@ The queried location is shown on the map using a |query_marker| marker.
 
 To quit the *query* mode, you can switch back to *pan* mode.
 
-Measuring
----------
+.. index:: pair: Measure; Control
+
+|measure_line| Measuring
+------------------------
 
 The |measure_line| button is actually a two-fold button. Clicking on the button itself will activate the *Distance Measurement* tool. But clicking on the |icon_submenu| 
 icon just on the right of it will open a submenu to choose between *Distance Measurement* (|measure_line|) or *Area Measurement* (|measure_area|) tool.
@@ -93,13 +104,19 @@ Measuring a surface is done the same: starting with the third corner, it makes a
    Measuring the covered area of a river floodplain area, on the Soil association overlay.
 
 
-History
--------
+.. index:: pair: History; Control
+
+|history_prev| |history_next| History
+-------------------------------------
 
 Using the arrows buttons |history_prev| and |history_next|, you can go back/forward in the previous zoom views, a bit like the history arrows of a web browser.
 
-Save/restore the map
---------------------
+
+.. index:: pair: Save (map); Control
+.. index:: pair: Restore (map); Control
+
+|savewmc| |loadwmc| Save/restore the map
+----------------------------------------
 
 You can save the map configuration, for further reload. It allows you to suspend a working session and restore it later, in order to get back to where you were last time. 
 Or to send the file to a colleague, that could restore the same environment you were working in.

@@ -167,12 +167,12 @@ latex_font_size = '11pt'
 # (source start file, target name, title, author, document class [howto/manual]).
 latex_documents = [
   ('index', 'RiskManagementGeoportal-Gambia.tex', u'Geoportal for Risk Management for Gambia',
-   u'Jean Pommier, jean.pommier@pi-geosolutions.fr', 'manual'),
+   u'Jean Pommier', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-latex_logo = 'GeoNetwork_433.png'
+latex_logo = 'logos.png'
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.

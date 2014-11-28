@@ -5,3 +5,4 @@
 .. |project_version| replace:: 2.10.3-1
 .. |version| replace:: 2.10.3-1
 .. |release| replace:: 2.10.3-1
+.. |release_bold| replace:: **2.10.3-1**
