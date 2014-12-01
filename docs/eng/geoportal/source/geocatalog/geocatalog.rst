@@ -1,9 +1,11 @@
 .. include:: ../substitutions.txt
 
-.. _geocatalog:
 
 
 .. index:: Geo-catalog, Search, Metadata
+
+
+.. _geocatalog:
 
 Geo-catalog
 ===========
