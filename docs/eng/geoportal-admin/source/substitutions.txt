@@ -1,0 +1,10 @@
+﻿.. |project_name| replace:: Geoportal for Risk Management in Gambia
+.. |project| replace:: Geoportal for Risk Management in Gambia
+.. |project_bold| replace:: **Geoportal for Risk Management in Gambia**
+.. |project_url| replace:: http://gm-risk.pigeo.fr
+.. |project_version| replace:: 2.10.3-1
+.. |version| replace:: 2.10.3-1
+.. |release| replace:: 2.10.3-1
+.. |release_bold| replace:: **2.10.3-1**
+.. |gn| replace:: GeoNetwork
+.. |gs| replace:: GeoServer
