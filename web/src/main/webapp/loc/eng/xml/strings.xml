@@ -1401,4 +1401,9 @@
 	<welcome.text>Welcome to GeoNetwork</welcome.text>
 	<tag_label>Tags</tag_label>
 	<map_label>Map</map_label>
+	<geoportal-admin-title>Geoportal configuration</geoportal-admin-title>
+	<geoportal-admin-showlt>Show layertree (JSON)</geoportal-admin-showlt>
+	<geoportal-admin-showlt-comment>Displays the layertree as JSON file</geoportal-admin-showlt-comment>
+	<geoportal-admin-managelt>Manage layertree</geoportal-admin-managelt>
+	<geoportal-admin-managelt-comment>View, reorganize, add nodes to the layertree</geoportal-admin-managelt-comment>
 </strings>

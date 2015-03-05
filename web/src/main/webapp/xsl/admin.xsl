@@ -111,18 +111,13 @@
                     <xsl:variable name="geoportalServices">
                        <xsl:call-template name="addrow">
                             <xsl:with-param name="service" select="'pigeo.layertree.get'"/>
-                            <xsl:with-param name="title" select="'Show layertree (JSON)'"/>
-                            <xsl:with-param name="desc" select="'Displays the layertree as JSON file'"/>
+                            <xsl:with-param name="title" select="/root/gui/strings/geoportal-admin-showlt"/>
+                            <xsl:with-param name="desc" select="/root/gui/strings/geoportal-admin-showlt-comment"/>
                       	</xsl:call-template>	
                         <xsl:call-template name="addrow">
                             <xsl:with-param name="service" select="'pigeo.layertree.admin'"/>
-                            <xsl:with-param name="title" select="'Manage layertree'"/>
-                            <xsl:with-param name="desc" select="'View, reorganize, add nodes to the layertree'"/>
-                        </xsl:call-template>
-                        <xsl:call-template name="addrow">
-                            <xsl:with-param name="service" select="'pigeo.featureinfos.admin'"/>
-                            <xsl:with-param name="title" select="'Translate features names'"/>
-                            <xsl:with-param name="desc" select="'Translate '"/>
+                            <xsl:with-param name="title" select="/root/gui/strings/geoportal-admin-managelt"/>
+                            <xsl:with-param name="desc" select="/root/gui/strings/geoportal-admin-managelt-comment"/>
                         </xsl:call-template>
                     </xsl:variable>
                     
@@ -255,8 +250,8 @@
                     <xsl:if test="/root/gui/config/client/@widget">
 	                    <xsl:call-template name="addTitle">
 	                        <xsl:with-param name="icon">exec.png</xsl:with-param>
-	                        <xsl:with-param name="title"
-	                                        select="'Geoportal configuration'"/>
+                            <xsl:with-param name="title"
+                                            select="/root/gui/strings/geoportal-admin-title"/>
 	                        <xsl:with-param name="content" select="$geoportalServices"/>
 	                    </xsl:call-template>
                     </xsl:if>

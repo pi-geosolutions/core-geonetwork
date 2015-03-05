@@ -1412,4 +1412,9 @@
 	<welcome.text></welcome.text>
 	<tag_label>Tags</tag_label>
 	<map_label>Carte</map_label>
+	<geoportal-admin-title>Configuration du Géoportail</geoportal-admin-title>
+	<geoportal-admin-showlt>Afficher le Référentiel de Données Cartographiques (JSON)</geoportal-admin-showlt>
+	<geoportal-admin-showlt-comment>Affiche le Référentiel de Données Cartographiques au format JSON, en mode lecture seule</geoportal-admin-showlt-comment>
+	<geoportal-admin-managelt>Gérer le Référentiel de Données Cartographiques</geoportal-admin-managelt>
+	<geoportal-admin-managelt-comment>Visualiser, réorganiser, ajouter des noeuds dans le Référentiel de Données Cartographiques</geoportal-admin-managelt-comment>
 </strings>
