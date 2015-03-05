@@ -445,7 +445,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	    scope:this
     	});
         var add_menu = new Ext.menu.Menu({
-            id: 'mainMenu',
+            id: 'addMenu',
             items: [
                     action_addfolder,
                     action_addwms,
