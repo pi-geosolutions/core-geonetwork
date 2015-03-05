@@ -124,13 +124,13 @@
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<service name="pigeo.animations.listfiles">
 			<class name="fr.pigeosolutions.geoportal.services.animations.ListFiles">
-				<param name="basePath" value="geoportal/animations/"/>
+				<param name="basePath" value="/home/jean/tomcat7/data/geoportal-global/animations/"/>
 				<param name="ext" value="png"/>
 			</class>
 		</service>
 		<service name="pigeo.animations.listfiles.json">
 			<class name="fr.pigeosolutions.geoportal.services.animations.ListFiles">
-				<param name="basePath" value="geoportal/animations/"/>
+				<param name="basePath" value="/home/jean/tomcat7/data/geoportal-global/animations/"/>
 				<param name="ext" value="png"/>
 			</class>
 			<output sheet="pigeo/geoportal/tojson.xsl" contentType="application/json; charset=UTF-8"/>

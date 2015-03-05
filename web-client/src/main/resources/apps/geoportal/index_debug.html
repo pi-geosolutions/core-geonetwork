@@ -31,10 +31,10 @@
     <div id="loading-mask"></div>
     <div id="loading">
       <div class="loading-indicator">
-      <p><b>Risk Management Geoportal for Gambia </b><br />
+      <p><b>Risk Management Geoportal for Burundi </b><br />
       Loading...</p>
       <hr />
-      <p><b>Géoportail de la Gestion des Risques en Gambie </b><br />
+      <p><b>Géoportail de la Gestion des Risques au Burundi </b><br />
       Chargement en cours...</p></div>
       Optimized for / optimisé pour : <br />Firefox (version 17 and +), Chrome (version 29 and +), Internet Explorer 9 and 10.
     </div>
@@ -85,7 +85,7 @@
     <!--[if gte IE 9]><!-->
     	<script src="../js/d3.v3.min.js"></script>
     <!--<![endif]-->
-	<script src="http://d3js.org/queue.v1.min.js"></script>
+	<script src="../js/queue.v1.min.js"></script>
     <script type="text/javascript" src="../jean/GeoNetwork/jpSearchFormTools.js"></script>
     <script type="text/javascript" src="../jean/Ext/Fixes.js"></script>
     <script type="text/javascript" src="../jean/Ext/ux/CheckColumn.js"></script>
@@ -130,26 +130,21 @@
     			withGoogleLayers	: false,
     			//MAXEXTENT 			:[-2.003750834E7,-2.003750834E7,2.0037508345578495E7,2.0037508345578495E7],
     			//MAXEXTENT 			:[-1500000,1100000,500000,3000000],
-    			EXTENT 			:[-1900000,1460000,-1530000,1560000],
-    			/*Mask 				: {
-						    			name 	: 'Translucent mask around Gambia', 
-						        		url 	: 'http://pigeo.fr/geoserver-prod/wms?',
-						        		layers 	: 'gm:gm_countryMask'	
-					    			},*/
-    			portalHeader 		:'<img class="catLogo" src="../images/logos/Coat_of_Arms_of_The_Gambia.svg.png"/><span class="bigger"> GAM-DRIS </span><br /><span class="smaller">Risk Management Portal for Gambia</span>',
-    			overviewWmsUrl		: 'http://gm-risk.pigeo.fr/geoserver-prod/wms',
-    			overviewWmsLayers	: 'gm_fond_carto',
-    			overviewWmsFormat	: 'image/jpeg',
-    			plainMapTitle 		: "Low resolution base map",
-    			plainMapWmsUrl		: "http://gm-risk.pigeo.fr/geoserver-prod/wms",
-    			plainMapWmsLayers 	:'gm_fond_carto',
-    			plainMapWmsFormat	:'image/jpeg',
-    			geonamesSearch		: {
-    				countryString:'country=GM',
-    				zoom : 11
-    			},
+			EXTENT                  :[3226595.30,-495653.48, 3434561.55,-256277.70],
+			portalHeader            :'<img class="catLogo" src="../images/logos/88px-Blason_du_Burundi.svg.png"/><span class="bigger"> Gestion des Risques au Burundi </span><br /><span class="smaller"></span>',
+            overviewWmsUrl          : 'http://bi-risk.pigeo.fr/geoserver-prod/wms',
+            overviewWmsLayers       : 'bi_fond_carto',
+            overviewWmsFormat       : 'image/jpeg',
+            plainMapTitle           : "Low resolution base map",
+            plainMapWmsUrl          : "http://bi-risk.pigeo.fr/geoserver-prod/wms",
+            plainMapWmsLayers       :'bi_fond_carto',
+            plainMapWmsFormat       :'image/jpeg',
+            geonamesSearch          : {
+                    countryString:'country=BI',
+                    zoom : 11
+            },
     			toolsPanelConfig	: {
-    				linkedLayers : ["Zonage Agro-ecologique (source PIRT)"],
+    				linkedLayers : [""],
     				disableLayersOnDeactivate : false	
    				}/*,
     			shortcutsZAE 		: {
@@ -173,15 +168,15 @@
 						title : 'searchTools',
 						items : 
 							[{
-								nom:'Regions...',
-								url:'http://gm-risk.pigeo.fr/sigdt-config/services-gambie/getRegions.php'
+								nom:'Provinces...',
+								url:'http://bi-risk.pigeo.fr/sigdt-config/services-burundi/getProvinces.php'
 							},{
-								nom:'Districts...',
-								url:'http://gm-risk.pigeo.fr/sigdt-config/services-gambie/getDistricts.php'
-							},{
+								nom:'Communes...',
+								url:'http://bi-risk.pigeo.fr/sigdt-config/services-burundi/getCommunes.php'
+							}/*,{
 								nom:'Wards...',
 								url:'http://gm-risk.pigeo.fr/sigdt-config/services-gambie/getWards.php'
-						}],
+						}*/],
 					options: {
 						header:true
 					}
@@ -211,7 +206,6 @@
     	}
 */
 	</script>
-    <!--no more in use <script type="text/javascript" src="http://gm-risk.pigeo.fr/sigdt-config/config-gambie-gn2_11/layertree.js"></script>  -->
  <!--    <script type="text/javascript" src="http://gm-risk.pigeo.fr/sigdt-config/config-gambie-gn2_10/infotree.js"></script>-->
     <script type="text/javascript" src="js/infotree.js"></script>
     

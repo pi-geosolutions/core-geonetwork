@@ -3,14 +3,14 @@
 		<properties>
                 <db.user>geonetwork</db.user>
                 <db.pass>geonetwork</db.pass>
-                <db.dbname>jdbc:postgresql://localhost:5432/gm_risk_gn2_10</db.dbname>
+                <db.dbname>jdbc:postgresql://localhost:5432/bi_risk_gn2_10</db.dbname>
                 
                 <charts-db.user>geonetwork</charts-db.user>
                 <charts-db.pass>geonetwork</charts-db.pass>
         </properties>
         
         <file name=".*/WEB-INF/config.xml">
-       			<addXML xpath="appHandler"><param name="geonetwork.dir" value="/home/jean/tomcat7/data/gm-risk-gn2_10-datadir" /></addXML>
+       			<addXML xpath="appHandler"><param name="geonetwork.dir" value="/home/jean/tomcat7/data/bi-risk-gn2_10-datadir" /></addXML>
                 <replaceXML xpath="resources">
                         <resource enabled="true">
                                 <name>main-db</name>
@@ -38,25 +38,13 @@
                                 </config>
                         </resource>
                         <resource enabled="true">
-                                <name>gm_census</name>
+                                <name>bi_risk_geodata</name>
                                 <provider>jeeves.resources.dbms.ApacheDBCPool</provider>
                                 <config>
 									<user>${charts-db.user}</user>
 									<password>${charts-db.pass}</password>
 									<driver>org.postgis.DriverWrapper</driver>
-									<url>jdbc:postgresql://localhost:5432/gm_census</url>
-									<poolSize>10</poolSize>
-                                	<validationQuery>SELECT 1</validationQuery>
-                                </config>
-                        </resource>
-                        <resource enabled="true">
-                                <name>gm_risk_geodata</name>
-                                <provider>jeeves.resources.dbms.ApacheDBCPool</provider>
-                                <config>
-									<user>${charts-db.user}</user>
-									<password>${charts-db.pass}</password>
-									<driver>org.postgis.DriverWrapper</driver>
-									<url>jdbc:postgresql://localhost:5432/gm_risk_geodata</url>
+									<url>jdbc:postgresql://localhost:5432/bi_risk_geodata</url>
 									<poolSize>10</poolSize>
                                 	<validationQuery>SELECT 1</validationQuery>
                                 </config>
@@ -70,7 +58,7 @@
 				value="../../apps/geoportal/index.html" />
 			<replaceAtt xpath="client" attName="createParameter" value="#create" />
 			<replaceAtt xpath="client" attName="parameters"
-				value="hl=eng" />
+				value="hl=fre" />
 	<!-- 	<replaceAtt xpath="client" attName="parameters"
 			value="extent=-17,13,-13.7,14&amp;hl=fre" />
 			-->
