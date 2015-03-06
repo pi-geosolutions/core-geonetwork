@@ -47,6 +47,9 @@ GeoNetwork.layers.GeoportalAbstractLayer = Ext.extend(Ext.util.Observable, {
     constructor: function(config) {
     	GeoNetwork.layers.GeoportalAbstractLayer.superclass.constructor.call(this, config);
         Ext.apply(this, config);
+        if (window.GeoportalAdmin.templates[this.type] != null) {
+        	this.template = window.GeoportalAdmin.templates[this.type];
+        }
         this.gpid = Math.round(Math.random() * 100);
     },
     
