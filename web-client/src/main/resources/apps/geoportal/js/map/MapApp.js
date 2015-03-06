@@ -633,7 +633,7 @@ GeoNetwork.mapApp = function() {
 
         var measureSplit = new Ext.SplitButton({
             iconCls: "icon-measure-length",
-            tooltip: "Measure",
+            tooltip: OpenLayers.i18n('tools.measure'),
             enableToggle: true,
             toggleGroup: "move"	, // Ext doesn't respect this, registered with ButtonToggleMgr below
             allowDepress: false, // Ext doesn't respect this, handler deals with it
@@ -663,27 +663,27 @@ GeoNetwork.mapApp = function() {
                 items: [
                     new Ext.menu.CheckItem(
                         new GeoExt.Action({
-                            text: "Length",
+                            text: OpenLayers.i18n('tools.measure.length'),
                             iconCls: "icon-measure-length",
                             toggleGroup: "measure",
                             group: "move",
                             allowDepress: false,
                             map: map,
                             control: createMeasureControl(
-                                OpenLayers.Handler.Path, "Length"
+                                OpenLayers.Handler.Path, OpenLayers.i18n('tools.measure.length')
                             )
                         })
                     ),
                     new Ext.menu.CheckItem(
                         new GeoExt.Action({
-                            text: "Area",
+                            text: OpenLayers.i18n('tools.measure.area'),
                             iconCls: "icon-measure-area",
                             toggleGroup: "measure",
                             group: "move",
                             allowDepress: false,
                             map: map,
                             control: createMeasureControl(
-                                OpenLayers.Handler.Polygon, "Area"
+                                OpenLayers.Handler.Polygon, OpenLayers.i18n('tools.measure.area')
                             )
                         })
                     )
@@ -707,14 +707,14 @@ GeoNetwork.mapApp = function() {
 
         action = new GeoExt.Action({
             iconCls: 'loadanimation',
-            text: OpenLayers.i18n('animationTooltipTitle'), 
+            text: OpenLayers.i18n('animations.title'), 
             //tooltip: {title: OpenLayers.i18n("loadanimationTooltipTitle"), text: OpenLayers.i18n("loadanimationTooltipText")},
             handler: function() {
                 GeoNetwork.WindowManager.showWindow("animations");
             },
             tooltip: {
-            	title: OpenLayers.i18n('animationTooltipTitle'), 
-            	text: OpenLayers.i18n('animationTooltipText') 
+            	title: OpenLayers.i18n('animations.title'), 
+            	text: OpenLayers.i18n('animations.tooltipText') 
             	}
         });
 

@@ -59,7 +59,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 	progress: {
 		panel:null,
 		bar:null,
-		emptyText: 'No dataset chosen...',
+		emptyText: '',
 		steps:0,
 		step:0
 	},
@@ -94,8 +94,10 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
     initComponent: function() {
         GeoNetwork.AnimationsWindow.superclass.initComponent.call(this);
 
+        
         window.dashboard = this;
-        this.title = this.title || OpenLayers.i18n("anim_AnimationsWindow.windowTitle");
+        this.title = this.title || OpenLayers.i18n("animations.title");
+        this.progress.emptyText = OpenLayers.i18n('animations.progress.empty');
 
         this.layout ='fit';
         this.content = new Ext.Panel({
@@ -192,7 +194,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 					forceSelection: true,
 					autoSelect:true,
 					triggerAction: 'all',
-					emptyText:'Select source of animation',
+					emptyText:OpenLayers.i18n("animations.combo.empty"),
 					selectOnFocus:true,
 					mode:'local',//load store only once (manually, see mystore.load())
 					lastQuery: '', //so that the first time dropdown will filter!!!!
@@ -206,7 +208,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 	        ],
 
 	        buttons: [{
-	            text: 'Load',
+	            text: OpenLayers.i18n("animations.load"),
 	            handler : this.loadAnimation.bind(me)
 	        }/*,{
 	            text: 'Cancel'
@@ -240,7 +242,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 		this.animator.buttons.fb = new Ext.Button({
 			width:btnwidth,
             text   : '|<',
-            tooltip: OpenLayers.i18n('anim_btn_first'),
+            tooltip: OpenLayers.i18n('animations.btn_first'),
             handler: function(btn) {
             	this.setImage( 0 );
             },
@@ -249,7 +251,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 		this.animator.buttons.b = new Ext.Button({
 			width:btnwidth,
             text   : '<',
-            tooltip: OpenLayers.i18n('anim_btn_previous'),
+            tooltip: OpenLayers.i18n('animations.btn_previous'),
             handler: function(btn) {
             	this.setImage( this.animator.layerindex-1 );
             },
@@ -258,7 +260,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 		this.animator.buttons.p = new Ext.Button({
 			width:btnwidth,
             text   : '| |',
-            tooltip: OpenLayers.i18n('anim_btn_pause'),
+            tooltip: OpenLayers.i18n('animations.btn_pause'),
             handler: function(btn) {
             	this.animator.playforward=false;
             	this.animator.playbackward=false;
@@ -269,7 +271,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 			width:btnwidth,
             text   : ' ',
             iconCls: 'anim_loopforward',
-            tooltip: OpenLayers.i18n('anim_btn_loopforward'),
+            tooltip: OpenLayers.i18n('animations.btn_loopforward'),
             handler: function(btn) {
             	var me = this;
             	this.animator.playforward=true;
@@ -292,7 +294,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 			width:btnwidth,
             text   : ' ',
             iconCls: 'anim_loopbackward',
-            tooltip: OpenLayers.i18n('anim_btn_loopbackward'),
+            tooltip: OpenLayers.i18n('animations.btn_loopbackward'),
             handler: function(btn) {
             	var me = this;
             	this.animator.playforward=false;
@@ -313,7 +315,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 		this.animator.buttons.f = new Ext.Button({
 			width:btnwidth,
             text   : '>',
-            tooltip: OpenLayers.i18n('anim_btn_next'),
+            tooltip: OpenLayers.i18n('animations.btn_next'),
             disabled:true,
             handler: function(btn) {
             	this.setImage( this.animator.layerindex+1);
@@ -323,7 +325,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 		this.animator.buttons.ff = new Ext.Button({
 			width:btnwidth,
             text   : '>|',
-            tooltip: OpenLayers.i18n('anim_btn_last'),
+            tooltip: OpenLayers.i18n('animations.btn_last'),
             disabled:true,
             handler: function(btn) {
             	this.setImage( this.animator.imgs.length-1);
@@ -416,7 +418,7 @@ Ext.extend(GeoNetwork.AnimationsWindow, GeoNetwork.BaseWindow, {
 	loadAllEvent: function() {
 		var params  =this.selectedDataset.data;
 		//console.log(this);
-		this.progress.bar.updateProgress(1,OpenLayers.i18n('anim_ready'));
+		this.progress.bar.updateProgress(1,OpenLayers.i18n('animations.ready'));
 		this.animator.panel.enable();
 		//console.log('done');
 		//console.log(this);
