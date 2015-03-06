@@ -34,10 +34,10 @@ Ext.namespace('GeoNetwork.layers');
  */
 
 GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.GeoportalAbstractLayerForm, {
-    title: 'WMS node details', 
+    title: OpenLayers.i18n('geoportal.layer.wms.form.title'), 
     nodeFormFields : [{
         xtype: 'fieldset',
-        title: 'General features',
+        title: OpenLayers.i18n('geoportal.layer.abstract.form.generalfs'), 
         autoHeight: true,
         layout: 'form',
         //border:false,
@@ -45,18 +45,18 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
         defaults: {width: '90%', 'hidden':false,xtype : 'textfield'},
         //frame:true,
     	items	: 	[{
-    		fieldLabel : 'ID',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.id'), 
     		name : 'id',
             disabled:true
     	},{
-    		fieldLabel : 'Type',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.type'), 
     		name : 'type',
             disabled:true
     	},{
-    		fieldLabel : 'Text',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.text'), 
     		name : 'text'
     	},{
-    		fieldLabel : 'Opacity',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.opacity'), 
     		xtype : 'spinnerfield',
     		name : 'opacity',
     		maxValue : 1.0,
@@ -67,10 +67,10 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
         	alternateIncrementValue: 2.1,
         	accelerate: true
     	},{
-    		fieldLabel : 'CSS class',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.css'), 
     		name : 'cls'
     	},{
-    		fieldLabel : 'Comments',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.comments'), 
     		xtype : 'textarea',
     		name : 'qcktip',
     		height:20,
@@ -78,7 +78,7 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
     		growMin:20,
     		growMax:200
     	},{
-    		fieldLabel : 'Extensions',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.ext'), 
     		xtype : 'textarea',
     		name : 'extensions',
     		height:20,
@@ -88,7 +88,7 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
     	}]
     },{
         xtype: 'fieldset',
-        title: 'WMS features',
+        title: OpenLayers.i18n('geoportal.layer.wms.form.wmsfs'),
         autoHeight: true,
         layout: 'form',
         //border:false,
@@ -96,44 +96,44 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
         defaults: {width: '90%', 'hidden':false, xtype : 'textfield'},
         //frame:true,
     	items	: 	[{
-    		fieldLabel : 'WMS server URL',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.wms.form.wmsfs.url'),
     		name : 'url'
     	},{
-    		fieldLabel : 'Layer(s) name(s)',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.wms.form.wmsfs.layers'),
     		name : 'layers'
     	},{
             xtype: 'radiogroup',
             columns: [100, 100],
-            fieldLabel: 'Image format',
+            fieldLabel: OpenLayers.i18n('geoportal.layer.wms.form.wmsfs.format'),
             name:'format', //necessary for hide/show procedures
             items: [{
                 name: 'format',
                 inputValue: 'image/png',
-                boxLabel: 'PNG'
+                boxLabel: OpenLayers.i18n('geoportal.layer.wms.form.wmsfs.formatpng')
             }, {
                 name: 'format',
                 inputValue: 'image/jpg',
-                boxLabel: 'JPG'
+                boxLabel: OpenLayers.i18n('geoportal.layer.wms.form.wmsfs.formatjpg')
             }]
         },{
         	xtype: 'checkbox',
-            fieldLabel: 'Tiled',
+            fieldLabel: OpenLayers.i18n('geoportal.layer.wms.form.wmsfs.tiled'),
             //inputValue:false,
             name: 'TILED',
             value:true
     	},{
         	xtype: 'checkbox',
-            fieldLabel: 'Queryable ?',
+            fieldLabel: OpenLayers.i18n('geoportal.layer.wms.form.wmsfs.queryable'),
             //inputValue:false,
             name: 'queryable',
             value:true
     	},{
-    		fieldLabel : 'Legend URL',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.wms.form.wmsfs.legend'),
     		name : 'legend'
     	}]
 	},{
         xtype: 'fieldset',
-        title: 'Metadata reference',
+        title: OpenLayers.i18n('geoportal.layer.wms.form.mtdfs'),
         autoHeight: true,
         layout: 'form',
         //border:false,
@@ -141,13 +141,13 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
         defaults: {width: '90%', 'hidden':false, xtype : 'textfield'},
         //frame:true,
     	items	: 	[{
-    		fieldLabel : 'UUID',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.wms.form.mtdfs.uuid'),
     		name : 'uuid'
     	}]
 	},{
         xtype: 'fieldset',
     	id:'pq_form',
-        title: 'Enable Polygon Query ? (available only for raster-type source data, hosted on a Geoserver WPS-enabled)',
+        title: OpenLayers.i18n('geoportal.layer.wms.form.pqfs'),
         checkboxToggle:true,
         checkboxName:'pq_enable',
         autoHeight: true,
@@ -191,15 +191,15 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
             defaults: {width: '90%', hidden:false, xtype : 'textfield'},
             //frame:true,
         	items	: 	[{*/
-    		fieldLabel : 'WMS Layer to query',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.wms.form.pqfs.layer'),
     		name : 'pq_layer'
     	},{
     		xtype: 'numberfield',
-    		fieldLabel : 'Band nb used to compute stats (integer)',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.wms.form.pqfs.band'),
     		value:0,
     		name : 'pq_bandnb'
     	},{
-    		fieldLabel : 'Header',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.wms.form.pqfs.header'),
     		name : 'pq_header'
     	}/*,{
         	xtype: 'checkbox',
@@ -241,36 +241,36 @@ GeoNetwork.layers.GeoportalWMSLayerForm = Ext.extend(GeoNetwork.layers.Geoportal
             }*/,{
                 xtype: 'checkboxgroup',
                 columns: 3,
-                fieldLabel: 'Stats to recover: ',
+                fieldLabel: OpenLayers.i18n('geoportal.layer.wms.form.pqfs.stats'),
                 id:'pq_rastertype_fields', 
                 name:'pq_rastertype_fields', //necessary for hide/show procedures
                 items: [{
                     name: 'count',
-                    boxLabel: 'Nb of pixels covered'
+                    boxLabel: OpenLayers.i18n('geoportal.layer.wms.form.pqfs.stats.count')
                 }, {
                     name: 'min',
-                    boxLabel: 'Min value', 
+                    boxLabel: OpenLayers.i18n('geoportal.layer.wms.form.pqfs.stats.min'),
                     checked: true
                 }, {
                     name: 'max',
-                    boxLabel: 'Max value', 
+                    boxLabel: OpenLayers.i18n('geoportal.layer.wms.form.pqfs.stats.max'),
                     checked: true
                 }, {
                     name: 'sum',
-                    boxLabel: 'Sum', 
+                    boxLabel: OpenLayers.i18n('geoportal.layer.wms.form.pqfs.stats.sum'),
                     checked: true
                 }, {
                     name: 'avg',
-                    boxLabel: 'Average value', 
+                    boxLabel: OpenLayers.i18n('geoportal.layer.wms.form.pqfs.stats.avg'),
                     checked: true
                 }, {
                     name: 'stddev',
-                    boxLabel: 'Standard dev.', 
+                    boxLabel: OpenLayers.i18n('geoportal.layer.wms.form.pqfs.stats.stddev'),
                     checked: true
                 }]
             },{
 	    		xtype: 'numberfield',
-	    		fieldLabel : 'Round level (nb of decimals)',
+	    		fieldLabel : OpenLayers.i18n('geoportal.layer.wms.form.pqfs.round'),
 	    		name : 'pq_round'
     	},]
 	}],

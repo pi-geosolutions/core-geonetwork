@@ -34,10 +34,10 @@ Ext.namespace('GeoNetwork.layers');
  */
 
 GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.GeoportalAbstractLayerForm, {
-    title: 'Chart node details', 
+    title: OpenLayers.i18n('geoportal.layer.chart.form.title'), 
     nodeFormFields : [{
         xtype: 'fieldset',
-        title: 'General features',
+        title: OpenLayers.i18n('geoportal.layer.abstract.form.generalfs'), 
         autoHeight: true,
         layout: 'form',
         //border:false,
@@ -45,18 +45,18 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
         defaults: {width: '90%', 'hidden':false,xtype : 'textfield'},
         //frame:true,
     	items	: 	[{
-    		fieldLabel : 'ID',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.id'), 
     		name : 'id',
             disabled:true
     	},{
-    		fieldLabel : 'Type',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.type'), 
     		name : 'type',
             disabled:true
     	},{
-    		fieldLabel : 'Text',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.text'), 
     		name : 'text'
     	},{
-    		fieldLabel : 'Opacity',
+    		fieldLabel :OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.opacity'), 
     		xtype : 'spinnerfield',
     		name : 'opacity',
     		maxValue : 1.0,
@@ -67,10 +67,10 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
         	alternateIncrementValue: 2.1,
         	accelerate: true
     	},{
-    		fieldLabel : 'CSS class',
+    		fieldLabel :OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.css'), 
     		name : 'cls'
     	},{
-    		fieldLabel : 'Comments',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.comments'), 
     		xtype : 'textarea',
     		name : 'qcktip',
     		height:20,
@@ -78,7 +78,7 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
     		growMin:20,
     		growMax:200
     	},{
-    		fieldLabel : 'Extensions',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.ext'), 
     		xtype : 'textarea',
     		name : 'extensions',
     		height:20,
@@ -88,7 +88,7 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
     	}]
     },{
         xtype: 'fieldset',
-        title: 'Geographic features',
+        title: OpenLayers.i18n('geoportal.layer.chart.form.geofs'), 
         autoHeight: true,
         layout: 'form',
         //border:false,
@@ -96,34 +96,34 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
         defaults: {width: '90%', 'hidden':false, xtype : 'textfield'},
         //frame:true,
     	items	: 	[{
-    		fieldLabel : 'WFS server URL',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.geofs.url'),
     		name : 'url'
     	},{
-    		fieldLabel : 'Layer(s) name(s)',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.wms.form.wmsfs.layers'), 
     		name : 'layers'
     	},{
-    		fieldLabel : 'Changing scale(s)',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.geofs.chsc'),
     		name : 'changescales'
     	},{
             xtype: 'radiogroup',
             columns: [100, 100],
-            fieldLabel: 'Image format',
+            fieldLabel: OpenLayers.i18n('geoportal.layer.chart.form.geofs.format'), 
             name:'format', //necessary for hide/show procedures
             items: [{
                 name: 'format',
                 inputValue: 'geojson',
-                boxLabel: 'GeoJSON'
+                boxLabel: OpenLayers.i18n('geoportal.layer.chart.form.geofs.formatgeojson'),
             }]
         },{
-    		fieldLabel : 'Legend URL',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.geofs.legend'),
     		name : 'legend'
     	},{
-    		fieldLabel : 'Data join field',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.geofs.join'),
     		name : 'join_geofield'
     	}]
 	},{
         xtype: 'fieldset',
-        title: 'Database params',
+        title: OpenLayers.i18n('geoportal.layer.chart.form.dbfs'),
         autoHeight: true,
         layout: 'form',
         //border:false,
@@ -132,7 +132,7 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
         //frame:true,
     	items	: 	[{
     		xtype:'combo',
-    		fieldLabel : 'Database',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.dbfs.db'),
     		name : 'dbname',
             //forceSelection: true,
             editable:       false,
@@ -151,24 +151,24 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
       		           {name: 'label'}]
             })
     	},{
-    		fieldLabel : 'Table(s) name(s)',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.dbfs.tables'),
     		name : 'dbtables'
     	},{
-    		fieldLabel : 'Data join field',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.geofs.join'),
     		name : 'join_dbfield'
     	},{
-    		fieldLabel : 'Values field',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.dbfs.values'),
     		name : 'values_dbfield'
     	},{
-    		fieldLabel : 'Labels field',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.dbfs.labels'),
     		name : 'labels_dbfield'
     	},{
-    		fieldLabel : 'WHERE clause',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.dbfs.where'),
     		name : 'dbwhere'
     	}]
 	},{
         xtype: 'fieldset',
-        title: 'Representation',
+        title: OpenLayers.i18n('geoportal.layer.chart.form.repfs'),
         autoHeight: true,
         layout: 'form',
         //border:false,
@@ -177,27 +177,27 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
         //frame:true,
     	items	: 	[{
             xtype: 'radiogroup',
-            fieldLabel: 'Chart type',
+            fieldLabel: OpenLayers.i18n('geoportal.layer.chart.form.repfs.charttype'),
             name:'charttype', //necessary for hide/show procedures
             items: [{
                 name: 'charttype',
                 inputValue: 'pie',
-                boxLabel: 'Pie chart'
+                boxLabel: OpenLayers.i18n('geoportal.layer.chart.form.repfs.piechart'),
             },{
                 name: 'charttype',
                 inputValue: 'bar',
-                boxLabel: 'Bar chart'
+                boxLabel: OpenLayers.i18n('geoportal.layer.chart.form.repfs.barchart'),
             }]
         },{
-    		fieldLabel : 'Color codes',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.repfs.colors'),
     		name : 'colorcodes'
     	},{
-    		fieldLabel : 'Chart size',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.chart.form.repfs.size'),
     		name : 'chartsize'
     	}]
 	},{
         xtype: 'fieldset',
-        title: 'Metadata reference',
+        title: OpenLayers.i18n('geoportal.layer.wms.form.mtdfs'),
         autoHeight: true,
         layout: 'form',
         //border:false,
@@ -205,7 +205,7 @@ GeoNetwork.layers.GeoportalChartLayerForm = Ext.extend(GeoNetwork.layers.Geoport
         defaults: {width: '90%', 'hidden':false, xtype : 'textfield'},
         //frame:true,
     	items	: 	[{
-    		fieldLabel : 'UUID',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.wms.form.mtdfs.uuid'),
     		name : 'uuid'
     	}]
 	}],

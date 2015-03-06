@@ -34,10 +34,10 @@ Ext.namespace('GeoNetwork.layers');
  */
 
 GeoNetwork.layers.GeoportalFolderLayerForm = Ext.extend(GeoNetwork.layers.GeoportalAbstractLayerForm, {
-    title: 'Folder node details', 
+    title: OpenLayers.i18n('geoportal.layer.folder.form.title'), 
     nodeFormFields : [{
         xtype: 'fieldset',
-        title: 'General features',
+        title: OpenLayers.i18n('geoportal.layer.abstract.form.generalfs'), 
         autoHeight: true,
         layout: 'form',
         //border:false,
@@ -45,21 +45,21 @@ GeoNetwork.layers.GeoportalFolderLayerForm = Ext.extend(GeoNetwork.layers.Geopor
         defaults: {width: '90%', 'hidden':false,xtype : 'textfield'},
         //frame:true,
     	items	: 	[{
-    		fieldLabel : 'ID',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.id'), 
     		name : 'id',
             disabled:true
     	},{
-    		fieldLabel : 'Type',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.type'), 
     		name : 'type',
             disabled:true
     	},{
-    		fieldLabel : 'Text',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.text'), 
     		name : 'text'
     	},{
-    		fieldLabel : 'CSS class',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.css'), 
     		name : 'cls'
     	},{
-    		fieldLabel : 'Comments',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.comments'), 
     		xtype : 'textarea',
     		name : 'qcktip',
     		height:20,
@@ -67,7 +67,7 @@ GeoNetwork.layers.GeoportalFolderLayerForm = Ext.extend(GeoNetwork.layers.Geopor
     		growMin:20,
     		growMax:200
     	},{
-    		fieldLabel : 'Extensions',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.ext'), 
     		xtype : 'textarea',
     		name : 'extensions',
     		height:20,

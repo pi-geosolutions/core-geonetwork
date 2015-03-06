@@ -117,7 +117,7 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
     loadGrid : function() {
     	var grid = null;
     	try {
-	    	console.log("layertreeIO : load grid");
+	    	//console.log("layertreeIO : load grid");
 	    	var store = new Ext.data.JsonStore({
 	    	    // store configs
 	    	    autoDestroy: true,
@@ -196,7 +196,7 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
 				type		: 'folder'
 			}];
         if (request.responseText) {
-        	OpenLayers.Console.log("loading Layertree from database");
+        	//OpenLayers.Console.log("loading Layertree from database");
         	var jsonTree = new OpenLayers.Format.JSON().read( request.responseText );
         	if (jsonTree.children!=null) {
         		treeConfig = jsonTree.children; //structure we get from DB (new version)
@@ -218,7 +218,7 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
                 align: 'stretch'  // Child items are stretched to full width
             },
             labelAlign: 'left',
-            title: 'Paste json code in this field',
+            title: OpenLayers.i18n('ltIO.json2tree.form'),
             defaults: {
                 xtype: 'textfield'
             },
@@ -232,7 +232,7 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
         });
             
         var win = new Ext.Window({
-        	title:'Import from json',
+        	title:OpenLayers.i18n('ltIO.json2tree.title'),
             collapsible: true,
             maximizable: true,
         	layout:'fit',
@@ -247,7 +247,7 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
             plain: true,
             items : form,
             buttons: [{
-	            text: 'Apply',
+	            text:OpenLayers.i18n('ltIO.json2tree.applybtn'),
 	            handler:function(button, event) {
 	            	var text = form.getForm().getFieldValues().json;
 	            	var jsonTree = Ext.decode( text );
@@ -258,12 +258,12 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
 	            	}
 	            	//var newtree = this.treeReload(treeConfig, true);
 	            	callback.call(cbscope,treeConfig, true);
-	            	GeoNetwork.admin.Utils.log(this.logWindow,"Loaded new tree config. Don't forget to <i>Save to DB</i> to apply the changes. You can revert last saved session using Tree->reload.");
+	            	GeoNetwork.admin.Utils.log(this.logWindow,OpenLayers.i18n('ltIO.json2tree.loadsuccessful'));
 	            	win.close();
 	            },
 	            scope:this
 	        },{
-	            text: 'Cancel',
+	            text: OpenLayers.i18n('ltIO.json2tree.cancelbtn'),
 	            handler: function(button, event) {
 	            	win.close();
 	            }
@@ -286,7 +286,7 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
     tree2json: function(tree) {
         var json = this.serializeTree(tree);
         var win = new Ext.Window({
-        	title:'Layertree (JSON)',
+        	title:OpenLayers.i18n('ltIO.tree2json.title'),
         	layout:'border',
             width:'70%',
             height:400,
@@ -369,7 +369,7 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
                 GeoNetwork.admin.Utils.log(this.logWindow,msg);
             	switch (code) { //see code values in geoportal.service.layertree.Set.java
             	case "1" : //success
-            		GeoNetwork.admin.Utils.log(this.logWindow,"Reloading the tree");
+            		GeoNetwork.admin.Utils.log(this.logWindow,OpenLayers.i18n('ltIO.dbio.reloading'));
 //fix            		this.treeReload(null, false);
 
 	            	callback.call(cbscope,null, false);
@@ -377,29 +377,29 @@ GeoNetwork.admin.LayertreeIO = Ext.extend(Object, {
             	case "-1" : //a row (at least) has been changed since last load. Forcing the update would remove changes made by someone else
             		Ext.MessageBox.show({
             			icon: Ext.MessageBox.WARNING,
-                        title: OpenLayers.i18n("Database has changed !"), msg:
-                        	OpenLayers.i18n("<b>WARNING : the database content has changed since the last time you loaded the layertree</b><br /><b>Proceeding will overwrite some data created by another user. Do you really want to proceed ?</b><br /><br /><i>Please cancel and refer to the docs if you don't know what to do</i>"),
-                            buttons: Ext.MessageBox.YESNOCANCEL,
-                            fn: function(btn) {
-                            	if (btn=='yes') {
-                            		this.treeSave(tree, name, true);
-                            	}
-                            },
-                            scope:this
+                        title: 	OpenLayers.i18n("ltIO.dbio.warning.changed"), 
+                        msg:	OpenLayers.i18n('ltIO.dbio.warning.changedmsg'),
+                        buttons: Ext.MessageBox.YESNOCANCEL,
+                        fn: function(btn) {
+                        	if (btn=='yes') {
+                        		this.treeSave(tree, name, true);
+                        	}
+                        },
+                        scope:this
                     });
             		break;
             	default:
             		Ext.MessageBox.show({icon: Ext.MessageBox.ERROR,
-                        title: OpenLayers.i18n("Save layertree"), msg:
-                        OpenLayers.i18n("ERROR : couldn't save the layertree. Please contact your administrator."),
+                        title: OpenLayers.i18n('ltIO.dbio.savelt'), msg:
+                        OpenLayers.i18n('ltIO.dbio.warning.savefailure'),
                         buttons: Ext.MessageBox.OK});
             		break;
             	}
             },
             failure: function(response){
             	Ext.MessageBox.show({icon: Ext.MessageBox.ERROR,
-                    title: OpenLayers.i18n("Save layertree"), msg:
-                    OpenLayers.i18n("ERROR : couldn't save the layertree. Please contact your administrator."),
+                    title: OpenLayers.i18n('ltIO.dbio.savelt'), msg:
+                    OpenLayers.i18n('ltIO.dbio.warning.savefailure'),
                     buttons: Ext.MessageBox.OK});
             },
             scope : this

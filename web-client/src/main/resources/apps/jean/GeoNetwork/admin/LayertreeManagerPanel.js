@@ -40,7 +40,7 @@ Ext.tree.TreePanel.nodeTypes.gx_baselayercontainer = Ext.tree.TreeNode;
 GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     frame: false,
     defaultConfig: {
-        title: OpenLayers.i18n('Manage Layertree'),
+        title: OpenLayers.i18n('ltmanager.title'),
         defaultViewMode: 'simple',
         border: false,
         height: 800,
@@ -111,7 +111,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
                 autoScroll: true,
                 minHeight: 50,
                 height: 100,
-                html:"&gt; <b>Welcome in the Layertree Management Board</b><br />It allows you to view, edit, add, transform the layers and the structure<br />"
+                html: OpenLayers.i18n('ltmanager.console.html')
             });
         
         this.add(this.detailView);
@@ -188,10 +188,10 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         this.groups.load({
         	callback 	: function(r, opts, success) {
 				            	if (success) {
-				            		GeoNetwork.admin.Utils.log(this.consoleView,"Successfully loaded groups list");
+				            		GeoNetwork.admin.Utils.log(this.consoleView,OpenLayers.i18n('ltmanager.console.loadsuccessful'));
 				            		this.useGroups = true;
 				            	} else {
-				            		GeoNetwork.admin.Utils.log(this.consoleView,"failed loading groups");
+				            		GeoNetwork.admin.Utils.log(this.consoleView,OpenLayers.i18n('ltmanager.console.loadfailure'));
 				            		this.useGroups = false;
 				            		return ;
 				            	}
@@ -228,11 +228,11 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	    	this.tree = newtree;
 	    	this.treeView.add(newtree);
 	    	this.treeView.doLayout();
-	    	GeoNetwork.admin.Utils.log(this.consoleView,"Layertree successfully reloaded");
+	    	GeoNetwork.admin.Utils.log(this.consoleView,OpenLayers.i18n('ltmanager.console.reloadsuccessful'));
 	    	if (this.nodeForm)
 	    		this.nodeForm.hide();
     	} else {
-    		GeoNetwork.admin.Utils.log(this.consoleView,"ERROR: couldn't reload the layertree. Please report to your administrator");
+    		GeoNetwork.admin.Utils.log(this.consoleView,OpenLayers.i18n('ltmanager.console.reloadfailure'));
     	}
     },
     /**
@@ -280,7 +280,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     addNode: function(lay) {
     	var node = this.tree.getSelectionModel().getSelectedNode();
     	if (node==null) {
-    		Ext.Msg.alert('Add node', 'Please first select a parent node in the tree');
+    		Ext.Msg.alert(OpenLayers.i18n('ltmanager.actions.addnode'), OpenLayers.i18n('ltmanager.actions.addnode-warning'));
     		return false;
     	}
     	if (node.leaf) { //we can add a node only to a folder. We will thus use its parent node (the closest folder)
@@ -316,22 +316,22 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     removeNode: function() {
     	var node = this.tree.getSelectionModel().getSelectedNode();
     	if (node==null) {
-    		Ext.Msg.alert('You need to select a node, first');
+    		Ext.Msg.alert(OpenLayers.i18n('ltmanager.actions.warning-select'));
     		return false;
     	}
-    	var msg  ="You are about to delete the node "+node.text;
+    	var msg  =OpenLayers.i18n('ltmanager.actions.delnode-warningl1')+node.text;
     	if (node.hasChildNodes()) {
-    		msg += "<br /> <b>It will remove also all its child nodes. Be very careful !";
+    		msg += OpenLayers.i18n('ltmanager.actions.delnode-warningl2');
     	}
     	Ext.MessageBox.show({
     		icon: Ext.MessageBox.WARNING,
-            title: OpenLayers.i18n("Delete node"), 
+            title: OpenLayers.i18n('ltmanager.actions.delnode'), 
             msg: OpenLayers.i18n(msg),
             buttons: Ext.MessageBox.OKCANCEL,
             fn: function(btn) {
             	if (btn=='ok') {
             		node.remove(true);
-            		GeoNetwork.admin.Utils.log(this.consoleView,"Removed node "+node.text);
+            		GeoNetwork.admin.Utils.log(this.consoleView,OpenLayers.i18n('ltmanager.actions.delnode-removed')+node.text);
             	}
             },
             scope:this
@@ -341,7 +341,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     duplicateNode: function() {
     	var node = this.tree.getSelectionModel().getSelectedNode();
     	if (node==null) {
-    		Ext.Msg.alert('You need to select a node, first');
+    		Ext.Msg.alert(OpenLayers.i18n('ltmanager.actions.warning-select'));
     		return false;
     	}
     	var parent = node.parentNode;
@@ -372,24 +372,26 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     getToolbar: function() {
     	//TREE actions
        	var action_2json = new Ext.Action({
-    		text:'Export as Json',
+    		text:OpenLayers.i18n('ltmanager.actions.exportjson'),
     		iconCls:'export',
     		handler: this.tree2json,
     	    itemId: 'tree2json',
     	    scope:this
     	});
        	var action_import = new Ext.Action({
-    		text:'Import from Json',
+    		text:OpenLayers.i18n('ltmanager.actions.importjson'),
     		iconCls:'import',
     		handler: this.json2tree,
     	    itemId: 'json2tree',
     	    scope:this
     	});
     	var action_save = new Ext.Action({
-    		text:'Save to DB',
+    		text:OpenLayers.i18n('ltmanager.actions.savetodb'),
     		iconCls:'save',
     		handler: function() {
-    			Ext.MessageBox.prompt('Name', 'Please give it a name:', function(btn, text) {
+    			Ext.MessageBox.prompt(OpenLayers.i18n('ltmanager.actions.savetodb.givenamet'), 
+    									OpenLayers.i18n('ltmanager.actions.savetodb.givename'), 
+    									function(btn, text) {
     				this.getLayertreeIO().treeSave(this.tree, text, false, this.treeReload, this);
     			},this);
     		},
@@ -397,7 +399,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	    scope:this
     	});
     	var action_reload = new Ext.Action({
-    		text:'Reload',
+    		text:OpenLayers.i18n('ltmanager.actions.reload'),
     		iconCls:'reload',
     		handler: function() {
     			this.treeReload(null, false);
@@ -406,7 +408,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	    scope:this
     	});
     	var action_restore = new Ext.Action({
-    		text:'Restore previous version',
+    		text:OpenLayers.i18n('ltmanager.actions.restore'),
     		iconCls:'restore',
     		handler: this.treeRestore,
     	    itemId: 'treerestore',
@@ -424,21 +426,21 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         });
         //ADD actions
     	var action_addfolder = new Ext.Action({
-    		text:'Add folder',
+    		text:OpenLayers.i18n('ltmanager.actions.add.folder'),
     		iconCls:'folder',
     		handler: this.addFolder,
     	    itemId: 'addfolder',
     	    scope:this
     	});
     	var action_addwms = new Ext.Action({
-    		text:'Add WMS layer (default)',
+    		text:OpenLayers.i18n('ltmanager.actions.add.wms'),
     		iconCls:'wms',
     		handler: this.addWMS,
     	    itemId: 'addwms',
     	    scope:this
     	});
     	var action_addchart = new Ext.Action({
-    		text:'Add chart',
+    		text:OpenLayers.i18n('ltmanager.actions.add.chart'),
     		iconCls:'chart',
     		handler: this.addChart,
     	    itemId: 'addchart',
@@ -454,7 +456,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
         });
         //REMOVE actions
     	var action_remove = new Ext.Action({
-    		text:'Remove',
+    		text:OpenLayers.i18n('ltmanager.actions.remove'),
     		iconCls:'remove',
     		handler: this.removeNode,
     	    itemId: 'removenode',
@@ -462,7 +464,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
     	});
         //DUPLICATE actions
     	var action_duplicate = new Ext.Action({
-    		text:'Duplicate',
+    		text:OpenLayers.i18n('ltmanager.actions.duplicate'),
     		iconCls:'duplicate',
     		handler: this.duplicateNode,
     	    itemId: 'duplicatenode',
@@ -473,11 +475,11 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 
         var tb = new Ext.Toolbar();
         tb.add({
-	            text:'Tree',
+	            text:OpenLayers.i18n('ltmanager.menu.tree'),
 	            iconCls: 'tree',  // <-- icon
 	            menu: tree_menu  // assign menu by instance
 	        },{
-	            text:'Add',
+	            text:OpenLayers.i18n('ltmanager.menu.tree'),
 	            iconCls: 'add',  // <-- icon
 	            menu: add_menu  // assign menu by instance
 	        },

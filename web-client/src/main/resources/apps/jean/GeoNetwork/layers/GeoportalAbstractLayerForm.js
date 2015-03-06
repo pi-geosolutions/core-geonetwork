@@ -38,7 +38,7 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
     frame:true,
     labelAlign: 'left',
     labelWidth: 150,
-    title: 'Node details', 
+    title: OpenLayers.i18n('geoportal.layer.abstract.form.title'), 
     defaultType: 'textfield',
     defaults: {width: '90%', 'hidden':false},
     autoHeight: true,
@@ -47,7 +47,7 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
     logWindow:null,
     nodeFormFields : [{
         xtype: 'fieldset',
-        title: 'General features',
+        title: OpenLayers.i18n('geoportal.layer.abstract.form.generalfs'), 
         autoHeight: true,
         layout: 'form',
         //border:false,
@@ -55,28 +55,28 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
         defaults: {width: '90%', 'hidden':false,xtype : 'textfield'},
         //frame:true,
     	items	: 	[{
-    		fieldLabel : 'ID',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.id'), 
     		name : 'id',
             disabled:true
     	},{
-    		fieldLabel : 'Type',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.type'), 
     		name : 'type',
             disabled:true
     	},{
-    		fieldLabel : 'Text',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.text'), 
     		name : 'text'
     	},{
-    		fieldLabel : 'Opacity',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.opacity'), 
     		xtype : 'numberfield',
     		name : 'opacity',
     		value : 1.0,
     		maxValue : 1.0,
     		minValue : 0
     	},{
-    		fieldLabel : 'CSS class',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.css'), 
     		name : 'cls'
     	},{
-    		fieldLabel : 'Comments',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.comments'), 
     		xtype : 'textarea',
     		name : 'qcktip',
     		height:20,
@@ -84,7 +84,7 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
     		growMin:20,
     		growMax:200
     	},{
-    		fieldLabel : 'Extensions',
+    		fieldLabel : OpenLayers.i18n('geoportal.layer.abstract.form.generalfs.ext'), 
     		xtype : 'textarea',
     		name : 'extensions',
     		height:20,
@@ -106,12 +106,12 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
     initComponent: function(){
     	var me=this;
     	this.buttons = [{
-            text: 'Apply',
+            text: OpenLayers.i18n('apply'), 
             //iconCls:'icon-disk',
             handler:this.applyChanges,
             scope:this
         },{
-            text: 'Cancel changes',
+            text: OpenLayers.i18n('geoportal.layer.abstract.form.btn.cancel'), 
             handler: function(button, event) {
             	this.editNode(this.currentNode);
             },
@@ -157,7 +157,7 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
     	}, this);
     	checkGroup = new Ext.form.FieldSet({
     	        xtype: 'fieldset',
-    	        title: 'Groups visibility',
+    	        title: OpenLayers.i18n('geoportal.layer.abstract.form.groupsfs'), 
     	        autoHeight: true,
     	        collapsible:false,
     	        layout: 'form',
@@ -168,7 +168,7 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
     	            // across a single row
     	        	id:'groupscbg',
     	            xtype: 'checkboxgroup',
-    	            fieldLabel: 'Groups',
+    	            fieldLabel: OpenLayers.i18n('geoportal.layer.abstract.form.groupsfs.groups'), 
     	            items: groups,
     	            name:'cbgroup'
     	        }]
@@ -195,7 +195,7 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
 		this.groupsForm.items.items[0].setValue(Ext.pluck(node.attributes.group, "show"));
     	
     	//loads the node values in the form
-    	GeoNetwork.admin.Utils.log(this.logWindow,"loaded parameters for layer : <i>"+node.text+"</i>");
+    	GeoNetwork.admin.Utils.log(this.logWindow,OpenLayers.i18n('geoportal.layer.abstract.form.log.loaded')+"<i>"+node.text+"</i>");
     	this.getForm().setValues(node.attributes);
     	//this.getForm().findField("gambia").setValue(node.attributes.group[3].show);
     	this.currentNode=node;
@@ -272,7 +272,7 @@ GeoNetwork.layers.GeoportalAbstractLayerForm = Ext.extend(Ext.form.FormPanel, {
 			
 			node.setText(attr.text);
 
-	    	GeoNetwork.admin.Utils.log(this.logWindow,"layer <i>"+attr.text+"</i> successfully updated. Don't forget to save the tree when you are done.");
+	    	GeoNetwork.admin.Utils.log(this.logWindow,"<i>"+attr.text+"</i>"+OpenLayers.i18n('geoportal.layer.abstract.form.log.updated'));
 	    }
     }
 });

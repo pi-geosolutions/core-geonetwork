@@ -47,7 +47,7 @@ GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
     autoHeight:true,
     hidden:true,
     frame: true,
-    title: 'Choose the backup to restore',
+    title: OpenLayers.i18n('backupmanager.title'),
     iconCls: 'icon-grid',
     
 	//private vars
@@ -66,17 +66,17 @@ GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
 			        // stick any markup in a menu
 			        //'<b class="menu-title">Choose a Theme</b>',
 			        {
-			        	text: 'Restore',
+			        	text: OpenLayers.i18n('backupmanager.tb.restore'),
 			        	iconCls:'restore',
                 		handler:this.restoreBackup,
                 		scope : this
 			        }, {
-			        	text: 'View',
+			        	text: OpenLayers.i18n('backupmanager.tb.view'),
 			        	iconCls:'view',
                 		handler:this.viewBackup,
                 		scope : this
 			        }, {
-                        text: 'Remove',
+                        text: OpenLayers.i18n('backupmanager.tb.remove'),
                 		iconCls:'remove',
                 		handler:this.removeBackup,
                 		scope : this
@@ -113,13 +113,13 @@ GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
     	}
     	this.alterIDs(treeConfig);
     	var newtree = this.parent.treeReload(treeConfig, true);
-    	this.log("Loaded new tree config. Don't forget to <i>Save to DB</i> to apply the changes. You can revert last saved session using Tree->reload.");
+    	this.log(OpenLayers.i18n('backupmanager.log.restored'));
 
 	},
 	viewBackup: function() {
 		var tree_text = this.getBackup();
 		var win = new Ext.Window({
-        	title:'Layertree (JSON)',
+        	title:OpenLayers.i18n('backupmanager.view.title'),
         	layout:'border',
             width:'70%',
             height:400,
@@ -172,22 +172,22 @@ GeoNetwork.admin.BackupGridManager = Ext.extend(Ext.grid.GridPanel, {
             success: function(response){
             	var xml = response.responseXML;
             	if (Ext.isIE) {//IE sucks with getElementsByTagsName : we skip the checkings, and it will be nice
-                	this.log("removed backup entry "+id+ " ("+name+")");
+                	this.log(OpenLayers.i18n('backupmanager.log.removed')+id+ " ("+name+")");
                     this.store.remove(record);	
             	} else {
 	            	var status = xml.getElementsByTagName("removed")[0].textContent;
 	            	if (status=="true") {
-	                	this.log("removed backup entry "+id+ " ("+name+")");
+	                	this.log(OpenLayers.i18n('backupmanager.log.removed')+id+ " ("+name+")");
 	                    this.store.remove(record);	
 	            	} else {
-	            		this.log("error removing backup entry "+id+ " ("+name+")");
+	            		this.log(OpenLayers.i18n('backupmanager.log.removeerror')+id+ " ("+name+")");
 	            	}
             	}
             },
             failure: function(response){
             	Ext.MessageBox.show({icon: Ext.MessageBox.ERROR,
-                    title: OpenLayers.i18n("Remove backup entry"), msg:
-                    OpenLayers.i18n("ERROR : couldn't remove the backup entry. Please contact your administrator."),
+                    title: OpenLayers.i18n('backupmanager.remove.errortitle'), msg:
+                    OpenLayers.i18n('backupmanager.remove.errormsg'),
                     buttons: Ext.MessageBox.OK});
             },
             scope : this
