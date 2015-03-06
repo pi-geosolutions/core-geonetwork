@@ -479,7 +479,7 @@ GeoNetwork.admin.LayertreeManagerPanel = Ext.extend(Ext.Panel, {
 	            iconCls: 'tree',  // <-- icon
 	            menu: tree_menu  // assign menu by instance
 	        },{
-	            text:OpenLayers.i18n('ltmanager.menu.tree'),
+	            text:OpenLayers.i18n('ltmanager.menu.add'),
 	            iconCls: 'add',  // <-- icon
 	            menu: add_menu  // assign menu by instance
 	        },
