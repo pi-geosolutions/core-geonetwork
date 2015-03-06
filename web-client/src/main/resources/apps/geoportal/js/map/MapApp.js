@@ -574,7 +574,7 @@ GeoNetwork.mapApp = function() {
         
         action = new GeoExt.Action({
         	id: "btnPolygonQuery",
-            text: "Polygon Query",
+            text: OpenLayers.i18n('polygonQueryWindow.windowTitle'),
             iconCls: "icon-pquery",
             autoWidth:true,
             toggleGroup: "move",
