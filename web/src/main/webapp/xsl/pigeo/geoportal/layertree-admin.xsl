@@ -26,51 +26,20 @@
 		<script type="text/javascript" src="{$widgetPath}/js/proj4js-compressed.js"/>
 		<script type="text/javascript" language="JavaScript">
 			window.GeoportalAdmin = {
-				templates : {
+				templatesoverrides : { //here comes templates overrides for Layers types
 					folder : {
-						type:"folder",
 						text:"Nouveau dossier",
-						iconCls:'folder',
-						qcktip : '',
-						leaf:false
 					},
 					wms : {
-						type:"wms",
 						text:"Nouvelle couche WMS",
-						opacity:1,
-						cls:'',
 						qcktip : 'Vous pouvez placer ici vos commentaires au sujet de cette couche',
-						url: "http://bi-risk.pigeo.fr/geoserver-prod/bi/wms?",
-						format:"image/png",
-						TILED:true,
-						queryable:true,
-						checked:false,
-						leaf:true
+						url: "http://bi-risk.pigeo.fr/geoserver-prod/bi/wms?"
 				    },
 					chart : {
-						type:"chart",
 						text:"Nouvelle couche Graphique",
-						opacity:1,
-						cls:'',
 						qcktip : 'Vous pouvez placer ici vos commentaires au sujet de cette couche',
-						extensions: '',
 						url:'http://bi-risk.pigeo.fr/geoserver-prod/bi/ows?service=WFS%26version=1.0.0%26request=GetFeature%26maxFeatures=500%26outputFormat=application/json%26typeName=',
-						layers:'region_layer,district_layer,local_layer',
-						changescales : '250000,100000,0',
-						format:"geojson",
-						legend : '',
-						join_geofield : '',
-						dbname : 'bi_risk_geodata',
-						dbtables : 'reg_table,district_table,local_table',
-						join_dbfield : '',
-						values_dbfield : '',
-						labels_dbfield : '',
-						dbwhere : '',
-						charttype : 'pie',
-						colorcodes : '',
-						chartsize : 30,
-						checked:false,
-						leaf:true
+						dbname : 'bi_risk_geodata'
 					}
 				}
 			};
