@@ -1,96 +1,99 @@
 .. _introduction:
 .. include:: ../substitutions.txt
+.. |zoomin| image:: ../useTheMap/icon_zoomin.png
 
-Geoportal's layout
-==================
+Présentation Générale
+=====================
 
-In order to leave the largest area possible to the map area, the other elements have been grouped whenever possible. 
-The layout is then cut in only three parts, one of them almost negligible: 
+Afin de laisser un maximum d'espace à la fenêtre cartographique, les éléments ont été regroupés le plus possible.
+La page se décompose donc en trois parties seulement : 
 
-- The header
+- l'entête
 
-- A central panel with the map
+- le panneau cartographique, central. Il intègre aussi quelques outils, plus directement liés à l'outil cartographique.
 
-- A left panel giving access to lots of functionnalities
-
+- le panneau latéral, à gauche, qui contient l'essentiel des outils
 
 .. figure:: layout.png
 
-   Global layout
+   Présentation générale
 
 .. _header_panel:
 
-Header panel
-------------
+Entête
+------
 
 
 .. figure:: header.png
 
-   Header panel
+   Entête
    
-The header panel is the simplest part. It contains:
+C'est le panneau le plus léger. Il a été réduit au maximum, pour optimiser l'espace fonctionnel.
 
-- The site's name
+- Le nom du site
 
-- The :index:`login form`, for registered users and administrators
+- Le :index:`formulaire d'identification`, réservé aux utilisateurs enregistrés du portail (administrateurs, fournisseurs de données, etc)
 
-- The language switcher: the site is available in English and French
+- L'outil de sélection de language : le site est disponible en français et en englais.
 
-- The :index:`help` link: gives access to some helpful links, including this documentation.
+- Le lien vers la page d' :index:`aide` : donne accès à plusieurs liens utiles, donc la présente documentation.
 
 .. _central_panel:
 
-Central panel: Interactive map
-------------------------------
+Panneau central : la carte interactive
+--------------------------------------
 
 
 .. figure:: map.png
    :scale: 50 %
    :align: right
 
-   Central panel: the map
+   Panneau central : la carte
    
-The central panel contains the map and most of its tools: toolbar on the top, scale and coordinates widget on the bottom-right corner.
+Le panneau central contient la carte et l'essentiel de ses outils : une barre d'outils en haut, un encart d'échelle et coordonnées dans le coin en bas à droite.
 
-The map itself is interactive, meaning you can move the center of the map, zoom in or out, add some overlays, etc.
+La carte elle-même est interactive : vous pouvez déplacer le centre de la carte, zoomer avant/arrière, ajouter des calques de données, etc.
 
-In default mode, you are in 'pan' mode: if you keep pressed the left button of your mouse and move the mouse, you will move the map. 
-The pan mode is activated with the *hand* button in the map's toolbar.
+Par défaut, vous êtes en mode 'déplacement' : si vous gardez appuyé le bouton gauche de la souris tout en bougeant la souris, la carte va suivre votre déplacement. 
+Le mode 'déplacement' est encenché en pressant le bouton *main* de la barre d'outils.
 
-You can zoom in or out, either by using the mouse's wheel, or by selecting one of the zoom buttons, just left of the *hand* button in the toolbar.
-Using the zoom in button (the one with the '+'), you can draw a rectangle defining the area on which you want to zoom. 
+Vous pouvez zoomer avant/arrière, soit en tournant la molette de la souris, soit via l'un des boutons de zooms, à gauche du bouton *main* dans la barre d'outils.
+Avec le bouton zoom avant (|zoomin|), vous pouvez dessiner un rectangle définissant la zone sur laquelle vous voulez zoomer.
 
-Returning to the initial point of view is done using the *Full extent* button (the first button on the left).
+Revenir au point de vue initial se fait via le bouton 'Zoom optimal' (le premier en partant de la gauche).
 
-Returning to the previous zoom (and back to the next)  can be done using the *history* buttons, the blue arrow buttons.
+Revenir au point de vue précédent (et ensuite au suivant) peut se faire grâce aux boutons *historique*, les boutons aux flèches bleues.
 
-You can even perform more advanced actions, which will be detailed on :ref:`advanced_tools`.
+Un certain nombre d'actions avancées sont également disponibles et sont documentées dans :ref:`advanced_tools`.
 
-.. note:: A tooltip is available for each button on the map's toolbar: it will show if you leave the mouse over the button for a while. 
+.. note:: Une infobulle est disponible pour chacun des boutons de la barre d'outils : elle s'affichera si vous laissez la souris survoler le bouton pendant un moment.
 
 .. _left_panel:
 
-Left panel: the control center
-------------------------------
+Panneau latéral : le centre de contrôle
+---------------------------------------
 
 
 .. figure:: leftPanel.png
    :scale: 50 %
    :align: right
 
-   Left panel
+   Panneau latéral
    
-The left panel is composed of several tabs:
+Le panneau latéral se compose de plusieurs onglets : 
 
-- *Select* tab is a hierarchical list of cartographic overlays (layers). Checking a layer will add it to the map. After checking the layers to display, it will be necessary to order them properly, add some transparency, etc. This happens in the next tab:
+- L'onglet *Choisir* fournit une liste structurée de calques cartographiques organisés de façon hiétarchique. 
+  Cocher un calque le rajoute dans la carte. Après avoir coché un calque pour l'afficher, il sera souvent nécessaire 
+  de l'agencer correctement avec les autres claques affichés, définir son opacité, etc. Ca se fait dans l'onglet suivant:
  
-- *Organize* tab is merely empty at the beginning. It gets filled as one checks some layers, in the *Select* tab.  The checked layers are added in the 'Overlays' folder. It is the place to reorganize them, manage them, consult them.
+- L'onglet *Organiser* est presque vide au départ. Il se remplit au fur et à mesure que l'on coche des calques depuis l'onglet *Choisir*. 
+  Les calques cochés sont rajoutés dans le dossier 'Calques'. C'est là qu'on pourra les réorganiser, changer leurs paramètres d'affichage, demander leurs métadonnées.
 
-- *Locate* tab regroups some positionning tools: zoom by administrative areas, searching for a place in an external placenames database.
+- L'onglet *Localiser* rassemble quelques outils de positionnement : zoom par entités administratives, recherche d'un lieu dans une base de données externe de lieux géographiques.
 
-- *Print* tab is the printing configuration panel.
+- L'onglet *Imprimer* est le panneau de configuration d'impression.
 
-- *Geo-catalogue* tab is the form to search for data, in the metadata database. This is the 'library' database search area.
+- L'onglet *Géo-catalogue* est le formulaire de recherche de données, dans la base de métadonnées. C'est l'espace de recherche de la partie 'catalogage de données' du géoportail.
 
 
    

@@ -4,15 +4,15 @@
 |project_name|
 ==============
 
-**User Manual**
+**Manuel utilisateurs**
 
  .. only:: latex
 
-   This is the public user documentation for the |project|.
+   Ce document s'adresse aux utilisateurs publics du |project|.
 
-   Last update: |today|
+   Dernière mise à jour : |today|
 
-   Author : Jean Pommier, pi-Geosolutions
+   Auteur : Jean Pommier, pi-Geosolutions
 
             jean.pommier@pi-geosolutions.fr
     
@@ -20,11 +20,11 @@
 
 .. only:: html
 
-   *Last update:* |today|
+   *Dernière mise à jour :* |today|
 
-   This is the public user documentation for the |project|.
+   Ce document s'adresse aux utilisateurs publics du |project|.
 
-   *Table of contents:*
+   *Sommaire :*
 
 .. toctree::
     :maxdepth: 2
@@ -38,11 +38,11 @@
     advanced_tools/advanced_tools.rst
     
 
-*Other documents:*
+*Autres documents :*
 
-- `User Manual (PDF) <../latex/RiskManagementGeoportal-Gambia.pdf>`_
+- `Manuel Utilisateur (PDF) <../latex/RiskManagementGeoportal-Gambia.pdf>`_
 
-- `Editor & Administrator Manual <../../admindoc/html/index.html>`_
+- `Manuel Editeur & Administrateur <../../admindoc/html/index.html>`_
 
-- `Editor & Administrator (PDF) <../../admindoc/latex/RiskManagementGeoportal-Gambia-EditorManual.pdf>`_
+- `Manuel Editeur & Administrateur (PDF) <../../admindoc/latex/RiskManagementGeoportal-Gambia-EditorManual.pdf>`_
     
