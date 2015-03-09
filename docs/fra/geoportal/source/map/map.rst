@@ -13,206 +13,222 @@
 .. index:: Overlay, Layer
 
 
-Building a map
-==============
+Construire une carte
+====================
 
-Most of the geoportal is about mapping: :ref:`select overlays <select_overlays>`, :ref:`organize overlays <organize_overlays>`, 
-:ref:`compose them <manage_overlays>` in order to :ref:`print <print>` some maps. Here is a typical workflow using the map:
+L'une des fonctions principales d'un géoportail est de pouvoir composer des cartes : :ref:`sélectionner des calques <select_overlays>`, :ref:`organiser ces calques <organize_overlays>`, 
+:ref:`les composer entre eux <manage_overlays>` pour à la fin :ref:`imprimer <print>` des cartes. Ce chapitre est organisé en suivant ce flux typique de travail : 
 
 .. _select_overlays:
 
 .. index:: pair: WMS; Layer
 .. index:: pair: Chart; Layer
 
-Select overlays
----------------
+Sélectionner des calques
+------------------------
 
-This happens in the :ref:`left panel<left_panel>`, first tab. Every checked layer is added to the map.
+Cela se passe dans le :ref:`panneau latéral<left_panel>`, premier onglet : tout calque coché est automatiquement ajouté à la carte.
 
-It is hierarchically organized, in a tree-like structure: unfold a folder to see what's inside. It can contain several kinds of *nodes*:
+Cette liste de calques est organisée de façon hiérarchique dans une structure arborescente : il faut déplier un dossier pour voir ce qu'il contient. 
+Il peut contenir différents types de *noeuds* : 
 
-- other folders. Folders are represented with a |folder| when closed and a |folder_open| when open.
+- D'autres dossiers. Les dossiers sont représentés par un|folder| quand ils sont fermés, et par un |folder_open| lorsqu'ils sont ouverts. Ce sont des contenants, 
+  servant à la hiérarchisation du contenu. Ils n'ont pas de cases à cocher.
 
-- WMS layers. They are the most common map layers. They are represented with a |wms| icon and a checkbox. 
+- Des calques WMS. Ce sont les plus courants. Ils sont représentés par une icône |wms| et une case à cocher. 
  
-- Chart layers. They are less common. They will show as pie or bar charts, at some locations on the map. They are represented with a |chart| icon and a checkbox. 
+- Des calques graphiques (*Charts*). Ils sont moins courants. Ils s'afficheront dans la carte sous forme de camemberts ou d'histogrammes, positionnés à des emplacements clés. 
+  Ils sont représentés dans l'arborescence par une icône |chart| et une case à cocher.
 
-Some *nodes* have a description: it will pop-up when leaving the mouse over for a second.
+Certains *noeuds* ont une description : elle s'ouvrira lors d'un survol prolongé de la souris sur le noeud.
 
 
 .. _organize_overlays:
 
-Organize overlays
------------------
+Organiser les calques
+---------------------
 
-This is the function of the second tab, the *Organize* tab. 
+C'est la fonction du second onglet, l'onglet *Organser*. 
 
-The layers checked in the *Select* tab are initially stacked as they come, in the tree-like structure. 
+Les calques cochées dans l'onglet *Choisir* sont rangés, par défaut, dans l'ordre d'apparition dans l'arborescence.
 
 .. figure:: organize_wrong.png
 
-   Layers stacked as they come: administrative boundaries are hidden underneath the Population (opaque) layer.
+   Les calques, empilés "comme ça vient" : les limites adminitratives sont cachées derrière le calque Population (opaque).
    
-Sometimes, it will be good, but most often this will not be the right order, it will be necessary to reorganize them. This is the main purpose of this panel.
-Reorganizing the layers is simple: just click on the layer to move, keep the mouse pressed and move the layer to its new place. The place where it will be inserted is shown by a dotted line.
-When in the right place, release the mouse's button.
+Parfois, l'organisation par défaut conviendra, mais la plupart du temps, et surtout si on coche de nombreux calques, ils ne s'empileront pas comme vous le voulez. 
+Il faudra alors les réorganiser entre-eux. C'est le rôle principal de cet onglet.
+Réorganiser les calques est simple : il suffit de cliquer sur le calque à bouger, garder le bouton appuyé et déplacer le calque à son nouvel emplacement, suivant le principe du 
+"Drag'n'Drop". L'emplacement où le calque sera repositionné est indiqué par une ligne en pointillés.
+Lorsque vous avez atteint le bon emplacement, relachez le bouton de la souris.
    
 .. figure:: organize_DnD.png
 
-   Reorganizing the layers
+   Réorganiser les calques
    
    
 .. _change_background_map:
    
 .. index:: pair: Background; Layer
    
-Change the background map
--------------------------
+Changer le fond de carte
+------------------------
 
-The default background map is a Bing Aerial map. It is possible to change it for OpenStreetMap background.
-The background choice is in the *Base Layers* folder, in the *Organize* tab
+Le fond de carte par défaut est une carte Bing Aerial (carte "satellite"). Il est possible de le changer contre un fond OpenStreetMap.
+Le choix du fond de carte se passe dans le dossier *Fond de carte* de l'onglet *Organiser*. 
+
+Un seul fond peut être affiché à la fois.
 
 .. figure:: OSMonBanjul.png
 
-   OpenStreetMap background on Banjul
+   Fond OpenStreetMap sur Banjul, Gambie
    
-.. note:: OpenStreetMap images are easier to compress, and will result in less bandwith requirements than Bing Aerial. so if you have no need for Bing Aerial 
-          background, you may prefer using OpenStreetMap
+.. note:: Les cartes OpenStreetMap sont plus compressibles qu'une image satellite, ce qui va se concrétiser par des besoins réduits en bande passante que 
+   si on utilisait le fond Bing Aerial. Donc si vous n'avez pas l'usage d'un fond Bing Aerial (par exemple si un de vos claques couvre tout le territoite, cachant le fond 
+   de carte), autant utiliser OpenStreeMap.
           
-.. note:: Bing maps are not supported for printing (licence issue). The right background for printing is then OpenStreetMap
+.. note:: Les cartes Bing maps ne sont pas supportées par le module d'impression (problème de licences d'utilisation). 
+   Pour imprimer, il vaut donc mieux utiliser OpenStreetMap
    
 
 .. _manage_overlays:
 
-Manage an overlay
------------------
+Paramétrer un calque
+--------------------
 
-View the legend
-```````````````
+Afficher la légende
+```````````````````
 
-For most of the overlays, there is a small downward arrow, just left of the checkbox. Clicking this arrow will unfold the legend underneath the overlays' row.
-Clicking it again will fold the legend.
+La plupart des calques sont dotés d'une petite flèche noire dirigée vers le bas, juste avant la case à cocher. Cliquer sur cette flèche va déplier la légende, 
+juste en-dessous du calque. Un second clic repliera la légende.
 
 .. figure:: legend.png
 
-   Unfolding the legend
+   Déplier la légende
    
-For some layers (scanned maps), the legend is very large and will not be readable in the panel (not large enough). It is then possible to open it in a pop-up window: 
-right-click on the overlay, and select '*Open legend in popup*'.
+Dans le cas de certains calques (cartes scannées), la légende est très volumineuse et n'est pas diponible suivant un format adapté, pour un affichage en ligne dans le panneau.
+Dans ces cas, il est possible de l'afficher dans une fenêtre séparée, en pop-up : cliquer droit (bouton droit) sur le calque, et choisir '*Ouvrir la légende dans un pop-up*'.
 
 .. figure:: legendInPopup.png
 
-   Soil association layer comes from a scanned map. Its legend is too large for an easy display. The best way then is to open it in a separate pop-up window.
+   Ce calque provient d'une carte scannée. Sa légende est trop grande pour un affichage correct. Le meilleur moyen reste de l'ouvrir dans un pop-up séparé.
 
 
 .. _layers_icons:
 
-Information about the overlay
-`````````````````````````````
+Informations sur le calque
+``````````````````````````
 
-Some icons on the right of the layer's name tell the user which information tools are available for this layer:
+A droite du nom d'un calque, des icônes vous signalent quels outils d'information disponibles pour ce calque donné : 
 
-- |i| says the layer is *queryable*, meaning you can use the :ref:`Query <query_layers>` tool on this layer.
+- |i| informe que ce calque est *interrogeable*, signifiant que vous pouvez utiliser l'outil :ref:`Interrogation <query_layers>` sur ce calque.
 
-- |pquery| says the layer is enabled for the :ref:`Polygon Query <polygon_query>` tool.
+- |pquery| informe que ce calque supporte l'outil :ref:`Interrogation Polygonale <polygon_query>`.
 
-- |M| says some metadata are available for this layer.
+- |M| informe qu'un fiche de métadonnées est disponible pour ce calque.
 
-They are just informative icons, telling the user which actions he will be able to perform. Then, each of these
-actions will be trigged in their own way (see further).
+Ce sont juste des icônes informatives, vous informant des actions que vous pourrez effectuer : il est inutile de cliquer dessus, il ne se produira rien.
+Chacune de ces actions est déclenchée à sa façon (voir plus loin).
 
 .. figure:: info_icons.png
 
-   Here, all the layers are queryable, Population density and Elevation are enabled for Polygon Query and have a metadata sheet available. 
-   Road Network too, has a metadata sheet.
+   Dans ce cas, tous les calques sont interrogeables. Population density et Elevation sont disponibles pour l'outil Interrogation Polygonale et ont
+   une fiche de métadonnées disponible. Road Network a aussi une fiche de métadonnées.
 
-View Metadata
-*************
+Afficher les métadonnées
+************************
 
-A layer having metadata will be represented with the |M| indicator. When selected (left-click on it), the |M| button on the panel's top toolbar will be activated. 
-On the layer's context menu (right-click on the layer), the *Metadata* entry will be activated too.
+Un calque disposant de métadonnées associées sera signalé par un indicateur |M|. Si l'on sélectionne un tel calque (clic gauche dessus), le bouton |M| dans la 
+barre d'outils du panneau latéral s'active. Dans le menu contextuel de ce calque (clic droit sur le calque), l'entrée *Métadonnées* sera également activé.
 
-Clicking on one of those will open the metadata sheet, if you have access rights to this metadata. Otherwise, a message will tell you don't have the access rights 
-(meaning the access is restricted to some registered users: you have to log in).
+Cliquer sur l'un de ces deux boutons ouvrira la fiche de métadonnées, si vous disposez des droits suffisants pour accéder aux métadonnées de ce calque. 
+Sinon (droits d'accès insuffisants), un message vous en informera. En effet, dans certains cas, l'accès est restreint et il faut disposer d'un compte pour se connecter 
+au géoportail comme utilisateur authentifié.
 
 .. figure:: openMtd.png
    :scale: 50 %
 
-   Opening the metadata sheet (on the right)
+   Ouvrir la fiche de métadonnées (à droite)
    
-See also the :ref:`geocatalog` section about metadata.
+Voir aussi la section :ref:`geocatalog`.
 
-Use transparency / curtain ('*swipe*') controls
-```````````````````````````````````````````````
+Utiliser les contrôles d'opacité / rideau ('*swipe*')
+`````````````````````````````````````````````````````
 
 .. index:: pair: Transparency; Control
 
-Transparency
-************
+Opacité
+*******
 
-It is possible to make a layer partially transparent. This allows to overlay several layers, for example overlay hillshade data over a topographic map, to add some
-elevation effect on the map.
+Il est possible de rendre un calque partiellement transparent. Cela permet de superposer plusieurs calques et de produire des effets de rendu. Par exemple, superposer un
+calque d'ombrages par-dessus une carte topo, mettant en valeur le relief.
 
 .. figure:: opacity.png
 
-   Overlapping slopes information over a topographic map enhances the map with some 3D effect...
+   Superposer une représentation des pentes par-dessus une carte topo met en valeur le relief, ajoutant un effet 3D...
 
-A right-click on a layer opens a contextual menu, with some actions available for this layer. One of these actions is called '*opacity*', and opens a slider. 
-By moving this slider, on can change the layer's opacity from 1 (completely opaque) to 0 (invisible). 
+Cliquer-droit sur un calque, pour ouvrir son menu contextuel. Plusieurs actions sont proposées, l'une d'elles s'appelant '*Opacité*'. 
+Lorsqu'on la survole, cela ouvre un curseur. On peut régler l'opacité (donc la transparence) en déplaçant ce curseur entre 1 (complètement opaque) et 0 (invisible).
 
-.. note:: Setting the opacity to 0 (invisible) will automatically uncheck the layer. It is important to remember it, since unchecked layers are automatically 'cleaned' 
-          from the Organize tab.
+.. note:: Régler l'opacité à 0 (invisible) va automatiquemen décocher le calque. Il est important de s'en souvenir, puisque les calques décochés sont automatiquement 
+   régulièrement 'nettoyés' de l'onglet *Organiser*. 
           
 .. index:: pair: Curtain; Control
 
-Curtain ('*swipe*') controls
+Contrôles rideau ('*swipe*')
 ****************************
 
-Sometimes, one want to compare two overlapping layers. One way of doing this is to use the transparency. Another way, keeping both layers' full opacity, is to use the curtain controls.
+Il arrive que l'on veuille comparer deux calques superposés. Par exemple pour comparer une même donnée à deux dates différentes.
+Pour cela, on peut utiliser la transparence, mais ce n'est pas toujours le meilleur moyen. Si l'on veut conserver la totale opacité de nos calques, on peut utiliser les
+contrôles "rideau".
 
-It works as if the active layer were a curtain: folding the curtain leaves room to what lies behind. Moving the curtain over the layer lets the user see, on this cleared area,
-the underlying layer.
-Curtain control is available both for vertical and horizontal directions.
+Ils fonctionnent comme si le calque actif était un rideau : on peut replier le rideau pour révéler ce qui se trouve derrière. En déplaçant le rideau, on peut voir, 
+sur cet espace dégagé, la donnée qui se trouve derrière.
 
-Open the contextual menu by right-clicking on the layer, position the mouse over the proper curtain (horizontal or vertical) and move the slider.
+Le contrôle rideau est disponible à la fois horizontalement et verticalement.
+
+Ouvrir le menu contextuel en cliquant (clic-droit) sur le calque. Positionner la souris sur le rideau voulu (horizontal ou vertical) et bouger le curseur. 
+L'effet se voit particulièrement bien sur un calque plein, mais le rideau marche même sur un calque de graphiques ou de points.
 
 
 .. figure:: curtains.png
 
-   Using the horizontal curtain to compare locally the Soil association map with the Land Use data
+   Utilisation du rideau horizontal pour comparer localemet la carte des sols et la carte d'occupation des sols.
 
-.. note:: Don't forget the curtains settings are persisted for this layer, even if the layer is removed from the Organize tab. It will reset only after reloading 
-          the page in the browser. It is of course possible to reset the curtains manually by moving the sliders back to their initial positions.
+.. note:: Les réglages rideau et transparence sont conservés pour ce calque, même s'il est supprimé de l'onglet *Organiser* et re-coché ensuite. Attention aux surprises !
+   Les réglages ne seront réinitialisés qu'au rechargement de la page dans le navigateur. Il est bien sûr possible de les réinitialiser manuellement en replaçant les 
+   curseurs à leur position initiale.
+
+Supprimer un calque
+```````````````````
+
+Il y a trois façons de supprimer un calque de la carte, depuis l'onglet *Organiser* : 
+
+- Cliquer sur '*Supprimer*' dans le menu contextuel
+
+- Sélectionner le calque et cliquer sur le bouton |rm| dans la barre d'outils du panneau
+
+- Décocher le calque, changer d'onglet et revenir.
+
+.. note:: Cette dernière solution utilise la fonctionnalité de 'nettoyage automatique' de l'onglet *Organiser* : chaque calque décoché est supprimé lorsqu'on change d'onglet. 
+   Cela permet d'éviter une potentielle surpopulation de l'onglet *Organiser*.
           
-.. note:: The maximum number of layers one can compare using the curtains is 4, letting one layer for each quadrant. It is even possible to use transparency 
-          to combine some more layers. But this is an extreme scenario !
+Il est bien sûr aussi possible de le décocher depuis l'onglet *Choisir*.
 
-Remove the overlay
-``````````````````
+Ajouter d'autres calques
+------------------------
 
-There are three ways to remove a layer from the map and from the Organize tab:
+Ajouter un calque WMS externe
+`````````````````````````````
 
-- Choose '*Remove*' in the contextual menu.
+Il est possible d'ajouter des calques provenant de services cartographiques externes, via le premier bouton dans la barre d'outils du panneau (Ajouter WMS).
+WMS signifie *Web Map Service*, Service Cartographique pour le Web. Cet outil permt de choisir dans une liste de services préconfigurés, ou bien d'en rajouter un nouveau 
+(vous devez connaitres son adresse WMS).
+Il listera alors les calques disponibles depuis ce service, et vous pourrez ajouter certains de ces calques dans la carte.
 
-- Select the layer and choose the |rm| button from the toolbar on the top of the panel.
 
-- uncheck the layer, change tab and come back again.
+Ajouter un calque depuis le catalogue
+`````````````````````````````````````
 
-.. note:: This last solution uses the 'auto-clean' functionality of the Organize tab: every unchecked layer is removed, when one changes tab. 
-          This allows to keep the Organize panel quite well ordered. 
-
-Add other layers
-----------------
-
-Add an external WMS layer
-`````````````````````````
-
-It is possible to add overlays from external cartographic services, through the first button in the tab's toolbar (Add WMS). 
-WMS means Web Map Service. This tool allows you to look in a list of available services, or to add a new one (you must know its WMS URL). 
-It then lists the available overlays associated to this service, and you can choose a add some of them to the map.
-
-Add a layer from the catalog
-````````````````````````````
-
-Its is also possible to add overlays from a search in the :ref:`geocatalog`. When overlays are attached to a metadata, it is possible, 
-by clicking the icon, to add them to the map. This operation will be explained in the :ref:`geocatalog` section.
+Il est aussi possible de rajouter des calques suite à une recherche dans le :ref:`geocatalog`. Lorsque des calques sont associés à une fiche de metadonnées
+il est possible, en clquant sur l'icône, et les rajouter dans la carte. Cette opération est expliquée dans la section :ref:`geocatalog`.

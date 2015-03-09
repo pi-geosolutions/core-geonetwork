@@ -16,43 +16,45 @@
 .. |query_marker| image:: query.png
 
 
-Using the map
-=============
+Utiliser la carte
+=================
 
-Manipulating the map is mostly done using the mouse and the map's top toolbar.
+L'essentiel des manipulations, concernant la carte, se fait avec la souris et la barre d'outils de la carte.
 
-|zoomfull| |zoomin| |zoomout| |pan| Zoom in, zoom out, pan the map
-------------------------------------------------------------------
+|zoomfull| |zoomin| |zoomout| |pan| Zoomer avant / arrière et déplacer la carte
+-------------------------------------------------------------------------------
 
 
 .. index:: pair: Zoom; Control
 
 Zoom
 ````
-Zooming in or out can be performed by simply scrolling the mouse's wheel.
 
-It can also be done using the three first buttons on the map's top toolbar:
+On peut simplement zommer avant / arriève avec la molette de la souris.
 
-- |zoomfull| will reset the map's position and zoom.
+Il est aussi possible d'utiliser les trois premiers boutons de la barre d'outils de la carte : 
 
-- |zoomin| switches the mouse in *zoom in* mode. While in this mode, it is no longer possible to move the map. Click with the mouse to draw a rectangle. 
-  The application will zoom the map the closest possible to this rectangle. A single click (no rectangle) will zoom one level closer.
+- |zoomfull| va repositionner la carte à la position et au niveau de zoom de départ.
+
+- |zoomin| passe la souris en mode *zoom avant*. Dans ce mode, il n'est plus possible de déplacer la carte. Cliquer sur la carte avec la souris pour dessiner un rectangle.
+L'application zoomera au plus près de ce rectangle. Un simple clic (pas de rectangle) zommera un niveau plus près.
   
-- |zoomout| switches the mouse in *zoom out* mode: a mouse click will zoom the map one level farther, centered on the click.
+- |zoomout| passe la souris en mode *zoom arrière* : un clic zoomera un niveau en arrière, centré sur le point cliqué.
 
-One last way to zoom in is to press the *shift* key, click with the mouse and draw a rectangle. This can be one while in *pan* mode, and is simpler than 
-switching to *zoom in* mode.
+Un dernier moyen pour zoomer en avant consiste à presser la touche *maj*, la maintenir pressée et cliquer avec la souris opur dessiner un rectangle. Cela peut se faire tout 
+en restant en mode *déplacement*. C'est donc plus simple que de basculer en mode *zoom avant*.
+
 
 .. index:: pair: Pan; Control
 .. index:: pair: Move; Control
 
-Pan
-```
+Déplacement
+```````````
 
-Along with zooming in/out, it is necessary to be able to move the map.
-Actually, this is the default tool, activated at startup.
+Le mode par défaut, activé au démarrage de l'application.
 
-Select |pan| to switch to *pan* mode. In this mode, to move the map, click on the map, keep the mouse pressed and move the mouse. Release when done.
+Choisir |pan| pour basculer en mode *déplacement*. Dans ce mode, pour bouger la carte, cliquer sur la carte, garder le bouton de souris pressé, et déplacer la souris. 
+Puis relâcher le bouton.
 
 
 .. _query_layers:
@@ -60,71 +62,77 @@ Select |pan| to switch to *pan* mode. In this mode, to move the map, click on th
 .. index:: pair: Query; Control
 .. index:: pair: Query; Layer
 
-|featureinfo| Query layers
---------------------------
+|featureinfo| Interroger des calques
+------------------------------------
 
-Select |featureinfo| to switch to *query* mode. While in *query* mode, click somewhere on the map to retrieve the layers' values on this point.
-Only queryable layers (see :ref:`layers_icons`) will be queried.
+Sélectionner |featureinfo| pour basculer en mode *interrogation*. En mode *interrogation*, cliquer quelque part sur la carte retournera les valeurs des calques 
+actifs en ce point. 
+Seuls les calques cochés *et* identifiés comme interrogeables (voir :ref:`layers_icons`) seront interrogés.
 
-The query can take some time, as it requests the information from the map server.
+L'interrogation peut prendre un peu de temps à répondre, car la requête est faite sur le serveur cartographique.
 
-The result is displayed in a pop-up window:
+Le résultat est ensuite affiché dans une fenêtre pop-up : 
 
-- on the left part are listed all the layers that have returned values. Sometimes, a same layer appears several times: this means it returned several records 
-  (often happens when querying on a polygon intersection, or on a stacked group of points). Sometimes a layer doesn't appear at all, if it has no data at this place.
+- sur la gauche sont listés tous les calques qui ont retourné des valeurs. Souvent, un même calque apparaît plusieurs fois : cela signifie qu'il a retourné plusieurs valeurs
+  (ce qui arrive souvent lorsqu'on a cliqué près d'une intersection de polygones, par exemple, ou sur un group de opints rapprochés). Parfois, un calque n'apparaît pas du tout, 
+  lorsqu'il n'a aucun élément à l'emplacement interrogé.
   
-- on the right are displayed the informations (data) for the layer selected on the left panel. Select another layer, the informations will update accordingly.
+- à droite sont affichés les informations (données) pour le résultat sélectionné à gauche. Sélectionnez un autre calque, les informations se mettront à jour immédiatement.
 
-The queried location is shown on the map using a |query_marker| marker.
+L'emplacement interrogé sur la carte est marqué par une croix |query_marker|.
 
 .. figure:: querying.png
 
-   Both layers are shown as queryable in the Organize tab. Querying on a place where both layers have data (a polygon, for the Natural parks layer) returns one value 
-   for the Natural Parks layer and two for the Land Use layer (must have fallen on a boundary between two polygons).
+   Les deux calques sont marqués interrogeables dans l'onglet *Organiser*. Interroger la carte sur un lieu où les deux calques ont des données (un polygone pour le calque 
+   Natural Parks) retourne une valeur pour le calque Natural Parks et deux pour le calque Land Use (le clic a dû se faire près d'une frontière entre deux polygones).
 
-To quit the *query* mode, you can switch back to *pan* mode.
+Pour sortir du mode *interrogation*, le plus simple est de revenir en mode *déplacement*.
 
 .. index:: pair: Measure; Control
 
-|measure_line| Measuring
-------------------------
+|measure_line| Mesurer
+----------------------
 
-The |measure_line| button is actually a two-fold button. Clicking on the button itself will activate the *Distance Measurement* tool. But clicking on the |icon_submenu| 
-icon just on the right of it will open a submenu to choose between *Distance Measurement* (|measure_line|) or *Area Measurement* (|measure_area|) tool.
+Le bouton |measure_line| est en fait un bouton en deux-étapes, plus un menu qu'un bouton. 
+Cliquer sur le bouton lui-même activera l'outil *Mesurer une distance*. Mais en cliquant sur le |icon_submenu| juste à droite du bouton, cela ouvrira un sous-menu
+permettant de choisir entre les outils *Mesurer une distance* (|measure_line|) ou *Mesurer une surface* (|measure_area|).
 
-Both tools work in a similar way.
+Les deux outils fonctionnent de façon similaire.
 
-To measure a distance, select |measure_line| and draw the line on the map: each left-click with the mouse will draw a corner. Starting with two corners, it makes a line 
-and the measure gets displayed. A double-click will end the measurement.
+Pour mesurer une distance, sélectionner |measure_line| et dessiner une ligne sur la carte : chaque clic gauche ajoutera un point. A partir de deux points, ecla forme une
+ligne et la mesure correspondante est affichée. Un double clic met fin à la mesure.
 
-Measuring a surface is done the same: starting with the third corner, it makes a polygon and the measured area gets displayed.
+Mesurer une surface se fait de la même manière : à partir du 3e point, ça forme un polygone et la surface du polygone est affichée.
 
 .. figure:: measuringSurface.png
 
-   Measuring the covered area of a river floodplain area, on the Soil association overlay.
+   Mesure de la surface d'une zone inondable.
 
 
 .. index:: pair: History; Control
 
-|history_prev| |history_next| History
--------------------------------------
+|history_prev| |history_next| Historique
+----------------------------------------
 
-Using the arrows buttons |history_prev| and |history_next|, you can go back/forward in the previous zoom views, a bit like the history arrows of a web browser.
+En utilisant les boutons |history_prev| et |history_next|, vous pouvez revenir en arrière / avant dans les vues de la carte (zoom + position) que vous avez naviguées, un peu
+comme avec les flèches d'historique de votre navigateur web.
 
 
 .. index:: pair: Save (map); Control
 .. index:: pair: Restore (map); Control
 
-|savewmc| |loadwmc| Save/restore the map
-----------------------------------------
+|savewmc| |loadwmc| Sauvegarder/restaurer la carte
+--------------------------------------------------
 
-You can save the map configuration, for further reload. It allows you to suspend a working session and restore it later, in order to get back to where you were last time. 
-Or to send the file to a colleague, that could restore the same environment you were working in.
+Vous pouvez sauvegarder la configuration de la carte, pour réutilisation ultérieure. Cela vous permet de suspendre une session de travail puis de la restaurer 
+ultérieurement, de sorte à reprendre là où vous en étiez. Ou d'envoyer le fichier à un collègue, qui pourra alors restaurer le même environnement que celui
+sur lequel vous travaillez.
 
-This is done using WMC, *Web Map Context* protocol. This is a standardized way to store a map's composition.
+Cette fonction utilise le protocole WMC (*Web Map Context*). C'est une façon standardisée de stocker la composition d'une carte.
 
-Saving is done using the |savewmc| button. It will offer you to save a file with a cml extension. This is the file that will contain all the necessary information to 
-further restore the map's composition. Save it somewhere on the computer, or send it to the persons with whom you want to share the map.
+Sauevgarder la carte se fait avec le bouton |savewmc|. Le navigateur vous proposera de sauvegarder un fichier doté d'une extension cml. C'est le fichier de sauvegarde, 
+qui contient les informations nécessaires pour restaurer la composition cartographique. Stockez-le quelque part sur votre ordinateur, ou envoyez-le aux personnes avec qui 
+vous voulez partager votre carte.
 
-Restoring the composition is done using the |loadwmc| button, selecting the file on the computer, and pressing *Load* button. Choosing *Merge* button would add 
-the layers in to the current map. Load will replace the current map with the saved one. 
+Restaurer la composition se fait avec le bouton |loadwmc|, en sélectionnant le fichier sur son ordinateur et en appuyant sur le bouton *Charger*. Choisir *Fusionner* 
+ajoutera les calques à votre carte actuelle. *Charger* remplacera la carte actuelle par la carte sauvée.
