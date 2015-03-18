@@ -11,7 +11,8 @@ Geo-catalog
 ===========
 
 This is the search engine for the |project|. It allows you to perform searches in the cataloged data. 
-As the time goes, an increasing amount of data will be stored in the catalog, making it a reference about Risk Management in Gambia.
+It is possible that, for a while, the number of referenced documents stay limited, and so will be the usefulness of the catalog. But as the time goes, 
+an increasing amount of data will be stored in the catalog, making the catalog's search engine the only way to fully harnest its content.
 
 Search form
 -----------
@@ -23,7 +24,7 @@ Search form
    Search form, with advanced 
    options unfolded
    
-The form in the Search tab gives wide means to query the catalog, depending on relevant fields in the metadata sheets. Each search field
+The form in the *Geo-catalog* tab gives wide means to query the catalog, depending on relevant fields in the metadata sheets. Each search field
 defines a specific search criteria, that gets combined with the others. 
 
 **The first form field**, with no label, **is a free search field**, and
@@ -47,9 +48,7 @@ This is just a beginning: you can add more search criteria:
      
      To disable the Select extent button, you can click on the hand button in the map toolbar: it
      is attached to the same buttons toggle-group. 
-     
-  * *WKT geometry*: this field, grayed, is not meant to be used, it is more of a control field for advanced users. 
-  
+       
   * *Relation type*: it allows you to define the kind of relation assumed for the box. The most interesting are: 
   
      - Overlaps: default choice. All the data whose extent  overlaps, even partially, the box are selected. 

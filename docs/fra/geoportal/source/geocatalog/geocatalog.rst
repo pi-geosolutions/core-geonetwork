@@ -1,5 +1,7 @@
 .. include:: ../substitutions.txt
 
+.. |geogbb_remove| image:: geogbb_remove.png
+.. |pan| image:: ../useTheMap/icon_pan.png
 
 
 .. index:: Geo-catalog, Search, Metadata
@@ -7,173 +9,170 @@
 
 .. _geocatalog:
 
-Geo-catalog
-===========
+Géo-catalogue
+=============
 
-This is the search engine for the |project|. It allows you to perform searches in the cataloged data. 
-As the time goes, an increasing amount of data will be stored in the catalog, making it a reference about Risk Management in Gambia.
+Il s'agit du moteur de recherche du |project|. Il permet de réaliser des recherches au sein des données cataloguées dans la base documentaire.
+Il est possible que dans un premier temps, le nombre de documents référencés soit limité et son utilité ne soit pas évidente de prime abord. Mais
+avec le temps, le nombre de documents référencés va augmenter, et le catalogue va être un outil indispensable pour explorer les données stockées.
 
-Search form
------------
+Formulaire de recherche
+-----------------------
 
 .. figure:: searchform.png
    :scale: 50 %
    :align: right
 
-   Search form, with advanced 
-   options unfolded
+   Le formulaire de recherche. Les options avancées sont affichées.
    
-The form in the Search tab gives wide means to query the catalog, depending on relevant fields in the metadata sheets. Each search field
-defines a specific search criteria, that gets combined with the others. 
+Le formulaire présent dans l'onglet *Géo-catalogue* fournit des moyens puissants pour explorer le contenu du catalogue, en appuyant la recherche sur des 
+champs précis des fiches de métadonnées. Chaque champ du formulaire définit un critère de recherche spécifique qui sera combiné aux autres pour produire la requête.
 
-**The first form field**, with no label, **is a free search field**, and
-corresponds to the usual search field of a search engine, like Google's, for example. The words entered in that field are looked for in the
-whole content of the metadata sheets. Each sheet containing one of the word is selected as belonging to the search results.
+**Le premier champ du formulaire**, sans étiquette, **est un champ de recherche libre**, et
+correspond au champ de recherche auquel nous sommes tous habitués dans les moteurs de recherche, celui de Google par exemple.
+Les mots saisis dans ce champ de recherche seront recherchés dans l'intégralité du contenu des fiches de métadonnées. Chaque fiche contenant l'un des mots sera ajoutée 
+dans la liste des résultats de la recherche.
 
-This is just a beginning: you can add more search criteria:
+Mais ce n'est qu'un début : vous pouvez ajouter d'autres critères de recherche, plus spécifiques : 
 
-- **Resource type**: most data are classified in Datasets. Data series correspond to
-  series, like, for example, the whole set of topographic 1/250 000th scale maps. The Service (Web Map Services) and Feature catalog are more
-  rare and reserved to experts. 
+- **Type de ressource** :    la plupart des données sont catégorisées comme *Jeu de donnée*. Les *Série de données* correspondent à des séries, comme par exemple le jeu 
+  complet des cartes topo à l'échelle 1/50 000. Les *Service(Web Map Service)* et *Catalogue d'attributs* sont plus rares et techniques.
 
-- **Geographic criteria**: one of the ideas of geocatalogs is, precisely, to take into account the geographic
-  positioning of objects. Therefore, we can deal with those information, while searching for data. 
-
-  *  *Select extent*: by clicking on this button, you can draw on the map an extent box for the search. By default, all data intersecting 
-     this box, even partially, will be selected. This behavior can be changed with the Relation type list. 
+- **Critères géographiques** : l'un des concepts des géocatalogues est justement de prendre en compte le positionnement géographique des objets. Il est donc, logiquement, 
+  proposé  de prendre en compte ces informations lors d'une recherche.
+   
+  *  *Définir une emprise* : en cliquant sur ce bouton, vous pouvez dessiner sur la carte un rectangle d'emprise pour la recherche. Par défaut, toutes les données en contact
+     avec cette emprise, même partiellement, seront sélectionnées. Ce comportement peut être changé grâce à la liste *Type de relation*.
      
-     If not satisfied with the drawn box, you can redraw it as much as you want. You can
-     remove the box by clicking the remove button. 
+     Si vous n'êtes pas satisfait par le rectangle dessiné, vous pouvez le redessiner autant que vous le vouler. Vous pouvez aussi le supprimer en cliquant sur le bouton
+     |geogbb_remove|.
      
-     To disable the Select extent button, you can click on the hand button in the map toolbar: it
-     is attached to the same buttons toggle-group. 
-     
-  * *WKT geometry*: this field, grayed, is not meant to be used, it is more of a control field for advanced users. 
+     Pour désactiver le bouton *Définir une emprise*, vous pouvez cliquer sur le bouton |pan| dans la barre d'outils de la carte.
   
-  * *Relation type*: it allows you to define the kind of relation assumed for the box. The most interesting are: 
+  * *Type de relation* : permet de définir le rôle de l'emprise dessinée. Les plus intéressants : 
   
-     - Overlaps: default choice. All the data whose extent  overlaps, even partially, the box are selected. 
+     - Chevauche : choix par défaut. Toutes les données dont l'étendue recouvre, même partiellement, le rectangle d'emprise sont sélectionnées. 
      
-     - Encloses: all the data whose extent contain the box are selected. 
+     - Contient : toutes les données dont l'étendue contient le rectangle sont sélectionnées. 
      
-     - Fully Outside of : the data outside of the box are selected. 
+     - En dehors : les données situées hors du rectangle (pas de contact avec l'intérieur du rectangle et ses bords) sont sélectionnées. 
      
-     - Within: selects the data whose extent is strictly within the box. 
+     - A l'intérieur : sélectionne les données dont l'emprise est strictement à l'intérieur du rectangle. 
 
 .. figure:: advanced_search.png
    :scale: 50 %
 
-   Advanced search using both geographic extent definition and some advanced options
+   Recherche avancée en utilisant à la fois la définition de l'étendue géographique et des options avancées
 
-- **Advanced search options**: this field set allows you to set more criteria, more precise. Be careful that by defining too much criteria, 
-  you may end with no result... 
+- **Critères avancés** : ce sous-formulaire vous permet de définir plus de critères de recherche, plus spécifiques. Attention : si vous fixez trop de critères en même temps, 
+  vous risquez de vous retrouver sans résultat...
   
-  + *Keywords*: we can enter some keywords. Those keywords are only looked for in the words set as keywords in the sheets, not in the whole 
-    content (use free search field for this). If clicking on the arrow on the right of the field, a list of available keywords is proposed. 
-    Auto-completion is also available. 
+  + *Mots-clés* : Vous pouvez saisir des mots-clés. Attention ! Ces mots-clés ne sont recherchés que parmis les mots définis comme mots-clés dans les fiches, pas dans le 
+    contenu global de la fiche (utiliser le champ de recherche global pour ça). Si vous cliquez sur la flèche à droite du champ, une liste de mots-clés vous est proposée.
+    L'auto-complétion est active sur ce champ : au fur et à mesure que vous tapez un mot-clé, le portail vous proposera des possibilités en fonction de ce qu'il a référencé.
      
-  + *Organization*: you can restrict the search based on which organization owns the metadata.
+  + *Organisation* : vous pouvez limiter la recherche selon l'organisation à qui appartient la métadonnée.
 
-  + *Category*: GeoNetwork gives the possibility to attach given categories to the metadata. This is a complementary approach to the keywords use. 
-    You can restrict the search to certain of these categories. 
+  + *Categorie* : GeoNetwork donne la possibilité d'associer des catégories à une métadonnée. Il s'agit d'une approche complémentaire aux mots-clés.
+    Vous pouvez restreindre la recherche à certaines de ces catégories.
 
-  + *When?*: by default, this fields set is folded, thus invisible. You can unfold it by clicking on the arrow on the left. It is used to restrict 
-    the search on temporal criteria: 
+  + *Critères temporels* : par défaut, ce bloc est replié, donc invisible sauf son titre. Vous devez le déplier en cliquant sur la flèche à gauche du titre. 
+    Il est utilisé pour restreindre la recherche en fonction de critères temporels :
      
-     * Metadata change date: you can, for example, select all the data that have not been updated since at least 5 years. Or, on the contrary, 
-       data published less than 1 month ago. 
+     * Date de mise à jour des métadonnées : vous pouvez, par exemple, sélectionner toutes les données qui n'ont pas été mises à jour depuis au moins 5 ans. Ou, au contraire,
+       les données publiées depuis moins d'un mois.
      
-     * Temporal extent: same thing, but on the data date itself, as defined in the metadata sheet. 
+     * Étendue temporelle : même chose, mais sur les données elles-même, suivant ce qui a été défini dans les fiches de métadonnées. 
      
-     * The fields can be reset by clicking the “any time” check-box. 
+     * Il est possible de réinitialiser ces champs en cochant la case *N'importe quand*. 
 
-  + Spatial representation: allows to filter on the data type: raster data, text, vector, video, etc. 
+  + *Représentation spatiale* : permet de filtrer selon le type de donnée : données raster, vecteur, texte, vidéo, etc. 
   
-  + Scale: when checked, a cursor allows you to set the scale extent to apply. 
+  + *Echelle* : si cochée, un curseur s'affiche permettant de définir la plage d'échelles à appliquer. 
      
-  + *Catalog*: the geocatalog can perform what is called “harvesting”. It can harvest other catalogs, for example the FAO geocatalog, that can 
-    contain relevant data for our purpose. Those harvested catalogs are also queried in the search. Using this field, you can choose to restrict 
-    the search to one or more catalogs. 
+  + *Catalogue* : le géocatalogue peut réaliser ce qu'on appelle du "moissonnage". Le moissonnage consiste à parcourir et référencer des catalogues externes, 
+    par exemple le catalogue FAO, qui peut contenir des données pertinentes sur notre thématique. Ces catalogues moissonnés sont utilisés dans la recherche au même 
+    titre  que les données locales. Ce champ vous permet de restreindre la recherche à un ou plusieurs catalogues.
   
-- **Options**: allows you to define display and sorting parameters for the search results' display. 
+- **Options** : permet de définir des paramètres d'affichage et de tri des résultats de la recherche. 
 
-Finally (but you don't have to fill all the field !), you trigger the search by clicking on the Search button.
+Finalement (mais il n'est absolument pas nécessaire d'avoir rempli tous ces champs de recherche !), vous pouvez déclencher la recherche en cliquant sur le bouton *Rechercher*.
 
 
-Results
--------
+Résultats
+---------
 
-After searching in the catalog database, the Search Form folds itself and gives place to the Results panel. This panel lists the
-search results, 10 by 10. 
+A l'issue d'une recherche dans la base de données, le formulaire de recherche se replie et cède la place au panneau *Résultats de la recherche*. Ce panneau liste les 
+résultats, 10 par 10 (pagination).
 
 
 .. figure:: search_result.png
    :scale: 50 %
+   
+   Liste des résultats de recherche. En survolant un résultat avec la souris, une infobulle s'ouvre, affichant le résumé de la fiche. Dans la carte, les rectangles représentant 
+   l'emprise de chaque résultat  de la page s'affichent, chacun d'une couleur différente et associée à son résultat. Le rectangle mis en évidence est celui du résultat
+   actuellement survolé.
 
-   Search results list. Hovering a result with the mouse opens a tip showing the full abstract. In the map, the rectangles represent 
-   the extent of each result, one color per result. The highlighted one is the current hovered result.
 
+Liste des résultats
+```````````````````
 
-Results list
-````````````
+Chaque élément des résultats de recherche affiche : 
 
-Each result element shows : 
+- Une case à cocher, pour sélectionner le résultat (vous pouvez réaliser des actions sur les résultats sélectionnés, depuis la barre d'outils du panneau, menu *Autres actions*).
 
-- A checkbox to select the result (you can perform actions on selected metadata using the top toolbar's Other actions menu) 
+- Le titre. Cliquer dessus pour ouvrir la fiche complète. 
 
-- The title. You click it to open the full metadata sheet. 
+- Le résumé. Tronqué s'il est trop long.
 
-- The summary, truncated if too large. 
+- La liste des mots-clés. 
 
-- The keywords list. 
+- Une imagette d'aperçu (si disponible). Cliquer dessus pour afficher la version large. 
 
-- A thumbnail (if available). Click it to open the large thumbnail. 
+- Une liste d'icônes à droite, vous informant des fonctionnalités additionnelles accessibles pour cette donnée : 
 
-- An icon list on the right, telling you the additional feature of this data: 
-
-  * data to download; 
+  * donnés téléchargeables; 
   
-  * geospatial data to display in the map; 
+  * données géospatiales que l'on peut afficher dans la carte; 
   
-  * web links. 
+  * liens internet. 
   
-  Those icons are not clickable, but just give you the information. To go further, you have to pass by the complete metadata sheet 
-  (click on the title). 
+  Ces icônes ne sont pas cliquables, mais donnent juste une information. Pour aller plus loin, il faut ouvrir la fiche de métadonnée complète (cliquer sur le titre). 
+  *Penser à vérifier les droits d'utilisation de la donnée !*
   
-- On the right border, a colored line tells you what color is used for the extent, as drawn on the map. This way you can visually identify the result's extent on
-  the map. When hovering a result, its extent is made brighter.
+- En bordure droite, une ligne de couleur permet de connaitre la couleur utiliser pour figurer l'emprise de cette donnée dans la carte. 
 
-- On the bottom right, the referent organism is shown, if available. 
+- En bas à droite, sous l'imagette, l'organisme référent est affiché, si disponible. 
 
-- When hovering the result for a while, a “tooltip” is shown. It contains the whole summary. 
+- Si l'on survole le résultat pendant un instant, une infobulle est affichée. Elle contient le résumé complet. 
 
-- Finally, double-clicking on the result entry positions the map on its extent.
+- Enfin, double-cliquer sur le résultat positionne la carte sur son emprise.
 
 
 .. figure:: mtd_sheet.png
    :scale: 50 %
 
-   A metadata sheet
+   Une fiche de métadonnées
 
 
 
 
-Toolbars
---------
+Barres d'outils
+---------------
 
-Top toolbar
+Barre haute
 ```````````
 
-The top toolbar allows you to: 
+La barre d'outils haute vous permet de :
 
-- Sort the results based on a different criteria.
+- Trier les résultats selon différents critères.
 
-- Select/unselect results.
+- Sélectionner/désélectionner les résultats.
 
-- Perform actions on selected results. For simple visitors, the available actions are mostly limited to exporting data in several formats. If logged in,
-  other actions are available, such as edition, duplicate metadata, set privileges, etc. 
+- réaliser des actions sur les résultats sélectionnés.Pour des utilisateurs non-enregistrés, les actions disponibles sont essentiellement limitées à des actions d'export, 
+   dans différents formats. Un utilisateur enregistré dispose d'autres possibilités : éditer la métadonnée, la dupliquer, définir les privilèges, etc, selon son profil. 
 
-Bottom toolbar
-``````````````
+Barre basse
+```````````
 
- It gives you control over the results' pagination. 
+C'est la barre de pagination : nombre de résultats, possibilité de passer à la page suivante/précédente.

@@ -17,54 +17,55 @@
 .. |ff| image:: ff.png
    :scale: 75 %
 .. |pquery| image:: ../map/polygon_query_16px.png
+.. |pan| image:: ../useTheMap/icon_pan.png
 
 .. _advanced_tools:
 
-Advanced tools
+Outils avancés
 ==============
 
 .. index:: pair: Polygon Query; Control
 
 .. _polygon_query: 
 
-|pquery| Polygon Query
-----------------------
+|pquery| Interrogation polygonale
+---------------------------------
 
-Presentation
+Présentation
 ````````````
-The standard :ref:`query<query_layers>` tool only allows to perform punctual queries. While this satisfies many needs, 
-there are some cases when you want to collect some information on a surface rather than on punctual locations. Say, for example, you need to know how 
-many people live in a given area at risk. Or, you want to know the lowest, or the highest elevation in this area. You will not do this using punctual 
-queries. You will use this new polygonal queries tool.
+L'outil d':ref:`interrogation<query_layers>` standard ne permet que d'interroger les données ponctuellement. Cela peut remplir bien des besoins, mais il arrive 
+que l'on ait besoin de collecter des informations sur une surface plutôt que surdes emplacements ponctuels. Disons, par exemple, que l'on veuille savoir combien
+de personnes vivent dans une zone à risque. Ou que l'on veuille déterminer l'altitude la plus faible, ou la plus élevée, dans un secteur donné. Cela sera impossible à 
+réaliser avec une interrogation ponctuelle. Il faudra un outil d'interrogation polygonale.
 
-This tool will be available for only specific layers. You basicly have to select one of those layers, draw on the map the polygon defining the area you want to 
-query, and get the results.
+Cet outil n'est disponible que pour certaines données s'y prêtant. Il faut d'abord avoir sélectionné un de ces données, puis dessiner sur la carte le polygône sur lequel 
+collecter les informations.
 
-Identify suitable layers
-````````````````````````
+Identifier les calques disponibles
+``````````````````````````````````
 
-This is done in the Organize tab (left panel): suitable layers have the |pquery| icon (see :ref:`layers_icons`).
+Cela se voit depuis l'onglet *Organiser* (panneau de gauche) : les calques convenant à l'interrogation polygonale affichent une icône |pquery| (voir :ref:`layers_icons`).
 
-Selecting a suitable layer (mouse-click on it) should enable the |pquery| *Polygon Query* button on the map's top toolbar.
+En sélectionnant un tel calque (cliquer dessus avec la souris), cela devrait activer le bouton |pquery| *Interrogation Polygonale* dans la barre d'outils de la carte.
 
-Use the Polygon Query tool
-``````````````````````````
+Utiliser l'outil Interrogation polygonale
+`````````````````````````````````````````
 
 .. figure:: pquery_usage.png
 
-   Using the Polygon Query tool.
+   Utiliser l'outil Interrogation polygonale.
 
+Cliquer sur le bouton |pquery| *Interrogation Polygonale*, dans la barre d'outils de la carte : cela va basculer la souris en mode  *Interrogation Polygonale* et ouvrir 
+une fenêtre à gauche, contenant du texte, mais pas de données encore.
 
-Click on the |pquery| *Polygon Query* button on the map's top toolbar, it will switch the mouse to *Polygon Query* mode and 
-open a window on the left, with some informational text but no data yet.
+Puis dessiner un polygône sur la carte : chaque clic de la souris va rajouter un angle ; un double-clic fermera le polygône et déclenchera la requête.
 
-Then draw a polygon on the map: each mouse-click will add a corner ; a double click will close the polygon and trigger the query.
+Cela devrait prendre un moment, le temps pour le serveur de calculer et retourner les informations.Celles-ci seront ensuite affichées dans la partie basse de la fenêtre 
+mentionnée précédemment.
 
-This then may take a while, for the server to compute and return the data. The data is then displayed on the bottom part of the window.
+Dessinez un nouveau polygône, terminez-le par un double-clic, le résultat se mettra à jour en fonction.
 
-Draw again a new polygon, close-it by double-click and the result will update accordingly.
-
-To quit the *Polygon Query* mode, switch back to another too in the map's top toolbar, say the *Pan* mode, for example.
+Pour quitter le mode *Interrogation polygonale*, revenez sur un autre outil dans la barre d'outils de la carte. Par exemple l'outil |pan|.
 
 .. _animations: 
 
@@ -73,76 +74,79 @@ To quit the *Polygon Query* mode, switch back to another too in the map's top to
 |anim| Animations
 -----------------
 
-Some data are meaningful only if one can browse them in their temporal dimension. The Temporal Profiles tool gives one way of exploring these data. 
-Another way is to play animations. Like it is usually done with cloud weather data.
+Certaines données prennent tout leur sens si l'on peut explorer leur dimension temporelle. L'outil *Profils Temporels* fournit l'un des moyens d'explorer ces données.
+Une autre façon consiste à jouer des animations, comme c'est couramment fait avec des données météo, par exemple.
 
-A “player” has been implemented for such use : the animations tool.
+Un "lecteur" a été mis en place pour ce type d'usage : l'outil *Animations*.
 
-Each dataset that can be used with this tool is configured by an Administrator. The portal User can select the dataset to animate, load it, 
-and play the animation, either backward or forward, or step-by-step.
+Les jeux de données disponibles pour le lecteur *Animations* sont définis par un administrateur. Un utilisateur du Portail peu choisir quel jeu de données animer, 
+le charger et jouer l'animation, soit en boucle ou pas-à-pas.
 
-Activate Animations tool
-````````````````````````
+Activer l'outil Animations
+``````````````````````````
 
-One can activate the tool by clicking the |anim| *Animation* button in the map's top toolbar.
+Pour activer l'outil, il suffit de cliquer sur le bouton |anim| *Animations* de la barre d'outils de la carte
 
 .. figure:: animations_open.png
 
-   Open the Animations tool, select the dataset to animate.
+   Ouvrir l'outil *Animations*. Sélectionner la donnée à animer.
 
-A window pops up. You first have to choose the dataset you want to animate and then load it (click on the Load button).
+Une fenêtre s'ouvre. Vous devez d'abord choisir la donnée à animer, puis la charger (cliquer sur le bouton "Charger").
 
-A progress bar will keep you informed on the loading status: all data have to be loaded before you can start playing the animation. This allows for 
-more fluidity afterwards. 
+Une barre d'avancement vous tiendra informé de la progression du chargement : toutes les données se chargent avant de pouvoir jouer l'animation. 
+Cela permet d'obtenir une meilleur fluidité par la suite.
 
-If you load the dataset for the first time, it may take some sime. Afterwards, it should be quite straightforward, since the data are cached in the browser.
+Si vous chargez le jeu de données pour la première fois, cela prendra peut-être un peu de temps. Ensuite, cela devrait être rapide, les données étant 
+conservées en cache dans le navigateur.
 
-When the dataset has finished loading, the second half of the window gets accessible: the player part, composed of:
+Quand le jeu de données est complètement chargé, la partie basse de la fenêtre devient accessible : la partie "lecteur", composée de :
 
-- A slider, telling you where you are on the dataset. It starts on the last image (for meteo data, the current meteo).
+- Un curseur, vous informant de la position au sein du jeu de données. Au départ, il se positionne sur la dernière image.
 
-- A field telling you the date associated with this image.
+- Un champ texte précisant la date associée à cette image.
 
-- A row of buttons for animation control.
+- Une rangée de boutons de contrôle de l'animation.
 
-You can play the animation, either by moving the slider, or using the animation control buttons.
+Vous pouvez jouer l'animation soit en déplaçant le curseur, ou bien en utilisant les boutons de contrôle.
 
 .. figure:: animations_play.png
 
-   Data is loaded, the animation layer is added in the Organize layers list.
+   Les données sont chargées, le calque d'animation est ajouté dans la liste des calques de l'onglet *Organiser*.
 
-Animation control buttons
-`````````````````````````
+Boutons de contrôle de l'animation
+``````````````````````````````````
 
-This is a 7 buttons row:
+Il y a 7 boutons : 
 
-- |fb| moves to the first (oldest) image. If an animation is running, it will move to the first image, but will not stop the animation (for this, use the pause button).
+- |fb| passe à la première (plus vieille) image. Si une animation est en cours, l'animation ne sera pas stoppée (pour ça, utiliser le bouton pause), 
+  mais juste recalée sur la première image.
 
-- |b| moves to the previous image.
+- |b| passe à l'image précédente
 
-- |pb| backward animation button: loops over the images, playing backward. The animation will keep playing until you press the pause button (or the forward 
-  animation button, which will revert the play).
+- |pb| bouton d'animation rétrograde : boucle sur les images, en jouant "vers l'arrière". L'animation continuera de jouer tant que vous ne presserez pas le bouton Pause 
+  (ou le bouton d'animation "en avant", qui inversa l'animation).
 
-- |pause| pause button: this will stop any animations in play.
+- |pause| bouton pause : cela stoppera toute animation en cours.
 
-- |pf| forward animation button: loops over the images, playing forward. The animation will keep playing until you press the pause button (or the backward animation button, 
-  which will revert the play).
+- |pf| bouton d'animation "en avant": boucle sur les images, vers l'avant. L'animation continuera de jouer tant que vous ne presserez pas le bouton Pause 
+  (ou le bouton d'animation rétrograde, qui inversa l'animation).
 
-- |f| moves to the next image.
+- |f| passe à l'image suivante.
 
-- |ff| moves to the last (the more recent) image. If an animation is running, it will move to the last image, but will not stop the animation (for this, use the pause button).
+- |ff| passe à la dernière image (la plus récente).  Si une animation est en cours, l'animation ne sera pas stoppée (pour ça, utiliser le bouton pause), 
+  mais juste recalée sur la dernière image.
 
-Animation map layer
-```````````````````
+Calque associé à l'outil Animations
+```````````````````````````````````
 
-When you start playing the images, a new layer is added in the Organize tab, with the dataset's name. You can use it as any other map layer : play on opacity, 
-curtain settings, visibility,reorganize with other layers, etc.
+Lorsque vous commencez à jouer les images, un nouveau calque est ajouté dans l'onglet *Organiser*, nommé du nom du jeu de données animé. Vous pouvez l'utiliser comme n'importe 
+quel autre calque de la carte : changer son opacité, le réorganiser par rapport aux autres calque, etc.
 
-If you close the animation window, the layer is kept visible. This allows you to use it without having to keep this window around. If you want to remove the layer, 
-simply unckeck it, or remove it (right-click, choose remove).
+Si vous fermez la fenêtre Animations, le calque reste présent dans l'onglet *Organiser* et visible sur la carte. Cela vous permet de le visualiser sans formcément conserver 
+la fenêtre quelque part. Si vous voulez supprimer le calque, décochez-le ou supprimez-le (clic-droit, choisir "supprimer").
 
-.. note:: Be aware that if you close the window while an animation is playing, it will keep playing. To stop it from playing, open the animation tool again, and press the 
-   pause button.
+.. note:: Attention, si vous fermez la fenêtre alors qu'une boucle d'animation est en cours, celle-ci continuera de jouer. Pour l'arrêter, ouvrez la fenêtre Animations à 
+   nouveau (cliquer sur le bouton *Animations* de la barre d'outils) et cliquez sur le bouton *pause*).
 
 .. _temporal_profiles: 
 
@@ -150,32 +154,35 @@ simply unckeck it, or remove it (right-click, choose remove).
 .. index:: Temporal Profile, NDVI, Soil Moisture, VCI, graphics
 
 
-|dashboard| Temporal profiles
+|dashboard| Profils Temporels
 -----------------------------
 
-This tool is activated by clicking the |dashboard| *Temporal Profile* button, on the map's top toolbar.
+Cet outil est activé en cliquant sur le bouton |dashboard| *Profils Temporels* , dans la barre d'outils de la carte.
 
 
 .. figure:: ndvi.png
    :scale: 50 %
    :align: right
 
-   NDVI index, annual data graphic
+   Index NDVI, graphique des données annuelles
 
-The form of the mouse cursor changes to a |qmark| question mark. Click a place on the map where you want to get some profiling information. It will open a window.
+La forme du curseur de la souris change et devient un point d'interrogation |qmark|. Cliquer sur un emplacement de la carte où vous voulez obtenir des informations : 
+cela ouvrira une fenêtre.
 
-The window has several tabs, one per dataset:
+Celle-ci possède plusieurs onglets, un par jeu de données interrogeable :
 
 - `NDVI <http://en.wikipedia.org/wiki/Normalized_Difference_Vegetation_Index>`_ (Normalized Difference Vegetation Index)
 
-- Soil Moisture indicator
+- Soil Moisture indicator (indicateur d'humidité du sol)
 
 - VCI (Vegetation Condition Index)
 
-For each of these layers, two kind of profiles are available:
+Pour chacune de ces données, deux type de profils sont disponibles : 
 
-- Annual data: select a year, press *Apply* and the data are recovered, one value by decade (each 10 days) and displayed as a graphic.
+- Données annuelles: sélectionner une année, faire "Appliquer" et les données sont récupérées, une valeur par décade (chaque 10 jours) et affichées dans un histogramme.
 
-- History of a decade: select a decade (month then day of the month), press *Apply* and the history of the values taken by the index over the years is displayed as a graphic.
+- Histoire d'une décade : sélectionner une décade (mois puis jour du mois), faire "Appliquer" et l'historique des valeurs prises par l'index au fil des années est affiché, 
+  sous forme d'histogramme.
+
 
 

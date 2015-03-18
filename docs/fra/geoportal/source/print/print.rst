@@ -4,36 +4,37 @@
 
 .. index:: PDF, Print
 
-Printing
+Imprimer
 ========
 
-The printing function allows to generate a PDF page with an extract from the map, title, comments and legend.
-This PDF page can then be easily printed, sent, or integrated in larger documents.
+La fonction d'impression permet de générer une page PDF composée d'un extrait de la carte, d'un titre, de commentaires et de la légende.
+Cette page PDF peut ensuite être imprimée, envoyée, ou intégrée dans un autre document.
 
 .. figure:: printed.png
 
-   Print output, first page
+   Impression, première page
    
-Print tab
----------
+L'onglet Imprimer
+-----------------
 
-Printing is controlled from the *Print* tab. It contains a form in which you can define the title, the comments to incorporate 
-and several parameters. 
+L'impression est contrôlée dans l'onglet *Imprimer*. Il contient un formulaire où vous pourrez définir le titre, les commentaires à incorporer
+ainsi que plusieurs paramètres d'impression.
 
-Simultaneously, an orange square box should appear on the map. It represents the extent that will be taken in consideration while printing. 
-The box automatically centers on the map center. Its size is determined by the Scale field. By default and when the map refreshes, the portal tries
-to optimize the box's size to the current view.
+Lorsque vous basculez sur l'onglet *Imprimer*, un rectangle orange s'affichera sur la carte. Il représente l'étendue qui sera prise en compte pour l'impression.
+Le rectangle reste automatiquement centré sur le centre de la carte. Sa taille est déterminée par le champ *Echelle* du formulaire. Par défaut et à chaque fois que le carte est 
+actualisée, le portail essaie d'optimiser l'emprise de l'impression par rapport à la vue en cours.
 
 .. figure:: print_form.png
 
-   Print form on the left, orange extent box overlaid on the map.
+   Formulaire d'impression à gauche, rectangle d'emprise, orange, en surimpression sur la carte.
 
-A *Generate PDF* button, on the bottom, triggers the document's production. It may take a moment, since the document's generation 
-is made on the server and requires to process the active layers.
+Un bouton *Générer le PDF*, en bas, déclenche la fabrication du document PDF. Cela peut prendre un moment, car le document est généré côté serveur et nécessite d'executer
+un traitement sur les données des calques actifs.
 
-Then, the browser should output a PDF file, to open in a PDF viewer or save to the disk.
+Lorsque la génération est faite, le navigateur vous retourne un document PDF à visualiser avec votre lecteur PDF, ou a enregistrer sur le disque dur.
 
-.. note:: As stated in the Print tab, Google and Bing backgrounds can't be used for the printing. This is due to licence restrictions from those companies, 
-          allowing the use for view, but not for export/print. 
-          
-          It is therefore advised to use another background (OpenStreetMap works fine) or any overlay that will cover the background.
+.. note:: Attention : comme stipulé dans l'onglet *Imprimer*, les fonds de carte Google et Bing ne peuvent pas être utilisés pour une impression, à cause des licences restrcitives 
+   imposées par ces compagnies : l'utilisateur peut visualiser les données, mais pas les exporter ni les imprimer.
+   
+   Il est donc recommandé d'utiliser un autre fond de carte pour l'impression : OpenStreeMap fait très bien l'affaire, ou n'importe quel calque qui couvre entièrement toute 
+   la zone à imprimer.

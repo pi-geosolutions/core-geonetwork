@@ -64,7 +64,7 @@ This then may take a while, for the server to compute and return the data. The d
 
 Draw again a new polygon, close-it by double-click and the result will update accordingly.
 
-To quit the *Polygon Query* mode, switch back to another too in the map's top toolbar, say the *Pan* mode, for example.
+To quit the *Polygon Query* mode, switch back to another tool in the map's top toolbar, say the *Pan* mode, for example.
 
 .. _animations: 
 
