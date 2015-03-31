@@ -203,8 +203,8 @@ The Polygon Query window hides the layers' list
 
 Yes, it opens by default on top of the lateral panel, to leave the map area free, for the drawings. But you can freely move it to any place you want. You can even close it, it will open again when some information gets updated.
 
-I get an Error trying to retrieve the stats. You may be experiencing network failures. If this error persists, please contact the portal\'s administrator message
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+I get an Error trying to retrieve the stats: "You may be experiencing network failures. If this error persists, please contact the portal\'s administrator message"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If instead of the results you get this message, it is most likely that the layer is not properly configured.
 

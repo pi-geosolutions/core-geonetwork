@@ -72,7 +72,7 @@ Logging in |gs| and publishing the dataset in |gs|
 --------------------------------------------------
 
 After you get your credentials, you will be able to log into the Geoportal's |gs| instance. Current address is 
-`http://gm-risk.pigeo.fr/geoserver-prod/web/ <http://gm-risk.pigeo.fr/geoserver-prod/web/>`_.
+`http://bi-risk.pigeo.fr/geoserver-prod/web/ <http://bi-risk.pigeo.fr/geoserver-prod/web/>`_.
 
 While logged in, you will simply have to repeat the steps taken when first publishing the data on your computer's |gs| instance.
 
@@ -101,9 +101,9 @@ This is done in the Edition form of the metadata. In the top-right`corner, click
 
 This will open a window with a form. Check *Link a URL* and enter:
 
-- **URL**: if using the Geoportal's |gs| server, it will be ``http://gm-risk.pigeo.fr/geoserver-prod/gm/wms?``
+- **URL**: if using the Geoportal's |gs| server, it will be ``http://bi-risk.pigeo.fr/geoserver-prod/bi/wms?``
 
-- **Name**: you will put the |gs|'s layer name. It will look something like ``gm:gm_4c_soils``
+- **Name**: you will put the |gs|'s layer name. It will look something like ``bi:bi_4c_soils``
 
 - **Description**: this is the text you want to be displayed in the metadata sheet, for the link to this layer. 
   This will usually be layer's name in human-readable terms. E.g. ``Soils association``

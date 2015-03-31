@@ -80,7 +80,7 @@ Editing a node
 
 This is quite easy. Just click on a node, on the tree. A form will show on the right-panel, listing the node's attributes.
 
-The 2 first nodes are grayed, meaning you can't edit them. They are here for mere information.
+The 2 first fields are grayed, meaning you can't edit them. They are here for mere information.
 
 A few (not much) fields in the form are common to all kinds of nodes. Most of them are specific.
 
@@ -147,7 +147,8 @@ There are some more fields for a WMS node :
 
 **[WMS features block]**
 
-- **WMS server URL**: this is the URL of the WMS server. It depends on the map server (GeoServer, MapServer, etc) you are using for this layer, and its location. Default is ``http://gm-risk.pigeo.fr/geoserver-prod/gm/wms?``
+- **WMS server URL**: this is the URL of the WMS server. It depends on the map server (GeoServer, MapServer, etc) you are using for this layer, and its location. Default is 
+  ``http://bi-risk.pigeo.fr/geoserver-prod/wms?``
    
 - **Layer(s) name(s)**: you put here the layer's name, as defined in the map server. A list of layer names should work too, resulting in a combination of the layers.
 
@@ -155,7 +156,8 @@ There are some more fields for a WMS node :
  
 - **TILED**:  default is checked, and it is fine. You will uncheck it for data that you don't want to store in cache, e.g. live data that will change on a regular basis.
 
-- **Legend URL**:  if left empty, the geoportal will use the default legend processing. Use it when you want to customize the legend, or to link to a pre-generated, external legend file. The value must be a valid URL.
+- **Legend URL**:  if left empty, the geoportal will use the default legend processing. Use it when you want to customize the legend, or to link to a pre-generated, 
+  external legend file. The value must be a valid URL.
    
 **[Metadata reference block]**
 
@@ -215,7 +217,8 @@ Chart nodes form fields
 
 **[Geographic features]: regroups the fields related to the GeoJSON geospatial dataset**
 
-- **WFS server URL**: this is a typical WFS GeoJSON URL, except that the typeName parameter is set last, with no value (the value will be set using the next field).  Default is: ``http://gm-risk.pigeo.fr/geoserver-prod/gm/ows?service=WFS&version=1.0.0&request=`` ``GetFeature&maxFeatures=500&outputFormat=application/json&typeName=``
+- **WFS server URL**: this is a typical WFS GeoJSON URL, except that the typeName parameter is set last, with no value (the value will be set using the next field).  
+  Default is: ``http://bi-risk.pigeo.fr/geoserver-prod/bi/ows?service=WFS%26version=1.0.0%26request=GetFeature%26maxFeatures=500%26outputFormat=application/json%26typeName=``
    
 - **Layer(s) name(s)**: the GeoJSON layer's name. If you want multi-scale representation, this will be a comma-separated list of the layers' names.  No blank space will be accepted in the list. Please note that the order matters, in the list : is goes from the largest to the closest.
    

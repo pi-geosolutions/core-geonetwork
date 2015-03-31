@@ -28,8 +28,8 @@ The main administration panel is thus the same as standard |gn|, except for the 
 |project| and |gs|
 ------------------
 
-As told before, |gn| deals with metadata management (and data cataloging), eand |gs| deals with the cartographic layers creation. The layertree (part of 
+As told before, |gn| deals with metadata management (and data cataloging), and |gs| deals with the cartographic layers creation. The layertree (part of 
 this project's developments) makes the link.
 
-|gs| is the piece of software that takes GIs data as input, and outputs them in an internet-usable format. It also processes legend and query requests, and 
+|gs| is the piece of software that takes GIS data as input, and outputs them in an internet-usable format. It also processes legend and query requests, and 
 some more complicated requests, as used in the Polygon Query tool.

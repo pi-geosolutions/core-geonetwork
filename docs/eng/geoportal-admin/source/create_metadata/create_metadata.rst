@@ -57,7 +57,7 @@ To create a new Metadata, you need to be logged in (see :ref:`login`), will an *
 
 #. Press *Create*. It will open the new metadata sheet in *Edit* mode.
 
-Then, for the edition, see 'the corresponding section <geonetwork-opensource.org/manuals/2.10.3/eng/users/quickstartguide/new_metadata/index.html>`_ in 
+Then, for the edition, see `the corresponding section <geonetwork-opensource.org/manuals/2.10.3/eng/users/quickstartguide/new_metadata/index.html>`_ in 
 |gn| documentation.
 
 Publish a metadata
@@ -76,7 +76,7 @@ To make it fully available, you still have to set the privileges associated to t
 A user with *Editor* profile will have only restricted possibilities. A *Reviewer* and above will have all control on the privileges table.
 
 Best way to find the newly created metadata is to open the personal menu and select *Last update* entry. It will perform a search over your owned metadata, 
-order by update date, so the first metadata should be the one.
+order by update date, so the first metadata should be the first one.
 
    
 When letting the mouse over the metadata title, an *Action* menu should appear. Click on *Action*, it will open the menu. 
@@ -96,7 +96,7 @@ Below is a brief description for each privilege to help you identify which ones 
 
 **Interactive Map**: Users in the specified group/s are able to get an interactive map. The interactive map has to be created separately using a Web Map Server such as GeoServer, which is distributed with GeoNetwork.
 
-**Featured**: When randomly selected by GeoNetwork, the metadata record can appear in the `Featured` section of the GeoNetwork home page. *Not used in the Geoportal interface.
+**Featured**: When randomly selected by GeoNetwork, the metadata record can appear in the `Featured` section of the GeoNetwork home page. *Not used in the Geoportal interface*.
 
 **Notify**: Users in the specified group receive notification if data attached to the metadata record is downloaded.
 

@@ -40,9 +40,9 @@
 
 *Autres documents :*
 
-- `Manuel Utilisateur (PDF) <../latex/RiskManagementGeoportal-Gambia.pdf>`_
+- `Manuel Utilisateur (PDF) <../latex/RiskManagementGeoportal-Burundi.pdf>`_
 
 - `Manuel Editeur & Administrateur <../../admindoc/html/index.html>`_
 
-- `Manuel Editeur & Administrateur (PDF) <../../admindoc/latex/RiskManagementGeoportal-Gambia-EditorManual.pdf>`_
+- `Manuel Editeur & Administrateur (PDF) <../../admindoc/latex/RiskManagementGeoportal-Burundi-EditorManual.pdf>`_
     
