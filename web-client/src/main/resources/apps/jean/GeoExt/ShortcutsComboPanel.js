@@ -84,7 +84,7 @@ GeoExt.ShortcutsComboPanel = Ext.extend(Ext.Panel, {
 		       }, map_fields),
 		    sortInfo : {field: "nom", direction: "ASC"}
         });
-    	mystore.load();
+    	//mystore.load();
     	
     	var mycombo = new Ext.form.ComboBox({
       					store: mystore,
