@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09448"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="UsersHierarchy.svg"
+   inkscape:export-filename="/home/jean/PRO/projets/2014-02-GNdocRefactoring/usersHierarchy.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="433.7623"
+     inkscape:cy="343.67232"
+     inkscape:document-units="px"
+     inkscape:current-layer="g3026"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1033"
+     inkscape:window-x="1920"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-308.2677)">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3755"
+       style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       transform="translate(0,308.2677)"><flowRegion
+         id="flowRegion3757"><rect
+           id="rect3759"
+           width="88.89344"
+           height="170.71576"
+           x="684.88342"
+           y="505.69849" /></flowRegion><flowPara
+         id="flowPara3761">EDITEUR</flowPara></flowRoot>    <g
+       id="g3009"
+       transform="translate(17.172593,31.314729)">
+      <g
+         id="g3026"
+         transform="translate(-94.954339,40.406102)">
+        <rect
+           style="color:#000000;fill:#cccccc;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect4135"
+           width="614.17273"
+           height="517.19812"
+           x="367.69553"
+           y="373.53967"
+           ry="6.0609155" />
+        <g
+           id="g3844"
+           transform="translate(-49.497478,-103.03556)">
+          <rect
+             transform="translate(77.781746,236.54687)"
+             y="250.12988"
+             x="351.53308"
+             height="396.98996"
+             width="544.47223"
+             id="rect4087"
+             style="color:#000000;fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             ry="11.111678" />
+          <g
+             id="g3865">
+            <flowRoot
+               transform="translate(651.99205,335.21676)"
+               style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:tb-rl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+               id="flowRoot3811-6"
+               xml:space="preserve"><flowRegion
+                 id="flowRegion3813-9"><rect
+                   style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:tb-rl;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+                   y="303.66797"
+                   x="251.52798"
+                   height="240.41631"
+                   width="38.385815"
+                   id="rect3815-6" /></flowRegion><flowPara
+                 id="flowPara3817-8">USERS</flowPara></flowRoot>            <flowRoot
+               xml:space="preserve"
+               id="flowRoot4044"
+               style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:tb-rl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+               transform="translate(669.16464,335.21676)"><flowRegion
+                 id="flowRegion4046"><rect
+                   id="rect4048"
+                   width="38.385815"
+                   height="240.41631"
+                   x="251.52798"
+                   y="303.66797"
+                   style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:tb-rl;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /></flowRegion><flowPara
+                 id="flowPara4050">ADMINISTRATOR</flowPara></flowRoot>          </g>
+          <flowRoot
+             transform="translate(46.468875,527.4708)"
+             style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+             id="flowRoot4052"
+             xml:space="preserve"><flowRegion
+               id="flowRegion4054"><rect
+                 y="267.30249"
+                 x="424.26407"
+                 height="80.812218"
+                 width="460.62955"
+                 id="rect4056" /></flowRegion><flowPara
+               id="flowPara4068"
+               style="font-size:12px">- Creates/removes users in his group</flowPara><flowPara
+               id="flowPara4070"
+               style="font-size:12px">- Can change the profile for the users of his group (including their status: registered user, editor, reviewer: can promote them to higher rank).</flowPara><flowPara
+               id="flowPara4072"
+               style="font-size:12px">- Can see / create /edit / delete anay metadata belonging to his group</flowPara><flowPara
+               id="flowPara4074"
+               style="font-size:12px">-<flowSpan
+   style="font-style:italic"
+   id="flowSpan3108"> Inherits the Reviewer's rights</flowSpan></flowPara><flowPara
+               style="font-size:12px"
+               id="flowPara4062" /><flowPara
+               style="font-size:12px"
+               id="flowPara4064" /></flowRoot>        </g>
+        <g
+           id="g3831"
+           transform="translate(-106.10663,-199.92898)">
+          <rect
+             y="593.75293"
+             x="500.02551"
+             height="280.82242"
+             width="469.72095"
+             id="rect3041"
+             style="color:#000000;fill:#ececec;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             ry="8.0812206" />
+          <flowRoot
+             xml:space="preserve"
+             id="flowRoot3811"
+             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:tb-rl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+             transform="translate(664.68038,392.11036)"><flowRegion
+               id="flowRegion3813"><rect
+                 id="rect3815"
+                 width="38.385815"
+                 height="240.41631"
+                 x="251.52798"
+                 y="303.66797"
+                 style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:tb-rl;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /></flowRegion><flowPara
+               id="flowPara3817">REVIEWER</flowPara></flowRoot>          <flowRoot
+             transform="translate(-40.390723,335.54182)"
+             style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+             id="flowRoot3819"
+             xml:space="preserve"><flowRegion
+               id="flowRegion3821"><rect
+                 y="474.38376"
+                 x="567.70575"
+                 height="59.599022"
+                 width="386.8884"
+                 id="rect3823" /></flowRegion><flowPara
+               style="font-size:12px"
+               id="flowPara3825">- Can publish (make public) his metadata, and the metadata from the editors in his group(s)</flowPara><flowPara
+               id="flowPara3829"
+               style="font-size:12px">- I<flowSpan
+   id="flowSpan4015"
+   style="font-style:italic;-inkscape-font-specification:Arial Italic">nherits the Editor's rights</flowSpan></flowPara></flowRoot>        </g>
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4089"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:tb-rl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+           transform="translate(677.24586,344.30812)"><flowRegion
+             id="flowRegion4091"><rect
+               id="rect4093"
+               width="38.385815"
+               height="240.41631"
+               x="251.52798"
+               y="303.66797"
+               style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:tb-rl;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /></flowRegion><flowPara
+             id="flowPara4095">ADMINISTRATOR</flowPara></flowRoot>        <g
+           id="g3110">
+          <flowRoot
+             xml:space="preserve"
+             id="flowRoot4097"
+             style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+             transform="translate(-3.0286031,509.28805)"><flowRegion
+               id="flowRegion4099"><rect
+                 id="rect4101"
+                 width="495.98483"
+                 height="114.14726"
+                 x="424.26407"
+                 y="267.30249" /></flowRegion><flowPara
+               style="font-size:12px"
+               id="flowPara4107" /><flowPara
+               id="flowPara4113"
+               style="font-size:12px">- Has all rights to create / remove groups and users</flowPara><flowPara
+               id="flowPara4129"
+               style="font-size:12px">- Can change the profile for the users of <flowSpan
+   style="font-weight:bold"
+   id="flowSpan3123">any</flowSpan> group (including their status: registered user, editor, reviewer: can promote them to higher rank).</flowPara><flowPara
+               id="flowPara4131"
+               style="font-size:12px">- Can see / create / edit / remove any metadata</flowPara><flowPara
+               id="flowPara4133"
+               style="font-size:12px">- Administers the geocatalog</flowPara><flowPara
+               id="flowPara4126"
+               style="font-size:12px">- Inherits the User Administrator's rights</flowPara><flowPara
+               id="flowPara4115"
+               style="font-size:12px" /></flowRoot>        </g>
+        <g
+           id="g3833"
+           transform="translate(-269.22596,-397.91888)"
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none">
+          <rect
+             y="802.21863"
+             x="675.00873"
+             height="189.94057"
+             width="378.35608"
+             id="rect2985"
+             style="color:#000000;fill:#f9f9f9;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             ry="7.0710678" />
+          <flowRoot
+             transform="translate(745.99766,559.79568)"
+             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:tb-rl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+             id="flowRoot3763"
+             xml:space="preserve"><flowRegion
+               id="flowRegion3765"><rect
+                 style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:tb-rl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+                 y="303.66797"
+                 x="251.52798"
+                 height="240.41631"
+                 width="38.385815"
+                 id="rect3767" /></flowRegion><flowPara
+               id="flowPara3769">EDITOR</flowPara></flowRoot>          <flowRoot
+             transform="translate(-21.719046,386.55452)"
+             style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+             id="flowRoot2991"
+             xml:space="preserve"><flowRegion
+               id="flowRegion2993"><rect
+                 y="519.84064"
+                 x="711.1474"
+                 height="106.06604"
+                 width="320.21835"
+                 id="rect2995"
+                 style="fill:#000000;fill-opacity:1;stroke:none" /></flowRegion><flowPara
+               style="font-size:12px;fill:#000000;fill-opacity:1;stroke:none"
+               id="flowPara2997">- Edits his metadata</flowPara><flowPara
+               style="font-size:12px;fill:#000000;fill-opacity:1;stroke:none"
+               id="flowPara2999">- Published his metadata, but internally only</flowPara><flowPara
+               id="flowPara3007"
+               style="font-size:12px;fill:#000000;fill-opacity:1;stroke:none">- Imports MEF files</flowPara><flowPara
+               style="font-size:12px;fill:#000000;fill-opacity:1;stroke:none;font-style:italic"
+               id="flowPara4011">- Inherits the Registered User's rights</flowPara><flowPara
+               style="font-size:12px;fill:#000000;fill-opacity:1;stroke:none"
+               id="flowPara3001" /></flowRoot>        </g>
+        <g
+           transform="translate(-205.62696,-380.74628)"
+           id="g3951"
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none">
+          <g
+             style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+             id="g3995"
+             transform="translate(-52.527933,-33.335034)">
+            <rect
+               ry="8.0812206"
+               y="827.47241"
+               x="676.01886"
+               height="71.752716"
+               width="305.62509"
+               id="rect3953"
+               style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          </g>
+          <flowRoot
+             xml:space="preserve"
+             id="flowRoot3955"
+             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:tb-rl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+             transform="translate(625.7895,512.31851)"><flowRegion
+               id="flowRegion3957"><rect
+                 id="rect3959"
+                 width="192.93915"
+                 height="41.416306"
+                 x="205.06097"
+                 y="286.49536"
+                 style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:tb-rl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial" /></flowRegion><flowPara
+               style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+               id="flowPara3979">REGISTERED</flowPara><flowPara
+               style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+               id="flowPara3079">USER</flowPara></flowRoot>          <flowRoot
+             xml:space="preserve"
+             id="flowRoot3963"
+             style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+             transform="translate(-84.852815,313.35907)"><flowRegion
+               id="flowRegion3965"><rect
+                 style="fill:#000000;fill-opacity:1;stroke:none"
+                 id="rect3967"
+                 width="224.25383"
+                 height="33.335056"
+                 x="711.1474"
+                 y="519.84064" /></flowRegion><flowPara
+               id="flowPara3977"
+               style="font-size:12px;fill:#000000;fill-opacity:1;stroke:none">- Can download protected data</flowPara><flowPara
+               style="font-size:12px;fill:#000000;fill-opacity:1;stroke:none"
+               id="flowPara3100">- Sees the metadata from the groups he belongs to</flowPara></flowRoot>        </g>
+      </g>
+    </g>
+  </g>
+</svg>
