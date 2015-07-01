@@ -42,8 +42,8 @@
 *Other documents:*
 
 
-- `User Manual <../../userdoc/html/index.html>`_
+- `User Manual <../../../geoportal/build/html/index.html>`_
 
-- `User Manual (PDF) <../../userdoc/latex/RiskManagementGeoportal-Gambia.pdf>`_
+- `User Manual (PDF) <../../../geoportal/build/latex/RiskManagementGeoportal-Burundi.pdf>`_
 
-- `Editor & Administrator (PDF) <../../admindoc/latex/RiskManagementGeoportal-Gambia-EditorManual.pdf>`_
+- `Editor & Administrator (PDF) <../../../geoportal-admin/build/latex/RiskManagementGeoportal-Burundi-EditorManual.pdf>`_

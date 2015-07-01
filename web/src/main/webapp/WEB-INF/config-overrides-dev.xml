@@ -49,7 +49,7 @@
                                 	<validationQuery>SELECT 1</validationQuery>
                                 </config>
                         </resource>
--->                        <resource enabled="true">
+                        <resource enabled="true">
                                 <name>bi_risk_geodata</name>
                                 <provider>jeeves.resources.dbms.ApacheDBCPool</provider>
                                 <config>
@@ -61,7 +61,7 @@
                                 	<validationQuery>SELECT 1</validationQuery>
                                 </config>
                         </resource>
-               </replaceXML>   
+ -->              </replaceXML>   
         </file>
        	<file name=".*/WEB-INF/config-gui.xml">
 			<replaceAtt xpath="client" attName="widget" value="true" />

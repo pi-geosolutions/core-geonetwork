@@ -69,12 +69,12 @@ Après avoir correctement publié les données sur l'instance |gs| *de votre ord
 
 Pour cela, vous devrez en premier lieu placer les données sur le serveur et obtenir un identifiant pour vous connecter à l'instance |gs| du serveur.
 
-Pour transférer les données sur le serveur, vous devez vous adresser à l'`Administrateur Système <jean.pommier@pi-geosolutions.fr>`_du Géoportail.
+Pour transférer les données sur le serveur, vous devez vous adresser à l'`Administrateur Système <jean.pommier@pi-geosolutions.fr>`_ du Géoportail.
 Selon que vous allez publier régulièrement des données, ou biend e façon très occasionnelle, il vous fournira un accès sur le serveur, ou bien il vous demandera de lui fournir les données
 de sorte qu'il les place lui-même sur le serveur.
 
 Pour avoir un identifiant |gs|, vous devrez vous adresser à quelqu'un disposant de droits d'administration dans |gs|. Vous pouvez aussi vous adresser à 
-l'`Administrateur Système <jean.pommier@pi-geosolutions.fr>`_du Géoportail.
+l'`Administrateur Système <jean.pommier@pi-geosolutions.fr>`_ du Géoportail.
 
 |gs| : se connecter et publier un jeu de données
 ------------------------------------------------

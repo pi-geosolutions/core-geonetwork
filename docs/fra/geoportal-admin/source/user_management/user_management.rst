@@ -29,7 +29,7 @@ de sorte à les informer  que la donnée existe et qui contacter pour en savoir 
 
 C'est à ça que servent les groupes et le système de privilèges qui va avec.
 
-Voir la `documentation sur les groupes <http://geonetwork-opensource.org/manuals/2.10.3/eng/users/admin/usersandgroups/index.html#creating-new-user-groups>`_ (en anglais)
+Voir la `documentation sur les groupes <http://geonetwork-opensource.org/manuals/2.10.4/eng/users/admin/usersandgroups/index.html#creating-new-user-groups>`_ (en anglais)
 dans la documentation |gn|.
 
 Profils utilisateurs
@@ -50,7 +50,7 @@ groupe "Ministère de l'intérieur".
 Cela permet une gestion fine des droits d'accès, d'édition et de configuration du portail.
 
 
-Voir `User Profiles documentation <http://geonetwork-opensource.org/manuals/2.10.3/eng/users/admin/usersandgroups/index.html#creating-new-users>`_ (en anglais) dans la documentation |gn|.
+Voir `User Profiles documentation <http://geonetwork-opensource.org/manuals/2.10.4/eng/users/admin/usersandgroups/index.html#creating-new-users>`_ (en anglais) dans la documentation |gn|.
 
 Propriété et privilèges
 -----------------------
@@ -73,7 +73,7 @@ Pour que cela se fasse facilement, il faut transférer la propriété de ses mé
 
 .. note:: il faut un profil *Administrateur d'utilisateurs* au moins pour pouvoir réaliser un transfert de propriété.
 
-Voir `ownership transfer <http://geonetwork-opensource.org/manuals/2.10.3/eng/users/managing_metadata/ownership/index.html#transfer-ownership>`_ (en anglais) dans la documentation |gn|.
+Voir `ownership transfer <http://geonetwork-opensource.org/manuals/2.10.4/eng/users/managing_metadata/ownership/index.html#transfer-ownership>`_ (en anglais) dans la documentation |gn|.
 
 
 .. _privileges:
@@ -83,7 +83,7 @@ Privilèges
 
 Les privilèges sont la raison d'être de la structure par groupes : il est possible, pour une métadonnée, de définir différents droits d'accès (privilèges) en fonction des groupes.
 
-Voir `privileges <http://geonetwork-opensource.org/manuals/2.10.3/eng/users/managing_metadata/ownership/index.html#setting-privileges-on-a-metadata-record>`_ (en anglais) dans la 
+Voir `privileges <http://geonetwork-opensource.org/manuals/2.10.4/eng/users/managing_metadata/ownership/index.html#setting-privileges-on-a-metadata-record>`_ (en anglais) dans la 
 documentation |gn|.
 
 .. note:: Les privilèges d'une métadonnée puvent être définis soit ar son propriétaire, soit par un *Relecteur* ou *Administrateur d'utilisateurs* du groupe auquel est associée la 

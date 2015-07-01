@@ -5,7 +5,7 @@ Introduction
 ============
 
 The |project| application is actually an extension over `GeoNetwork OpenSource <http://geonetwork-opensource.org>`_, a metadata catalog project, 
-focusing on mapping features, backed by `GeoServer <http://www.geoserver.org>`_ map server software.
+focusing on mapping features, backed by `GeoServer <http://geoserver.org>`_ map server software.
 
 This documentation will thus intensively refer to GeoNetwork documentation, when dealing with metadata management, and to GeoServer documentation
 when dealing about cartographic layers management.
@@ -19,7 +19,7 @@ means to plug custom public interfaces on top of |gn| standard features.
 The |project| makes use of this capacity and is build as a |gn| *widget*, extending the mapping capacity.
 
 While the public interface is totally specific to the |project| project, and properly documented in its 
-`User Manual <http://gm-risk.pigeo.fr/docs/userdoc/html/index.html>`_,  the editor and administration parts are massively native |gn| software 
+`User Manual <../../../../geoportal/build/html/index.html>`_,  the editor and administration parts are massively native |gn| software 
 (and |gs| software as for the cartographic layers conception).
 
 The main administration panel is thus the same as standard |gn|, except for the layertree management parts.

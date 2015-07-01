@@ -6,7 +6,7 @@ Métadonnées
 ===========
 
 Pour une introduction sur les métadonnées, veuillez lire  
-`Viewing and Analysing the Data <http://geonetwork-opensource.org/manuals/2.10.3/eng/users/quickstartguide/viewing/index.html>`_ 
+`Viewing and Analysing the Data <http://geonetwork-opensource.org/manuals/2.10.4/eng/users/quickstartguide/viewing/index.html>`_ 
 dans la  documentation |gn|.
 
 
@@ -57,7 +57,7 @@ Pour créer une nouvelle métadonnée, il faut tout d'abord être connecté (voi
 
 #. Enfin, cliquez sur *Créer*. Ca ouvrira la fiche de la nouvelle métadonnée en mode *Edition*.
 
-Puis, pour l'édition, voir `la section correspondante <geonetwork-opensource.org/manuals/2.10.3/eng/users/quickstartguide/new_metadata/index.html>`_ dans la 
+Puis, pour l'édition, voir `la section correspondante <http://geonetwork-opensource.org/manuals/2.10.4/eng/users/quickstartguide/new_metadata/index.html>`_ dans la 
 documentation |gn|.
 
 
@@ -105,7 +105,7 @@ Utiliser les modèles
 --------------------
 
 Pour une description des modèles tels qu'ils sont définis dans |gn|, veuillez vous référer à
-`Templates <http://geonetwork-opensource.org/manuals/2.10.3/eng/users/managing_metadata/templates/index.html>`_.
+`Templates <http://geonetwork-opensource.org/manuals/2.10.4/eng/users/managing_metadata/templates/index.html>`_.
 
 Les modèles peuvent être très utiles pour gagner du temps lors de la création de multiples métadonnées semblables entre elles : créer un modèle contenant tout le contenu commun aux 
 métadonnées considérées (points de contact, étendue, mots-clefs communs, etc) puis utiliser ce modèle comme base pour la création des métadonnées.

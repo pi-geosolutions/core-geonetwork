@@ -36,25 +36,25 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General substitutions.
-project = u'Geoportal for Risk Management for Gambia'
-manual = u'Editor & Administrator Manual'
+project = u'Géoportail pour la Gestion des Risques au Burundi'
+manual = u'Manuel Editeur & Administrateur'
 copyright = u'Jean Pommier, jean.pommier@pi-geosolutions.fr'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '2.10.3-1'
+version = '2.10.3-2'
 # The full version, including alpha/beta/rc tags.
-release = '2.10.3-1'
+release = '2.10.3-2'
 
-language = 'en'
+language = 'fr'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
 #today = ''
 # Else, today_fmt is used as the format for a strftime call.
-today_fmt = '%B %d, %Y'
+today_fmt = '%d/%m/%Y'
 
 # List of documents that shouldn't be included in the build.
 #unused_docs = []
@@ -166,7 +166,7 @@ latex_font_size = '11pt'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, document class [howto/manual]).
 latex_documents = [
-  ('index', 'RiskManagementGeoportal-Gambia-EditorManual.tex', u'Geoportal for Risk Management for Gambia, Editor and Administrator Manual',
+  ('index', 'RiskManagementGeoportal-Burundi-EditorManual.tex', u'Géoportail pour la Gestion des Risques au Burundi, Manuel Editeurs et Administrateurs',
    u'Jean Pommier', 'manual'),
 ]
 

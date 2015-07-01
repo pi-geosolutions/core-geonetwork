@@ -23,7 +23,7 @@ User profiles in |gn|
    
 There are several profile levels:
 
-- **Plain user**, unregistered, cannot log in. He has only access to what is described in the `User Manual <http://gm-risk.pigeo.fr/docs/userdoc/html/index.html>`_.
+- **Plain user**, unregistered, cannot log in. He has only access to what is described in the `User Manual <../../../../geoportal/build/html/index.html>`_.
 
 - **Registered User** has access to some restricted metadata and data.
 

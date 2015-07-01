@@ -24,7 +24,7 @@ Profils utilisateur dans |gn|
    
 Il y a plusieurs niveaux de profils : 
 
-- **Utilisateur basique** : non-identifié, ne peut pas se connecter. Il a seulement accès à ce qui est décrit dans le  `Manuel Utilisateur <../../../userdoc/html/index.html>`_.
+- **Utilisateur basique** : non-identifié, ne peut pas se connecter. Il a seulement accès à ce qui est décrit dans le  `Manuel Utilisateur <../../../../geoportal/build/html/index.html>`_.
 
 - **Utilisateur enregistré** : il a accès à certaines métadonnées et données resteintes aux groupes auxquels il appartient.
 

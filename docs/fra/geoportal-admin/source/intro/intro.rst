@@ -5,7 +5,7 @@ Introduction
 ============
 
 L'application |project| est en fait une extension réalisée par-dessus `GeoNetwork OpenSource <http://geonetwork-opensource.org>`_, une application de géocatalogue,
-centrée sur la cartographie des données, et soutenue par le serveur cartographique `GeoServer <http://www.geoserver.org>`_.
+centrée sur la cartographie des données, et soutenue par le serveur cartographique `GeoServer <http://geoserver.org>`_.
 
 Cette documentation fera donc de nombreuses références à la documentation GeoNetwork, au sujet de la gestion des métadonnées, et à la documentation de GeoServer lorsqu'il 
 s'agira de la gestion des couches cartographiques.
@@ -19,7 +19,7 @@ s'agira de la gestion des couches cartographiques.
 Le |project|  fait usage de cette capacité et est construit comme un *widget* pour |gn|, enrichissant la partie cartographique.
 
 Alors que la partie interface publique est entièrement spécifique au projet |project|, et dûment documentée dans le 
-`Manuel Utilisateurs <../../../userdoc/html/index.html>`_,  les parties éditeur et administrateur sont massivement héritées de |gn| (et |gs| pour ce qui touche à la conception 
+`Manuel Utilisateurs <../../../../geoportal/build/html/index.html>`_,  les parties éditeur et administrateur sont massivement héritées de |gn| (et |gs| pour ce qui touche à la conception 
 des données cartographiques).
 
 Le panneau principal d'administration est donc le même que pour une instance standard de |gn|, à part opur la partie gestion du Référentiel de Données Cartographiques.

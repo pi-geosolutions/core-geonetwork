@@ -89,6 +89,11 @@ if (window.Geoportal.online) {
 	}
 	
 	GeoNetwork.map.BACKGROUND_LAYERS.push(new OpenLayers.Layer.OSM());
+	GeoNetwork.map.BACKGROUND_LAYERS.push(new OpenLayers.Layer.OSM("OpenStreetMap Humanitarian",
+			["http://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png",
+			   "http://b.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png",
+			   "http://c.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png"]
+			));
 }
 
 //// Config for OSM based maps

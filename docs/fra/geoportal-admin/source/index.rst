@@ -41,8 +41,8 @@
 
 *Autres documents :*
 
-- `Manuel Utilisateur <../../userdoc/html/index.html>`_
+- `Manuel Utilisateur <../../../geoportal/build/html/index.html>`_
 
-- `Manuel Utilisateur (PDF) <../../userdoc/latex/RiskManagementGeoportal-Burundi.pdf>`_
+- `Manuel Utilisateur (PDF) <../../../geoportal/build/latex/RiskManagementGeoportal-Burundi.pdf>`_
 
-- `Manuel Editeur & Administrateur (PDF) <../../admindoc/latex/RiskManagementGeoportal-Burundi-EditorManual.pdf>`_
+- `Manuel Editeur & Administrateur (PDF) <../../../geoportal-admin/build/latex/RiskManagementGeoportal-Burundi-EditorManual.pdf>`_

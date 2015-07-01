@@ -6,7 +6,7 @@ Metadata workflow
 =================
 
 As a preliminary about Metadata, please read 
-`Viewing and Analysing the Data <http://geonetwork-opensource.org/manuals/2.10.3/eng/users/quickstartguide/viewing/index.html>`_ 
+`Viewing and Analysing the Data <http://geonetwork-opensource.org/manuals/2.10.4/eng/users/quickstartguide/viewing/index.html>`_ 
 in |gn| documentation.
 
 
@@ -57,7 +57,7 @@ To create a new Metadata, you need to be logged in (see :ref:`login`), will an *
 
 #. Press *Create*. It will open the new metadata sheet in *Edit* mode.
 
-Then, for the edition, see `the corresponding section <geonetwork-opensource.org/manuals/2.10.3/eng/users/quickstartguide/new_metadata/index.html>`_ in 
+Then, for the edition, see `the corresponding section <http://geonetwork-opensource.org/manuals/2.10.4/eng/users/quickstartguide/new_metadata/index.html>`_ in 
 |gn| documentation.
 
 Publish a metadata
@@ -106,7 +106,7 @@ Using Templates
 ---------------
 
 For a description of the Templates as used in |gn|, see the corresponding 
-`Templates section <http://geonetwork-opensource.org/manuals/2.10.3/eng/users/managing_metadata/templates/index.html>`_.
+`Templates section <http://geonetwork-opensource.org/manuals/2.10.4/eng/users/managing_metadata/templates/index.html>`_.
 
 Templates can be very useful to gain some time when creating several quite similar metadata: create a template will all those metadata will have in common 
 (points of contact, extent, common keywords, etc), and then create your metadata using this template, at the creation time.
