@@ -65,7 +65,7 @@ public class GetChartData implements Service {
     } 
 
     private Element getFeatures(Dbms dbms, String table, String fields, String where) throws SQLException {
-        String req = "SELECT "+this.quote(fields)+" FROM \""+table+"\" ";
+        String req = "SELECT "+this.quoteFields(fields)+" FROM "+this.quoteTable(table)+" ";
         if (where!="") {
             req += "WHERE " +where;
         }
@@ -81,7 +81,7 @@ public class GetChartData implements Service {
         return features;
     }
 
-    private String quote(String fields) {
+    private String quoteFields(String fields) {
         String fieldslist="";
         String[] tb = fields.split(",");
         for (int i=0 ; i  < tb.length ; i++) {
@@ -90,5 +90,12 @@ public class GetChartData implements Service {
         fieldslist = fieldslist.substring(0, fieldslist.length() -1); //trim last comma
         
         return fieldslist;
+    }
+    
+    private String quoteTable(String tbname) {
+        String quotedName="\""+tbname+"\"";
+        //in case we use schemas names (schema distinct from public), we must split the schema name and the table name, and quote each
+        quotedName = quotedName.replace(".", "\".\"");
+        return quotedName;
     }
 }

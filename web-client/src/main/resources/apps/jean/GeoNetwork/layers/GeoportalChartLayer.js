@@ -232,7 +232,7 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 			
 			svgSublayer.data.forEach(function(d) {
 				d[params.values_dbfield] = +d[params.values_dbfield];
-				d[params.labels_dbfield] = +d[params.labels_dbfield];
+				d[params.labels_dbfield] = d[params.labels_dbfield];
 				d[params.join_dbfield] = +d[params.join_dbfield];
 			});
 			svgSublayer.svg_level = this.svg_g.append("g")
