@@ -272,10 +272,10 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 			function makeBars(geo) {
 				var width = getSize(params.chartsize, geo.properties, svgSublayer.data, null);
 			    	height = width;
-
+			    	
 				var y = d3.scale.linear()
 				    .range([height, 0]);
-	
+				
 				var chart = d3.select(".chart")
 				    .attr("width", width)
 				    .attr("height", height);
@@ -283,9 +283,10 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 				var bardata = svgSublayer.data.filter(function(d) {	return d[params.join_dbfield]==geo.properties[params.join_geofield]});
 				
 				y.domain([0, d3.max( bardata
-										, function(d) { return d.area; })]);
+										, function(d) { 
+					//console.log(d);console.log(d[params.values_dbfield]); 
+					return d[params.values_dbfield]; })]);
 				var barWidth = width / bardata.length;
-				
 				var g = d3.select(this).selectAll(".chart")
 				.data(bardata)
 				.enter().append("g")
@@ -293,8 +294,8 @@ GeoNetwork.layers.GeoportalChartLayer = Ext.extend(GeoNetwork.layers.GeoportalAb
 					.attr("transform", function(d, i) { return "translate(" + i * barWidth + ",-"+height+")"; });
 
 				g.append("rect")
-			      .attr("y", function(d) { return y(d.area); })
-			      .attr("height", function(d) { return height - y(d.area); })
+			      .attr("y", function(d) { return y(d[params.values_dbfield]); })
+			      .attr("height", function(d) { return height - y(d[params.values_dbfield]); })
 			      .attr("width", barWidth - 1)
 			      .style("fill", function(d) { return me.getColor(d[params.labels_dbfield]); });
 				/*g.append("text")
