@@ -1,49 +1,83 @@
-<div class="navbar navbar-default gn-top-bar" role="navigation"
-     data-ng-include="'../../catalog/templates/top-toolbar.html'"
-     xmlns="http://www.w3.org/1999/html">
-</div>
+<div id="main-container" ng-controller="MainController as mainCtrl">
 
-<div data-gn-alert-manager=""></div>
+  <!--Header-->
+  <header class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="http://localhost:8080/geonetwork" target="_blank">
+          <img class="respimg" width="180" alt="ResEau" src="http://pigeo.fr:8080/gm-risk-gn2_10/apps/images/logos/Coat_of_Arms_of_The_Gambia.svg.png" style="">
+        </a>
+        <div class="portaltitle">
+          <span class="title">{{::mainCtrl.siteTitle}}</span>
+          <span>{{::mainCtrl.siteSubTitle}}</span>
+        </div>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <un-search un-search-map="mainCtrl.map"></un-search>
+      </ul>
+    </div>
+  </header>
 
-<div class="gn-search-page"
-     data-ng-controller="GnSearchController">
-  <cookiewarning></cookiewarning>
-  <div class=""
-       data-ng-controller="gnsDefault">
-    <gn-extend-mainctrl></gn-extend-mainctrl>
+  <!--Container-->
+  <div id="map-container" >
+    <div id="sidebar" ng-class="{open: mainCtrl.sidebarOpen()}"
+         ngeo-resizemap="mainCtrl.map" ngeo-resizemap-state="mainCtrl.sidebarOpen()">
 
-    <div data-ng-include="'../../catalog/views/default/templates/home.html'"
-         data-ng-show="activeTab == '/home'"/>
-    <div data-ng-include="'../../catalog/views/default/templates/results.html'"
-         data-ng-show="activeTab == '/search'"/>
-    <div data-ng-if="isMapViewerEnabled" 
-         data-ng-include="'../../catalog/views/default/templates/map.html'"
-         data-ng-show="activeTab == '/map'"/>
-    <div data-ng-include="'../../catalog/views/default/templates/recordView.html'"
-         data-ng-show="activeTab == '/metadata'"/>
+      <!--Layers sidebar-->
+      <div id="layers" data-ng-show="mainCtrl.layersOpen">
+        <h2 translate>layers</h2>
+        <button class="close-panel" ng-click="mainCtrl.closeSidebar()">
+          ✕
+        </button>
+
+        <!--Tab panel header-->
+        <ul class="nav nav-tabs">
+          <li role="presentation" class="active">
+            <a href="#layertree" data-toggle="tab">
+              <span translate>mylayers</span>
+              <span ng-if="mainCtrl.selectedLayers.length > 0">({{mainCtrl.selectedLayers.length}})</span>
+            </a>
+          </li>
+          <li role="presentation">
+            <a href="#layermanager" data-toggle="tab" translate>catalog</a>
+          </li>
+        </ul>
+
+        <!--Tab panel content-->
+        <div class="tab-content">
+
+          <!--Mymap, list of inmap layer-->
+          <div id="layertree" class="tab-pane active">
+            <app-backgroundlayer app-backgroundlayer-map="::mainCtrl.map"></app-backgroundlayer>
+            <un-layermanager un-layermanager-map="::mainCtrl.map"
+                             un-layermanager-layers="::mainCtrl.selectedLayers">
+            </un-layermanager>
+            <div class="text-center">
+              <button class="btn btn-default" ng-click="mainCtrl.showTab('a[href=#catalog]');" translate>+ Ajouter</button>
+            </div>
+            <!--            <button data-ng-if="mainCtrl.selectedLayers.length > 0" class="btn btn-default" id="legendBtn" ng-click="mainCtrl.legendOpen = !mainCtrl.legendOpen">Légende</button>-->
+          </div>
+
+          <!--Catalog tree-->
+          <div id="layermanager" class="tab-pane">
+            <un-catalog un-catalog-map="::mainCtrl.map"></un-catalog>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="un-main-tools" ngeo-btn-group ng-class="{active: mainCtrl.sidebarOpen()}">
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.layersOpen"><span class="icon layers"></span><span role="tooltip">Mes couches</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.importOpen"><span class="fa fa-plus"></span><span role="tooltip">Import de couches externes</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.contextOpen"><i class="icon map"></i><span role="tooltip">Mes cartes</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.printOpen"><i class="fa fa-print"></i><span role="tooltip">Impression</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.mInteraction.active"><i class="icon measure"></i><span role="tooltip">Mesure</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.drawOpen"><i class="fa fa-pencil"></i><span role="tooltip">Annotations</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.legendOpen"><i class="fa fa-list"></i><span role="tooltip">Légendes</span></button>
+    </div>
+
+    <div ngeo-map="mainCtrl.map">
+    </div>
+
   </div>
-</div>
-
-
-<div class="navbar navbar-default gn-bottom-bar">
-  <ul class="nav navbar-nav">
-    <li><a href="http://geonetwork-opensource.org/">
-      <i class="fa fa-fw"></i>
-      <span data-translate="">about</span>
-    </a></li>
-    <li class="hidden-sm"><a href="https://github.com/geonetwork/core-geonetwork">
-      <i class="fa fa-github"></i>
-      <span data-translate="">github</span></a></li>
-    <li>
-      <a data-translate=""
-         data-translate-values="{platform: '{{info.site.platform.name}}', version: '{{info.site.platform.version}}', subversion: '{{info.site.platform.subVersion}}'}">
-        versionDetails</a>
-    </li>
-    <li>
-      <a href="rss.search?sortBy=changeDate&georss=simplepoint"
-              title="{{'lastRecords' | translate}}">
-        <i class="fa fa-rss"/>
-      </a>
-    </li>
-  </ul>
 </div>
