@@ -6,21 +6,54 @@
 @fa-version: '4.3.0';
 @fa-font-path: '../catalog/lib/style/font-awesome/fonts';
 
-@header-height: 80px;
+@header-height: 60px;
 @sidebar-width: 320px;
+@sidebar-left-offset: 40px;
+@sidebar-top-offset: 30px;
 
 @import "themes.less";
 @import "layout.less";
+@import "olcontrols.less";
+@import "catalog.less";
 
-
-.close-panel {
-  font-size: 16px;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  background: none;
-  border: 0;
-  color: #fff;
-  line-height: 1;
+@font-face {
+  font-family: 'mapicon';
+  src: url('../catalog/views/niger/less/font/icons.woff') format('woff');
 }
+
+.icon {
+  font-family: mapicon;
+  font-style: normal;
+
+  &.layers:after {
+    content: '\e00e';
+  }
+  &.measure:after {
+    content: '\e021';
+  }
+  &.map:after {
+    content: '\e02c';
+  }
+  &:after {
+    text-align: center;
+    width: 100%;
+    font-size: 13px;
+  }
+}
+[role=tooltip] {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  left: 82px;
+  top: 100px;
+  z-index: 1060;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(125, 125, 125, 0.7);
+}
+
 

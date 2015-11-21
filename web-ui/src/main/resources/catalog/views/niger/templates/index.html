@@ -18,11 +18,17 @@
     </div>
   </header>
 
-  <!--Container-->
-  <div id="map-container" >
-    <div id="sidebar" ng-class="{open: mainCtrl.sidebarOpen()}"
-         ngeo-resizemap="mainCtrl.map" ngeo-resizemap-state="mainCtrl.sidebarOpen()">
+  <div id="sidebar" ng-class="{open: mainCtrl.sidebarOpen()}">
 
+    <div id="sidebar-header" class="un-main-tools" ngeo-btn-group ng-class="{active: mainCtrl.sidebarOpen()}">
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.layersOpen"><span class="icon layers"></span><span role="tooltip">Mes couches</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.importOpen"><span class="fa fa-plus"></span><span role="tooltip">Import de couches externes</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.contextOpen"><i class="icon map"></i><span role="tooltip">Mes cartes</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.printOpen"><i class="fa fa-print"></i><span role="tooltip">Impression</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.mInteraction.active"><i class="icon measure"></i><span role="tooltip">Mesure</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.legendOpen"><i class="fa fa-list"></i><span role="tooltip">Légendes</span></button>
+    </div>
+    <div id="sidebar-content">
       <!--Layers sidebar-->
       <div id="layers" data-ng-show="mainCtrl.layersOpen">
         <h2 translate>layers</h2>
@@ -30,16 +36,19 @@
           ✕
         </button>
 
+        <!--Background layer combo-->
+        <app-backgroundlayer app-backgroundlayer-map="::mainCtrl.map"></app-backgroundlayer>
+
         <!--Tab panel header-->
         <ul class="nav nav-tabs">
           <li role="presentation" class="active">
-            <a href="#layertree" data-toggle="tab">
+            <a href="#layermanager" data-toggle="tab">
               <span translate>mylayers</span>
               <span ng-if="mainCtrl.selectedLayers.length > 0">({{mainCtrl.selectedLayers.length}})</span>
             </a>
           </li>
           <li role="presentation">
-            <a href="#layermanager" data-toggle="tab" translate>catalog</a>
+            <a href="#layertree" data-toggle="tab" translate>catalog</a>
           </li>
         </ul>
 
@@ -47,37 +56,27 @@
         <div class="tab-content">
 
           <!--Mymap, list of inmap layer-->
-          <div id="layertree" class="tab-pane active">
-            <app-backgroundlayer app-backgroundlayer-map="::mainCtrl.map"></app-backgroundlayer>
+          <div id="layermanager" class="tab-pane active">
             <un-layermanager un-layermanager-map="::mainCtrl.map"
                              un-layermanager-layers="::mainCtrl.selectedLayers">
             </un-layermanager>
             <div class="text-center">
-              <button class="btn btn-default" ng-click="mainCtrl.showTab('a[href=#catalog]');" translate>+ Ajouter</button>
+              <button class="btn btn-default" ng-click="mainCtrl.showTab('a[href=#layertree]');" translate>+ Ajouter</button>
             </div>
-            <!--            <button data-ng-if="mainCtrl.selectedLayers.length > 0" class="btn btn-default" id="legendBtn" ng-click="mainCtrl.legendOpen = !mainCtrl.legendOpen">Légende</button>-->
           </div>
 
           <!--Catalog tree-->
-          <div id="layermanager" class="tab-pane">
-            <un-catalog un-catalog-map="::mainCtrl.map"></un-catalog>
+          <div id="layertree" class="tab-pane">
+            <app-catalog app-catalog-map="::mainCtrl.map"></app-catalog>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="un-main-tools" ngeo-btn-group ng-class="{active: mainCtrl.sidebarOpen()}">
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.layersOpen"><span class="icon layers"></span><span role="tooltip">Mes couches</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.importOpen"><span class="fa fa-plus"></span><span role="tooltip">Import de couches externes</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.contextOpen"><i class="icon map"></i><span role="tooltip">Mes cartes</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.printOpen"><i class="fa fa-print"></i><span role="tooltip">Impression</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.mInteraction.active"><i class="icon measure"></i><span role="tooltip">Mesure</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.drawOpen"><i class="fa fa-pencil"></i><span role="tooltip">Annotations</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.legendOpen"><i class="fa fa-list"></i><span role="tooltip">Légendes</span></button>
-    </div>
-
+  <!--Container-->
+  <div id="map-container" >
     <div ngeo-map="mainCtrl.map">
     </div>
-
   </div>
 </div>

@@ -5,12 +5,14 @@
   goog.require('gn_search');
   goog.require('gn_search_niger_config');
   goog.require('app.bglayer');
+  goog.require('app.catalog');
 
 
   var module = angular.module('gn_search_niger',[
     'gn_search',
     'gn_search_niger_config',
-    'app.bglayer'
+    'app.bglayer',
+    'app.catalog'
   ]);
 
   gn.MainController = function($scope) {
@@ -25,8 +27,8 @@
 
     this.map = new ol.Map({
       view: new ol.View({
-        center: [2081543.807860756, 1688640.2681711826],
-        zoom: 6
+        center: [-1761109.131690461, 1540970.4902291533],
+        zoom: 8
       }),
       controls: [
         new ol.control.Zoom({
@@ -34,7 +36,8 @@
           zoomOutTipLabel: 'Zoom arrière'
         }),
         new ol.control.ZoomToExtent({
-          extent: this.defaultExtent_,
+          extent: [-2091317.0938824224, 1267325.9289682223,
+            -1430901.1694984995, 1814615.0514900843],
           tipLabel: 'Emprise globale',
           className: 'un-zoom-extent',
           label:$(
