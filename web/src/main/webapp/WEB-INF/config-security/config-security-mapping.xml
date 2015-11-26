@@ -476,6 +476,16 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
                 <!-- Metadata identifier templates -->
                 <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/metadataIdentifierTemplates!?.*" access="hasRole('Editor')"/>
 
+                <!-- Pigeosolutions services -->
+                <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/pigeo.layertree.admin.get!?.*" access="permitAll"/>
+                <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/pigeo.layertree.get!?.*" access="permitAll"/>
+                <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/pigeo.ndvi.initialize!?.*" access="permitAll"/>
+                <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/pigeo.ndvi.listfiles!?.*" access="permitAll"/>
+                <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/pigeo.ndvi.getvalues!?.*" access="permitAll"/>
+                <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/pigeo.featureinfos.get!?.*" access="permitAll"/>
+                <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/pigeo.featureinfos.set!?.*" access="permitAll"/>
+                <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/testflo!?.*" access="permitAll"/>
+
                 <sec:intercept-url pattern="/error" access="permitAll"/>
                 <sec:intercept-url pattern="/home\?.*" access="permitAll"/>
                 <sec:intercept-url pattern="/home" access="permitAll"/>

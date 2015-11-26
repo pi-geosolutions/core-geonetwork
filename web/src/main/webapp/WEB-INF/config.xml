@@ -310,4 +310,6 @@
   <include>config/config-service-reports.xml</include>
 
   <include>config/config-service-inspireatom.xml</include>
+	<include>config-pigeo.xml</include>
+
 </geonet>
