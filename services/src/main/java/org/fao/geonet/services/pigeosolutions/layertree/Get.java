@@ -62,23 +62,29 @@ public class Get implements Service {
         Profile myProfile = usrSess.getProfile();
         String myUserId = usrSess.getUserId();
 
-        if (myProfile == null) { // guest "all" user
-            selectClause = "SELECT id, parentid, weight, isfolder, json, lastchanged FROM geoportal.nodes ";
-            whereClause1 = "WHERE parentid=0 ";
-            whereClause2 =                  " AND (id NOT IN (SELECT nodeid FROM geoportal.\"iNodeGroup\" WHERE groupid=1)) ORDER BY weight;";
-            loadNodes(con, layertreeXML, null, selectClause, whereClause1, whereClause2);
-        } else if (this.withGroups.equalsIgnoreCase("true") || myProfile == Profile.Administrator) {
-            GroupRepository groupRepo = gc.getBean(GroupRepository.class);
-            List<Group> groups = groupRepo.findAll();
-            selectClause = "SELECT id, parentid, weight, isfolder, json, lastchanged, excludes, excludes_id FROM geoportal.\"vNodesWithExcludes\" ";
-            whereClause1 = "WHERE parentid=0 ";
-            whereClause2 =                  " ORDER BY weight";
-            loadNodes(con, layertreeXML, groups, selectClause, whereClause1, whereClause2);
-        } else {// logged in user
-            selectClause = "SELECT id, parentid, weight, isfolder, json, lastchanged FROM geoportal.nodes ";
-            whereClause1 = "WHERE parentid=0 ";
-            whereClause2 =                  " AND ((id NOT IN (SELECT DISTINCT nodeid FROM geoportal.\"iNodeGroup\")) OR (id IN (SELECT DISTINCT nodeid FROM geoportal.\"vNodeGroupIncludes\" WHERE groupid IN (SELECT DISTINCT id FROM Groups, UserGroups WHERE groupId=id AND userId="+myUserId+")))) ORDER BY weight;";
-            loadNodes(con, layertreeXML, null, selectClause, whereClause1, whereClause2);
+        try {
+            if (myProfile == null) { // guest "all" user
+                selectClause = "SELECT id, parentid, weight, isfolder, json, lastchanged FROM geoportal.nodes ";
+                whereClause1 = "WHERE parentid=0 ";
+                whereClause2 =                  " AND (id NOT IN (SELECT nodeid FROM geoportal.\"iNodeGroup\" WHERE groupid=1)) ORDER BY weight;";
+                loadNodes(con, layertreeXML, null, selectClause, whereClause1, whereClause2);
+            } else if (this.withGroups.equalsIgnoreCase("true") || myProfile == Profile.Administrator) {
+                GroupRepository groupRepo = gc.getBean(GroupRepository.class);
+                List<Group> groups = groupRepo.findAll();
+                selectClause = "SELECT id, parentid, weight, isfolder, json, lastchanged, excludes, excludes_id FROM geoportal.\"vNodesWithExcludes\" ";
+                whereClause1 = "WHERE parentid=0 ";
+                whereClause2 =                  " ORDER BY weight";
+                loadNodes(con, layertreeXML, groups, selectClause, whereClause1, whereClause2);
+            } else {// logged in user
+                selectClause = "SELECT id, parentid, weight, isfolder, json, lastchanged FROM geoportal.nodes ";
+                whereClause1 = "WHERE parentid=0 ";
+                whereClause2 =                  " AND ((id NOT IN (SELECT DISTINCT nodeid FROM geoportal.\"iNodeGroup\")) OR (id IN (SELECT DISTINCT nodeid FROM geoportal.\"vNodeGroupIncludes\" WHERE groupid IN (SELECT DISTINCT id FROM Groups, UserGroups WHERE groupId=id AND userId="+myUserId+")))) ORDER BY weight;";
+                loadNodes(con, layertreeXML, null, selectClause, whereClause1, whereClause2);
+            }
+        } catch (SQLException e ) {
+            throw e;
+        } finally {
+            if (con != null) con.close();
         }
         return response;
     }
@@ -130,7 +136,6 @@ public class Get implements Service {
         } finally {
             if (stmt != null) stmt.close();
             if (rs != null) rs.close();
-            if (con != null) con.close();
         }
     }
 }
