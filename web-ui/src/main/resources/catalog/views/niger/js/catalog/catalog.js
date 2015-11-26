@@ -27,10 +27,13 @@
   module.directive('appCatalog', gn.catalogDirective);
 
   var layerCache_ = {};
-  gn.AppCatalogController = function($http, unCatalogUrl, gnMap) {
+  gn.AppCatalogController = function($http, unCatalogUrl, gnMap,
+                                     gnGlobalSettings) {
 
     var $this = this;
     this.gnMap_ = gnMap;
+    this.gnGlobalSettings_ = gnGlobalSettings;
+
     $http.get(unCatalogUrl).then(function(catalog) {
       $this.tree = catalog.data;
     });
@@ -60,7 +63,7 @@
   gn.AppCatalogController.prototype.getLayer = function(node) {
     var layer, layerCacheKey;
     var type = node.type;
-    if (type != 'wms') {
+    if (type == 'folder') {
       return null;
     }
 
@@ -70,11 +73,35 @@
       return layerCache_[layerCacheKey];
     }
 
-    var layer = this.gnMap_.createOlWMS(this.map,
-        {'LAYERS': node.layers},
-        {label: node.name, url: node.url, metadata: node.metadataUrl});
+    var layer;
+    var $this = this;
 
-    layer.set('cextent', node.cextent);
+    // Create a wms layer
+    if(type == 'wms') {
+      layer = this.gnMap_.createOlWMS(this.map,
+          {'LAYERS': node.layers},
+          {label: node.name, url: node.url, metadata: node.metadataUrl});
+
+      layer.set('cextent', node.cextent);
+    }
+
+    // load full WFS layer
+    else if (type == 'chart') {
+      var vectorFormat = node.format == 'geojson' ?
+          new ol.format.GeoJSON() : new ol.format.WFS();
+      var vectorSource = new ol.source.Vector({
+        format: vectorFormat,
+        url : $this.gnGlobalSettings_.proxyUrl +
+          encodeURIComponent(node.url + node.layers),
+        projection: this.map.getView().getProjection().getCode()
+      });
+      layer = new ol.layer.Vector({
+        source: new ol.source.Cluster({
+          distance: 40,
+          source: vectorSource
+        })
+      });
+    }
     layerCache_[layerCacheKey] = layer;
     return layer;
   };
@@ -85,7 +112,8 @@
   gn.AppCatalogController['$inject'] = [
     '$http',
     'unCatalogUrl',
-    'gnMap'
+    'gnMap',
+    'gnGlobalSettings'
   ];
 
 })();
