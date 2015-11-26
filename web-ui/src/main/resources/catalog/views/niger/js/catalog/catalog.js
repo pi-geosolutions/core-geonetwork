@@ -4,6 +4,7 @@
 
   var module = angular.module('app.catalog', []);
   module.constant('unCatalogUrl', '../../catalog/views/niger/data/layertree.json');
+  //module.constant('unCatalogUrl', 'pigeo.layertree.get');
 
   module.value('ngeoLayertreeTemplateUrl',
       '../../catalog/views/niger/js/catalog/layertree.html');

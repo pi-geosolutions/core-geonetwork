@@ -1,0 +1,87 @@
+#layermanager {
+  .text-center {
+    margin-top:20px;
+  }
+}
+
+ul.layermanager {
+  margin: 0;
+  padding: 0;
+}
+
+li.layermanager-panel {
+  list-style-type: none;
+  margin-bottom: 1px;
+  padding: 5px 10px;
+  padding-bottom: 2px;
+  border-radius: 0;
+  background-color: @main_color_50;
+
+  .sortable-handle {
+    padding-right: 15px;
+    margin-top: 2px;
+  }
+
+  .fa-minus, .fa-ellipsis-h, .fa-info, .fa-trash-o {
+    padding-right: 5px;
+  }
+
+  a:hover, a:focus {
+    text-decoration: none;
+  }
+
+  a[data-toggle=collapse] .expanded,
+  a[data-toggle=collapse] .collapsed {
+    float: right;
+    line-height: inherit;
+  }
+
+  a .collapsed {
+    display: none;
+  }
+
+  a.collapsed {
+    .collapsed {
+      display: block;
+    }
+    .expanded {
+      display: none;
+    }
+  }
+  a.layername {
+    width: 170px;
+    display: inline-block;
+    /* overflow-x: hidden; */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 16px;
+  }
+
+  input.opacity {
+    margin-top: 10px;
+    margin-left: 32px;
+    width: 100px;
+    display: inline-block;
+  }
+  .delete {
+    float: right;
+    cursor: pointer;
+  }
+}
+
+.sortable-handle {
+  cursor: move;
+  -moz-user-select: none;
+}
+
+.sortable-dragger {
+  padding: 2px 10px;
+  z-index: 1070;
+  .box-shadow(0px 2px 6px -1px rgba(0, 0, 0, 0.5));
+  .fa {
+    &.sortable-handle {
+      visibility: visible;
+    }
+  }
+}

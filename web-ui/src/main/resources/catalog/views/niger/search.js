@@ -6,21 +6,27 @@
   goog.require('gn_search_niger_config');
   goog.require('app.bglayer');
   goog.require('app.catalog');
+  goog.require('app.layermanager');
 
 
   var module = angular.module('gn_search_niger',[
     'gn_search',
     'gn_search_niger_config',
     'app.bglayer',
-    'app.catalog'
+    'app.catalog',
+    'app.layermanager'
   ]);
 
-  gn.MainController = function($scope) {
+  gn.MainController = function($scope, ngeoSyncArrays) {
 
     this.siteTitle = 'gam-dris';
     this.siteSubTitle = 'Risk Management Portal for Gambia';
 
     this.setMap_();
+
+    this['selectedLayers'] = [];
+    this.manageSelectedLayers_($scope, ngeoSyncArrays);
+
   };
 
   gn.MainController.prototype.setMap_ = function() {
@@ -54,6 +60,17 @@
     var map = this.map;
   };
 
+  gn.MainController.prototype.manageSelectedLayers_ =
+      function(scope, ngeoSyncArrays) {
+        var map = this.map;
+        ngeoSyncArrays(map.getLayers().getArray(),
+            this['selectedLayers'], true, scope,
+            function(layer) {
+              return layer.displayInLayerManager;
+            }
+        );
+      };
+
   gn.MainController.prototype.closeSidebar = function() {
     this.layersOpen = false;
     this.contextOpen = false;
@@ -72,7 +89,8 @@
 
   module.controller('MainController', gn.MainController);
   gn.MainController['$inject'] = [
-    '$scope'
+    '$scope',
+    'ngeoSyncArrays'
   ];
 
 })();
