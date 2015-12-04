@@ -44,11 +44,6 @@ public class GetValues
     }
     private AbstractGridCoverage2DReader reader;
     
-    //--------------------------------------------------------------------------
-    //---
-    //--- Service
-    //---
-    //--------------------------------------------------------------------------
     @RequestMapping(value="/{lang}/pigeo.ndvi.getvalues", produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public JSONObject exec(@PathVariable String lang,

@@ -40,7 +40,7 @@ public class Set implements Service {
     public Element exec(Element params, ServiceContext context) throws Exception {
 
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
-        DataSource dataSource = gc.getBean(DataSource.class);
+        DataSource dataSource = (DataSource)context.getBean("jdbcDataSource");
         Connection con = dataSource.getConnection();
 
              if (!this.backup(con, params)) {

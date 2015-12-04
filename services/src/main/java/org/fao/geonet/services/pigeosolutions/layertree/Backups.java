@@ -46,7 +46,7 @@ public class Backups implements Service {
 
     public Element exec(Element params, ServiceContext context) throws Exception {
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
-        DataSource dataSource = gc.getBean(DataSource.class);
+        DataSource dataSource = (DataSource)context.getBean("jdbcDataSource");
         Connection con = dataSource.getConnection();
         Element response = new Element(Jeeves.Elem.RESPONSE);
 

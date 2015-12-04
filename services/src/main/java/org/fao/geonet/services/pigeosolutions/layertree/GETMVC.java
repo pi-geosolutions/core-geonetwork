@@ -5,6 +5,7 @@ import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
 import jeeves.server.sources.http.JeevesServlet;
 import net.sf.json.JSONObject;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.domain.Group;
 import org.fao.geonet.domain.Profile;
@@ -39,9 +40,6 @@ import java.util.List;
 @Controller
 public class GETMVC {
 
-    @Autowired
-    private DataSource dataSource;
-
 
     @RequestMapping(value = "/{lang}/testflo", produces= MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
@@ -54,6 +52,9 @@ public class GETMVC {
         File transformFile = new File(appPath, "xslt/pigeo/geoportal/layertree-2json.xsl");
 
         ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
+
+        DataSource dataSource = (BasicDataSource)appContext.getBean("jdbcDataSource");
+
         //LayerTreeNodeRepository categoryRepository = appContext.getBean(LayerTreeNodeRepository.class);
         Connection con = dataSource.getConnection();
         Element layertreeXML = new Element("tree");
