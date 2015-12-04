@@ -26,6 +26,7 @@ import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
@@ -33,6 +34,7 @@ import org.fao.geonet.kernel.search.LuceneConfig;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.utils.TransformerFactoryFactory;
 import org.jdom.Element;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -193,7 +195,7 @@ public class GetInfo implements Service {
 
         Connection connection = null;
         try {
-            connection = context.getBean(DataSource.class).getConnection();
+            connection = ((BasicDataSource)context.getBean("jdbcDataSource")).getConnection();
             dbURL = connection.getMetaData().getURL();
             databaseProperties.put("db.openattempt", "Database Opened Successfully");
 

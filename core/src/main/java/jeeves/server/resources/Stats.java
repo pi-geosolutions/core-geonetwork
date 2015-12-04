@@ -22,7 +22,7 @@ public class Stats {
 
 
     public Stats(final ServiceContext context) {
-        DataSource source = context.getBean(DataSource.class);
+        DataSource source = (DataSource)context.getBean("jdbcDataSource");
         if (source instanceof BasicDataSource) {
             BasicDataSource basicDataSource = (BasicDataSource) source;
             numActive = basicDataSource.getNumActive();

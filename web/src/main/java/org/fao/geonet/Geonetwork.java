@@ -213,7 +213,7 @@ public class Geonetwork implements ApplicationHandler {
         SettingManager settingMan = this._applicationContext.getBean(SettingManager.class);
 
         //--- initialize ThreadUtils with setting manager and rm props
-        final DataSource dataSource = context.getBean(DataSource.class);
+        final DataSource dataSource = (DataSource)context.getBean("jdbcDataSource");
         Connection conn = null;
         try {
             conn = dataSource.getConnection();

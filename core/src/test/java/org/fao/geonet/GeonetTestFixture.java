@@ -154,7 +154,7 @@ public class GeonetTestFixture {
 
         addSourceUUID(dataDir);
 
-        final DataSource dataSource = _applicationContext.getBean(DataSource.class);
+        final DataSource dataSource = (DataSource)_applicationContext.getBean("jdbcDataSource");
         try (Connection conn = dataSource.getConnection()) {
             ThreadUtils.init(conn.getMetaData().getURL(), _applicationContext.getBean(SettingManager.class));
         }

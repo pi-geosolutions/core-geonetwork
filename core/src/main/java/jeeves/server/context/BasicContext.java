@@ -117,6 +117,12 @@ public class BasicContext implements Logger {
 
     //--------------------------------------------------------------------------
 
+    public @Nonnull Object getBean(String beanId) {
+        return jeevesApplicationContext.getBean(beanId);
+    }
+
+    //--------------------------------------------------------------------------
+
     public EntityManager getEntityManager() {
         return entityManager;
     }

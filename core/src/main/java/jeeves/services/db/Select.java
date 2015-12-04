@@ -211,7 +211,7 @@ public class Select implements Service
     public static Element selectFull(ServiceContext context, String query, Map<String, String> formats, Object... args)
             throws SQLException {
 
-        DataSource datasource = context.getBean(DataSource.class);
+        DataSource datasource = (DataSource)context.getBean("jdbcDataSource");
 
         Connection conn = null;
         PreparedStatement stmt = null;

@@ -114,7 +114,7 @@ public class SvnManager implements AfterCommitTransactionListener, BeforeRollbac
     public void init() throws Exception {
 
         SettingManager _settingManager = ApplicationContextHolder.get().getBean(SettingManager.class);
-        DataSource _dataSource = ApplicationContextHolder.get().getBean(DataSource.class);
+        DataSource _dataSource = (DataSource)ApplicationContextHolder.get().getBean("jdbcDataSource");
 
         this._enabled = true;
         String uuid = _settingManager.getValue("system/site/svnUuid");

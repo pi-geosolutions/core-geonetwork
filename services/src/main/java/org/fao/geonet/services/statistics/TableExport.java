@@ -3,6 +3,8 @@ package org.fao.geonet.services.statistics;
 import jeeves.constants.Jeeves;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
+import org.apache.commons.dbcp.BasicDataSource;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.Constants;
 import org.fao.geonet.Util;
 import org.fao.geonet.constants.Geonet;
@@ -10,6 +12,7 @@ import org.fao.geonet.exceptions.BadParameterEx;
 import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.fao.geonet.utils.Log;
 import org.jdom.Element;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.BufferedWriter;
 import java.nio.file.Files;
@@ -70,7 +73,7 @@ public class TableExport extends NotInReadOnlyModeService {
     @Override
     public Element serviceSpecificExec(Element params, ServiceContext context) throws Exception {
         String tableToExport = Util.getParam(params, "tableToExport");
-
+        ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
         if (tableToExport == null) {
             if (Log.isDebugEnabled(Geonet.SEARCH_LOGGER))
                 Log.debug(Geonet.SEARCH_LOGGER, "Export Statistics table: no table name received from the client.");
@@ -97,7 +100,7 @@ public class TableExport extends NotInReadOnlyModeService {
         }
 
         // use connection by hand, to allow us to control the resultset and avoid Java Heap Space Exception
-        try (Connection con = context.getBean(DataSource.class).getConnection();
+        try (Connection con = ((BasicDataSource)appContext.getBean("jdbcDataSource")).getConnection();
              Statement stmt = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
              ResultSet rs = stmt.executeQuery(query);
              BufferedWriter out = Files.newBufferedWriter(tableDumpFile, Constants.CHARSET)){
