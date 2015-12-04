@@ -1,4 +1,4 @@
-package org.fao.geonet.services.pigeosolutions.ndvi;
+package org.fao.geonet.pigeosolutions.geoportal.services.ndvi;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -27,6 +27,7 @@ import java.util.Arrays;
 
 //=============================================================================
 //http://localhost:8080/geonetwork/srv/fre/pigeo.ndvi.getvalues?data=ndvi&mode=yearByMonths&lat=13.921286845169426&lon=-15.635446747281302
+
 /** Returns the list of NDVI-like files, in the specified folder, ordered alphabetically
  */
 

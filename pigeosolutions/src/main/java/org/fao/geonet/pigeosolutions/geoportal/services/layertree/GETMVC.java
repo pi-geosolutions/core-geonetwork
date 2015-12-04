@@ -1,4 +1,4 @@
-package org.fao.geonet.services.pigeosolutions.layertree;
+package org.fao.geonet.pigeosolutions.geoportal.services.layertree;
 
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
@@ -13,7 +13,6 @@ import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;

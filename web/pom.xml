@@ -467,6 +467,11 @@
       <artifactId>schema-dublin-core</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.geonetwork-opensource</groupId>
+      <artifactId>pigeosolutions</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
   </dependencies>
 

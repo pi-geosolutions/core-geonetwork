@@ -1,4 +1,4 @@
-package org.fao.geonet.services.pigeosolutions.layertree;
+package org.fao.geonet.pigeosolutions.geoportal.services.layertree;
 
 import jeeves.constants.Jeeves;
 import jeeves.interfaces.Service;

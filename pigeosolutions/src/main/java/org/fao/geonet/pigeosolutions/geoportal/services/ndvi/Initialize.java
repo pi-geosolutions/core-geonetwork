@@ -1,4 +1,4 @@
-package org.fao.geonet.services.pigeosolutions.ndvi;
+package org.fao.geonet.pigeosolutions.geoportal.services.ndvi;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

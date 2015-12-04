@@ -1,4 +1,4 @@
-package org.fao.geonet.services.pigeosolutions.ndvi;
+package org.fao.geonet.pigeosolutions.geoportal.services.ndvi;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 

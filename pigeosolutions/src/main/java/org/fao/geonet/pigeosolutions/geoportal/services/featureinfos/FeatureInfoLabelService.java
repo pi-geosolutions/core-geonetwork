@@ -1,4 +1,4 @@
-package org.fao.geonet.services.pigeosolutions.featureinfos;
+package org.fao.geonet.pigeosolutions.geoportal.services.featureinfos;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

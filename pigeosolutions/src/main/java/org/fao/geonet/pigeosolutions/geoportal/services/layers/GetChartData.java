@@ -1,4 +1,4 @@
-package org.fao.geonet.services.pigeosolutions.layers;
+package org.fao.geonet.pigeosolutions.geoportal.services.layers;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.*;
 import java.util.List;
