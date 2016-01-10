@@ -17,6 +17,11 @@
     'app.layermanager'
   ]);
 
+  module.config(['$LOCALES',
+    function($LOCALES) {
+      $LOCALES.push('pigeo');
+    }]);
+
   gn.MainController = function($scope, ngeoSyncArrays) {
 
     this.siteTitle = 'gam-dris';

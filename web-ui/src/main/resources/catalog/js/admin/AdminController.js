@@ -23,13 +23,14 @@
   goog.require('gn_settings_controller');
   goog.require('gn_standards_controller');
   goog.require('gn_usergroup_controller');
+  goog.require('app.admin.geoportal');
 
   var module = angular.module('gn_admin_controller',
       ['gn_dashboard_controller', 'gn_usergroup_controller',
        'gn_admintools_controller', 'gn_settings_controller',
        'gn_adminmetadata_controller', 'gn_classification_controller',
        'gn_harvest_controller', 'gn_standards_controller',
-       'gn_report_controller']);
+       'gn_report_controller', 'app.admin.geoportal']);
 
 
   var tplFolder = '../../catalog/templates/admin/';
@@ -102,7 +103,14 @@
         when('/reports/:tab', {
           templateUrl: tplFolder + 'page-layout.html',
           controller: 'GnReportController'}).
-        otherwise({templateUrl: tplFolder + 'admin.html'});
+    when('/geoportal/:tab', {
+      templateUrl: tplFolder + 'page-layout.html',
+      controller: 'AppAdminGeoportalController'}).
+    when('/geoportal', {
+      templateUrl: tplFolder + 'page-layout.html',
+      controller: 'AppAdminGeoportalController'}).
+
+    otherwise({templateUrl: tplFolder + 'admin.html'});
   }]);
 
   /**
@@ -155,6 +163,14 @@
             classes: 'btn-warning', icon: 'fa-medkit'}]
         // TODO : add other role menu
       };
+
+      // pigeo specific
+      $scope.menu.Administrator.push({
+        name: 'Geoportal',
+        route: '#geoportal',
+        classes: 'btn-danger',
+        icon: 'fa-globe'
+      });
 
       /**
        * Define menu position on the left (nav-stacked)

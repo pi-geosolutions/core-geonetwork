@@ -19,7 +19,7 @@
   ]);
 
   // Define the translation files to load
-  module.constant('$LOCALES', ['core', 'admin']);
+  module.constant('$LOCALES', ['core', 'admin', 'pigeo']);
 
   module.config(['$translateProvider', '$LOCALES',
                  function($translateProvider, $LOCALES) {

@@ -69,13 +69,7 @@ public class Backups implements Service {
     }
 
     private Element getBackup(Element params, Connection con) throws SQLException {
-        String id = "";
-        if (params.getName()=="id") {
-            id = params.getText();
-        } else {
-            //TODO: id = Util.getParam(params, "id");
-        }
-        if (id==null) return new Element("failure");
+        String id = params.getChild("id").getText();
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -109,11 +103,11 @@ public class Backups implements Service {
     }
 
     private boolean removeBackup(Element params, Connection con) throws SQLException {
-        if (params.getName()!="id") return false ; //bad POST data
+        String id = params.getChild("id").getText();
+        if(id == null || id.equals("")) return false;
         PreparedStatement pstmt = null;
 
         try {
-            String id = params.getText();
             pstmt = con.prepareStatement("DELETE FROM geoportal.\"nodesBackups\" WHERE id =?;");
             pstmt.setInt(1, Integer.parseInt(id));
             return pstmt.execute();
@@ -137,9 +131,8 @@ public class Backups implements Service {
             while (rs.next()) {
                 Element record = new Element("record");
                 record.addContent(new Element("id").setText(rs.getString("id")));
-                record.addContent(new Element("layertree").setText(rs.getString("layertree")));
                 record.addContent(new Element("name").setText(rs.getString("name")));
-                record.addContent(new Element("timestamp").setText(rs.getString("timestamp")));
+                record.addContent(new Element("timestamp").setText(rs.getString("date")));
                 list.addContent(record);
             }
         }  catch (SQLException e ) {

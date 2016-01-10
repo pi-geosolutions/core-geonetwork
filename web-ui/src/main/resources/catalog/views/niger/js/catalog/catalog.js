@@ -50,6 +50,7 @@
   };
 
   gn.AppCatalogController.prototype.toggleNode = function(ctrl, evt) {
+    evt.preventDefault();
     if(ctrl.node.children && ctrl.depth > 1) {
       var el = $(evt.target);
       if(el.is('i')) {

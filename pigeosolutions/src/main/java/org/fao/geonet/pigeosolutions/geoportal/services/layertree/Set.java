@@ -43,47 +43,52 @@ public class Set implements Service {
         DataSource dataSource = (DataSource)context.getBean("jdbcDataSource");
         Connection con = dataSource.getConnection();
 
-             if (!this.backup(con, params)) {
-                 return new Element(Jeeves.Elem.RESPONSE).setText("ERROR: backing up the tree");
-             }
-             System.out.println("INFO : properly backed up the previous layertree structure");
-            
-             Element response = new Element(Jeeves.Elem.RESPONSE);
-             Element status = new Element("status");
-             Element code = new Element("code");
-             Element message = new Element("message");
-             response.addContent(status);
-             response.addContent(code);
-             response.addContent(message);
-             
-             Element tree=params;
-             int result = this.save(con, tree);
+        Element response = new Element(Jeeves.Elem.RESPONSE);
+        Element status = new Element("status");
+        Element code = new Element("code");
+        Element message = new Element("message");
+        response.addContent(status);
+        response.addContent(code);
+        response.addContent(message);
+
+        Element tree=params;
+
+        try {
+            this.backup(con, params);
+            System.out.println("INFO : properly backed up the previous layertree structure");
+
+            int result = this.save(con, tree);
              /*gets the output code
-              * output codes are : 
+              * output codes are :
               *      1 : successful outcome
               *     -1 : a row (at least) has been changed since last load. Forcing the update would remove changes made by someone else
-              */             
-             switch (result) {
-             case 1 : 
-                 //return new Element(Jeeves.Elem.RESPONSE).setText("success");
-                 status.setText("success");
-                 code.setText("1");
-                 message.setText("Layertree successfully saved to DB");
-                 break;
-             case -1 : 
-                 //return new Element(Jeeves.Elem.RESPONSE).setText("WARNING (output code -1): some data have been changed on the DB");
-                 status.setText("error");
-                 code.setText("-1");
-                 message.setText("WARNING (output code -1): some data have been changed on the DB");
-                 break;
-             default:                 //return new Element(Jeeves.Elem.RESPONSE).setText("WARNING (output code -1): some data have been changed on the DB");
-                 status.setText("unknown");
-                 code.setText(String.valueOf(result));
-                 message.setText("unknown result value");
-                 break;
-             }
-             
-             return response;
+              */
+            switch (result) {
+                case 1 :
+                    //return new Element(Jeeves.Elem.RESPONSE).setText("success");
+                    status.setText("success");
+                    code.setText("1");
+                    message.setText("Layertree successfully saved to DB");
+                    break;
+                case -1 :
+                    //return new Element(Jeeves.Elem.RESPONSE).setText("WARNING (output code -1): some data have been changed on the DB");
+                    status.setText("error");
+                    code.setText("-1");
+                    message.setText("WARNING (output code -1): some data have been changed on the DB");
+                    break;
+                default:                 //return new Element(Jeeves.Elem.RESPONSE).setText("WARNING (output code -1): some data have been changed on the DB");
+                    status.setText("unknown");
+                    code.setText(String.valueOf(result));
+                    message.setText("unknown result value");
+                    break;
+            }
+        }
+        catch (Exception e) {
+            if(con != null) con.close();
+            throw e;
+        }
+
+        return response;
     }
 
     /*
@@ -93,7 +98,7 @@ public class Set implements Service {
         this.idslist = "";
 
         Statement stmt = null;
-        String cleanRequest = "DELETE FROM geoportal.nodes WHERE id NOT IN ("+this.idslist +");"  ;
+        String cleanRequest = null;
 
         try {
             con.setAutoCommit(false);
@@ -103,7 +108,8 @@ public class Set implements Service {
             System.out.println("BEGIN;");
             int result = this.saveChildren(tree, 0, con);
             this.idslist=this.idslist.substring(0, idslist.length()-1);//we remove the last trailing ','
-            stmt.executeQuery(cleanRequest);
+            cleanRequest = "DELETE FROM geoportal.nodes WHERE id NOT IN ("+this.idslist +");"  ;
+            stmt.execute(cleanRequest);
 
             if (result == 1) {
                 con.commit();
@@ -119,7 +125,7 @@ public class Set implements Service {
             throw e;
         } finally {
             if (stmt != null) stmt.close();
-            con.setAutoCommit(true);
+            if(con != null) con.setAutoCommit(true);
         }
         return 1 ;
     }
@@ -172,6 +178,15 @@ public class Set implements Service {
 
             } else { //it's an update of an existing node. We check if the node hasn't been changed meanwhile. If yes, we abort the commit
 
+                pstmt = con.prepareStatement("SELECT id, lastchanged FROM geoportal.nodes WHERE id=?;");
+                pstmt.setInt(1, Integer.parseInt(nodeid));
+                rs = pstmt.executeQuery();
+                String dbchangedate = null;
+                while (rs.next()) {
+                    dbchangedate = rs.getString("lastchanged");
+                }
+                pstmt.close();
+
                 pstmt = con.prepareStatement("WITH row AS (UPDATE geoportal.nodes SET (parentid, weight, isfolder, json, lastchanged) = (?, ? ,? ,?, (SELECT now()))  WHERE id=? RETURNING lastchanged ) SELECT lastchanged from row ;");
                 pstmt.setInt(1, parentid);
                 pstmt.setInt(2, Integer.parseInt(node.getChildText("weight")));
@@ -184,18 +199,6 @@ public class Set implements Service {
                 if (!this.force) {
                     //we check if database content has changed since last load
                     //if it does, abort the transaction and warn the user
-                    pstmt = con.prepareStatement("SELECT id, lastchanged FROM geoportal.nodes WHERE id=?;");
-                    pstmt.setInt(1, Integer.parseInt(nodeid));
-                    rs = pstmt.executeQuery();
-
-                    String dbchangedate = null;
-                    while (rs.next()) {
-                        dbchangedate = rs.getString("lastchanged");
-                    }
-
-                    //System.out.println(dbchangedate);
-                    //System.out.println(lastchanged);
-                    //System.out.println(dbchangedate.compareTo(lastchanged));
                     if (dbchangedate != null && dbchangedate.compareTo(lastchanged)!=0) {
                         return -1; //will be the code to tell there is a changedate  error
                     }
@@ -206,7 +209,6 @@ public class Set implements Service {
         } finally {
             if (pstmt != null) pstmt.close();
             if (rs != null) rs.close();
-            if (con != null) con.close();
         }
 
         this.saveNodeGroupsRelations(nodeid, node, con);
@@ -238,7 +240,6 @@ public class Set implements Service {
         } finally {
             if (stmt != null) stmt.close();
             if (rs != null) rs.close();
-            if (con != null) con.close();
         }
     }
 
@@ -272,7 +273,6 @@ public class Set implements Service {
             throw e;
         } finally {
             if (pstmt != null) pstmt.close();
-            if (con != null) con.close();
         }
     }
 
@@ -308,7 +308,6 @@ public class Set implements Service {
         } finally {
             if (stmt != null) stmt.close();
             if (rs != null) rs.close();
-            if (con != null) con.close();
         }
     }    
     
