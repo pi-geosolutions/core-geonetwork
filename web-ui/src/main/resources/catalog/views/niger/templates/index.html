@@ -1,5 +1,7 @@
 <div id="main-container" ng-controller="MainController as mainCtrl">
 
+  <app-temporal-interaction map="::mainCtrl.map" active="mainCtrl.temporalActive"></app-temporal-interaction>
+
   <!--Header-->
   <header class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -26,7 +28,7 @@
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.contextOpen"><i class="icon map"></i><span role="tooltip">Mes cartes</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.printOpen"><i class="fa fa-print"></i><span role="tooltip">Impression</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.mInteraction.active"><i class="icon measure"></i><span role="tooltip">Mesure</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.legendOpen"><i class="fa fa-list"></i><span role="tooltip">Légendes</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.temporalActive"><i class="fa fa-clock-o"></i><span role="tooltip">Légendes</span></button>
     </div>
     <div id="sidebar-content">
 
@@ -140,9 +142,15 @@
     </div>
   </div>
 
+
   <!--Container-->
   <div id="map-container" >
+
+
     <div ngeo-map="mainCtrl.map">
     </div>
+
   </div>
+  <div gn-gfi=""  map="mainCtrl.map" ></div>
+
 </div>

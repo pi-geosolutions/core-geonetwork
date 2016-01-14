@@ -1,0 +1,14 @@
+{
+    "wmsFeatures": "WMS Features",
+    "type": "Type",
+    "opacity": "Opacity",
+    "text": "Text",
+    "id": "Identifiant",
+    "ext": "Extension",
+    "generalFeatures": "Général",
+    "cssClass": "Classe CSS",
+    "managelayertree": "Administrer l'arbre des couches",
+    "treenodeinfo": "Détail du noeud de type {{type}}",
+    "mdreference": "Métadonnée associée",
+    "layernames": ""
+}

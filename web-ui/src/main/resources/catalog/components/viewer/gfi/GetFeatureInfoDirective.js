@@ -10,61 +10,6 @@
 
   module.value('gfiTemplateURL', gfiTemplateURL);
 
-  module.directive('gnVectorFeatureToolTip', [function() {
-    return {
-      restrict: 'A',
-      scope: {
-        map: '=gnVectorFeatureToolTip'
-      },
-      link: function(scope, element, attrs) {
-        $('body').append('<div id="feature-info" data-content=""' +
-            'style="position: absolute; z-index: 100;"/>');
-        var info = $('#feature-info');
-        info.popover({
-          animation: false,
-          trigger: 'manual',
-          placement: 'top',
-          html: true,
-          title: 'Feature info'
-        });
-
-        var displayFeatureInfo = function(pixel) {
-          info.css({
-            left: pixel[0] + 'px',
-            top: (pixel[1] + 45) + 'px'
-          });
-          var feature = scope.map.forEachFeatureAtPixel(pixel,
-              function(feature, layer) {
-                return feature;
-              });
-          if (feature) {
-            var props = feature.getProperties();
-            var tooltipContent = '<ul>';
-            $.each(props, function(key, values) {
-              if (typeof values !== 'object') {
-                tooltipContent += '<li>' + key + ': ' + values + '</li>';
-              }
-            });
-            tooltipContent += '</ul>';
-            info.popover('hide');
-            info.data('bs.popover').options.content = tooltipContent;
-            info.popover('show');
-          } else {
-            info.popover('hide');
-          }
-        };
-
-        scope.map.on('pointermove', function(evt) {
-          if (evt.dragging) {
-            //info.hide();
-            info.popover('hide');
-            return;
-          }
-          displayFeatureInfo(scope.map.getEventPixel(evt.originalEvent));
-        });
-      }
-    };
-  }]);
   /**
    * @ngdoc directive
    * @name gn_viewer.directive:gnGfi
@@ -81,7 +26,8 @@
       return {
         restrict: 'A',
         scope: {
-          map: '='
+          map: '=',
+          dismiss: '@'
         },
         templateUrl: gfiTemplateURL,
         link: function(scope, element, attrs) {
@@ -113,7 +59,19 @@
             overlay.setPosition(undefined);
           };
 
+          var dismiss = false;
+          map.on('click', function(e) {
+            if (scope.dismiss && $(scope.dismiss).length > 0) {
+              dismiss = true;
+            }
+          });
           map.on('singleclick', function(e) {
+
+            if (dismiss) {
+              dismiss = false;
+              return;
+            }
+
 
             for (var i = 0; i < map.getInteractions().getArray().length; i++) {
               var interaction = map.getInteractions().getArray()[i];
@@ -140,6 +98,8 @@
                     INFO_FORMAT: layer.ncInfo ? 'text/xml' :
                         'application/vnd.ogc.gml'
                   });
+              uri += '&FEATURE_COUNT=2147483647';
+
               var coordinate = e.coordinate;
               var proxyUrl = '../../proxy?url=' + encodeURIComponent(uri);
               scope.pending += 1;
@@ -180,6 +140,10 @@
 
           });
 
+          scope.keys = function(obj){
+            return obj? Object.keys(obj) : [];
+          }
+
           scope.$watch('pending', function(v) {
             mapElement.toggleClass('gn-gfi-loading', (v !== 0));
           });
@@ -191,17 +155,17 @@
 
   angular.module('gfiFilters', ['ngSanitize'])
 
-  .filter('attributes', function() {
+      .filter('attributes', function() {
         return function(properties) {
-          var props = {};
           var exclude = ['FID', 'boundedBy', 'the_geom', 'thegeom'];
-          Object.keys(properties).forEach(function(k) {
-            if (exclude.indexOf(k) !== -1) return;
-            if (properties[k]) {
-              props[k] = properties[k].toString();
+          // sextant the properties is already keys)
+          for(var i = properties.length - 1; i >= 0; i--) {
+            if (exclude.indexOf(properties[i]) !== -1) {
+              properties.splice(i, 1);
+              //properties.length --;
             }
-          });
-          return props;
+          }
+          return properties;
         };
       });
 

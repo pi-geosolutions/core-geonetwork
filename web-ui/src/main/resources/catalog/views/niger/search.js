@@ -7,6 +7,7 @@
   goog.require('app.bglayer');
   goog.require('app.catalog');
   goog.require('app.layermanager');
+  goog.require('app.temporalfiles');
 
 
   var module = angular.module('gn_search_niger',[
@@ -14,7 +15,8 @@
     'gn_search_niger_config',
     'app.bglayer',
     'app.catalog',
-    'app.layermanager'
+    'app.layermanager',
+    'app.temporalfiles'
   ]);
 
   module.config(['$LOCALES',
@@ -22,16 +24,22 @@
       $LOCALES.push('pigeo');
     }]);
 
-  gn.MainController = function($scope, ngeoSyncArrays) {
+  gn.MainController = function($scope, gnPopup, ngeoSyncArrays) {
 
     this.siteTitle = 'gam-dris';
     this.siteSubTitle = 'Risk Management Portal for Gambia';
 
+    this.temporalActive = false;
+    this.$scope = $scope;
+
     this.setMap_();
+    this.initInteractions_();
 
     this['selectedLayers'] = [];
     this.manageSelectedLayers_($scope, ngeoSyncArrays);
+    this.gnPopup = gnPopup;
 
+    this.temporalPopup;
   };
 
   gn.MainController.prototype.setMap_ = function() {
@@ -62,8 +70,27 @@
       ]
     });
 
-    var map = this.map;
   };
+
+  gn.MainController.prototype.initInteractions_ =
+      function() {
+
+        // init temporal interaction
+        this.map.on('click', function(evt) {
+          if(this.temporalActive) {
+            if(!this.temporalPopup || this.temporalPopup.destroyed) {
+              this.temporalCoords = evt.coordinate;
+              this.$scope.$apply();
+              this.temporalPopup = this.gnPopup.create({
+                title: 'temporalFiles',
+                content: '<app-temporal-files app-temporal-files-coords="mainCtrl.temporalCoords"></app-temporal-files>',
+                className: 'temporal-popup'
+              }, this.$scope);
+            }
+
+          }
+        }, this);
+      };
 
   gn.MainController.prototype.manageSelectedLayers_ =
       function(scope, ngeoSyncArrays) {
@@ -95,6 +122,7 @@
   module.controller('MainController', gn.MainController);
   gn.MainController['$inject'] = [
     '$scope',
+    'gnPopup',
     'ngeoSyncArrays'
   ];
 

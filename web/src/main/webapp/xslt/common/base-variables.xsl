@@ -30,7 +30,7 @@
   
   <xsl:variable name="isDebugMode" select="/root/request/debug"/>
   <xsl:variable name="isReadOnly" select="/root/gui/env/readonly = 'true'"/>
-  <xsl:variable name="withD3" select="$service = 'admin.console'"/>
+  <xsl:variable name="withD3" select="true()"/>
 
   <xsl:variable name="searchView" select="if (/root/request/view) then /root/request/view else if(util:getSettingValue('system/ui/defaultView')) then util:getSettingValue('system/ui/defaultView') else 'default'"></xsl:variable>
   <xsl:variable name="owsContext" select="/root/request/owscontext" />

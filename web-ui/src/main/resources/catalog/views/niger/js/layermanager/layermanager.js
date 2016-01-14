@@ -11,7 +11,7 @@
         'map': '=appLayermanagerMap',
         'layers': '=appLayermanagerLayers'
       },
-      controller: 'UnLayermanagerController',
+      controller: 'AppLayermanagerController',
       controllerAs: 'ctrl',
       bindToController: true,
       templateUrl: '../../catalog/views/niger/js/layermanager/' +
@@ -21,7 +21,7 @@
 
   module.directive('appLayermanager', gn.layermanagerDirective);
 
-  gn.LayermanagerController = function($scope, ngeoSyncArrays) {
+  gn.LayermanagerController = function() {
     var $this = this;
     this['uid'] = goog.getUid(this);
     this.opacities_ = {};
@@ -59,10 +59,8 @@
 
 
   gn.LayermanagerController['$inject'] = [
-    '$scope',
-    'ngeoSyncArrays'
   ];
 
-  module.controller('UnLayermanagerController', gn.LayermanagerController);
+  module.controller('AppLayermanagerController', gn.LayermanagerController);
 
 })();
