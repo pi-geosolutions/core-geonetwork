@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
   <bean id="jdbcURLGeodata" class="java.lang.String">
-    <constructor-arg value="jdbc:postgresql://${jdbc.host}:5433/ne_risques_geodata"/>
+    <constructor-arg value="jdbc:postgresql://${jdbc.host}:${jdbc.port}/ne_risques_geodata"/>
   </bean>
 
   <bean id="ne_risques_geodata" class="org.apache.commons.dbcp.BasicDataSource"
