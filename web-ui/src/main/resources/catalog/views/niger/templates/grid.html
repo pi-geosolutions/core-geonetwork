@@ -1,0 +1,47 @@
+<ul class="list-group gn-resultview gn-resultview-sumup">
+
+  <li class="list-group-item gn-grid col-md-6 col-xs-12"
+      data-ng-repeat="md in searchResults.records"
+      data-gn-fix-mdlinks=""
+      data-gn-displayextent-onhover=""
+      data-gn-zoomto-onclick="">
+
+    <div class="gn-grid-item">
+
+      <!--Title-->
+      <div class="row gn-md-title">
+        <input data-gn-selection-md type="checkbox"
+               data-ng-model="md['geonet:info'].selected"
+               data-ng-change="change()"/>
+
+        <h4 title="{{md.title || md.defaultTitle}}">
+          <a  href="md.viewer#/sxt_view/{{md.getUuid()}}" gn-metadata-open="md">
+            {{(md.title || md.defaultTitle) | characters:70}}</a>
+        </h4>
+      </div>
+
+      <div class="gn-md-details" title="{{(md.abstract || md.defaultAbstract) | striptags}}">
+
+        <!-- Thumbnail -->
+        <div class="gn-md-thumbnail" ng-class="{'gn-md-emptythumbnail': !md.getThumbnails().small }">
+          <img gn-img-modal="md" class="gn-img-thumbnail" data-ng-src="{{md.getThumbnails().small}}" data-ng-if="md.getThumbnails().small"/>
+        </div>
+
+        <div class="text-justify md-abstract ellipsis">
+          <div>
+            <p>{{::(md.abstract || md.defaultAbstract) | striptags}}</p>
+          </div>
+        </div>
+
+        <p data-ng-if="md.getCredits()" class="gn-md-source" title="{{::md.getCredits()}}">
+          <!--<h5 data-translate="">contacts</h5>-->
+          Source: {{::md.getCredits() | characters : 50}}
+        </p>
+
+      </div>
+      <div>
+        <gn-links-btn></gn-links-btn>
+      </div>
+    </div>
+  </li>
+</ul>

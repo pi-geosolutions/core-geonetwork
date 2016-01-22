@@ -1,0 +1,59 @@
+<form class="form-horizontal" role="form"
+      data-ng-search-form="">
+
+  <!--any field-->
+  <div class="input-group gn-search-input">
+    <input type="text" ng-model="searchObj.params.any" placeholder="{{'anyPlaceHolder' | translate}}"
+           typeahead="address for address in ctrl.getAnySuggestions($viewValue)" typeahead-focus-first="false" typeahead-loading="ctrl.anyLoading" class="form-control"
+           typeahead-min-length="1" id="anySearchField" autocomplete="off">
+    <i ng-show="ctrl.anyLoading" class="fa fa-refresh inner-spinner"></i>
+        <span class="input-group-btn">
+          <button type="submit" data-ng-click="triggerSearch()" class="btn btn-default search-btn">
+            <i class="fa fa-search"></i>
+          </button>
+        </span>
+  </div>
+
+
+  <!--Tool bar-->
+  <div class="row gn-toolbar"
+       data-ng-show="searchResults.records.length > 0">
+    <div class="col-md-12">
+      <div class="pull-right"
+           data-gn-pagination="paginationInfo"
+           template="../../catalog/views/niger/templates/pagination.html"
+           data-hits-values="searchObj.hitsperpageValues"></div>
+
+      <div class="pull-right"
+           data-sortby-combo=""
+           data-params="searchObj.params"
+           template="../../catalog/views/niger/templates/sortbycombo.html"
+           data-gn-sortby-values="searchObj.sortbyValues"></div>
+      <div data-gn-selection-widget=""
+           data-results="searchResults"></div>
+    </div>
+  </div>
+
+  <!--Results-->
+  <div class="row">
+    <div class="col-md-12">
+      <span class="loading fa fa-spinner fa-spin"
+            data-ng-show="searching"></span>
+
+      <div class="alert alert-warning" role="alert"
+           ng-if="!searching && searchResults.count == 0">
+        <i class="fa fa-frown-o"></i>
+        <span data-translate="">zarooResult</span>
+      </div>
+
+      <div data-ng-show="searchResults.records.length > 0"
+           data-gn-results-container=""
+           data-search-results="searchResults"
+           data-template-url="resultTemplate"
+           data-map="searchObj.searchMap"></div>
+
+    </div>
+  </div>
+
+
+</form>

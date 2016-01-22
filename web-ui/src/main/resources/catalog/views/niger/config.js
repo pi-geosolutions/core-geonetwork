@@ -33,13 +33,9 @@ if(!goog) {
 
           viewerSettings.servicesUrl = {
             wms: [{
-              name: 'Ifremer - Biologie',
-              url: 'http://www.ifremer.fr/services/wms/biologie?'
-            }, {
-              name: 'Ifremer - Océanographie physique',
-              url: 'http://www.ifremer.fr/services/wms/oceanographie_physique?service=WMS&request=GetCapabilities'
+              name: 'Pigeo geoserver',
+              url: 'http://gm-risk.pigeo.fr/geoserver-prod/ows'
             }],
-
             wmts: [{
               name: 'Arcgisonline - Relief ombré',
               url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/WMTS/1.0.0/WMTSCapabilities.xml?REQUEST=GetCapabilities&service=WMTS'
@@ -135,8 +131,7 @@ if(!goog) {
 
           /* Custom templates for search result views */
           searchSettings.resultViewTpls = [{
-            tplUrl: '../../catalog/components/search/resultsview/' +
-            'partials/viewtemplates/grid.html',
+            tplUrl: '../../catalog/views/niger/templates/grid.html',
             tooltip: 'Grid',
             icon: 'fa-th'
           }];
@@ -171,5 +166,16 @@ if(!goog) {
               searchSettings.resultViewTpls[0].tplUrl;
 
           viewerSettings.contexts = ['france', 'italy', 'gb'];
+
+          viewerSettings.localisations= [{
+            name: 'United States',
+            extent: [-13884991, 2870341, -7455066, 6338219]
+          }, {
+            name: 'France',
+            extent: [-817059, 4675034, 1719426, 7050085]
+          },{
+            name: 'Brest',
+            extent: [-510281, 6164880, -490464, 6183435]
+          }]
         }]);
 })();

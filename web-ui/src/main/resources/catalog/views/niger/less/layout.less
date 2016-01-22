@@ -14,6 +14,11 @@ body > div,
 
 @color-red: #AA6F71;
 
+::-webkit-input-placeholder,
+::-moz-placeholder{
+  color: white;
+}
+
 header {
   &.navbar {
     border-width: 0;
@@ -74,6 +79,7 @@ header {
   left: @sidebar-left-offset;
   top: @sidebar-top-offset;
   background-color: @main_color_50;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
 
   #sidebar-content {
     > div {
@@ -104,8 +110,14 @@ header {
     background-color: white;
     min-height: 200px;
     .form-control {
-      background-color: @main_color_200;
+      background-color: @main_color_300;
+      color: white;
       font-size: 12px;
+      box-shadow: none;
+      &:focus {
+        border-color: @main_color_700;
+      }
+
     }
     select{
       -webkit-appearance:none;
@@ -218,6 +230,13 @@ ul.dropdown-menu {
   background-color: @main_color_50;
   font-size: @main-font-size;
   padding: 3px 0;
+  cursor: pointer;
+  > .active > a {
+    background-color: #f5f5f5;
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
 }
 
 .chart-icon {

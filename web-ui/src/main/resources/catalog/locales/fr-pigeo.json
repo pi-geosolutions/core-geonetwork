@@ -71,5 +71,9 @@
   "annualData": "Annual Data",
   "annualDataMsg": "Display the {{type}} variation on an area over the last year (10-days intervals)",
   "variation": "Yearly variations",
-  "variationMsg": "Display the {{type}} variation on an area over the past years"
+  "variationMsg": "Display the {{type}} variation on an area over the past years",
+  "paginationInfo": "Résultats {{from}} à {{to}} <em> sur {{total}}</em> :",
+  "byPage": "par page",
+  "sortBy": "Tri par"
+
 }

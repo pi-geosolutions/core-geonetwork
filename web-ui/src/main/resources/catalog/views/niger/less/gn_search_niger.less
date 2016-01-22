@@ -15,9 +15,12 @@
 @import "layout.less";
 @import "olcontrols.less";
 @import "catalog.less";
+@import "geocatalog.less";
 @import "layermanager.less";
 @import "temporalfiles.less";
 @import "gfi.less";
+@import "import.less";
+@import "../../../style/ellipsis.less";
 
 @font-face {
   font-family: 'mapicon';
@@ -90,4 +93,61 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   background: #ccc;
 }
 
+[gn-localisation-input] {
+  position: absolute;
+  width: 25em;
+  right: 80px;
+  top: @sidebar-top-offset;
+  z-index: 1050;
 
+  input {
+    height: 3em;
+    border-radius: 0;
+    border: none;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
+  }
+
+  .clear {
+    position: absolute;
+    top:  1.2em;
+    right: .75em;
+    color: @main_color_400;
+    cursor: pointer;
+  }
+
+  .dropdown-menu {
+    border-radius: 0;
+    width: 100%;
+    top: calc(100% - 3px);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0 0 0em;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
+    border: none;
+    margin:0;
+    h5 {
+      padding: 0.8em;
+      margin: 0;
+      font-size: 12px;
+      color: white;
+      background-color: @main_color_500;
+    }
+    ul {
+      margin: 0;
+      background: #fff;
+    }
+    li {
+      padding: 0;
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+      font-size: 12px;
+      a {
+        padding: .5em 1em;
+        display: block;
+      }
+      em {
+        font-size: 11px;
+      }
+    }
+  }
+}

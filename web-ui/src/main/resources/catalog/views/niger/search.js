@@ -6,6 +6,7 @@
   goog.require('gn_search_niger_config');
   goog.require('app.bglayer');
   goog.require('app.catalog');
+  goog.require('app.geocatalog');
   goog.require('app.layermanager');
   goog.require('app.temporalfiles');
 
@@ -15,6 +16,7 @@
     'gn_search_niger_config',
     'app.bglayer',
     'app.catalog',
+    'app.geocatalog',
     'app.layermanager',
     'app.temporalfiles'
   ]);
@@ -109,10 +111,11 @@
     this.printOpen = false;
     this.drawOpen = false;
     this.importOpen = false;
+    this.geocatalogOpen = false;
   };
   gn.MainController.prototype.sidebarOpen = function() {
     return this.layersOpen || this.contextOpen || this.printOpen ||
-        this.drawOpen || this.importOpen;
+        this.drawOpen || this.importOpen || this.geocatalogOpen;
   };
 
   gn.MainController.prototype.showTab = function(selector) {
