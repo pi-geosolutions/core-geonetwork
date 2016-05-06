@@ -9,17 +9,21 @@
          type="search"
          class="form-control" placeholder="{{'searchPlaces' | translate}}">
   <div class="dropdown-menu" role="menu">
-    <h5 ng-if="(localisations | filter:query).length > 0" data-translate="">Locations</h5>
-    <ul class="loc-defaults list-group">
-      <li data-ng-repeat="loc in localisations | filter:query" class="list-group-item">
-        <a href="" data-ng-click="locCtrl.onClick(loc, map)">{{loc.name}}</a>
-      </li>
-    </ul>
-    <h5 ng-if="results.length>0" data-translate="">Results</h5>
+    <h5 ng-if="results.length>0" data-translate="">geonames</h5>
     <ul class="loc-geonames list-group">
       <li data-ng-repeat="loc in results" class="list-group-item">
-      <a href="" data-ng-click="locCtrl.onClick(loc, map)">{{loc.name}} <em>{{loc.formattedName}}</em></a>
+        <a href="" data-ng-click="locCtrl.onClick(loc, map)">{{loc.name}} <em>{{loc.formattedName}}</em></a>
       </li>
     </ul>
+
+    <h5 translate>administrativeunits</h5>
+    <div ng-repeat="unit in locCtrl.adminUnits">
+      <h6 translate>{{unit.name}}</h6>
+      <ul class="loc-geonames list-group">
+        <li data-ng-repeat="loc in unit.values | filter:query" class="list-group-item"  ng-class="{active: unit.choice == loc.name}">
+          <a href="" data-ng-click="locCtrl.adminSelect(loc)">{{loc.name}}</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

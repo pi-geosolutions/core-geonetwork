@@ -119,6 +119,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     border-radius: 0;
     width: 100%;
     top: calc(100% - 3px);
+    max-height: 80%;
     background: rgba(255, 255, 255, 0.9);
     padding: 0 0 0em;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
@@ -131,9 +132,16 @@ input[type=range]:focus::-webkit-slider-runnable-track {
       color: white;
       background-color: @main_color_500;
     }
+    h6 {
+      margin: 0;
+      background-color: @main_color_50;
+      padding: 0.7em;
+    }
     ul {
       margin: 0;
       background: #fff;
+      max-height: 150px;
+      overflow-y: scroll;
     }
     li {
       padding: 0;
@@ -147,6 +155,12 @@ input[type=range]:focus::-webkit-slider-runnable-track {
       }
       em {
         font-size: 11px;
+      }
+      &.active {
+        font-weight: bold;
+        a {
+          color: #428bca !important;
+        }
       }
     }
   }

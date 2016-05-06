@@ -9,6 +9,7 @@
   goog.require('app.geocatalog');
   goog.require('app.layermanager');
   goog.require('app.temporalfiles');
+  goog.require('app.adminunits');
 
 
   var module = angular.module('gn_search_niger',[
@@ -18,7 +19,8 @@
     'app.catalog',
     'app.geocatalog',
     'app.layermanager',
-    'app.temporalfiles'
+    'app.temporalfiles',
+    'app.adminunits'
   ]);
 
   module.config(['$LOCALES',

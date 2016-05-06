@@ -81,9 +81,10 @@
                   lang: 'fr',
                   style: 'full',
                   type: 'json',
-                  maxRows: 10,
+                  maxRows: 20,
                   name_startsWith: query,
-                  username: 'georchestra'
+                  username: 'pigeo_ilwac',
+                  country: 'NE'
                 }
               }).
                   success(function(response) {
@@ -103,7 +104,48 @@
                     }
                   });
             };
+
+            //specific pigeo
+            var adminDepth = -1;
+            var locs;
+            gnViewerSettings.adminunitsPromise.then(function(){
+              locs = gnViewerSettings.adminunits;
+              this.adminUnits = [];
+              angular.forEach(locs, function(value, key) {
+                this.adminUnits.push({
+                  choice: '',
+                  name: key,
+                  lvl: ++adminDepth,
+                  values: value
+                });
+              }.bind(this));
+            }.bind(this));
+
+            this.filterLowerAdmin_ = function(unit) {
+              if (unit.lvl < adminDepth) {
+                for (var i = unit.lvl+1; i <= adminDepth; i++) {
+                  var au = this.adminUnits[i];
+                  au.values = locs[au.name].filter(function(item) {
+                    return item['up' + (i - unit.lvl)] == unit.id;
+                  });
+                }
+              }
+            };
+
+            this.adminSelect = function(adminUnit) {
+              this.filterLowerAdmin_(adminUnit);
+              zoomTo(adminUnit.extent, $scope.map);
+              this.adminUnits.some(function(unit) {
+                if(unit.lvl == adminUnit.lvl) {
+                  unit.choice = adminUnit.name;
+                  return true;
+                }
+              }.bind(this));
+            };
+            // end specific pigeo
           }],
+
+
         link: function(scope, element, attrs, ctrl) {
 
           /** localisation text query */
@@ -144,13 +186,14 @@
             }
           });
 
-          scope.map.on('click', function() {
-            scope.$apply(function() {
-              $(':focus').blur();
-              scope.collapsed = true;
+          ['click', 'pointerdrag'].forEach(function(event) {
+            scope.map.on(event, function() {
+              scope.$apply(function() {
+                $(':focus').blur();
+                scope.collapsed = true;
+              });
             });
           });
-
         }
       };
     }]);
