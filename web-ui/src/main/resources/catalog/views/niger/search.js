@@ -10,6 +10,8 @@
   goog.require('app.layermanager');
   goog.require('app.temporalfiles');
   goog.require('app.adminunits');
+  goog.require('app.mouseposition');
+  goog.require('app.scaleselector');
 
 
   var module = angular.module('gn_search_niger',[
@@ -20,6 +22,8 @@
     'app.geocatalog',
     'app.layermanager',
     'app.temporalfiles',
+    'app.mouseposition',
+    'app.scaleselector',
     'app.adminunits'
   ]);
 
