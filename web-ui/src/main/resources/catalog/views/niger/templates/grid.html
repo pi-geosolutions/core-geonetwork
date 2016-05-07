@@ -3,8 +3,8 @@
   <li class="list-group-item gn-grid col-md-6 col-xs-12"
       data-ng-repeat="md in searchResults.records"
       data-gn-fix-mdlinks=""
-      data-gn-displayextent-onhover=""
-      data-gn-zoomto-onclick="">
+      app-md-extent=""
+      app-md-extent-md="md">
 
     <div class="gn-grid-item">
 
@@ -22,6 +22,8 @@
 
       <div class="gn-md-details" title="{{(md.abstract || md.defaultAbstract) | striptags}}">
 
+        <div class="pull-right" style="width:5px;height:20px;background-color: {{::md.extentColor}}"></div>
+
         <!-- Thumbnail -->
         <div class="gn-md-thumbnail" ng-class="{'gn-md-emptythumbnail': !md.getThumbnails().small }">
           <img gn-img-modal="md" class="gn-img-thumbnail" data-ng-src="{{md.getThumbnails().small}}" data-ng-if="md.getThumbnails().small"/>
@@ -37,6 +39,7 @@
           <!--<h5 data-translate="">contacts</h5>-->
           Source: {{::md.getCredits() | characters : 50}}
         </p>
+
 
       </div>
       <div>

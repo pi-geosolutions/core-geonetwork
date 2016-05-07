@@ -1,13 +1,15 @@
 (function() {
 
   goog.provide('app.geocatalog');
+  goog.require('app.mdextent');
 
-  var module = angular.module('app.geocatalog', []);
+  var module = angular.module('app.geocatalog', ['app.mdextent']);
 
   gn.geoCatalogDirective = function() {
     return {
       restrict: 'E',
       scope: {
+        map: '=appGeoCatalogMap'
       },
       controller: 'AppGeoCatalogController',
       controllerAs: 'ctrl',
