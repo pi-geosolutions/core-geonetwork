@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
+  ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
+  ~ and United Nations Environment Programme (UNEP)
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 2 of the License, or (at
+  ~ your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but
+  ~ WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  ~ General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program; if not, write to the Free Software
+  ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+  ~
+  ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+  ~ Rome - Italy. email: geonetwork@osgeo.org
+  -->
+
 <xsl:stylesheet version="2.0"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
@@ -244,11 +267,10 @@
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
             <xsl:for-each select="//gmd:MD_Keywords">
-                <!-- Index all keywords as text, multilingual text or anchor -->
+                <!-- Index all keywords as text or anchor -->
                 <xsl:variable name="listOfKeywords"
                                 select="gmd:keyword/gco:CharacterString|
-                                        gmd:keyword/gmx:Anchor|
-                                        gmd:keyword/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString"/>
+                                        gmd:keyword/gmx:Anchor"/>
                 <xsl:for-each select="$listOfKeywords">
                     <xsl:variable name="keyword" select="string(.)"/>
 
@@ -354,6 +376,7 @@
             <xsl:for-each select="gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString|gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gmx:Anchor">
 
                 <Field name="orgName" string="{string(.)}" store="true" index="true"/>
+                <Field name="orgNameTree" string="{string(.)}" store="true" index="true"/>
 
                 <xsl:variable name="role"    select="../../gmd:role/*/@codeListValue"/>
                 <xsl:variable name="roleTranslation" select="util:getCodelistTranslation('gmd:CI_RoleCode', string($role), string($isoLangId))"/>
@@ -532,36 +555,16 @@
                 </xsl:for-each>
             </xsl:for-each>
 
-            <xsl:for-each select="gmd:graphicOverview/gmd:MD_BrowseGraphic">
+            <xsl:for-each select="gmd:graphicOverview/gmd:MD_BrowseGraphic[normalize-space(gmd:fileName/gco:CharacterString) != '']">
                 <xsl:variable name="fileName"  select="gmd:fileName/gco:CharacterString"/>
-                <xsl:if test="$fileName != ''">
-                    <xsl:variable name="fileDescr" select="gmd:fileDescription/gco:CharacterString"/>
-                    <xsl:choose>
-                        <xsl:when test="contains($fileName ,'://')">
-                            <xsl:choose>
-                                <xsl:when test="string($fileDescr)='thumbnail'">
-                                    <Field  name="image" string="{concat('thumbnail|', $fileName)}" store="true" index="false"/>
-                                </xsl:when>
-                                <xsl:when test="string($fileDescr)='large_thumbnail'">
-                                    <Field  name="image" string="{concat('overview|', $fileName)}" store="true" index="false"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <Field  name="image" string="{concat('unknown|', $fileName)}" store="true" index="false"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:when>
-                        <xsl:when test="string($fileDescr)='thumbnail'">
-                            <!-- FIXME : relative path -->
-                            <Field  name="image" string="{concat($fileDescr, '|', 'resources.get?uuid=', //gmd:fileIdentifier/gco:CharacterString, '&amp;fname=', $fileName, '&amp;access=public')}" store="true" index="false"/>
-                        </xsl:when>
-                        <xsl:when test="string($fileDescr)='large_thumbnail'">
-                            <!-- FIXME : relative path -->
-                            <Field  name="image" string="{concat('overview', '|', 'resources.get?uuid=', //gmd:fileIdentifier/gco:CharacterString, '&amp;fname=', $fileName, '&amp;access=public')}" store="true" index="false"/>
-                        </xsl:when>
-                    </xsl:choose>
-                </xsl:if>
+                <xsl:variable name="fileDescr" select="gmd:fileDescription/gco:CharacterString"/>
+                <xsl:variable name="thumbnailType"
+                              select="if (position() = 1) then 'thumbnail' else 'overview'"/>
+                <!-- First thumbnail is flagged as thumbnail and could be considered the main one -->
+                <Field  name="image"
+                        string="{concat($thumbnailType, '|', $fileName, '|', $fileDescr)}"
+                        store="true" index="false"/>
             </xsl:for-each>
-
         </xsl:for-each>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -774,8 +777,10 @@
         <xsl:for-each select="gmd:parentIdentifier/gco:CharacterString">
             <Field name="parentUuid" string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
+        <Field name="isChild" string="{exists(gmd:parentIdentifier)}" store="true" index="true"/>
 
-        <xsl:for-each select="gmd:metadataStandardName/gco:CharacterString">
+
+      <xsl:for-each select="gmd:metadataStandardName/gco:CharacterString">
             <Field name="standardName" string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
@@ -945,7 +950,7 @@
                                     or $englishKeyword='soil' or $englishKeyword='land use'
                                     or $englishKeyword='human health and safety' or $englishKeyword='utility and governmental services'
                                     or $englishKeyword='environmental monitoring facilities' or $englishKeyword='production and industrial facilities'
-                                    or $englishKeyword='agricultural and aquaculture facilities' or $englishKeyword='population distribution - demography'
+                                    or $englishKeyword='agricultural and aquaculture facilities' or $englishKeyword='population distribution — demography'
                                     or $englishKeyword='area management/restriction/regulation zones and reporting units'
                                     or $englishKeyword='natural risk zones' or $englishKeyword='atmospheric conditions'
                                     or $englishKeyword='meteorological geographical features' or $englishKeyword='oceanographic geographical features'

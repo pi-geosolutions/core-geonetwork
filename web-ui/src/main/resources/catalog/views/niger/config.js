@@ -45,50 +45,6 @@ if(!goog) {
             }]
           };
 
-          var bboxStyle = new ol.style.Style({
-            stroke: new ol.style.Stroke({
-              color: 'rgba(255,0,0,1)',
-              width: 2
-            }),
-            fill: new ol.style.Fill({
-              color: 'rgba(255,0,0,0.3)'
-            })
-          });
-          searchSettings.olStyles = {
-            drawBbox: bboxStyle,
-            mdExtent: new ol.style.Style({
-              stroke: new ol.style.Stroke({
-                color: 'orange',
-                width: 2
-              })
-            }),
-            mdExtentHighlight: new ol.style.Style({
-              stroke: new ol.style.Stroke({
-                color: 'orange',
-                width: 3
-              }),
-              fill: new ol.style.Fill({
-                color: 'rgba(255,255,0,0.3)'
-              })
-            })
-
-          };
-
-          /*******************************************************************
-           * Define maps
-           */
-          var mapsConfig = {
-            center: [280274.03240585705, 6053178.654789996],
-            zoom: 2,
-            maxResolution: 9783.93962050256
-          };
-
-          var viewerMap = new ol.Map({
-            controls: [],
-            view: new ol.View(mapsConfig)
-          });
-
-
           /*
            * Hits per page combo values configuration. The first one is the
            * default.
@@ -167,15 +123,13 @@ if(!goog) {
 
           viewerSettings.contexts = ['france', 'italy', 'gb'];
 
-          viewerSettings.localisations= [{
-            name: 'United States',
-            extent: [-13884991, 2870341, -7455066, 6338219]
-          }, {
-            name: 'France',
-            extent: [-817059, 4675034, 1719426, 7050085]
-          },{
-            name: 'Brest',
-            extent: [-510281, 6164880, -490464, 6183435]
-          }]
+          /** Facets configuration */
+          searchSettings.facetsSummaryType = 'hits';
+
+          viewerSettings.bingKey = 'AnElW2Zqi4fI-9cYx1LHiQfokQ9GrNzcjOh_' +
+              'p_0hkO1yo78ba8zTLARcLBIf8H6D';
+
+          viewerSettings.singleTileWMS = false;
+
         }]);
 })();

@@ -37,6 +37,9 @@
             </li>
           </ul>
         </div>
+
+
+        <div data-gn-need-help="administrator-guide/managing-classification-systems/managing-thesaurus.html"></div>
       </div>
     </div>
   </div>
@@ -98,10 +101,13 @@
             </div>
 
             <label>
-              <input type="checkbox" data-ng-model="thesaurusSelectedActivated"
-                data-ng-click="enableThesaurus()"/>
+              <input type="checkbox"
+                     data-ng-model="thesaurusSelectedActivated"
+                     data-ng-click="enableThesaurus()"/>
               <span data-translate="">enable</span>
             </label>
+            <p class="help-block" data-translate="">enableThesaurusHelp</p>
+
           </fieldset>
         </form>
 

@@ -288,7 +288,10 @@ class Harvester implements IHarvester<HarvestResult>
             //--- check to see if we have to perform other searches
             int matchedCount = getSearchResultAttribute(results, ATTRIB_SEARCHRESULT_MATCHED);
             int returnedCount = getSearchResultAttribute(results, ATTRIB_SEARCHRESULT_RETURNED);
-            int nextRecord = getSearchResultAttribute(results, ATTRIB_SEARCHRESULT_NEXT);
+
+            // nextRecord *is* required by CSW specifications, but some servers (e.g. terra catalog) are not returning this attribute
+            // See https://github.com/geonetwork/core-geonetwork/issues/1429
+            Integer nextRecord = getOptionalSearchResultAttribute(results, ATTRIB_SEARCHRESULT_NEXT);
 
             if (log.isDebugEnabled()) {
                 log.debug("Records matched by the query : " + matchedCount);
@@ -296,6 +299,8 @@ class Harvester implements IHarvester<HarvestResult>
                 log.debug("Records found in response    : " + foundCnt);
                 log.debug("Next record                  : " + nextRecord);
             }
+
+            //== Some log lines, in case we do not like some of the received values
 
             if (returnedCount != GETRECORDS_REQUEST_MAXRECORDS) {
                 log.warning("Declared number of returned records (" + returnedCount + ") does not match requested record count (" + GETRECORDS_REQUEST_MAXRECORDS + ")");
@@ -305,13 +310,39 @@ class Harvester implements IHarvester<HarvestResult>
                 log.warning("Declared number of returned records (" + returnedCount + ") does not match actual record count (" + foundCnt + ")");
             }
 
-            // As indicated in CSW: A value of 0 means all records have been returned.
-            if (nextRecord == 0) {
+            if(nextRecord == null) {
+                log.warning("Declared nextRecord is null");
+            }
+
+            //== Find out if the harvesting loop has completed
+            
+            // Check for standard CSW: A value of 0 means all records have been returned.
+            if (nextRecord != null && nextRecord == 0) {
+                break;
+            }
+
+            // Misbehaving CSW server:
+            // GN 3.0.x: see https://github.com/geonetwork/core-geonetwork/issues/1537
+            // startPosition=493&maxRecords=1
+            //    <csw:SearchResults numberOfRecordsMatched="493" numberOfRecordsReturned="1" elementSet="summary" nextRecord="494">
+            // startPosition=494&maxRecords=1
+            //    <csw:SearchResults numberOfRecordsMatched="493" numberOfRecordsReturned="0" elementSet="summary" nextRecord="494">
+
+            if (nextRecord != null && nextRecord > matchedCount) {
+                log.warning("Forcing harvest end since next > matched");
+                break;
+            }
+
+            // Another way to escape from an infinite loop
+
+            if (returnedCount == 0) {
+                log.warning("Forcing harvest end since numberOfRecordsReturned = 0");
                 break;
             }
 
             // Start position of next record.
-            start = nextRecord;
+            // Note that some servers may return less records than requested (it's ok for CSW protocol)
+            start += returnedCount;
         }
 
         log.info("Records added to result list : " + records.size());
@@ -347,10 +378,22 @@ class Harvester implements IHarvester<HarvestResult>
         request.setConstraintLangVersion(CONSTRAINT_LANGUAGE_VERSION);
         request.setConstraint(constraint);
         request.setMethod(method);
-        for (String typeName : oper.getTypeNamesList()) {
-            request.addTypeName(TypeName.getTypeName(typeName));
+
+        // Adapt the typename parameter to the outputschema used
+        if (this.params.outputSchema != null && !this.params.outputSchema.isEmpty()) {
+            if ("http://www.isotc211.org/2005/gmd".equals(this.params.outputSchema)) {
+                request.addTypeName(TypeName.getTypeName("gmd:MD_Metadata"));
+            } else if ("http://www.opengis.net/cat/csw/2.0.2".equals(this.params.outputSchema)) {
+                request.addTypeName(TypeName.getTypeName("csw:Record"));
+            } else {
+                request.addTypeName(TypeName.getTypeName("csw:Record"));
+            }
+        } else {
+            for (String typeName : oper.getTypeNamesList()) {
+                request.addTypeName(TypeName.getTypeName(typeName));
+            }
         }
-        request.setOutputFormat(oper.getPreferredOutputFormat());
+		request.setOutputFormat(oper.getPreferredOutputFormat());
     }
 
     /**
@@ -561,6 +604,9 @@ class Harvester implements IHarvester<HarvestResult>
 		{
             errors.add(new HarvestError(e, log));
 			log.warning("Raised exception when searching : "+ e);
+			log.warning("Url: " + request.getHost());
+			log.warning("Method: " + request.getMethod());
+			log.warning("Sent request " + request.getSentData());
 			throw new OperationAbortedEx("Raised exception when searching: " + e.getMessage(), e);
 		}
 	}
@@ -579,6 +625,20 @@ class Harvester implements IHarvester<HarvestResult>
             }
 
             return Integer.parseInt(value);
+	}
+
+        private Integer getOptionalSearchResultAttribute(Element results, String attribName) throws OperationAbortedEx	{
+            String value = results.getAttributeValue(attribName);
+
+            if (value == null) {
+                return null;
+            }
+
+            if (!Lib.type.isInteger(value)) {
+                throw new OperationAbortedEx("Bad value for '" + attribName + "'", value);
+            }
+
+            return Integer.valueOf(value);
 	}
 
 	//---------------------------------------------------------------------------
