@@ -459,4 +459,134 @@ public class Handlers {
 
             return  rootPackageOutput.toString() + otherPackageData
     }
+
+    // Pigeo Specific : Formatters
+    def keywordsElPigeo = {keywords ->
+        def keywordProps = com.google.common.collect.ArrayListMultimap.create()
+        keywords.collectNested {it.'**'.findAll{it.name() == 'gmd:keyword'}}.flatten().each { k ->
+            def thesaurusName = isofunc.isoText(k.parent().'gmd:thesaurusName'.'gmd:CI_Citation'.'gmd:title')
+
+            if (thesaurusName.isEmpty()) {
+                def keywordTypeCode = k.parent().'gmd:type'.'gmd:MD_KeywordTypeCode'
+                if (!keywordTypeCode.isEmpty()) {
+                    thesaurusName = f.translate("uncategorizedKeywords")
+                }
+            }
+
+            if (thesaurusName.isEmpty()) {
+                thesaurusName = f.translate("noThesaurusName")
+            }
+            keywordProps.put(thesaurusName, isofunc.isoText(k))
+        }
+
+        return handlers.fileResult('html/pigeo-keyword.html', [
+                label : f.nodeLabel("gmd:descriptiveKeywords", null),
+                keywords: keywordProps.asMap()])
+    }
+
+
+    def bboxElPigeo(thumbnail) {
+        return { el ->
+            if (el.parent().'gmd:EX_BoundingPolygon'.text().isEmpty() &&
+                    el.parent().parent().'gmd:geographicElement'.'gmd:EX_BoundingPolygon'.text().isEmpty()) {
+                def replacements = bbox(thumbnail, el)
+                replacements['label'] = f.nodeLabel(el)
+                replacements['gnUrl'] = env.getLocalizedUrl();
+                //replacements['pdfOutput'] = env.formatType == FormatType.pdf
+
+                handlers.fileResult("html/pigeo-bbox.html", replacements)
+            }
+        }
+    }
+
+    def dataQualityInfoElPigeo =  { el ->
+        return handlers.fileResult('html/pigeo-statements.html', [
+                statements : el
+        ])
+    }
+
+    def datesElPigeo =  { els ->
+        def dates = ''
+        els.each { el ->
+            def date = el.'gmd:date'.'gco:Date'.text().isEmpty() ?
+                    el.'gmd:date'.'gco:DateTime'.text() :
+                    el.'gmd:date'.'gco:Date'.text()
+
+            if(date) {
+                def dateType = f.codelistValueLabel(el.'gmd:dateType'.'gmd:CI_DateTypeCode')
+                dates += '<p>' + date + ' - ' + dateType + '</p>'
+            }
+        }
+        return dates
+    }
+
+    def contactsElPigeo =  { els ->
+        def contacts = []
+        def orgs = []
+        def idx = 0
+        els.each { el ->
+            def name = el.'gmd:individualName'
+            def mail = el.'gmd:contactInfo'.'gmd:CI_Contact'.'gmd:address'.'gmd:CI_Address'.'gmd:electronicMailAddress'
+            def org = el.'gmd:organisationName'
+            def contact = [name : name, mail : mail]
+
+            if(name && name != "" && contacts.indexOf(name) < 0) {
+                contacts.push(contact)
+            }
+            if(org && orgs.indexOf(org) < 0) {
+                orgs.push(org)
+            }
+        }
+        def replacements = [
+                contacts : contacts,
+                orgs : orgs
+        ]
+
+        if(!contacts)  {
+            return ""
+        }
+        else {
+            return handlers.fileResult("html/pigeo-contacts.html", replacements)
+        }
+    }
+
+    def constraintsElPigeo = { els ->
+        def useLimitation
+        def accessConstraints
+        def useConstraints
+        def otherConstraints
+        def useLimitationLabel
+        def accessConstraintsLabel
+        def useConstraintsLabel
+        def otherConstraintsLabel
+
+        els.each { el ->
+            useLimitationLabel = f.nodeLabel(el."gmd:useLimitation")
+            accessConstraintsLabel = f.nodeLabel(el."gmd:accessConstraints")
+            useConstraintsLabel = f.nodeLabel(el."gmd:useConstraints")
+            otherConstraintsLabel = f.nodeLabel(el."gmd:otherConstraints")
+
+            useLimitation = el."gmd:useLimitation"
+            accessConstraints = f.codelistValueLabel(el."gmd:accessConstraints"."gmd:MD_RestrictionCode")
+            useConstraints = f.codelistValueLabel(el."gmd:useConstraints"."gmd:MD_RestrictionCode")
+            otherConstraints = []
+            el.collectNested {it.'**'.findAll{it.name() == 'gmd:otherConstraints'}}.flatten().each { k ->
+                otherConstraints.add(this.isofunc.isoText(k))
+            }
+        }
+
+        def replacements = [
+                useLimitation : useLimitation,
+                accessConstraints : accessConstraints,
+                useConstraints : useConstraints,
+                otherConstraints : otherConstraints,
+                useLimitationLabel : useLimitationLabel,
+                accessConstraintsLabel : accessConstraintsLabel,
+                useConstraintsLabel : useConstraintsLabel,
+                otherConstraintsLabel : otherConstraintsLabel
+        ]
+
+        return handlers.fileResult("html/pigeo-constraints.html", replacements)
+    }
+    // End pigeo specific handlers
 }

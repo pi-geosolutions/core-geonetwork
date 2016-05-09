@@ -132,6 +132,7 @@ public class Handlers {
 <script type="text/javascript">
 //<![CDATA[
     gnFormatter.formatterOnComplete();
+    console.log('TTTTTTTTTTTTTTT');
 //]]>
 </script>"""
         }
