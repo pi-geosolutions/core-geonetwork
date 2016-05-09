@@ -212,7 +212,7 @@
             }
           });
 
-/*
+
           ['click', 'pointerdrag'].forEach(function(event) {
             scope.map.on(event, function() {
               scope.$apply(function() {
@@ -221,8 +221,9 @@
               });
             });
           });
-*/
 
+
+/*
           $('body').on('click', function(e) {
             if (!$.contains(element[0], e.target)) { return; }
             if ((element.find('input')[0] != e.target) &&
@@ -234,6 +235,7 @@
               });
             }
           });
+*/
 
         }
       };

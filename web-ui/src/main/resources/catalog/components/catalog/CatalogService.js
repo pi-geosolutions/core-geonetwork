@@ -608,6 +608,20 @@
           record[field] = [record[field]];
         }
       });
+
+      // Create a structure that reflects the transferOption/onlinesrc tree
+      var links = [];
+      angular.forEach(this.link, function(link) {
+        var linkInfo = formatLink(link);
+        var idx = linkInfo.group - 1;
+        if (!links[idx]) {
+          links[idx] = [linkInfo];
+        }
+        else if (angular.isArray(links[idx])) {
+          links[idx].push(linkInfo);
+        }
+      });
+      this.linksTree = links;
     };
 
     function formatLink(sLink) {
@@ -776,6 +790,22 @@
         } else {
           return null;
         }
+      },
+      getCredits: function() {
+        if (this.credits) return this.credits;
+        if (this.credit) {
+          this.credits = angular.isArray(this.credit) ? this.credit.join(', ') :
+              this.credit;
+          return this.credits;
+        }
+      },
+      getContactResources : function() {
+        this.getAllContacts();
+        var res = '';
+        var res = this.allContacts.resource.map(function(r) {
+          return r.org;
+        });
+        return res.join(',');
       },
       getOwnername: function() {
         if (this.userinfo) {

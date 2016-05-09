@@ -32,7 +32,7 @@
       $LOCALES.push('pigeo');
     }]);
 
-  gn.MainController = function($scope, gnPopup, ngeoSyncArrays) {
+  gn.MainController = function($scope, gnPopup, ngeoSyncArrays, gnMdView) {
 
     this.siteTitle = 'gam-dris';
     this.siteSubTitle = 'Risk Management Portal for Gambia';
@@ -48,6 +48,9 @@
     this.gnPopup = gnPopup;
 
     this.temporalPopup;
+
+    gnMdView.initFormatter('#map-container');
+
   };
 
   gn.MainController.prototype.setMap_ = function() {
@@ -77,7 +80,6 @@
               '<span class="fa fa-arrows-alt"></span>')})
       ]
     });
-
   };
 
   gn.MainController.prototype.initInteractions_ =
@@ -132,7 +134,7 @@
   gn.MainController['$inject'] = [
     '$scope',
     'gnPopup',
-    'ngeoSyncArrays'
+    'ngeoSyncArrays', 'gnMdView'
   ];
 
 })();

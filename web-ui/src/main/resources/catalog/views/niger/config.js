@@ -99,7 +99,7 @@ if(!goog) {
           // TODO: formatter should be defined per schema
           searchSettings.formatter = {
             // defaultUrl: 'md.format.xml?xsl=full_view&id='
-            defaultUrl: 'md.format.xml?xsl=xsl-view&id=',
+            defaultUrl: 'md.format.xml?xsl=pigeo_simple_view&uuid=',
             list: [{
               //  label: 'inspire',
               //  url: 'md.format.xml?xsl=xsl-view' + '&view=inspire&id='

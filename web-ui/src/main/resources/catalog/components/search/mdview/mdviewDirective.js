@@ -66,6 +66,7 @@
 
           var unRegister;
 
+          element.find('.panel-body').append(scope.fragment);
           scope.dismiss = function() {
             unRegister();
             gnMdView.removeLocationUuid();

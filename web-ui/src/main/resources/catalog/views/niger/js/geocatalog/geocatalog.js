@@ -2,8 +2,11 @@
 
   goog.provide('app.geocatalog');
   goog.require('app.mdextent');
+  goog.require('app.formatter');
+  goog.require('app.linksbtn');
 
-  var module = angular.module('app.geocatalog', ['app.mdextent']);
+  var module = angular.module('app.geocatalog', [
+    'app.mdextent', 'app.formatter', 'app.linksbtn']);
 
   gn.geoCatalogDirective = function() {
     return {
@@ -21,7 +24,7 @@
 
 
   gn.AppGeoCatalogController = function($scope, $http, gnSearchSettings,
-                                        suggestService) {
+                                        suggestService, gnMap) {
 
     this.suggestService = suggestService;
     this.$http = $http;
@@ -33,6 +36,25 @@
       sortbyDefault: gnSearchSettings.sortbyDefault,
       hitsperpageValues: gnSearchSettings.hitsperpageValues
     };
+
+    var map = this.map;
+    $scope.resultviewFns = {
+      addMdLayerToMap: function(link, md) {
+
+        var loadLayerPromise = gnMap.addWmsFromScratch(map,
+            link.url, link.name, undefined, md).then(function(layer) {
+          if(layer) {
+            gnMap.feedLayerWithRelated(layer, link.group);
+          }
+        });
+      },
+      addAllMdLayersToMap: function (layers, md) {
+        angular.forEach(layers, function (layer) {
+          $scope.resultviewFns.addMdLayerToMap(layer, md);
+        });
+      }
+    };
+
   };
 
   gn.AppGeoCatalogController.prototype.getAnySuggestions = function(val) {
@@ -48,7 +70,7 @@
   gn.AppGeoCatalogController['$inject'] = [
     '$scope',
     '$http', 'gnSearchSettings',
-    'suggestService'
+    'suggestService', 'gnMap'
   ];
   module.controller('AppGeoCatalogController',
       gn.AppGeoCatalogController);
