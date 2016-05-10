@@ -21,7 +21,7 @@
     return {
       restrict: 'E',
       scope: {
-        coords: '=appTemporalFilesCoords',
+        coords: '=appTemporalFilesCoords'
       },
       controller: 'AppTemporalFilesController',
       controllerAs: 'ctrl',

@@ -1,9 +1,4 @@
-#geocatalog {
-
-  .tab-content {
-    width: calc(@sidebar-width + 300px);
-  }
-
+#geocatalog, .app-mdview .overview {
   .btn-default {
     background: @main_color_600;
     color: white;
@@ -11,6 +6,15 @@
     border-radius: 2px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
     padding: 4px 10px;
+  }
+
+}
+
+#geocatalog {
+
+  .tab-content {
+    width: calc(@sidebar-width + 300px);
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.4);
   }
 
   .gn-search-input, .gn-toolbar {
@@ -188,10 +192,10 @@
         max-width: 180px;
         max-height: 110px;
         min-height: 40px;
-        height: auto;
       }
       .gn-img-thumbnail {
         max-width: 100%;
+        max-height: 110px;
       }
     }
     .gn-md-emptythumbnail {
@@ -225,12 +229,12 @@
       height: 60px;
       margin-right:2em;
     }
+  }
+}
 
-    .gn-md-links {
-      button {
-        width: 46px;
-        margin: 0 3px 0 0;
-      }
-    }
+.gn-md-links {
+  button {
+    width: 46px;
+    margin: 0 3px 0 0;
   }
 }

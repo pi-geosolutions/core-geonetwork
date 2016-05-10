@@ -62,6 +62,11 @@
       md.thumbnail = thumbs && (thumbs.small || thumbs.big || (
               thumbs.list.length && thumbs.list[0].url
           ));
+      if(md.thumbnail && md.thumbnail.indexOf('http') <0 &&
+          md.thumbnail.indexOf('resource.get') <0 ) {
+        md.thumbnail = 'resources.get?fname=' + md.thumbnail +
+            '&access=public&id=' + md.getId();
+      }
 
 
       scope.links = md.getLinksByType('LINK');

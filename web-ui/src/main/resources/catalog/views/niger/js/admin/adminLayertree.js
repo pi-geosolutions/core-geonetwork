@@ -1,3 +1,15 @@
+var gn = {};
+
+if(!goog) {
+  var goog = {};
+  goog.UID_PROPERTY_ = 'closure_uid_406936994';
+  goog.uidCounter_ = 0;
+  goog.getUid = function(obj) {
+    return obj[goog.UID_PROPERTY_] ||
+        (obj[goog.UID_PROPERTY_] = ++goog.uidCounter_);
+  };
+}
+
 (function() {
 
   goog.provide('app.admin.layertree');
@@ -32,7 +44,7 @@
 
   gn.LayertreeController = function($scope, $element, $attrs) {
   
-    var isRoot = !goog.isDef($attrs['adminLayertreeNotroot']);
+    var isRoot = !angular.isDefined($attrs['adminLayertreeNotroot']);
     this.isRoot = isRoot;
 
     this.layer = isRoot ? null :
@@ -43,15 +55,15 @@
     this.node = undefined;
   
     if (isRoot) {
-      $scope.$watch(nodeExpr, goog.bind(function(newVal, oldVal) {
+      $scope.$watch(nodeExpr, function(newVal, oldVal) {
         this.node = newVal;
-      }, this));
+      }.bind(this));
     } else {
       this.node = ($scope.$eval(nodeExpr));
     }
     
     var nodelayerExpr = $attrs['adminLayertreeNodelayer'];
-    if (!goog.isDef(nodelayerExpr)) {
+    if (!angular.isDefined(nodelayerExpr)) {
       var nodelayerexprExpr = $attrs['adminLayertreeNodelayerexpr'];
       nodelayerExpr = $scope.$eval(nodelayerexprExpr);
     }

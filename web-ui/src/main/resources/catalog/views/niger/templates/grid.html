@@ -21,8 +21,8 @@
       </div>
 
       <div class="md-details" title="{{(md.abstract || md.defaultAbstract) | striptags}}">
-        <div class="gn-md-thumbnail" ng-class="{'gn-md-emptythumbnail': !md.getThumbnails().small }">
-          <img gn-img-modal="md" class="gn-img-thumbnail" data-ng-src="{{md.getThumbnails().small}}" data-ng-if="md.getThumbnails().small"/>
+        <div class="gn-md-thumbnail" ng-class="{'gn-md-emptythumbnail': !md.thumbnail }">
+          <img gn-img-modal="md" class="gn-img-thumbnail" data-ng-src="{{md.thumbnail}}" data-ng-if="md.thumbnail"/>
         </div>
         <div class="text-justify md-abstract">
           <p>{{::(md.abstract || md.defaultAbstract)}}</p>

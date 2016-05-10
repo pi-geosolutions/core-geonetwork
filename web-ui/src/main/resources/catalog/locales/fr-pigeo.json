@@ -74,6 +74,8 @@
   "variationMsg": "Display the {{type}} variation on an area over the past years",
   "paginationInfo": "Résultats {{from}} à {{to}} <em> sur {{total}}</em> :",
   "byPage": "par page",
-  "sortBy": "Tri par"
+  "sortBy": "Tri par",
+  "accessData": "Accès aux données",
+  "searchPlaces": "Limites administratives ou geonames"
 
 }

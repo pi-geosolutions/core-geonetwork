@@ -46,6 +46,7 @@
 
 
 
+  goog.require('app.admin.geoportal');
   goog.require('gn_admin_menu');
   goog.require('gn_adminmetadata_controller');
   goog.require('gn_admintools_controller');
@@ -57,7 +58,6 @@
   goog.require('gn_settings_controller');
   goog.require('gn_standards_controller');
   goog.require('gn_usergroup_controller');
-  goog.require('app.admin.geoportal');
 
   var module = angular.module('gn_admin_controller',
       ['gn_dashboard_controller', 'gn_usergroup_controller',

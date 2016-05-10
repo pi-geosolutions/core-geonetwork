@@ -1,12 +1,9 @@
-var gn = {};
 
 (function() {
 
   goog.provide('app.admin.geoportal');
 
   goog.require('app.admin.layertreemanager');
-
-  window.gn = {};
 
   var module = angular.module('app.admin.geoportal',
       ['app.admin.layertreemanager']);
