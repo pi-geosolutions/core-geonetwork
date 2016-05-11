@@ -188,7 +188,8 @@
             map: this.map,
             solrObject: solrObject,
             layer: layer,
-            coordinates: coordinates
+            coordinates: coordinates,
+            format: 'text/html'
           });
         }.bind(this));
       };

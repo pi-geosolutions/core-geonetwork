@@ -45,13 +45,23 @@
         templateUrl: '../../catalog/components/viewer/gfi/partials/' +
           'featurestable.html',
         link: function (scope, element, attrs, ctrls) {
-          ctrls.ctrl.initTable(element.find('table'));
+          if(ctrls.ctrl.iframeUrl) {
+            element.empty();
+            $('<iframe src="'+ ctrls.ctrl.iframeUrl+ '" frameborder="0" width="100%"></iframe>').appendTo(element);
+          }
+          else {
+            ctrls.ctrl.initTable(element.find('table'));
+          }
         }
       };
     }]);
 
   var GnFeaturesTableController = function() {
-    this.promise = this.loader.loadAll();
+    if(this.loader.format != 'text/html') {
+      this.promise = this.loader.loadAll();
+    } else {
+      this.iframeUrl = this.loader.getGFIImageUrl();
+    }
   };
 
   GnFeaturesTableController.prototype.initTable = function(element) {

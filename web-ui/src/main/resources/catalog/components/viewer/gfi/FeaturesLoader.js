@@ -77,10 +77,26 @@
     geonetwork.GnFeaturesLoader.call(this, config, $injector);
 
     this.coordinates = config.coordinates;
+    this.format = config.format;
   };
 
   geonetwork.inherits(geonetwork.GnFeaturesGFILoader,
       geonetwork.GnFeaturesLoader);
+
+  geonetwork.GnFeaturesGFILoader.prototype.getGFIImageUrl = function() {
+    var layer = this.layer,
+        map = this.map,
+        coordinates = this.coordinates;
+
+    return layer.getSource().getGetFeatureInfoUrl(
+        coordinates,
+        map.getView().getResolution(),
+        map.getView().getProjection(),
+        {
+          INFO_FORMAT: 'text/html'
+        }
+    );
+  };
 
   geonetwork.GnFeaturesGFILoader.prototype.loadAll = function() {
     var layer = this.layer,
