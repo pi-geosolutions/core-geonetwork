@@ -4,6 +4,8 @@
 
   goog.require('gn_search');
   goog.require('gn_search_niger_config');
+  goog.require('gn_solr');
+  goog.require('gn_featurestable');
   goog.require('app.bglayer');
   goog.require('app.catalog');
   goog.require('app.geocatalog');
@@ -17,6 +19,7 @@
   var module = angular.module('gn_search_niger',[
     'gn_search',
     'gn_search_niger_config',
+    'gn_solr', 'gn_featurestable',
     'app.bglayer',
     'app.catalog',
     'app.geocatalog',

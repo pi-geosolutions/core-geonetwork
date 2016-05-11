@@ -21,6 +21,8 @@
  * Rome - Italy. email: geonetwork@osgeo.org
  */
 
+var geonetwork = {};
+
 (function() {
   goog.provide('gn');
 
