@@ -27,6 +27,7 @@
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.importOpen"><span class="fa fa-plus"></span><span role="tooltip">Import de couches externes</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.contextOpen"><i class="icon map"></i><span role="tooltip">Mes cartes</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.printOpen"><i class="fa fa-print"></i><span role="tooltip">Impression</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.animationOpen"><i class="fa fa-clock-o"></i><span role="tooltip">Animation</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.mInteraction.active"><i class="icon measure"></i><span role="tooltip">Mesure</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.temporalActive"><i class="fa fa-clock-o"></i><span role="tooltip">Légendes</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.geocatalogOpen"><i class="fa fa-book"></i><span role="tooltip">geocatalog</span></button>
@@ -141,6 +142,17 @@
         </div>
       </div>
 
+      <!--Animation panel -->
+      <div id="animationpanel" data-ng-show="mainCtrl.animationOpen">
+        <h2 translate>animation</h2>
+        <button class="close-panel" ng-click="mainCtrl.closeSidebar()">
+          ✕
+        </button>
+        <div class="tab-content no-nav">
+          <app-animation app-animation-map="::mainCtrl.map"></app-animation>
+        </div>
+      </div>
+
       <!--geo catalog form & results-->
       <div id="geocatalog" data-ng-show="mainCtrl.geocatalogOpen">
         <h2 translate>geocatalog</h2>
@@ -158,19 +170,19 @@
 
   <!--Container-->
   <div id="map-container" >
-    <div ngeo-map="mainCtrl.map">
+    <div ngeo-map="::mainCtrl.map">
     </div>
   </div>
-  <div gn-gfi=""  map="mainCtrl.map" ></div>
-  <gn-features-tables gn-features-tables-map="mainCtrl.map"></gn-features-tables>
+  <div gn-gfi=""  map="::mainCtrl.map" ></div>
+  <gn-features-tables gn-features-tables-map="::mainCtrl.map"></gn-features-tables>
 
   <div gn-localisation-input map="mainCtrl.map"></div>
   <app-admin-units app-admin-units-map="mainCtrl.map"></app-admin-units>
 
   <footer>
-    <app-scaleselector class="pull-right" map="mainCtrl.map">
+    <app-scaleselector class="pull-right" map="::mainCtrl.map">
     </app-scaleselector>
-    <app-mouseposition class="" map="mainCtrl.map">
+    <app-mouseposition class="" map="::mainCtrl.map">
     </app-mouseposition>
     <!--
         <div id="scale-position" ngeo-control="mainCtrl.scaleControl" ngeo-control-map="mainCtrl.map"></div>

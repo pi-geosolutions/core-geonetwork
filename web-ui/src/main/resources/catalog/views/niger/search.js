@@ -14,6 +14,7 @@
   goog.require('app.adminunits');
   goog.require('app.mouseposition');
   goog.require('app.scaleselector');
+  goog.require('app.animation');
 
 
   var module = angular.module('gn_search_niger',[
@@ -27,6 +28,7 @@
     'app.temporalfiles',
     'app.mouseposition',
     'app.scaleselector',
+    'app.animation',
     'app.adminunits'
   ]);
 
@@ -120,13 +122,15 @@
     this.layersOpen = false;
     this.contextOpen = false;
     this.printOpen = false;
+    this.animationOpen = false;
     this.drawOpen = false;
     this.importOpen = false;
     this.geocatalogOpen = false;
   };
   gn.MainController.prototype.sidebarOpen = function() {
     return this.layersOpen || this.contextOpen || this.printOpen ||
-        this.drawOpen || this.importOpen || this.geocatalogOpen;
+        this.drawOpen || this.importOpen || this.geocatalogOpen ||
+        this.animationOpen;
   };
 
   gn.MainController.prototype.showTab = function(selector) {

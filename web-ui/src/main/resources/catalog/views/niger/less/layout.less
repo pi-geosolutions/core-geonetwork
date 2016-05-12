@@ -120,14 +120,12 @@ header {
       &:focus {
         border-color: @main_color_700;
       }
-
     }
-    select{
-      -webkit-appearance:none;
-      -moz-appearance:none;
-      appearance:none;
-    }
-    &.no-nav {
+    select.form-control {
+      border-radius: 0;
+      border: @main_color_300 1px solid;
+      background-color: white;
+      color: @main_color_600;
     }
   }
   .nav-tabs {

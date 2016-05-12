@@ -3,8 +3,8 @@
   goog.provide('app.catalog');
 
   var module = angular.module('app.catalog', []);
-  module.constant('unCatalogUrl', '../../catalog/views/niger/data/layertree.json');
-  //module.constant('unCatalogUrl', 'pigeo.layertree.get');
+  module.constant('appCatalogUrl', '../../catalog/views/niger/data/layertree.json');
+  //module.constant('appCatalogUrl', 'pigeo.layertree.get');
 
   module.value('ngeoLayertreeTemplateUrl',
       '../../catalog/views/niger/js/catalog/layertree.html');
@@ -27,14 +27,14 @@
   module.directive('appCatalog', gn.catalogDirective);
 
   var layerCache_ = {};
-  gn.AppCatalogController = function($http, unCatalogUrl, gnMap,
+  gn.AppCatalogController = function($http, appCatalogUrl, gnMap,
                                      gnGlobalSettings) {
 
     var $this = this;
     this.gnMap_ = gnMap;
     this.gnGlobalSettings_ = gnGlobalSettings;
 
-    $http.get(unCatalogUrl).then(function(catalog) {
+    $http.get(appCatalogUrl).then(function(catalog) {
       $this.tree = catalog.data;
     });
   };
@@ -112,7 +112,7 @@
 
   gn.AppCatalogController['$inject'] = [
     '$http',
-    'unCatalogUrl',
+    'appCatalogUrl',
     'gnMap',
     'gnGlobalSettings'
   ];
