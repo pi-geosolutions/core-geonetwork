@@ -1,4 +1,4 @@
-package org.fao.geonet.pigeosolutions.geoportal.services.ndvi;
+package org.fao.geonet.pigeosolutions.geoportal.services.animations;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -13,27 +13,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.File;
 import java.util.Arrays;
 
-//=============================================================================
 
-/** Returns the list of NDVI-like files, in the specified folder, ordered alphabetically
- */
+//http://localhost:8080/geonetwork/srv/fre/pigeo.animations.listfiles?dataName=eumetsat
 
-@Controller("pigeo.ndvi.listfiles")
+@Controller("pigeo.animations.listfiles")
 public class ListFiles
 {
-    private final String BASE_PATH = "/home/large/geoserver-prod-datadir/data/afo/rast/5_ndvi";
-    private final String EXT = "tif";
+    private final String BASE_PATH = "d:/pigeo_data/animations";
+    private final String EXT = "png";
 
-
-    @RequestMapping(value="/{lang}/pigeo.ndvi.listfiles")
+    @RequestMapping(value="/{lang}/pigeo.animations.listfiles")
     @ResponseBody
-    public JSONObject exec(@RequestParam (defaultValue = "NDVI") String dataName) throws Exception
+    public JSONObject exec(@RequestParam(defaultValue = "NDVI") String dataName) throws Exception
     {
+
         ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
         GeonetworkDataDirectory dataDirectory = appContext.getBean(GeonetworkDataDirectory.class);
 
         String path = dataDirectory.getSystemDataDir()+File.separator+BASE_PATH+File.separator+dataName;
-        if (BASE_PATH.startsWith("/")) { //then it is an absolute URL
+        if (BASE_PATH.startsWith("d:")) { //then it is an absolute URL
             path = BASE_PATH+File.separator+dataName;
         }
         String ext = EXT;
@@ -81,7 +79,5 @@ public class ListFiles
         return res;
     }
 }
-
-//=============================================================================
 
 
