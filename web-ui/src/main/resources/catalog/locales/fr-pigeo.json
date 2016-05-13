@@ -76,6 +76,8 @@
   "byPage": "par page",
   "sortBy": "Tri par",
   "accessData": "Accès aux données",
-  "searchPlaces": "Limites administratives ou geonames"
+  "searchPlaces": "Limites administratives ou geonames",
+  "curtainH": "Clipping horizontal",
+  "curtainV": "Clipping vertical"
 
 }

@@ -2,11 +2,12 @@
 <ul id="layermanager-{{::ctrl.uid}}" class="layermanager" ngeo-sortable="ctrl.selectedLayers" ngeo-sortable-options="{handleClassName: 'sortable-handle', draggerClassName: 'sortable-dragger'}" >
   <li ng-repeat="layer in ctrl.selectedLayers" class="panel layermanager-panel">
     <span class="sortable-handle fa fa-reorder pull-left"></span>
-    <a href="" class="layername" data-ng-click="layer.visible = ! layer.visible" title="{{::(layer.get('label') || layer.get('title'))}}">
+    <a href="" ng-right-click="ctrl.toggleContent($index)" class="layername" data-ng-click="layer.visible = ! layer.visible" title="{{::(layer.get('label') || layer.get('title'))}}">
       <i class="fa" ng-class="(layer.visible) ? 'fa-check-square' : 'fa-square'"></i>
       {{(layer.get('label') || layer.get('title')) | translate}}
     </a>
-    <a class="collapsed" data-toggle="collapse" data-parent="#layermanager-{{::ctrl.uid}}" href="#layermanager-item-{{$index}}">
+    <a class="collapsed" id="layermanager-item-{{$index}}-collapse" ng-click="ctrl.toggleContent($index)" href=""
+       data-toggle="collapse">
       <span class="collapsed fa fa-ellipsis-h"></span>
       <span class="expanded fa fa-minus"></span>
     </a>
@@ -15,8 +16,16 @@
       <un-layerinfo-btn layer="::layer"></un-layerinfo-btn>
     </a>
     <div id="layermanager-item-{{$index}}" class="collapse">
-      <a href ng-if="::layer.get('cextent')" ng-click="ctrl.zoomToExtent(layer)"><span class="fa fa-arrows-alt" ></span></a>
-      <input class="opacity" type="range" min="0" max="1" step="0.1" ng-model="layer.opacity" />
+      <a href ng-if="::layer.get('cextent')" ng-click="ctrl.zoomToExtent(layer)" class="pull-left">
+        <span class="fa fa-arrows-alt" ></span>
+      </a>
+      <div>
+        <div class="slider-col">
+          <span translate="">opacity</span>
+          <input class="opacity" type="range" min="0" max="1" step="0.1" ng-model="layer.opacity" />
+        </div>
+        <app-layerclipping app-layerclipping-map="::ctrl.map" app-layerclipping-layer="layer"></app-layerclipping>
+      </div>
     </div>
   </li>
 </ul>

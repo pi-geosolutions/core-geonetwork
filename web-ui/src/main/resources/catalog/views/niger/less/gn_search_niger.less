@@ -67,10 +67,11 @@
 input[type=range]{
   -webkit-appearance: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 input[type=range]::-webkit-slider-runnable-track {
-  height: 5px;
+  height: 3px;
   background: #ddd;
   border: none;
   border-radius: 3px;
@@ -79,12 +80,11 @@ input[type=range]::-webkit-slider-runnable-track {
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   border: none;
-  height: 15px;
-  width: 15px;
-  background: @main_color_200;
-  border-radius: 6px;
-
-  margin-top: -5px;
+  height: 12px;
+  width: 12px;
+  background: @main_color_400;
+  border-radius: 2px;
+  margin-top: -4px;
 }
 
 input[type=range]:focus {
