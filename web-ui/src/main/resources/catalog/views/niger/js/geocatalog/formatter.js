@@ -22,7 +22,7 @@
 
 
   gn.formatterController = function($element, $scope, $rootScope, $http, $compile, $sce,
-                                    gnPopup, appGridService) {
+                                    gnPopup, appGridService, appResultviewFns) {
     this.$scope = $scope;
     this.$rootScope = $rootScope;
     this.$http = $http;
@@ -33,6 +33,7 @@
 
     $scope.md = this.md;
     appGridService.feedMd($scope);
+    $scope.resultviewFns = appResultviewFns;
 
     $element.on('click', function(e) {
       e.preventDefault();
@@ -70,7 +71,7 @@
   };
   gn.formatterController['$inject'] = ['$element',
     '$scope', '$rootScope', '$http', '$compile', '$sce', 'gnPopup',
-    'appGridService'
+    'appGridService', 'appResultviewFns'
   ];
 
   module.controller('AppFormatterController',

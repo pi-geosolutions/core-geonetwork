@@ -3,8 +3,8 @@
   goog.provide('app.catalog');
 
   var module = angular.module('app.catalog', []);
-  module.constant('appCatalogUrl', '../../catalog/views/niger/data/layertree.json');
-  //module.constant('appCatalogUrl', 'pigeo.layertree.get');
+  //module.constant('appCatalogUrl', '../../catalog/views/niger/data/layertree.json');
+  module.constant('appCatalogUrl', 'pigeo.layertree.get');
 
   module.value('ngeoLayertreeTemplateUrl',
       '../../catalog/views/niger/js/catalog/layertree.html');
@@ -82,8 +82,6 @@
       layer = this.gnMap_.createOlWMS(this.map,
           {'LAYERS': node.layers},
           {label: node.name, url: node.url, metadata: node.metadataUrl});
-
-      layer.set('cextent', node.cextent);
     }
 
     // load full WFS layer
@@ -103,7 +101,11 @@
         })
       });
     }
+    layer.set('metadataUuid', node.uuid);
+    this.gnMap_.feedLayerMd(layer);
+
     layerCache_[layerCacheKey] = layer;
+
     return layer;
   };
 

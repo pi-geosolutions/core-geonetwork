@@ -25,13 +25,11 @@
   goog.provide('gn_map_service');
 
   goog.require('gn_ows');
-  goog.require('gn_wfs_service');
 
 
   var module = angular.module('gn_map_service', [
     'gn_ows',
-    'ngeo',
-    'gn_wfs_service'
+    'ngeo'
   ]);
 
   /**
@@ -58,12 +56,11 @@
       'gnWmsQueue',
       'gnSearchManagerService',
       'Metadata',
-      'gnWfsService',
       'gnGlobalSettings',
       'gnViewerSettings',
       function(ngeoDecorateLayer, gnOwsCapabilities, gnConfig, $log,
           gnSearchLocation, $rootScope, gnUrlUtils, $q, $translate,
-          gnWmsQueue, gnSearchManagerService, Metadata, gnWfsService,
+          gnWmsQueue, gnSearchManagerService, Metadata,
           gnGlobalSettings, viewerSettings) {
 
         var defaultMapConfig = {
@@ -1003,6 +1000,7 @@
                   console.warn(errormsg);
 
                   olL.get('errors').push(errors);
+                  o.layer = olL;
 
                   gnWmsQueue.error(o);
                   defer.reject(o);
@@ -1515,7 +1513,7 @@
 
             defer.resolve(layer);
 
-            if (layer.get('metadataUrl') && layer.get('metadataUuid')) {
+            if (layer.get('metadataUuid')) {
 
               return gnSearchManagerService.gnSearch({
                 uuid: layer.get('metadataUuid'),

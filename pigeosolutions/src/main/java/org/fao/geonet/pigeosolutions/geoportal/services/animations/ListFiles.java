@@ -19,7 +19,8 @@ import java.util.Arrays;
 @Controller("pigeo.animations.listfiles")
 public class ListFiles
 {
-    private final String BASE_PATH = "d:/pigeo_data/animations";
+    //private final String BASE_PATH = "d:/pigeo_data/animations";
+    private final String BASE_PATH = "/home/jean/tomcat7/data/geoportal-global/animations";
     private final String EXT = "png";
 
     @RequestMapping(value="/{lang}/pigeo.animations.listfiles")
@@ -31,7 +32,7 @@ public class ListFiles
         GeonetworkDataDirectory dataDirectory = appContext.getBean(GeonetworkDataDirectory.class);
 
         String path = dataDirectory.getSystemDataDir()+File.separator+BASE_PATH+File.separator+dataName;
-        if (BASE_PATH.startsWith("d:")) { //then it is an absolute URL
+        if (BASE_PATH.startsWith("/")) { //then it is an absolute URL
             path = BASE_PATH+File.separator+dataName;
         }
         String ext = EXT;

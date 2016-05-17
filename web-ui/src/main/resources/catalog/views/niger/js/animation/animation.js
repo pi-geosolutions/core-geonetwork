@@ -23,9 +23,10 @@
   };
   module.directive('appAnimation', gn.animationDirective);
 
-  gn.AnimationController = function($http, $scope) {
+  gn.AnimationController = function($http, $scope, ngeoDecorateLayer) {
 
     this.$http = $http;
+    this.ngeoDecorateLayer = ngeoDecorateLayer;
     this.mapProj_ = this.map.getView().getProjection();
 
     $scope.$watch(function() {
@@ -34,13 +35,21 @@
       if(animation) {
         this.getFilesList();
       }
+      else {
+        delete this.filesList;
+      }
     }.bind(this));
 
     $http.get(URL_CONFIG).then(function(response) {
       this.animations = response.data[0];
-      this.animation = this.animations.length && this.animations[0]
+      //this.animation = this.animations.length && this.animations[0]
     }.bind(this));
 
+    this.map.getLayers().on('remove', function(e) {
+      if(e.element.get('_animation')) {
+        this.animation = null;
+      }
+    }.bind(this))
   };
 
   gn.AnimationController.prototype.getFilesList = function() {
@@ -72,6 +81,11 @@
     };
     this.animLayer = new ol.layer.Image();
     this.map.addLayer(this.animLayer);
+
+    this.ngeoDecorateLayer(this.animLayer);
+    this.animLayer.displayInLayerManager = true;
+    this.animLayer.set('label', animation.label);
+    this.animLayer.set('_animation', true);
   };
 
   gn.AnimationController.prototype.onAnimatorChange = function(index) {
@@ -88,7 +102,7 @@
       gn.AnimationController);
 
   gn.AnimationController['$inject'] = [
-    '$http', '$scope'
+    '$http', '$scope', 'ngeoDecorateLayer'
   ];
 
 })();

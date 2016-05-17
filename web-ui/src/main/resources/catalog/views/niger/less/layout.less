@@ -113,19 +113,14 @@ header {
     background-color: white;
     min-height: 200px;
     .form-control {
-      background-color: @main_color_300;
-      color: white;
+      color: @main_color_700;
       font-size: 12px;
       box-shadow: none;
+      border-radius: 0;
+      border: @main_color_300 1px solid;
       &:focus {
         border-color: @main_color_700;
       }
-    }
-    select.form-control {
-      border-radius: 0;
-      border: @main_color_300 1px solid;
-      background-color: white;
-      color: @main_color_600;
     }
   }
   .nav-tabs {
@@ -192,6 +187,14 @@ header {
   }
 }
 
+#contextpanel {
+  a.btn {
+    color: white;
+  }
+  .btn:hover {
+    color: @main_color_800;
+  }
+}
 .un-main-tools {
   padding: 6px 22px;
   &.active {
@@ -211,6 +214,33 @@ header {
       background-color: @main_color_600;
     }
   }
+  button:focus [role=tooltip],
+  button:hover [role=tooltip] {
+    right: auto;
+    margin-left: -1.7em;
+    top: 3.9em;
+    border-radius: .2em;
+    &:after {
+      content: ' ';
+      height: 0;
+      position: absolute;
+      width: 0;
+      border: 5px solid transparent;
+      border-bottom-color: rgba(0,0,0,.6);
+      left: .9em;
+      top: -10px;
+    }
+  }
+  button.active [role=tooltip] {
+    display: none;
+  }
+}
+
+.app-tools {
+  position: absolute;
+  top: 25px;
+  z-index: 1050;
+  right: 370px;
 }
 
 .btn {

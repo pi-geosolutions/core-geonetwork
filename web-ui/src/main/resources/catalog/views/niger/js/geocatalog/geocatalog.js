@@ -24,7 +24,7 @@
 
 
   gn.AppGeoCatalogController = function($scope, $http, gnSearchSettings,
-                                        suggestService, gnMap) {
+                                        suggestService, gnMap, appResultviewFns) {
 
     this.suggestService = suggestService;
     this.$http = $http;
@@ -38,23 +38,7 @@
     };
 
     var map = this.map;
-    $scope.resultviewFns = {
-      addMdLayerToMap: function(link, md) {
-
-        var loadLayerPromise = gnMap.addWmsFromScratch(map,
-            link.url, link.name, undefined, md).then(function(layer) {
-          if(layer) {
-            gnMap.feedLayerWithRelated(layer, link.group);
-          }
-        });
-      },
-      addAllMdLayersToMap: function (layers, md) {
-        angular.forEach(layers, function (layer) {
-          $scope.resultviewFns.addMdLayerToMap(layer, md);
-        });
-      }
-    };
-
+    $scope.resultviewFns = appResultviewFns;
   };
 
   gn.AppGeoCatalogController.prototype.getAnySuggestions = function(val) {
@@ -70,7 +54,7 @@
   gn.AppGeoCatalogController['$inject'] = [
     '$scope',
     '$http', 'gnSearchSettings',
-    'suggestService', 'gnMap'
+    'suggestService', 'gnMap', 'appResultviewFns'
   ];
   module.controller('AppGeoCatalogController',
       gn.AppGeoCatalogController);

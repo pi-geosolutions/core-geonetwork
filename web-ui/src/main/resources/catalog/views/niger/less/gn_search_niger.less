@@ -7,7 +7,7 @@
 @fa-font-path: '../catalog/lib/style/font-awesome/fonts';
 
 @header-height: 60px;
-@sidebar-width: 320px;
+@sidebar-width: 392px;
 @sidebar-left-offset: 40px;
 @sidebar-top-offset: 30px;
 
@@ -23,6 +23,7 @@
 @import "import.less";
 @import "mouseposition.less";
 @import "mdview.less";
+@import "measure.less";
 
 @font-face {
   font-family: 'mapicon';
@@ -51,9 +52,16 @@
 [role=tooltip] {
   position: absolute;
   clip: rect(1px, 1px, 1px, 1px);
-  left: 82px;
-  top: 100px;
-  z-index: 1060;
+}
+button:focus [role=tooltip],
+button:hover [role=tooltip] {
+  clip: auto;
+  background: rgba(0, 0, 0, .6);
+  color: #fff;
+  padding: 0.3em 0.6em 0.2em;
+  margin-top: -.2em;
+  text-shadow: 0 0 1px #000;
+  z-index: 9000;
 }
 
 ::-webkit-scrollbar {

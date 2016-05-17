@@ -96,6 +96,44 @@
     }
   }]);
 
+  module.factory('appResultviewFns', ['gnMap',
+    function(gnMap) {
+      return {
+        addMdLayerToMap: function(link, md) {
+
+          //hack but badly done in GN so hard to fix
+          var map = angular.element($('#main-container')).scope().mainCtrl.map;
+          var url, name;
+          var i = link.url.indexOf('layers=');
+          if(i >= 0) {
+            var res = new RegExp(/layers=(.*)/g).exec(link.url);
+            if (angular.isArray(res) && res.length == 2) {
+              name = res[1];
+              url = link.url.substring(0, i);
+            }
+          }
+          gnMap.addWmsFromScratch(map,
+              url || link.url, name || link.name, undefined, md).then(
+              function(layer) {
+                if(layer) {
+                  layer.set('label', link.name);
+                  gnMap.feedLayerWithRelated(layer, link.group);
+                }
+              }, function(error) {
+                var layer = error.layer;
+                if(layer) {
+                  layer.set('label', link.name);
+                }
+              });
+        },
+        addAllMdLayersToMap: function (layers, md) {
+          angular.forEach(layers, function (layer) {
+            this.addMdLayerToMap(layer, md);
+          }.bind(this));
+        }
+      };
+    }
+  ]);
 
   // fix angularjs bug fixed in v1.5.0-beta.1 : some html special char are
   // interpreted: &param => %B6m

@@ -59,10 +59,19 @@
   };
 
   gn.LayermanagerController.prototype.toggleContent = function(idx) {
+
+    var targetElem = $('#layermanager-item-' + idx + '-collapse');
+    var isCollapse = targetElem.hasClass('collapsed');
     $('#layermanager-item-' + idx).toggle({
-      toggle : true
+      complete: function() {
+        if(!isCollapse) {
+          targetElem.addClass('collapsed');
+        }
+        else {
+          targetElem.removeClass('collapsed');
+        }
+      }
     });
-    $('#layermanager-item-' + idx + '-collapse').toggleClass('collapsed');
   };
 
   gn.LayermanagerController['$inject'] = [
@@ -71,7 +80,7 @@
   module.controller('AppLayermanagerController', gn.LayermanagerController);
 
 
-  module.directive('ngRightClick', function($parse) {
+  module.directive('ngRightClick', ['$parse', function($parse) {
     return function(scope, element, attrs) {
       var fn = $parse(attrs.ngRightClick);
       element.bind('contextmenu', function(event) {
@@ -81,6 +90,6 @@
         });
       });
     };
-  });
+  }]);
 
 })();

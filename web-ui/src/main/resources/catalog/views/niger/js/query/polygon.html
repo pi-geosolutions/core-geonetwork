@@ -1,0 +1,11 @@
+<div class="alert alert-warning text-justify alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <span translate="">polygonhelp</span>
+</div>
+<span class="fa fa-spinner fa-spin fa-2x" ng-show="ctrl.loading"></span>
+<dl class="dl-horizontal">
+  <dt ng-repeat-start="(key, value) in ctrl.result">{{key}}</dt>
+  <dd ng-repeat-end="">{{value | number:2}}</dd>
+</dl>

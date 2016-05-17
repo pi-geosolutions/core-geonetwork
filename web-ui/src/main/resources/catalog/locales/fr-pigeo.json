@@ -78,6 +78,25 @@
   "accessData": "Accès aux données",
   "searchPlaces": "Limites administratives ou geonames",
   "curtainH": "Clipping horizontal",
-  "curtainV": "Clipping vertical"
-
+  "curtainV": "Clipping vertical",
+  "openMetadata": "Ouvrir la métadonnée",
+  "nolayerselected": "Aucune couche sélectionnée",
+  "polygonhelp": "<p>The <em>Polygon Query</em> tool is currently active. You can draw on the map the polygon on which you want to collect information</p><p>When done, the panel below will update accordingly with the newly collected information. The information available in the panel below matches with the polygon drawn with red stroke on the map and the layer mentioned in this panel.</p>  To quit the <em>Polygon Query</em> mode, simply select another tool on the map's toolbar. Default tool is the pan tool (hand icon)",
+  "layers": "Couches",
+  "mycontext": "Espace de travail",
+  "print": "Imprimer",
+  "geocatalog": "Géo-catalogue",
+  "measure": "Mesurer",
+  "temporalquery": "Profiles temporels",
+  "polygonquery": "Requête spatiale",
+  "animation": "Animations",
+  "print_legend": "Légende",
+  "print_legend_field": "Imprimer la légende",
+  "length": "Longueur",
+  "surface": "Surface",
+  "azimut": "Azimut",
+  "measureStart": "Cliquer pour commencer à dessiner.",
+  "measureLengthContinue": "Cliquer pour continuer le dessin.<br>Double-cliquer ou cliquer sur dernier point pour finir.",
+  "measureAreaContinue": "Cliquer pour continuer le dessin.<br>Double-cliquer ou cliquer sur point de départ pour finir.",
+  "measureZimutContinue": "Cliquer pour finir."
 }
