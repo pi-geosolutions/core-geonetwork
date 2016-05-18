@@ -17,6 +17,9 @@
       <ul class="nav navbar-nav navbar-right">
         <un-search un-search-map="::mainCtrl.map"></un-search>
       </ul>
+      <div class="app-lang-selector">
+        <span class="app-lang" ng-click="mainCtrl.switchLang(key)" ng-class="{active: key == mainCtrl.lang}" ng-repeat-start="(key, value) in ::mainCtrl.langs">{{value}}</span><span ng-repeat-end="" ng-if="!$last">&nbsp;|&nbsp;</span>
+      </div>
     </div>
   </header>
 

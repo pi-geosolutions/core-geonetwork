@@ -81,6 +81,9 @@
     });
 
     this.initInteractions_();
+
+    this.lang = $scope.lang;
+    this.langs =  {eng: "en", fre: "fr"};
   };
 
   gn.MainController.prototype.setMap_ = function() {
@@ -189,6 +192,17 @@
 
   gn.MainController.prototype.showTab = function(selector) {
     $(selector).tab('show');
+  };
+
+  gn.MainController.prototype.switchLang = function(code) {
+    if(code !== this.lang) {
+      var url = location.href.split('/');
+      url[5] = code;
+      location.href = url.join('/');
+      if (moment) {
+        moment.lang(this.langs[code]);
+      }
+    }
   };
 
   module.controller('MainController', gn.MainController);

@@ -73,6 +73,25 @@ header {
   }
 }
 
+.app-lang-selector {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  text-transform: uppercase;
+  color: lightgrey;
+  .active {
+    font-weight: bold;
+    color: white;
+  }
+  .app-lang:not(.active) {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+}
+
 #sidebar {
   display: block;
   width: @sidebar-width;
