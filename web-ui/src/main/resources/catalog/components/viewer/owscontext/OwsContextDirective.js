@@ -148,7 +148,8 @@
                 scope.map);
           } else if (storage.getItem('owsContext')) {
             var c = storage.getItem('owsContext');
-            gnOwsContextService.loadContext(c, scope.map);
+            // pigeo specific: don't persist context
+            //gnOwsContextService.loadContext(c, scope.map);
           } else if (gnViewerSettings.defaultContext) {
             gnOwsContextService.loadContextFromUrl(
                 gnViewerSettings.defaultContext,
@@ -158,7 +159,8 @@
           // store the current context in local storage to reload it
           // automatically on next connexion
           $(window).on('unload', function() {
-            gnOwsContextService.saveToLocalStorage(scope.map);
+            // pigeo specific: don't persist context
+            //gnOwsContextService.saveToLocalStorage(scope.map);
           });
         }
       };
