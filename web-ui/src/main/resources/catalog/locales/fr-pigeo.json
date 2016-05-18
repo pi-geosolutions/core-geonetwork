@@ -98,5 +98,7 @@
   "measureStart": "Cliquer pour commencer à dessiner.",
   "measureLengthContinue": "Cliquer pour continuer le dessin.<br>Double-cliquer ou cliquer sur dernier point pour finir.",
   "measureAreaContinue": "Cliquer pour continuer le dessin.<br>Double-cliquer ou cliquer sur point de départ pour finir.",
-  "measureZimutContinue": "Cliquer pour finir."
+  "measureZimutContinue": "Cliquer pour finir.",
+  "statements": "Généalogie",
+  "metadataManagement": "Gestion des métadonnées"
 }

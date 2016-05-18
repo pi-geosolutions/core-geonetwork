@@ -17,6 +17,7 @@
   goog.require('app.animation');
   goog.require('app.query.polygon');
   goog.require('app.measure');
+  goog.require('app.auth');
 
 
   var module = angular.module('gn_search_niger',[
@@ -33,7 +34,8 @@
     'app.animation',
     'app.adminunits',
     'app.measure',
-    'app.query.polygon'
+    'app.query.polygon',
+    'app.auth'
   ]);
 
   module.config(['$LOCALES',
@@ -84,6 +86,16 @@
 
     this.lang = $scope.lang;
     this.langs =  {eng: "en", fre: "fr"};
+
+    // Hide Auth panel docuement click
+    $(document).click(function(e){
+      if(!$(e.target).hasClass('fa-user')) {
+        $scope.$apply(function() {
+          this.showAuth = false;
+        }.bind(this));
+      }
+    }.bind(this));
+
   };
 
   gn.MainController.prototype.setMap_ = function() {

@@ -20,6 +20,7 @@
       <div class="app-lang-selector">
         <span class="app-lang" ng-click="mainCtrl.switchLang(key)" ng-class="{active: key == mainCtrl.lang}" ng-repeat-start="(key, value) in ::mainCtrl.langs">{{value}}</span><span ng-repeat-end="" ng-if="!$last">&nbsp;|&nbsp;</span>
       </div>
+      <a href class="app-auth-btn" ng-click="mainCtrl.showAuth = !mainCtrl.showAuth"><span class="fa fa-user" ng-class="authenticated ? 'fa-user' : 'fa-user-times'" id="authBtn"></span></a>
     </div>
   </header>
 
@@ -200,6 +201,8 @@
 
   <div gn-localisation-input map="::mainCtrl.map"></div>
   <app-admin-units app-admin-units-map="::mainCtrl.map"></app-admin-units>
+
+  <app-auth ng-show="mainCtrl.showAuth"></app-auth>
 
   <footer>
     <app-scaleselector class="pull-right" map="::mainCtrl.map">
