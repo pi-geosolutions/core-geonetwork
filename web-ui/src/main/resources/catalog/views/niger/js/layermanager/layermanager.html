@@ -1,29 +1,50 @@
 <div ng-if="!ctrl.selectedLayers.length" translate>nolayerselected</div>
 <ul id="layermanager-{{::ctrl.uid}}" class="layermanager" ngeo-sortable="ctrl.selectedLayers" ngeo-sortable-options="{handleClassName: 'sortable-handle', draggerClassName: 'sortable-dragger'}" >
   <li ng-repeat="layer in ctrl.selectedLayers" class="panel layermanager-panel">
+
+    <!--Drag and drop icon-->
     <span class="sortable-handle fa fa-reorder pull-left"></span>
+
+    <!--Visibility checkbox-->
     <a href="" ng-right-click="ctrl.toggleContent($index)" class="layername" ng-click="layer.visible = ! layer.visible" title="{{::(layer.get('label') || layer.get('title'))}}">
       <i class="fa" ng-class="(layer.visible) ? 'fa-check-square' : 'fa-square'"></i>
       {{(layer.get('label') || layer.get('title')) | translate}}
     </a>
+
+    <!--Collapse icon-->
     <a class="collapsed" id="layermanager-item-{{$index}}-collapse" ng-click="ctrl.toggleContent($index)" href=""
        data-toggle="collapse">
       <span class="collapsed fa fa-ellipsis-h"></span>
       <span class="expanded fa fa-minus"></span>
     </a>
+
+    <!--Delete layer icon-->
     <a class="delete" ng-click="ctrl.removeLayer(layer);"><span class="fa fa-trash-o"></span></a>
-    <a href="" class="info pull-right">
-      <un-layerinfo-btn layer="::layer"></un-layerinfo-btn>
-    </a>
+
+    <div class="info-icon pull-right">
+      <span ng-if="::layer.get('md')" title="{{'hasMetadata' | translate}}" class="fa fa-file-text-o fa-fw"></span>
+      <span ng-if="::layer.get('queryable')" title="{{'queryable' | translate}}" class="fa fa-info fa-fw"></span>
+      <span ng-if="::layer.get('queryablepolygon')" title="{{'queryablepolygon' | translate}}" class="fa fa-info-circle fa-fw"></span>
+    </div>
+
+    <!--Layer details (collapsed content)-->
     <div id="layermanager-item-{{$index}}" class="collapse">
+
+      <!--Left icons-->
       <div class="left-icons pull-left">
+
+        <!--zoom to extent-->
         <a href ng-if="::layer.get('cextent')" ng-click="ctrl.zoomToExtent(layer)" class="" title="{{'layerExtentZoom' | translate}}">
           <span class="fa fa-arrows-alt" ></span>
         </a>
+
+        <!--open metadata-->
         <a href ng-if="::layer.get('md')" app-formatter app-formatter-md="::layer.get('md')" title="{{'openMetadata' | translate}}">
           <span class="fa fa-file-text-o"></span>&nbsp;
         </a>
       </div>
+
+      <!--sliders-->
       <div class="right-content">
         <div class="slider-col">
           <span translate="">opacity</span>
