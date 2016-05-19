@@ -18,6 +18,7 @@
   goog.require('app.query.polygon');
   goog.require('app.measure');
   goog.require('app.auth');
+  goog.require('app.chartlayer.service');
 
 
   var module = angular.module('gn_search_niger',[
@@ -35,7 +36,8 @@
     'app.adminunits',
     'app.measure',
     'app.query.polygon',
-    'app.auth'
+    'app.auth',
+    'app.chartlayer.service'
   ]);
 
   module.config(['$LOCALES',
@@ -43,7 +45,8 @@
       $LOCALES.push('pigeo');
     }]);
 
-  gn.MainController = function($scope, gnPopup, ngeoSyncArrays, gnMdView) {
+  gn.MainController = function($scope, gnPopup, ngeoSyncArrays, gnMdView,
+                               chartlayerService) {
 
     this.siteTitle = 'gam-dris';
     this.siteSubTitle = 'Risk Management Portal for Gambia';
@@ -95,6 +98,8 @@
         }.bind(this));
       }
     }.bind(this));
+
+    chartlayerService.init(this.map);
 
   };
 
@@ -221,7 +226,7 @@
   gn.MainController['$inject'] = [
     '$scope',
     'gnPopup',
-    'ngeoSyncArrays', 'gnMdView'
+    'ngeoSyncArrays', 'gnMdView', 'chartlayerService'
   ];
 
 })();

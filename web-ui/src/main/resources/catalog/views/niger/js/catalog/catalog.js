@@ -100,6 +100,23 @@
           source: vectorSource
         })
       });
+
+      layer.set('layers', node.layers);
+      layer.set('chartconfig', {
+        changescales: node.changescales,
+        layers: node.layers,
+        chartsize: node.chartsize,
+        charttype: node.charttype,
+        colorcodes: node.colorcodes,
+        dbname: node.dbname,
+        dbtables: node.dbtables,
+        dbwhere: node.dbwhere,
+        format: node.format,
+        join_dbfield: node.join_dbfield,
+        join_geofield: node.join_geofield,
+        labels_dbfield: node.labels_dbfield,
+        values_dbfield: node.values_dbfield
+      });
     }
     layer.set('metadataUuid', node.uuid);
     layer.set('queryable', node.queryable);
