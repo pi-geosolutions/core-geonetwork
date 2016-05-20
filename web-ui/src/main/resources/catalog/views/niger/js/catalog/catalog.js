@@ -28,11 +28,12 @@
 
   var layerCache_ = {};
   gn.AppCatalogController = function($http, appCatalogUrl, gnMap,
-                                     gnGlobalSettings) {
+                                     gnGlobalSettings, ngeoDecorateLayer) {
 
     var $this = this;
     this.gnMap_ = gnMap;
     this.gnGlobalSettings_ = gnGlobalSettings;
+    this.ngeoDecorateLayer = ngeoDecorateLayer;
 
     $http.get(appCatalogUrl).then(function(catalog) {
       $this.tree = catalog.data;
@@ -84,24 +85,14 @@
           {label: node.name, url: node.url, metadata: node.metadataUrl});
     }
 
-    // load full WFS layer
     else if (type == 'chart') {
-      var vectorFormat = node.format == 'geojson' ?
-          new ol.format.GeoJSON() : new ol.format.WFS();
-      var vectorSource = new ol.source.Vector({
-        format: vectorFormat,
-        url : $this.gnGlobalSettings_.proxyUrl +
-          encodeURIComponent(node.url + node.layers),
-        projection: this.map.getView().getProjection().getCode()
+      layer = new ol.layer.Image({
+        label: node.name,
+        layers: node.layers
       });
-      layer = new ol.layer.Vector({
-        source: new ol.source.Cluster({
-          distance: 40,
-          source: vectorSource
-        })
-      });
+      this.ngeoDecorateLayer(layer);
+      layer.displayInLayerManager = true;
 
-      layer.set('layers', node.layers);
       layer.set('chartconfig', {
         changescales: node.changescales,
         layers: node.layers,
@@ -136,7 +127,7 @@
     '$http',
     'appCatalogUrl',
     'gnMap',
-    'gnGlobalSettings'
+    'gnGlobalSettings', 'ngeoDecorateLayer'
   ];
 
 })();

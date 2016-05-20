@@ -6,10 +6,10 @@
 
   var GETCHARTDATA_URL = 'pigeo.layers.getchartdata';
   var GEOSERVER_URL = 'http://gm-risk.pigeo.fr/geoserver-prod/gm/ows';
-  GETCHARTDATA_URL =  '../../catalog/views/niger/data/getchartdata.json';
+  GETCHARTDATA_URL =  '../../catalog/views/niger/data/getchartdata';
 
-  module.service('chartlayerService', ['$http', '$q',
-    function($http, $q) {
+  module.service('chartlayerService', ['$http', '$q', 'ngeoDecorateLayer',
+    function($http, $q, ngeoDecorateLayer) {
 
       this.colorFn = d3.scale.category20();
 
@@ -17,7 +17,7 @@
         this.map = map;
         map.getLayers().on('add', function(e) {
           var layer = e.element;
-          if(layer.get('chartconfig')) {
+          if(layer.get('chartconfig') && !layer.getSource()) {
             this.displayChartLayer(layer);
           }
         }.bind(this));
@@ -40,7 +40,7 @@
       this.getChartData = function(layer) {
         var cfg = layer.get('chartconfig');
 
-        return $http.get(GETCHARTDATA_URL, {
+        return $http.get(GETCHARTDATA_URL + cfg.charttype + '.json', {
           params: {
             source: cfg.dbname,
             tables: cfg.dbtables,
@@ -52,26 +52,24 @@
       };
 
       this.displayChartLayer = function(layer) {
-        var cfg = layer.get('chartconfig');
         $q.all([this.getChartData(layer), this.getFeatures(layer)]).then(
             function(responses) {
               var tables, features;
               responses.forEach(function(response) {
-                if(response.config.url == GETCHARTDATA_URL) {
+                if(response.config.url.indexOf(GETCHARTDATA_URL) == 0) {
                   tables = response.data;
                 } else {
                   //features = new ol.format.GeoJSON().readFeatures(response.data);
                   features = response.data;
                 }
               }.bind(this));
-              this.buildCharts(cfg, features, tables);
+              this.buildCharts(layer, features, tables);
             }.bind(this)
         );
       };
 
-      this.buildCharts = function (layerConfig, geo, dataset){
-        var params = layerConfig;
-        this.chartconfig = layerConfig;
+      this.buildCharts = function (layer, geo, dataset){
+        var params = layer.get('chartconfig');
         var features = geo;
 
         var pie = d3.layout.pie()
@@ -124,9 +122,9 @@
           });
         }.bind(this));
 
-        var canvasFunction = function(extent, resolution, pixelRatio, size, projection) {
-          var width = size[0],
-              height = size[1];
+        var canvasFunction = function(extent, resolution, pixelRatio, imgSize, projection) {
+          var width = imgSize[0],
+              height = imgSize[1];
 
           var canvas = d3.select(document.createElement('canvas'));
           canvas.attr('width', width)
@@ -165,10 +163,7 @@
           d3Path = d3Path
               .projection(d3Projection)
               .context(context);
-
-          d3Path(features);
-          context.stroke();
-
+          
           // compute current scale
           var units = projection.getUnits();
           var dpi = 25.4 / 0.28;
@@ -188,51 +183,81 @@
           lvl.geofeatures.forEach(function(f) {
             var pos = d3Projection(f.geometry.coordinates);
             var geo = f.properties;
-            var data = pie(lvl.data.filter(function(d) {
-                  return d[params.join_dbfield] == geo[params.join_geofield];
-                }
-            ));
 
-            context.beginPath();
-            data.forEach(function(arc) {
-              var size = eval(params.chartsize);
-              var color = colorCodes && colorCodes[arc.data.ocsol_code] ||
-                  this.colorFn(arc.data.ocsol_code);
+            var size;
+            try {
+              size = eval(params.chartsize);
+            } catch (e) {
+              size = 30;
+              console.warn("error calculating 'size' expression : " +
+                  params.chartsize + "\nError msg: "+e);
+            }
+            var filteredData = lvl.data.filter(function(d) {
+                return d[params.join_dbfield] == geo[params.join_geofield];
+              });
 
-              context.fillStyle = color;
-              context.lineWidth = 0;
+            // Draw pie in canvas
+            if(params.charttype == 'pie') {
+              var data = pie(filteredData);
+
               context.beginPath();
-              context.moveTo(pos[0], pos[1]);
-              context.arc(pos[0], pos[1], size, arc.startAngle, arc.endAngle);
-              context.lineTo(pos[0], pos[1]);
-              context.fill();
-              context.closePath();
-            }.bind(this));
+              data.forEach(function(arc) {
+                var color = colorCodes && colorCodes[arc.data.ocsol_code] ||
+                    this.colorFn(arc.data.ocsol_code);
+
+                context.fillStyle = color;
+                context.lineWidth = 0;
+                context.beginPath();
+                context.moveTo(pos[0], pos[1]);
+                context.arc(pos[0], pos[1], size, arc.startAngle, arc.endAngle);
+                context.lineTo(pos[0], pos[1]);
+                context.fill();
+                context.closePath();
+              }.bind(this));
+            }
+
+            // Draw bar in canvas
+            else if(params.charttype == 'bar') {
+              var range = d3.scale.linear().range([size, 0]);
+
+              range.domain([0, d3.max( filteredData
+                  , function(d) {
+                    return d[params.values_dbfield];
+                  })]);
+
+              var barWidth = size / filteredData.length;
+
+              filteredData.forEach(function(bar, i) {
+                var value = bar[params.values_dbfield];
+                var label = bar[params.labels_dbfield];
+
+                var color = colorCodes && colorCodes[label] ||
+                    this.colorFn(label);
+
+                context.fillStyle = color;
+                context.lineWidth = 0;
+                context.beginPath();
+                var x = pos[0] - size/2 + i * barWidth;
+                var y = pos[1];
+                //context.moveTo(x, y);
+                var barHeigth = size - range(value);
+                context.rect(x, y - barHeigth, barWidth, barHeigth);
+                //context.lineTo(x, y);
+                context.fill();
+                context.closePath();
+
+              }.bind(this));
+            }
+
           }.bind(this));
 
           return canvas[0][0];
         };
 
-        var layer = new ol.layer.Image({
-          source: new ol.source.ImageCanvas({
-            canvasFunction: canvasFunction.bind(this),
-            projection: 'EPSG:3857'
-          })
-        });
-        this.map.addLayer(layer);
-      };
-
-      this.getColor = function(idx) {
-        if (this.color==null) {
-          this.color=d3.scale.category20();
-        }
-        if (this.colorcodes) {
-          if (this.colorcodes[idx]) {
-            return this.colorcodes[idx];
-          }
-        }
-        //default
-        return this.color(idx)
+        layer.setSource(new ol.source.ImageCanvas({
+          canvasFunction: canvasFunction.bind(this),
+          projection: 'EPSG:3857'
+        }));
       };
     }]);
 })();
