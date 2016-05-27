@@ -45,20 +45,39 @@ if(!goog) {
             }]
           };
 
-          /*
-           * Hits per page combo values configuration. The first one is the
-           * default.
-           */
-          searchSettings.hitsperpageValues = [20, 50, 100];
+          var bboxStyle = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: 'rgba(255,0,0,1)',
+              width: 2
+            }),
+            fill: new ol.style.Fill({
+              color: 'rgba(255,0,0,0.3)'
+            })
+          });
+          searchSettings.olStyles = {
+            drawBbox: bboxStyle,
+            mdExtent: new ol.style.Style({
+              stroke: new ol.style.Stroke({
+                color: 'orange',
+                width: 2
+              })
+            }),
+            mdExtentHighlight: new ol.style.Style({
+              stroke: new ol.style.Stroke({
+                color: 'orange',
+                width: 3
+              }),
+              fill: new ol.style.Fill({
+                color: 'rgba(255,255,0,0.3)'
+              })
+            })
 
-          /* Pagination configuration */
+          };
+
+          searchSettings.hitsperpageValues = [20, 50, 100];
           searchSettings.paginationInfo = {
             hitsPerPage: searchSettings.hitsperpageValues[0]
           };
-
-          /*
-           * Sort by combo values configuration. The first one is the default.
-           */
           searchSettings.sortbyValues = [{
             sortBy: 'relevance',
             sortOrder: ''
@@ -124,7 +143,7 @@ if(!goog) {
           viewerSettings.contexts = ['france', 'italy', 'gb'];
 
           /** Facets configuration */
-          searchSettings.facetsSummaryType = 'hits';
+          searchSettings.facetsSummaryType = 'details';
 
           viewerSettings.bingKey = 'AnElW2Zqi4fI-9cYx1LHiQfokQ9GrNzcjOh_' +
               'p_0hkO1yo78ba8zTLARcLBIf8H6D';

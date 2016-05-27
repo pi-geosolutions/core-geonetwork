@@ -12,9 +12,20 @@
 
 #geocatalog {
 
-  .tab-content {
+  .tab-content.no-nav {
     width: calc(@sidebar-width + 300px);
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.4);
+  }
+  .nav-tabs li > a {
+    text-transform: none;
+  }
+
+  .tab-content.inner {
+    max-height: initial;
+    min-height: initial;
+    overflow: initial;
+    padding: 0;
+    padding-top: 1em;
   }
 
   .gn-search-input, .gn-toolbar {
@@ -55,6 +66,9 @@
     }
   }
 
+  .geocatalog-content {
+    margin-top: 1em;
+  }
   .gn-toolbar {
     line-height: 2.8em;
     background-color: @main_color_50;
@@ -237,4 +251,57 @@
     width: 46px;
     margin: 0 3px 0 0;
   }
+}
+
+.gn-facet-list {
+  a {
+    cursor: pointer;
+    &:hover {
+      color: grey;
+    }
+  }
+  h4 {
+    cursor: pointer;
+    margin-bottom: 3px;
+  }
+  .list-group {
+    margin-bottom: 0.5em;
+    margin-left: 25px;
+    border-left: 1px dotted #eeeeee;
+    li {
+      border: none;
+      padding: 0;
+      label {
+        font-weight: normal;
+        cursor: pointer;
+        margin: 0;
+        &:hover {
+          color: #428bca;
+        }
+      }
+      [data-gn-facet-dimension-category] {
+        display: none;
+      }
+
+    }
+  }
+  .btn-link {
+    background-color: transparent;
+    color: #428bca;
+    &:hover {
+      background-color: transparent;
+      text-decoration: underline;
+    }
+  }
+  .gn-facet-moreorless {
+    display: block;
+  }
+  .gn-facet-count {
+    color: #999999;
+  }
+}
+
+#appSearchForm h4{
+  font-size: 13px;
+  font-weight: bold;
 }

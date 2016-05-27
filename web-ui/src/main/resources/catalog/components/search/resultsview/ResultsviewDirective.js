@@ -133,6 +133,8 @@
                     scope.map.getView().getProjection());
                 fo.getSource().addFeature(feat);
               }
+              // pigeo specific, don't zoom to md extents on search
+/*
               var extent = ol.extent.createEmpty();
               fo.getSource().forEachFeature(function(f) {
                 var g = f.getGeometry();
@@ -143,6 +145,8 @@
               if (!ol.extent.isEmpty(extent)) {
                 scope.map.getView().fit(extent, scope.map.getSize());
               }
+*/
+              // end pigeo specific
             }
           });
 

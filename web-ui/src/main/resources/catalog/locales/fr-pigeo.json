@@ -100,5 +100,8 @@
   "measureAreaContinue": "Cliquer pour continuer le dessin.<br>Double-cliquer ou cliquer sur point de départ pour finir.",
   "measureZimutContinue": "Cliquer pour finir.",
   "statements": "Généalogie",
-  "metadataManagement": "Gestion des métadonnées"
+  "metadataManagement": "Gestion des métadonnées",
+  "geomFilter" : "Filtre géographique",
+  "advanced": "Recherche avancée",
+  "results": "Résultats"
 }

@@ -163,7 +163,7 @@
           d3Path = d3Path
               .projection(d3Projection)
               .context(context);
-          
+
           // compute current scale
           var units = projection.getUnits();
           var dpi = 25.4 / 0.28;
