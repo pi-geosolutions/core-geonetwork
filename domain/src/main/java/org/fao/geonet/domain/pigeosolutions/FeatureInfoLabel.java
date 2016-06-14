@@ -12,6 +12,8 @@ import javax.persistence.*;
 public class FeatureInfoLabel {
 
     private String layername;
+
+    @Column(columnDefinition = "TEXT")
     private String json;
 
     @Id
