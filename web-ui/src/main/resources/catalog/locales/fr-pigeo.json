@@ -103,5 +103,7 @@
   "metadataManagement": "Gestion des métadonnées",
   "geomFilter" : "Filtre géographique",
   "advanced": "Recherche avancée",
-  "results": "Résultats"
+  "results": "Résultats",
+  "ui.senegal.title": "Sénégal",
+  "ui.senegal.subtitle": "Gestion des risques"
 }
