@@ -56,7 +56,7 @@
       /**
        * The list of thesaurus
        */
-      $scope.thesaurus = {};
+      $scope.thesaurus = [];
       /**
        * The currently selected thesaurus
        */
