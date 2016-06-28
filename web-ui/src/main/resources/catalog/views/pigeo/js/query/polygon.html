@@ -4,8 +4,9 @@
   </button>
   <span translate="">polygonhelp</span>
 </div>
+<select class="form-control input-sm" ng-model="ctrl.activeLayer" ng-options="layer as layer.get('label') for layer in ctrl.queryLayers"></select>
 <span class="fa fa-spinner fa-spin fa-2x" ng-show="ctrl.loading"></span>
 <dl class="dl-horizontal">
-  <dt ng-repeat-start="(key, value) in ctrl.result">{{key}}</dt>
-  <dd ng-repeat-end="">{{value | number:2}}</dd>
+  <dt ng-repeat-start="(key, value) in ctrl.result">{{key | translate}}</dt>
+  <dd ng-repeat-end="">{{value}}</dd>
 </dl>

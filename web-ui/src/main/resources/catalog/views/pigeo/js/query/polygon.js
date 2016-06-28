@@ -12,6 +12,7 @@
       scope: {
         map: '<appQueryPolygonMap',
         active: '=appQueryPolygonActive',
+        enabled: '=appQueryPolygonEnabled',
         vector: '<appQueryPolygonVector'
       },
       controller: 'AppQueryPolygonController',
@@ -23,6 +24,33 @@
 
   module.directive('appQueryPolygon', gn.queryPolygonDirective);
 
+  var style = new ol.style.Style({
+    image: new ol.style.Circle({
+      stroke: new ol.style.Stroke({
+        color: 'rgba(255,0,0,1)',
+        width: 2
+      }),
+      fill: new ol.style.Fill({
+        color: 'rgba(255,0,0,0.3)'
+      }),
+      radius: 5
+    }),
+    stroke: new ol.style.Stroke({
+      color: 'rgba(255,0,0,1)',
+      width: 2
+    }),
+    fill: new ol.style.Fill({
+      color: 'rgba(255,0,0,0.3)'
+    })
+  });
+
+
+  /**
+   * Controller
+   * @param $http
+   * @param $scope
+   * @constructor
+   */
   gn.QueryPolygonController = function($http, $scope) {
     this.$http = $http;
     this.$scope = $scope;
@@ -38,9 +66,10 @@
       }
     }.bind(this));
 
+
     this.drawInteraction = new ol.interaction.Draw({
       type: 'Polygon',
-      style: this.vector.getStyle(),
+      style: style,
       source: this.vector.getSource()
     });
     this.map.addInteraction(this.drawInteraction);
@@ -48,6 +77,20 @@
 
     this.drawInteraction.on('drawend', this.handleDrawEnd_.bind(this));
     this.drawInteraction.on('drawstart', this.handleDrawStart_.bind(this));
+
+    // Get a list of queryable layers
+    this.map.getLayers().on('change:length', function() {
+      this.queryLayers = [];
+      this.map.getLayers().getArray().forEach(function(layer) {
+        if(layer.get('queryablepolygon')) {
+          this.queryLayers.push(layer);
+        }
+      }.bind(this));
+      if(this.queryLayers.length) {
+        this.activeLayer = this.queryLayers[0];
+      }
+      this.enabled = !!this.queryLayers.length;
+    }.bind(this));
   };
 
   gn.QueryPolygonController.prototype.handleDrawEnd_ = function(e) {
@@ -73,12 +116,28 @@
 
   gn.QueryPolygonController.prototype.callWpsRequest_ = function(geojson) {
 
-    var body = formatWPSBody('gm:gm_1b1_srtm', geojson);
+    this.result = null;
+    var pqConf = this.activeLayer.get('queryablepolygon');
+    var layerName = pqConf.pq_layer ||
+        this.activeLayer.getSource().getParams().LAYERS;
+
+    var body = formatWPSBody(layerName, geojson);
     this.loading = true;
     this.$http.post(WPS_SERVER_URL, body, {
       headers: {'Content-Type': 'application/xml'}
     }).then(function(response){
       this.result = response.data.features[0].properties;
+
+      // Filter response fields depending on layer conf
+      angular.forEach(pqConf.pq_rastertype_fields, function(v, k) {
+        if(!v) {
+          delete this.result[k];
+        }
+        else {
+          this.result[k] = this.result[k].toFixed(pqConf.pq_round)
+        }
+      }.bind(this)
+      );
     }.bind(this)).finally(function() {
       this.loading = false;
     }.bind(this));
