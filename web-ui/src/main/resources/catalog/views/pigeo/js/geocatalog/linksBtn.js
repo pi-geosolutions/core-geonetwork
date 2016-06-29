@@ -77,9 +77,11 @@
 
         // get all layers and downloads for this transferOptions
         var layers = md.getLinksByType(i+1, '#OGC:WMTS',
-            '#OGC:WMS', '#OGC:WMS-1.1.1-http-get-map', '#OGC:OWS-C');
+            '#OGC:WMS', '#OGC:WMS-1.1.1-http-get-map',
+            '#OGC:WMS-1.3.0-http-get-map', '#OGC:OWS-C');
         var downloads = md.getLinksByType(i+1, '#FILE', '#DB', '#COPYFILE',
-            '#WWW:DOWNLOAD-1.0-link--download', '#WFS', 'WCS');
+            '#WWW:DOWNLOAD-1.0-link--download',
+            '#WWW:DOWNLOAD-1.0-http--download', '#WFS', 'WCS');
 
         if(downloads.length > 0) {
           // If only one layer, we get only one download (we bind them later)

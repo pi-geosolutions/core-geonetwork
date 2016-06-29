@@ -20,17 +20,21 @@
       templateUrl: '../../catalog/views/pigeo/js/geocatalog/geocatalog.html',
       link: function(scope, element) {
         // Must trigger search to generate facet, but hide this first search
-          var searchFormScope = angular.element(element.find('form')).scope();
-          var unregisterFn = searchFormScope.$watch(
-              'searchResults.count', function(n,o) {
-            if(o <= 0) {
-              searchFormScope.searchResults.records = [];
-              searchFormScope.searchResults.count = 0;
-            } else {
-              this.showResult = true;
-              unregisterFn();
-            }
-          }.bind(this));
+        var searchFormScope = angular.element(element.find('form')).scope();
+        var unregisterFn = searchFormScope.$watch(
+            'searchResults.count', function(n,o) {
+          if(o <= 0) {
+            searchFormScope.searchResults.records = [];
+            searchFormScope.searchResults.count = 0;
+          } else {
+            this.showResult = true;
+            scope.$on('aftersearch', function() {
+              $('a[data-target=#appSearchresults]').tab('show');
+            });
+            unregisterFn();
+          }
+        }.bind(this));
+
 
       }
     };
@@ -66,6 +70,19 @@
     $scope.map = this.map;
     $scope.resultviewFns = appResultviewFns;
     this.geomRelations = ['within'];
+
+    var defaultSearchParams = ['sortBy', 'from', 'to', 'fast', 'resultType',
+        'facet.q', 'sortOrder',
+      '_content_type'];
+    $scope.$watch('searchObj.params', function(v) {
+      for (var p in v) {
+        if(defaultSearchParams.indexOf(p) < 0) {
+          $scope.searchObj.canReset = true;
+          return;
+        }
+      }
+      $scope.searchObj.canReset = false;
+    });
 
   };
 

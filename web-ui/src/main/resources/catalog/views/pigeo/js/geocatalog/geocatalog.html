@@ -17,11 +17,12 @@
   <div class="geocatalog-content">
     <ul class="nav nav-tabs">
       <li role="presentation"  class="active">
-        <a href="#appSearchForm" data-toggle="tab"><span translate="">advanced</span></a>
+        <a href="" data-target="#appSearchForm" data-toggle="tab"><span translate="">advanced</span></a>
       </li>
       <li role="presentation">
-        <a href="#appSearchresults" data-toggle="tab"><span translate="">results</span>&nbsp;<span>({{searchResults.count}})</span> </a>
+        <a href="" data-target="#appSearchresults" data-toggle="tab"><span translate="">results</span>&nbsp;<span>({{searchResults.count}})</span> </a>
       </li>
+      <button type="submit" data-ng-click="resetSearch()" class="btn btn-default app-reset-btn ng-scope" ng-disabled="!searchObj.canReset" translate="" disabled="disabled">reset</button>
     </ul>
 
     <div class="tab-content inner">
@@ -67,6 +68,10 @@
 
           </div>
         </div>
+        <div class="pull-right bottom-pagination" ng-if="searchResults.records.length > 3"
+             data-gn-pagination="paginationInfo"
+             template="../../catalog/views/pigeo/templates/pagination.html"
+             data-hits-values="searchObj.hitsperpageValues"></div>
       </div>
 
       <!--Advanced search form -->
@@ -121,6 +126,19 @@
                   </a>
                 </li>
               </ul>
+            </div>
+            <h4 translate="">search.resources</h4>
+            <div class="search-sub-section">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="searchObj.params.download" ng-false-value="null"><span translate="">search.download</span>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="searchObj.params.dynamic" ng-false-value="null"><span translate="">search.dynamic</span>
+                </label>
+              </div>
             </div>
           </div>
         </div>

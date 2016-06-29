@@ -1,7 +1,5 @@
 <div id="main-container" ng-controller="MainController as mainCtrl">
 
-  <app-temporal-interaction map="::mainCtrl.map" active="mainCtrl.temporalActive"></app-temporal-interaction>
-
   <!--Header-->
   <header class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -9,7 +7,7 @@
         <a class="navbar-brand" href="/geonetwork" target="_blank">
           <img class="respimg" width="180" alt="ResEau" ng-src="../../catalog/views/pigeo/data/{{::mainCtrl.ui.name}}.png" style="">
         </a>
-        <div class="portaltitle">
+        <div class="portaltitle navbar-brand">
           <span class="title">{{::('ui.' + mainCtrl.ui.name + '.title') | translate}}</span>
           <span>{{::('ui.' + mainCtrl.ui.name + '.subtitle') | translate}}</span>
         </div>
@@ -32,10 +30,10 @@
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.contextOpen"><i class="icon map"></i><span role="tooltip" translate="">mycontext</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.printOpen"><i class="fa fa-print"></i><span role="tooltip" translate="">print</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.animationOpen"><i class="fa fa-clock-o"></i><span role="tooltip" translate="">animation</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.geocatalogOpen"><i class="fa fa-book"></i><span role="tooltip" translate="">geocatalog</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.measureActive"><i class="icon measure"></i><span role="tooltip" translate="">measure</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.temporalActive"><i class="fa fa-bar-chart"></i><span role="tooltip" translate="">temporalquery</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.polygonQueryOpen"><i class="fa fa-info-circle"></i><span role="tooltip" translate="">polygonquery</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.geodashQueryOpen"><i class="fa fa-bar-chart"></i><span role="tooltip" translate="">temporalquery</span></button>
+      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.polygonQueryOpen" data-ng-disabled="!mainCtrl.polygonQueryEnabled"><i class="fa fa-info-circle"></i><span role="tooltip" translate="">polygonquery</span></button>
+      <button class="un-tool-btn btn geocatalog-btn" ngeo-btn ng-model="mainCtrl.geocatalogOpen"><i class="fa fa-book"></i><span role="tooltip" translate="">geocatalog</span></button>
     </div>
 
     <app-measure-tools app-measure-tools-map="::mainCtrl.map" app-measure-tools-active="mainCtrl.measureActive" ng-show="mainCtrl.measureActive">
@@ -80,7 +78,7 @@
                               app-layermanager-layers="::mainCtrl.selectedLayers">
             </app-layermanager>
             <div class="text-center">
-              <button class="btn btn-default" ng-click="mainCtrl.showTab('a[href=#layertree]');" translate>+ Ajouter</button>
+              <button class="btn btn-default" ng-click="mainCtrl.showTab('a[data-target=#layertree]');" translate>+ Ajouter</button>
             </div>
           </div>
         </div>
@@ -182,7 +180,8 @@
         <div class="tab-content no-nav">
           <app-query-polygon app-query-polygon-map="::mainCtrl.map"
                              app-query-polygon-vector="::mainCtrl.queryLayer"
-                             app-query-polygon-active="mainCtrl.polygonQueryOpen">
+                             app-query-polygon-active="mainCtrl.polygonQueryOpen"
+                             app-query-polygon-enabled="mainCtrl.polygonQueryEnabled">
           </app-query-polygon>
         </div>
       </div>
@@ -203,6 +202,11 @@
   <app-admin-units app-admin-units-map="::mainCtrl.map"></app-admin-units>
 
   <app-auth ng-show="mainCtrl.showAuth"></app-auth>
+
+  <app-query-geodash app-query-geodash-map="::mainCtrl.map"
+                     app-query-geodash-vector="::mainCtrl.queryLayer"
+                     app-query-geodash-active="mainCtrl.geodashQueryOpen">
+  </app-query-geodash>
 
   <footer>
     <app-scaleselector class="pull-right" map="::mainCtrl.map">

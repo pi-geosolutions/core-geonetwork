@@ -110,7 +110,7 @@
                   maxRows: 20,
                   name_startsWith: query,
                   username: 'pigeo_ilwac',
-                  country: 'NE'
+                  country: gnViewerSettings.ui.geonamesCode
                 }
               }).
                   success(function(response) {

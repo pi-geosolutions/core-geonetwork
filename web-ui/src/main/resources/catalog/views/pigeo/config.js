@@ -23,9 +23,7 @@ if(!goog) {
         function(searchSettings, viewerSettings) {
 
           // Load the context defined in the configuration
-          viewerSettings.defaultContext =
-              viewerSettings.mapConfig.viewerMap ||
-              '../../map/config-viewer.xml';
+          viewerSettings.defaultContext = null;
 
           // Keep one layer in the background
           // while the context is not yet loaded.
@@ -111,29 +109,12 @@ if(!goog) {
             icon: 'fa-th'
           }];
 
-          // For the time being metadata rendering is done
-          // using Angular template. Formatter could be used
-          // to render other layout
-
-          // TODO: formatter should be defined per schema
           searchSettings.formatter = {
-            // defaultUrl: 'md.format.xml?xsl=full_view&id='
             defaultUrl: 'md.format.xml?xsl=pigeo_simple_view&uuid=',
             list: [{
-              //  label: 'inspire',
-              //  url: 'md.format.xml?xsl=xsl-view' + '&view=inspire&id='
-              //}, {
-              //  label: 'full',
-              //  url: 'md.format.xml?xsl=xsl-view&view=advanced&id='
-              //}, {
               label: 'full',
               url: 'md.format.xml?xsl=full_view&id='
             }]
-            // TODO: maybe formatter config should depends
-            // on the metadata schema.
-            // schema: {
-            // iso19139: 'md.format.xml?xsl=full_view&&id='
-            // }
           };
 
           // Set the default template to use
@@ -149,6 +130,9 @@ if(!goog) {
               'p_0hkO1yo78ba8zTLARcLBIf8H6D';
 
           viewerSettings.singleTileWMS = false;
+
+          viewerSettings.geodashUrl = 'http://dev.padre2.pigeo.fr/geodash/' +
+              'dashboard/public/index.html?'
 
 
         }]);

@@ -1,34 +1,22 @@
 <div class="gn-md-links">
 
-  <!--Downloads to panier button-->
-  <div class="btn-group pull-right" ng-if="downloads.length > 1">
+  <!--Downloads button-->
+  <div class="btn-group pull-right dropup" ng-if="downloads">
     <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="{{'download' | translate}}" data-ng-disabled="md['geonet:info'].download == 'false'">
       <span class="fa fa-download"></span>
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">
       <li ng-repeat="link in downloads">
-        <a href="" ng-click="resultviewFns.addMdLayerToPanier(link, md)" title="{{link.desc || (link.name + ' - ' + link.contentType)}}">
+        <a href="{{link.url}}" target="_blank" title="{{::(link.desc || (link.name + ' - ' + link.contentType) || link.url)}}">
           <span class="fa fa-file-zip-o" ng-if="link.contentType=='application/zip'"></span>
-          {{link.desc || (link.name + ' - ' + link.contentType) }} </a></li>
-      <li class="divider"></li>
-      <li>
-        <a href="" data-ng-click="resultviewFns.addAllMdLayersToPanier(downloads, md)">
-          <i class="fa fa-plus"></i>&nbsp;
-                  <span data-translate=""
-                        data-translate-values="{number: '{{downloads.length}}'}">
-                    addAllLayersToPanier</span>
-        </a>
-      </li>
+          {{::link.desc || (link.name + ' - ' + link.contentType) }} </a></li>
+        </a></li>
     </ul>
   </div>
-  <button type="button" class="btn btn-default btn-sm pull-right" data-ng-disabled="md['geonet:info'].download == 'false'"
-          ng-if="downloads.length == 1" ng-click="resultviewFns.addMdLayerToPanier(downloads[0], md)" title="{{'download' | translate}}">
-    <span class="fa fa-download"></span>
-  </button>
 
   <!--Layers to map button-->
-  <div class="btn-group pull-right" ng-if="layers.length > 1 ">
+  <div class="btn-group pull-right dropup" ng-if="layers.length > 1 ">
     <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="{{'view' | translate}}" data-ng-disabled="md['geonet:info'].dynamic == 'false'">
       <span class="fa fa-globe"></span>
       <span class="caret"></span>
@@ -54,7 +42,7 @@
     <span class="fa fa-globe"></span>
   </button>
 
-  <div class="btn-group pull-right" ng-if="links.length > 0">
+  <div class="btn-group pull-right dropup" ng-if="links.length > 0">
     <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="{{'links' | translate}}">
       <span class="fa fa-link"></span>
       <span class="caret"></span>

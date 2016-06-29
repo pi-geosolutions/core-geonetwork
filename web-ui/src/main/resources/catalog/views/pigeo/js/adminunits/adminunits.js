@@ -30,6 +30,7 @@
     var loc = {};
     var promises = [];
     var adminUnitsNames = ['Provinces', 'Communes', 'Collines'];
+    serviceUrl = gnViewerSettings.ui.auService;
 
     adminUnitsNames.forEach(function(adminType, lvl) {
       var url = serviceUrl + 'get' + adminType + '.php';

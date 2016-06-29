@@ -49,7 +49,7 @@
           var defaultConfig = {
             pages: -1,
             currentPage: 1,
-            hitsPerPage: 10
+            hitsPerPage: 20
           };
           angular.extend(defaultConfig, scope.config);
           scope.config = defaultConfig;

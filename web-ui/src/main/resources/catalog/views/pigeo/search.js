@@ -10,15 +10,16 @@
   goog.require('app.catalog');
   goog.require('app.geocatalog');
   goog.require('app.layermanager');
-  goog.require('app.temporalfiles');
   goog.require('app.adminunits');
   goog.require('app.mouseposition');
   goog.require('app.scaleselector');
   goog.require('app.animation');
   goog.require('app.query.polygon');
+  goog.require('app.query.geodash');
   goog.require('app.measure');
   goog.require('app.auth');
   goog.require('app.chartlayer.service');
+  goog.require('app.mdactionsmenu');
 
 
   var module = angular.module('gn_search_pigeo',[
@@ -29,15 +30,16 @@
     'app.catalog',
     'app.geocatalog',
     'app.layermanager',
-    'app.temporalfiles',
     'app.mouseposition',
     'app.scaleselector',
     'app.animation',
     'app.adminunits',
     'app.measure',
     'app.query.polygon',
+    'app.query.geodash',
     'app.auth',
-    'app.chartlayer.service'
+    'app.chartlayer.service',
+    'app.mdactionsmenu'
   ]);
 
   module.config(['$LOCALES',
@@ -49,11 +51,6 @@
                                chartlayerService, gnViewerSettings) {
 
     this.ui = gnViewerSettings.ui;
-    console.log('ctrl');
-    this.siteTitle = 'gam-dris';
-    this.siteSubTitle = 'Risk Management Portal for Gambia';
-
-    this.temporalActive = false;
     this.$scope = $scope;
 
     this.setMap_();
@@ -62,7 +59,6 @@
     this.manageSelectedLayers_($scope, ngeoSyncArrays);
     this.gnPopup = gnPopup;
 
-    this.temporalPopup;
 
     gnMdView.initFormatter('#map-container');
 
@@ -86,8 +82,6 @@
       map: this.map,
       style: this.markerStyle
     });
-
-    this.initInteractions_();
 
     this.lang = $scope.lang;
     this.langs =  {eng: "en", fre: "fr"};
@@ -133,59 +127,13 @@
     });
   };
 
-  gn.MainController.prototype.handleTemporalQuery_ = function(e) {
-    if(true) {
-      var coords = e.feature.getGeometry().getCoordinates();
-      if(!this.temporalPopup || this.temporalPopup.destroyed) {
-        this.temporalCoords = coords;
-        this.temporalPopup = this.gnPopup.create({
-          title: 'temporalFiles',
-          content: '<app-temporal-files app-temporal-files-coords="mainCtrl.temporalCoords"></app-temporal-files>',
-          className: 'temporal-popup',
-          destroyOnClose: true
-        }, this.$scope);
-        this.$scope.$apply();
-      }
-    }
-  };
-
-  gn.MainController.prototype.initInteractions_ = function() {
-
-    this.queryPointInteraction = new ol.interaction.Draw({
-      type: 'Point',
-      style: this.markerStyle,
-      source: this.queryLayer.getSource()
-    });
-
-    var unbindDrawendKey;
-    this.$scope.$watch(function(){
-      return this.temporalActive;
-    }.bind(this), function(active) {
-      this.queryPointInteraction.setActive(active);
-      if(active) {
-        unbindDrawendKey = this.queryPointInteraction.on('drawend',
-            this.handleTemporalQuery_.bind(this))
-      } else {
-        this.queryLayer.getSource().clear();
-        this.queryPointInteraction.unByKey(unbindDrawendKey);
-      }
-    }.bind(this));
-
-    this.queryPointInteraction.on('drawstart', function(e) {
-      this.queryLayer.getSource().clear();
-    }.bind(this));
-
-    this.queryPointInteraction.setActive(false);
-    this.map.addInteraction(this.queryPointInteraction);
-
-  };
-
   gn.MainController.prototype.manageSelectedLayers_ =
       function(scope, ngeoSyncArrays) {
         var map = this.map;
         ngeoSyncArrays(map.getLayers().getArray(),
             this['selectedLayers'], true, scope,
             function(layer) {
+              layer.changed();
               return layer.displayInLayerManager;
             }
         );
@@ -200,12 +148,13 @@
     this.importOpen = false;
     this.geocatalogOpen = false;
     this.polygonQueryOpen = false;
+    this.geodashQueryOpen = false;
   };
 
   gn.MainController.prototype.sidebarOpen = function() {
     return this.layersOpen || this.contextOpen || this.printOpen ||
         this.drawOpen || this.importOpen || this.geocatalogOpen ||
-        this.animationOpen || this.polygonQueryOpen;
+        this.animationOpen || this.polygonQueryOpen || this.geodashQueryOpen;
   };
 
   gn.MainController.prototype.showTab = function(selector) {

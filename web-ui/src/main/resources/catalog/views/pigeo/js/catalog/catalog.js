@@ -3,8 +3,8 @@
   goog.provide('app.catalog');
 
   var module = angular.module('app.catalog', []);
-  //module.constant('appCatalogUrl', '../../catalog/views/pigeo/data/layertree.json');
-  module.constant('appCatalogUrl', 'pigeo.layertree.get');
+  module.constant('appCatalogUrl', '../../catalog/views/pigeo/data/layertree.json');
+  //module.constant('appCatalogUrl', 'pigeo.layertree.get');
 
   module.value('ngeoLayertreeTemplateUrl',
       '../../catalog/views/pigeo/js/catalog/layertree.html');
@@ -111,7 +111,16 @@
     }
     layer.set('metadataUuid', node.uuid);
     layer.set('queryable', node.queryable);
-    layer.set('queryablepolygon', node.pq_rastertype_fields);
+    if(node.pq_rastertype_fields) {
+      layer.set('queryablepolygon', {
+        pq_bandnb: node.pq_bandnb,
+        pq_header: node.pq_header,
+        pq_layer: node.pq_layer,
+        pq_rastertype_fields: node.pq_rastertype_fields,
+        pq_round: node.pq_round
+      });
+
+    }
 
     this.gnMap_.feedLayerMd(layer);
 

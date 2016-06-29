@@ -8,18 +8,17 @@
         'gnViewerSettings',
         function(viewerSettings) {
 
-          console.log('config');
           viewerSettings.ui = {
             name: 'senegal',
             title: '',
             map: {
-              center: [-1761109.131690461, 1540970.4902291533],
+              center: [-1609458.0675726712, 1583163.7298425706],
               zoom: 7,
-              extent: [-2192825.467445136, 1348654.9270636498, -1018752.712984829, 1895944.0495855117]
-
-            }
+              extent: [-2153078.2127368446, 1041378.0733572412,
+                -1073175.8771238746, 2135956.318400965]
+            },
+            auService: 'http://sn-risk.pigeo.fr/sigdt-config/services-senegal/',
+            geonamesCode: 'SN'
           }
-
-
         }]);
 })();

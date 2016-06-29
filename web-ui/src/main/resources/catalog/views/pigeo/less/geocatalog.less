@@ -139,6 +139,7 @@
 
   .gn-resultview {
 
+    margin-bottom: 0;
     input[type="checkbox"] {
       margin: 15px 8px 0;
     }
@@ -240,7 +241,6 @@
     .md-footer {
       display: flex;
       flex-direction: row-reverse;
-      height: 60px;
       margin-right:2em;
     }
   }
@@ -254,6 +254,7 @@
 }
 
 .gn-facet-list {
+  background-color: #f1f8ff;
   a {
     cursor: pointer;
     &:hover {
@@ -271,6 +272,7 @@
     li {
       border: none;
       padding: 0;
+      background-color: transparent;
       label {
         font-weight: normal;
         cursor: pointer;
@@ -304,6 +306,18 @@
 #appSearchForm h4{
   font-size: 13px;
   font-weight: bold;
+  margin-top: 25px;
+}
+
+.search-sub-section {
+  padding-left: 20px;
+  .checkbox {
+    padding-top: 0;
+    span {
+      margin-top: 2px;
+      display: inline-block;
+    }
+  }
 }
 
 .gn-md-actions-btn {
@@ -316,4 +330,23 @@
 
 .app-reset-btn {
   margin-left: 20px;
+}
+
+.bottom-pagination {
+  margin-top: 15px;
+  .btn-group {
+    display: none;
+  }
+}
+.app-mdview ul.formatter-sublist {
+  padding: 0 !important;
+  li {
+    list-style-type: none;
+  }
+}
+
+.summary-links {
+  table {
+    margin-left: 25px;
+  }
 }

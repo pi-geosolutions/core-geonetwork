@@ -141,6 +141,8 @@
               spinner.hide();
             }
 
+            var resourceLinkEl = $('.summary-links-links');
+
             $('a.associated-link-a').removeClass('disabled');
             if (!html) {
               return;
@@ -166,12 +168,20 @@
             togglerElements.on('click',
                gnFormatter.formatterSectionTogglersEventHandler);
 
-            if (linkBlockEl.find('table').children().length == 0) {
+            if (linkBlockEl.find('table').children().length == 0 &&
+                resourceLinkEl.find('table').children().length == 0) {
               linkBlockEl.hide();
               $('a[rel = ".container > .associated"]').
                  attr('disabled', 'disabled');
             }
-          },
+            if (linkBlockEl.find('table').children().length == 0) {
+              linkBlockEl.hide();
+            }
+            if (resourceLinkEl.find('table').children().length == 0) {
+              resourceLinkEl.hide();
+            }
+
+                },
           error: function(req, status, error) {
             if (spinnerSel) {
               spinner.hide();
