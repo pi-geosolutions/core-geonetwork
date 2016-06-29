@@ -32,7 +32,7 @@
       </ul>
     </li>
   </ul>
-  <div sxt-md-actions-menu="md"></div>
+  <div app-md-actions-menu="md"></div>
 
   <div class="entry overview">
 
@@ -42,28 +42,34 @@
 
         <dl class="dl-horizontal">
 
-          <dt fmt-translate="">Date(s)</dt>
-          <dd>
+          <dt data-fmt-if="dates" translate="">Date(s)</dt>
+          <dd data-fmt-if="dates">
             {{dates}}
           </dd>
 
           <dt fmt-translate="" translate="">abstract</dt>
-          <dd><p>{{abstract}}</p>
+          <dd><p class="text-justify">{{abstract}}</p>
           </dd>
 
-          <dt translate="" data-fmt-if="contacts">Contacts</dt>
-          <dd>{{contacts}}</dd>
+          <dt translate="">Contacts</dt>
+          <dd>
+            <ul class="formatter-sublist">
+              <li data-fmt-if="mdauthor"><strong translate="">format.mdauthor</strong>: {{mdauthor}}</li>
+              <li data-fmt-if="pocontacts"><strong translate="">format.pointofcontact</strong>: {{pocontacts}}</li>
+            </ul>
+          </dd>
 
-          <dt fmt-translate="" translate="">keywords</dt>
-          <dd>{{keywords}}</dd>
+          <dt data-fmt-if="keywords" translate="">keywords</dt>
+          <dd data-fmt-if="keywords">{{keywords}}</dd>
 
-          <dt fmt-translate="" translate="">statements</dt>
-          <dd>{{formats}}</dd>
+          <dt data-fmt-if="formats" translate="">statements</dt>
+          <dd data-fmt-if="formats">{{formats}}</dd>
 
-          <dt fmt-translate="" translate="">constraints</dt>
-          <dd>{{constraints}}</dd>
+          <dt data-fmt-if="constraints" translate="">constraints</dt>
+          <dd data-fmt-if="constraints">{{constraints}}</dd>
 
         </dl>
+
       </div>
 
       <div class="col-md-3 gn-md-side">
@@ -73,7 +79,7 @@
           <div gn-related="md" types="parent|children"
                template="../../catalog/views/sextant/templates/related.html"></div>
           <app-links-btn></app-links-btn>
-      </section>
+        </section>
 
         <section>
           <p>
@@ -92,4 +98,12 @@
     </div>
   </div>
   {{content}}
+  <div class="entry associated">
+        <span data-fmt-if="isPDF">
+            <div fmt-include="html/links.html" fmt-include-replace="true"/>
+        </span>
+    <div fmt-include="html/links.html" fmt-include-replace="true"/>
+    <div fmt-include="html/associated.html" fmt-include-replace="true"/>
+  </div>
+
 </div>

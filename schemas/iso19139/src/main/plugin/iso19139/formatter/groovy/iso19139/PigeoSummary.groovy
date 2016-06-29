@@ -18,6 +18,8 @@ class PigeoSummary extends Summary {
     def dates;
     def contacts;
     def constraints;
+    def pocontacts;
+    def mdauthor;
 
     public PigeoSummary(Handlers handlers, Environment env, Functions functions) throws Exception {
         super(handlers, env, functions)
@@ -47,6 +49,8 @@ class PigeoSummary extends Summary {
         params.put("dates", dates);
         params.put("contacts", contacts);
         params.put("constraints", constraints);
+        params.put("pocontacts", pocontacts);
+        params.put("mdauthor", mdauthor);
 
         return handlers.fileResult("html/pigeo-view-header.html", params);
     }

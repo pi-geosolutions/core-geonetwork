@@ -476,12 +476,15 @@ public class Handlers {
             if (thesaurusName.isEmpty()) {
                 thesaurusName = f.translate("noThesaurusName")
             }
-            keywordProps.put(thesaurusName, isofunc.isoText(k))
+            def keyValue = isofunc.isoText(k);
+            if (!keyValue) keyValue = k.'gmx:Anchor'.text()
+            if (keyValue) keywordProps.put(thesaurusName, keyValue)
         }
 
-        return handlers.fileResult('html/pigeo-keyword.html', [
-                label : f.nodeLabel("gmd:descriptiveKeywords", null),
-                keywords: keywordProps.asMap()])
+        if(keywordProps.asMap().size() > 0)
+            return handlers.fileResult('html/pigeo-keyword.html', [
+                    label : f.nodeLabel("gmd:descriptiveKeywords", null),
+                    keywords: keywordProps.asMap()])
     }
 
 

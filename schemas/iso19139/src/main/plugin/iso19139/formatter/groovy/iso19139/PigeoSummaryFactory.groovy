@@ -45,7 +45,7 @@ class PigeoSummaryFactory {
         PigeoSummary summary = new PigeoSummary(this.handlers, this.env, this.f)
 
         summary.title = this.isoHandlers.isofunc.isoText(metadata.'gmd:identificationInfo'.'*'.'gmd:citation'.'gmd:CI_Citation'.'gmd:title')
-        summary.abstr = this.isoHandlers.isofunc.isoText(metadata.'gmd:identificationInfo'.'*'.'gmd:abstract')
+        summary.abstr = this.isoHandlers.isofunc.isoText(metadata.'gmd:identificationInfo'.'*'.'gmd:abstract').replaceAll("\n", "<br>")
 
         configureKeywords(metadata, summary)
         //configureFormats(metadata, summary)
@@ -56,7 +56,31 @@ class PigeoSummaryFactory {
         configureContacts(metadata, summary)
         configureConstraints(metadata, summary)
 
-        //createCollapsablePanel()
+        LinkBlock linkBlock = new LinkBlock('links', "fa fa-link");
+        configureLinks(linkBlock, 'link', false, {
+            def linkParts = it.split("\\|")
+            [
+                    title   : isoHandlers.isofunc.clean(linkParts[0]),
+                    desc    : isoHandlers.isofunc.clean(linkParts[1]),
+                    href    : isoHandlers.isofunc.clean(linkParts[2]),
+                    protocol: isoHandlers.isofunc.clean(linkParts[3])
+            ]
+        })
+
+        if (!linkBlock.links.isEmpty()) {
+            summary.links.add(linkBlock)
+        }
+
+        /*
+         * TODO fix the xslt transform required by loadHierarchyLinkBlocks when running tests.
+         */
+
+
+        if (env.formatType == FormatType.pdf/* || env.formatType == FormatType.testpdf */) {
+            summary.associated.add(isoHandlers.commonHandlers.loadHierarchyLinkBlocks())
+        } else {
+            summary.associated.add(createDynamicAssociatedHtml(summary))
+        }
 
         def toNavBarItem = {s ->
             def name = f.nodeLabel(s, null)
@@ -77,8 +101,9 @@ class PigeoSummaryFactory {
 
     def configureKeywords(metadata, summary) {
         def keywords = metadata."**".findAll{it.name() == 'gmd:descriptiveKeywords'}
-        if (!keywords.isEmpty()) {
-            summary.keywords = this.isoHandlers.keywordsElPigeo(keywords).toString()
+        if (!keywords.isEmpty() && keywords.get(0)) {
+            def ks = this.isoHandlers.keywordsElPigeo(keywords)
+            if(ks) summary.keywords = ks.toString()
         }
     }
     def configureFormats(metadata, summary) {
@@ -95,9 +120,14 @@ class PigeoSummaryFactory {
     }
 
     def configureContacts(metadata, summary) {
-        def contacts = metadata."**".findAll{it.name() == 'gmd:CI_ResponsibleParty'}
-        if (!contacts.isEmpty()) {
-            summary.contacts = this.isoHandlers.contactsElPigeo(contacts).toString()
+        def mdauthor = metadata.'gmd:contact'.'gmd:CI_ResponsibleParty'
+        if (mdauthor != null) {
+            summary.mdauthor = this.isoHandlers.contactsElPigeo(mdauthor).toString()
+        }
+
+        def pocontacts = metadata."**".findAll{it.name() == 'gmd:pointOfContact'}
+        if (!pocontacts.isEmpty()) {
+            summary.pocontacts = this.isoHandlers.contactsElPigeo(pocontacts.'gmd:CI_ResponsibleParty').toString()
         }
     }
 
@@ -131,7 +161,7 @@ class PigeoSummaryFactory {
             statementsString.add(this.isoHandlers.isofunc.isoText(k))
         }
 
-        if (!statementsString.isEmpty()) {
+        if (!statementsString.isEmpty() && statementsString.get(0)) {
             summary.formats = this.isoHandlers.dataQualityInfoElPigeo(statementsString).toString()
         }
     }
@@ -161,4 +191,82 @@ class PigeoSummaryFactory {
             header.addThumbnail(logo.text())
         }
     }
+
+    def configureLinks(linkBlock, indexKey, urlAndTextEquals, objParser) {
+        Collection<String> links = this.env.indexInfo[indexKey];
+        if (links != null && !links.isEmpty()) {
+
+            links.each { link ->
+                def linkParts = objParser(link)
+                def title = linkParts.title
+                def desc = linkParts.desc
+                def href = linkParts.href
+                if (title.isEmpty()) {
+                    title = desc;
+                }
+                if (title.isEmpty()) {
+                    title = href;
+                }
+
+                if (href != '') {
+                    def protocol = linkParts.protocol != null ? linkParts.protocol.toLowerCase() : '';
+                    def linkClass = href.isEmpty() ? 'text-muted' : '';
+
+                    def imagesDir = "../../images/formatter/"
+                    def type;
+                    def icon = "";
+                    def iconClasses = "";
+                    if (protocol.contains("kml")) {
+                        type = "kml";
+                        icon = imagesDir + "kml.png";
+                    } else if (protocol.contains("wms")) {
+                        type = "wms";
+                        icon = imagesDir + "wms.png";
+                    } else if (protocol.contains("download")) {
+                        type = "download";
+                        iconClasses = "fa fa-download"
+                    } else if (protocol.contains("wfs")) {
+                        type = "wfs";
+                        icon = imagesDir + "wfs.png";
+                    } else if (protocol.contains("ogc:")) {
+                        type = "ogc";
+                    } else {
+                        if (indexKey == 'wms_uri' ) {
+                            type = "wms";
+                            icon = imagesDir + "wms.png";
+                        } else {
+                            type = "link";
+                            iconClasses = "fa fa-link"
+                        }
+                    }
+
+                    def linkType = new LinkType(type, null, icon, iconClasses)
+
+                    def linkObj = new Link(href, title, linkClass)
+                    if (urlAndTextEquals) {
+                        linkBlock.linkMap.put(linkType, linkObj);
+                    } else {
+                        linkBlock.put(linkType, linkObj)
+                    }
+                }
+            }
+        }
+    }
+
+    LinkBlock createDynamicAssociatedHtml(Summary summary) {
+        def associated = "associated-link"
+
+        def html = """
+<script type="text/javascript">
+//<![CDATA[
+gnFormatter.loadAssociated(undefined, '.${LinkBlock.CSS_CLASS_PREFIX + associated}', ${this.env.metadataId}, undefined, '.associated-spinner')
+//]]></script>
+<div><i class="fa fa-circle-o-notch fa-spin pad-right associated-spinner"></i>Loading...</div>
+"""
+
+        LinkBlock linkBlock = new LinkBlock(associated, "fa fa-sitemap")
+        linkBlock.html = html
+        return linkBlock;
+    }
+
 }
