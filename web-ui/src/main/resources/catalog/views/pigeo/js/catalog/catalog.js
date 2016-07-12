@@ -3,7 +3,7 @@
   goog.provide('app.catalog');
 
   var module = angular.module('app.catalog', []);
-  module.constant('appCatalogUrl', '../../catalog/views/pigeo/data/layertree.json');
+  module.constant('appCatalogUrl', '../../catalog/views/pigeo/data/senegaltree.json');
   //module.constant('appCatalogUrl', 'pigeo.layertree.get');
 
   module.value('ngeoLayertreeTemplateUrl',

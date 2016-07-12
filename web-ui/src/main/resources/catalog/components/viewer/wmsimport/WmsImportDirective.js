@@ -27,6 +27,10 @@
   var module = angular.module('gn_wmsimport', [
   ]);
 
+  var kmlimportTemplateURL = '../../catalog/components/viewer/wmsimport/' +
+      'partials/kmlimport.html';
+  module.value('kmlimportTemplateURL', kmlimportTemplateURL);
+
   /**
    * @ngdoc directive
    * @name gn_viewer.directive:gnWmsImport
@@ -49,26 +53,29 @@
         restrict: 'A',
         replace: true,
         templateUrl: '../../catalog/components/viewer/wmsimport/' +
-            'partials/wmsimport.html',
+        'partials/wmsimport.html',
         scope: {
           map: '=gnWmsImportMap'
         },
         controller: ['$scope', function($scope) {
 
           /**
-         * Transform a capabilities layer into an ol.Layer
-         * and add it to the map.
-         *
-         * @param {Object} getCapLayer
-         * @return {*}
-         */
+           * Transform a capabilities layer into an ol.Layer
+           * and add it to the map.
+           *
+           * @param {Object} getCapLayer
+           * @return {*}
+           */
           this.addLayer = function(getCapLayer) {
             if ($scope.format == 'wms') {
               var layer = gnMap.addWmsToMapFromCap($scope.map, getCapLayer);
               gnMap.feedLayerMd(layer);
               return layer;
-            }
-            else if ($scope.format == 'wmts') {
+            } else if ($scope.format == 'wfs') {
+              var layer = gnMap.addWfsToMapFromCap($scope.map, getCapLayer);
+              gnMap.feedLayerMd(layer);
+              return layer;
+            } else if ($scope.format == 'wmts') {
               return gnMap.addWmtsToMapFromCap($scope.map, getCapLayer,
                   $scope.capability);
             }
@@ -76,11 +83,26 @@
         }],
         link: function(scope, element, attrs) {
           scope.loading = false;
-          scope.format = attrs['gnWmsImport'];
+          scope.format = attrs['gnWmsImport'] != '' ?
+              attrs['gnWmsImport'] : 'all';
           scope.serviceDesc = null;
           scope.servicesList = gnViewerSettings.servicesUrl[scope.format];
           scope.catServicesList = [];
 
+          function addLinks(md, type) {
+            angular.forEach(md.getLinksByType(type), function(link) {
+              if (link.url) {
+                scope.catServicesList.push({
+                  title: md.title || md.defaultTitle,
+                  uuid: md.getUuid(),
+                  name: link.name,
+                  desc: link.desc,
+                  type: type,
+                  url: link.url
+                });
+              }
+            });
+          };
           // Get the list of services registered in the catalog
           if (attrs.servicesListFromCatalog) {
             // FIXME: Only load the first 100 services
@@ -89,21 +111,16 @@
               _content_type: 'json',
               from: 1,
               to: 100,
-              serviceType: 'OGC:WMS'
+              serviceType: 'OGC:WMS or OGC:WFS or OGC:WMTS'
             }).then(function(data) {
               angular.forEach(data.metadata, function(record) {
                 var md = new Metadata(record);
-                angular.forEach(md.getLinksByType('wms'), function(link) {
-                  if (link.url) {
-                    scope.catServicesList.push({
-                      title: md.title || md.defaultTitle,
-                      uuid: md.getUuid(),
-                      name: link.name,
-                      desc: link.desc,
-                      url: link.url
-                    });
-                  }
-                });
+                if (scope.format === 'all') {
+                  addLinks(md, 'wms');
+                  addLinks(md, 'wfs');
+                } else {
+                  addLinks(md, scope.format);
+                }
               });
             });
           }
@@ -132,6 +149,7 @@
 
           scope.setUrl = function(srv) {
             scope.url = angular.isObject(srv) ? srv.url : srv;
+            type = angular.isObject(srv) && srv.type || type;
             scope.serviceDesc = angular.isObject(srv) ? srv : null;
             scope.load();
           };
@@ -139,8 +157,8 @@
           scope.load = function() {
             if (scope.url) {
               scope.loading = true;
-              gnOwsCapabilities['get' + scope.format.toUpperCase() +
-                  'Capabilities'](scope.url).then(function(capability) {
+              gnOwsCapabilities['get' + type.toUpperCase() +
+              'Capabilities'](scope.url).then(function(capability) {
                 scope.loading = false;
                 scope.capability = capability;
               });
@@ -162,12 +180,13 @@
   module.directive('gnKmlImport', [
     'ngeoDecorateLayer',
     'gnAlertService',
-    function(ngeoDecorateLayer, gnAlertService) {
+    'kmlimportTemplateURL',
+    '$translate',
+    function(ngeoDecorateLayer, gnAlertService, kmlimportTemplateURL, $translate) {
       return {
         restrict: 'A',
         replace: true,
-        templateUrl: '../../catalog/components/viewer/wmsimport/' +
-            'partials/kmlimport.html',
+        templateUrl: kmlimportTemplateURL,
         scope: {
           map: '=gnKmlImportMap'
         },
@@ -176,12 +195,12 @@
           function($scope, $http, $translate) {
 
             /**
-           * Create new vector Kml file from url and add it to
-           * the Map.
-           *
-           * @param {string} url remote url of the kml file
-           * @param {ol.map} map
-           */
+             * Create new vector Kml file from url and add it to
+             * the Map.
+             *
+             * @param {string} url remote url of the kml file
+             * @param {ol.map} map
+             */
             this.addKml = function(url, map) {
 
               if (url == '') {
@@ -194,13 +213,14 @@
                 var kmlSource = new ol.source.Vector();
                 kmlSource.addFeatures(
                     new ol.format.KML().readFeatures(
-                    response.data, {
-                      featureProjection: $scope.map.getView().getProjection(),
-                      dataProjection: 'EPSG:4326'
-                    }));
+                        response.data, {
+                          featureProjection: $scope.map.getView().getProjection(),
+                          dataProjection: 'EPSG:4326'
+                        }));
                 var vector = new ol.layer.Vector({
                   source: kmlSource,
                   getinfo: true,
+                  kml: true,
                   label: $translate('kmlFile', {layer: url.split('/').pop()})
                 });
                 $scope.addToMap(vector, map);
@@ -263,6 +283,7 @@
             var layer = new ol.layer.Vector({
               source: vectorSource,
               getinfo: true,
+              kml: true,
               label: $translate('localLayerFile', {layer: event.file.name})
             });
             scope.addToMap(layer, scope.map);
@@ -315,7 +336,8 @@
               var vector = new ol.layer.Vector({
                 label: $translate('localLayerFile', {layer: entry.filename}),
                 getinfo: true,
-                source: source
+                source: source,
+                kml: true
               });
               var listenerKey = vector.getSource().on('change', function(evt) {
                 if (vector.getSource().getState() == 'ready') {
@@ -365,8 +387,8 @@
           collection: '='
         },
         template: "<ul class='list-group'><gn-cap-tree-elt " +
-            "ng-repeat='member in collection' member='member'>" +
-            '</gn-cap-tree-elt></ul>'
+        "ng-repeat='member in collection' member='member'>" +
+        '</gn-cap-tree-elt></ul>'
       };
     }]);
 
@@ -392,17 +414,17 @@
           member: '='
         },
         template: "<li class='list-group-item' ng-click='handle($event)' " +
-            "ng-class='(!isParentNode()) ? \"leaf\" : \"\"'><label>" +
-            "<span class='fa'  ng-class='isParentNode() ? \"fa-folder-o\" :" +
-            " \"fa-plus-square-o\"'></span>" +
-            ' {{member.Title || member.title}}</label></li>',
+        "ng-class='(!isParentNode()) ? \"leaf\" : \"\"'><label>" +
+        "<span class='fa'  ng-class='isParentNode() ? \"fa-folder-o\" :" +
+        " \"fa-plus-square-o\"'></span>" +
+        ' {{member.Title || member.title}}</label></li>',
         link: function(scope, element, attrs, controller) {
           var el = element;
           var select = function() {
             controller.addLayer(scope.member);
             gnAlertService.addAlert({
               msg: $translate('layerAdded', {layer:
-                    (scope.member.Title || scope.member.title)
+                  (scope.member.Title || scope.member.title)
               }),
               type: 'success'
             });

@@ -30,6 +30,7 @@
             this.showResult = true;
             scope.$on('aftersearch', function() {
               $('a[data-target=#appSearchresults]').tab('show');
+              $('#geocatalog').find('.tab-content.no-nav').scrollTop(0);
             });
             unregisterFn();
           }
@@ -64,6 +65,12 @@
         'facet.q': '',
         resultType: gnSearchSettings.facetsSummaryType || 'details'
       }
+    };
+
+    $scope.paginationInfo = {
+      pages: -1,
+      currentPage: 1,
+      hitsPerPage: 20
     };
 
     this.facetsSummaryType = 'details';

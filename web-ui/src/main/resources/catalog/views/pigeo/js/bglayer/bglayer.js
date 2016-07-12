@@ -5,9 +5,6 @@
   var module = angular.module('app.bglayer', []);
 
   var bgLayers = [{
-    "layer": "mapquest",
-    "name": "MapQuest"
-  }, {
     "name": "Open Street Map",
     "layer": "osm"
   }, {

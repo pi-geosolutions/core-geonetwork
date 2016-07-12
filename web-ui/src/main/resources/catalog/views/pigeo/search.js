@@ -20,6 +20,7 @@
   goog.require('app.auth');
   goog.require('app.chartlayer.service');
   goog.require('app.mdactionsmenu');
+  goog.require('app.kmz.overlay');
 
 
   var module = angular.module('gn_search_pigeo',[
@@ -39,13 +40,9 @@
     'app.query.geodash',
     'app.auth',
     'app.chartlayer.service',
-    'app.mdactionsmenu'
+    'app.mdactionsmenu',
+    'app.kmz.overlay'
   ]);
-
-  module.config(['$LOCALES',
-    function($LOCALES) {
-      $LOCALES.push('pigeo');
-    }]);
 
   gn.MainController = function($scope, gnPopup, ngeoSyncArrays, gnMdView,
                                chartlayerService, gnViewerSettings) {

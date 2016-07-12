@@ -45,15 +45,6 @@
         },
         link: function(scope, element, attrs, controller) {
 
-          // Init config from default and eventual given one
-          var defaultConfig = {
-            pages: -1,
-            currentPage: 1,
-            hitsPerPage: 20
-          };
-          angular.extend(defaultConfig, scope.config);
-          scope.config = defaultConfig;
-          delete defaultConfig;
           /**
            * If an object {paginationInfo} is defined inside the
            * SearchFormController, then add from and to  params

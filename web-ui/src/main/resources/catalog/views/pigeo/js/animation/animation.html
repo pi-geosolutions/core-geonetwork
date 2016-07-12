@@ -3,4 +3,5 @@
 </select>
 
 <app-animator app-animator-list="ctrl.filesList.files"
-              app-animator-onchange="ctrl.onAnimatorChange(index)" ng-if="ctrl.filesList" class="row"></app-animator>
+              app-animator-dateformatter="ctrl.animation.timestampformatter"
+              app-animator-onchange="ctrl.onAnimatorChange(index)" ng-if="ctrl.filesList" class="row form-horizontal"></app-animator>

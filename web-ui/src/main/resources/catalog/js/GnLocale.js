@@ -31,7 +31,7 @@
     'gn_cat_controller'
   ]);
 
-  module.constant('$LOCALES', ['core']);
+  module.constant('$LOCALES', ['core', 'pigeo']);
 
   module.factory('localeLoader', ['$http', '$q', 'gnLangs',
     function($http, $q, gnLangs) {

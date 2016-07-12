@@ -9,6 +9,7 @@
       restrict: 'E',
       scope: {
         list: '=appAnimatorList',
+        dateFormatter: '=appAnimatorDateformatter',
         onchangeFn: '&appAnimatorOnchange'
       },
       controller: 'AppAnimatorController',
@@ -23,6 +24,7 @@
     this.$timeout = $timeout;
     this.playing = false;
     this.promise;
+    this.time;
 
     $scope.$watch(function(){
       return this.list;
@@ -34,6 +36,7 @@
       return this.index;
     }.bind(this), function(index) {
       this.onchangeFn({index: index});
+      this.setTime_(index);
     }.bind(this));
 
   };
@@ -79,6 +82,11 @@
     if(this.modeBackward) this.previous();
     else this.next();
     this.promise = this.$timeout(this.applyNextValue_.bind(this), 1000);
+  };
+
+  gn.AnimatorController.prototype.setTime_ = function(index) {
+    var filename = this.list[index];
+    this.time = eval(this.dateFormatter);
   };
 
   module.controller('AppAnimatorController',

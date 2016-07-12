@@ -8,12 +8,6 @@
   var module = angular.module('app.admin.geoportal',
       ['app.admin.layertreemanager']);
 
-  // add pigeo locale file for admin content
-  module.config(['$LOCALES',
-    function($LOCALES) {
-      $LOCALES.push('pigeo');
-    }]);
-
   /**
    * Geoportal admin main controller.
    * Manage the tab layout of the geoportal admin page.

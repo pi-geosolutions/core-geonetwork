@@ -23,7 +23,7 @@
   };
   module.directive('appAnimation', gn.animationDirective);
 
-  gn.AnimationController = function($http, $scope, ngeoDecorateLayer) {
+  gn.AnimationController = function($http, $scope, ngeoDecorateLayer, $interval) {
 
     this.$http = $http;
     this.ngeoDecorateLayer = ngeoDecorateLayer;
@@ -49,18 +49,26 @@
       if(e.element.get('_animation')) {
         this.animation = null;
       }
-    }.bind(this))
+    }.bind(this));
+
+    $interval(function() {
+      if(this.animation) {
+        this.getFilesList(true);
+      }
+    }.bind(this), 1000*60*5);
   };
 
-  gn.AnimationController.prototype.getFilesList = function() {
+  gn.AnimationController.prototype.getFilesList = function(refresh) {
     this.$http.get(URL_LIST, {
       params: {
         dataName: this.animation.id
       }
     }).then(function(response) {
       this.filesList = response.data;
-      this.storeLayerInfo_(this.animation, this.filesList);
-    }.bind(this))
+      if(!refresh) {
+        this.storeLayerInfo_(this.animation, this.filesList);
+      }
+    }.bind(this));
   };
 
   gn.AnimationController.prototype.storeLayerInfo_ = function(animation, list) {
@@ -102,7 +110,7 @@
       gn.AnimationController);
 
   gn.AnimationController['$inject'] = [
-    '$http', '$scope', 'ngeoDecorateLayer'
+    '$http', '$scope', 'ngeoDecorateLayer', '$interval'
   ];
 
 })();
