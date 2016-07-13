@@ -26,12 +26,12 @@
 </div>
 
 <ul id="catalog-{{::layertreeCtrl.uid}}" ng-if="::layertreeCtrl.node.children"
-    ng-class="{collapse: !layertreeCtrl.isRoot && layertreeCtrl.depth < 5, catalog: layertreeCtrl.isRoot}">
+    ng-class="{collapse: !layertreeCtrl.isRoot, catalog: layertreeCtrl.isRoot}">
   <li ng-repeat="node in ::layertreeCtrl.node.children"
       ngeo-layertree="node"
       ngeo-layertree-notroot
       ngeo-layertree-map="layertreeCtrl.map"
       ngeo-layertree-nodelayerexpr="layertreeCtrl.nodelayerExpr"
-      ng-class="::(layertreeCtrl.isRoot || (layertreeCtrl.node.children && layertreeCtrl.depth < 5)) ? 'panel' : ''">
+      ng-class="::(layertreeCtrl.isRoot || (layertreeCtrl.node.children)) ? 'panel' : ''">
   </li>
 </ul>

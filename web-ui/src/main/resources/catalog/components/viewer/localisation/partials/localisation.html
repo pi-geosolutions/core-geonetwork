@@ -17,7 +17,7 @@
     </ul>
 
     <h5 translate>administrativeunits</h5>
-    <div ng-repeat="unit in locCtrl.adminUnits">
+    <div ng-repeat="unit in locCtrl.adminUnits" ng-if="unit.lvl <= locCtrl.auLevel">
       <h6 translate>{{unit.name}}</h6>
       <ul class="loc-geonames list-group">
         <li data-ng-repeat="loc in unit.values | filter:query" class="list-group-item"  ng-class="{active: unit.choice == loc.name}">

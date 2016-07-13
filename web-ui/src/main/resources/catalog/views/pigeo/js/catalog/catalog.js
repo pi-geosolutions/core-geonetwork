@@ -70,7 +70,7 @@
     }
 
     node.name = node.text || node.layer;
-    layerCacheKey = type + '_' + node['name'];
+    layerCacheKey = type + '_' + node['layers'];
     if (layerCacheKey in layerCache_) {
       return layerCache_[layerCacheKey];
     }

@@ -145,6 +145,7 @@
                   values: value
                 });
               }.bind(this));
+              this.auLevel = 0;
             }.bind(this));
 
             this.filterLowerAdmin_ = function(unit) {
@@ -159,6 +160,7 @@
             };
 
             this.adminSelect = function(adminUnit) {
+              this.auLevel = adminUnit.lvl+1;
               this.filterLowerAdmin_(adminUnit);
               zoomTo(adminUnit.extent, $scope.map);
               this.adminUnits.some(function(unit) {
