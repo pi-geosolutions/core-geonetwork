@@ -158,7 +158,7 @@
             if (scope.url) {
               scope.loading = true;
               gnOwsCapabilities['get' + type.toUpperCase() +
-              'Capabilities'](scope.url).then(function(capability) {
+                  'Capabilities'](scope.url).then(function(capability) {
                 scope.loading = false;
                 scope.capability = capability;
               });

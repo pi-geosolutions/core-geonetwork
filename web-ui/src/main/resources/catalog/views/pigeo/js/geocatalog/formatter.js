@@ -4,8 +4,6 @@
 
   var module = angular.module('app.formatter', []);
 
-  var FORMATTER_URL = 'md.format.xml?xsl=pigeo_simple_view&uuid=';
-
   gn.formatterDirective = function() {
     return {
       restrict: 'A',
@@ -29,7 +27,8 @@
     this.$compile = $compile;
     this.$sce = $sce;
     this.gnPopup = gnPopup;
-    this.url = FORMATTER_URL + this.md.getUuid();
+    this.url = '../api/records/' + this.md.getUuid() +
+        '/formatters/pigeo_simple_view';
 
     $scope.md = this.md;
     appGridService.feedMd($scope);

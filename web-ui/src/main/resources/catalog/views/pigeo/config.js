@@ -110,10 +110,17 @@ if(!goog) {
           }];
 
           searchSettings.formatter = {
-            defaultUrl: 'md.format.xml?xsl=pigeo_simple_view&uuid=',
+            defaultUrl: {
+              label: 'full',
+              url : function(md) {
+                return '../api/records/' + md.getUuid() + '/formatters/xsl-view?root=div&view=advanced';
+              }
+            }, //'md.format.xml?xsl=pigeo_simple_view&uuid=',
             list: [{
               label: 'full',
-              url: 'md.format.xml?xsl=full_view&id='
+              url : function(md) {
+                return '../api/records/' + md.getUuid() + '/formatters/xsl-view?root=div&view=advanced';
+              }
             }]
           };
 

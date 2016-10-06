@@ -43,7 +43,7 @@
           },
           link: function(scope, element, attrs) {
             $('body').append('<div id="feature-info" data-content=""' +
-                'style="position: absolute; z-index: 100;"/>');
+             'style="position: absolute; z-index: 100;"/>');
             var info = $('#feature-info');
             info.popover({
               animation: false,
@@ -61,11 +61,11 @@
               });
 
               var feature = scope.map.forEachFeatureAtPixel(pixel,
-                  function(feature, layer) {
-                    if (layer.get('featureTooltip')) {
-                      return feature;
-                    }
-                  });
+               function(feature, layer) {
+                 if (layer && layer.get('featureTooltip')) {
+                   return feature;
+                 }
+               });
               if (feature) {
                 var props = feature.getProperties();
                 var tooltipContent = '<ul>';
@@ -105,7 +105,7 @@
    * GFI results as an array in a popup.
    * The template could be overriden using `gfiTemplateURL` constant.
    */
-  module.directive('gnGfi', [ '$http', 'gfiTemplateURL',
+  module.directive('gnGfi', ['$http', 'gfiTemplateURL',
     function($http, gfiTemplateURL) {
       return {
         restrict: 'A',
@@ -133,9 +133,9 @@
     });
     map.addOverlay(this.overlay);
 
-    map.on('singleclick', function (e) {
+    map.on('singleclick', function(e) {
       this.$scope.$apply(function() {
-        if(!this.canApply()) {
+        if (!this.canApply()) {
           return;
         }
         var layers = map.getLayers().getArray().filter(function(layer) {
@@ -175,24 +175,24 @@
   geonetwork.GnGfiController.prototype.registerTables =
       function(layers, coordinates) {
 
-        this.gnFeaturesTableManager.clear();
-        layers.forEach(function(layer) {
+    this.gnFeaturesTableManager.clear();
+    layers.forEach(function(layer) {
 
-          var solrObject = layer.get('solrObject');
-          var type = solrObject ? 'solr' : 'gfi';
+      var solrObject = layer.get('solrObject');
+      var type = solrObject ? 'solr' : 'gfi';
 
-          this.gnFeaturesTableManager.addTable({
-            name: layer.get('label') || layer.get('name'),
-            type: type
-          }, {
-            map: this.map,
-            solrObject: solrObject,
-            layer: layer,
-            coordinates: coordinates,
-            format: 'text/html'
-          });
-        }.bind(this));
-      };
+      this.gnFeaturesTableManager.addTable({
+        name: layer.get('label') || layer.get('name'),
+        type: type
+      }, {
+        map: this.map,
+        solrObject: solrObject,
+        layer: layer,
+        coordinates: coordinates,
+        format: 'text/html'
+      });
+    }.bind(this));
+  };
 
 
   module.controller('gnGfiController', [

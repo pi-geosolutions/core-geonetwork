@@ -446,10 +446,9 @@
               return;
             }
 
-            var proxyUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
             var kmlSource = new ol.source.KML({
               projection: map.getView().getProjection(),
-              url: proxyUrl
+              url: url
             });
 
             var vector = new ol.layer.Vector({
@@ -501,6 +500,15 @@
                 params: layerParams,
                 url: options.url,
                 gutter: 15
+              });
+            }
+
+            // Set proxy for Cesium to load
+            // layers not accessible with CORS headers
+            // This is optional if the WMS provides CORS
+            if (viewerSettings.cesiumProxy) {
+              source.set('olcs.proxy', function(url) {
+                return '../../proxy?url=' + encodeURIComponent(url);
               });
             }
 
@@ -733,7 +741,11 @@
                 var mapProjection = map.getView().
                     getProjection().getCode();
                 for (var i = 0; i < layer.otherSRS.length; i++) {
-                  if (layer.otherSRS[i] === mapProjection) {
+                  var srs = layer.otherSRS[i];
+                  if (srs.indexOf('urn:ogc:def:crs:EPSG::') === 0) {
+                    srs = 'EPSG:' + srs.split('::')[1];
+                  }
+                  if (srs === mapProjection) {
                     isLayerAvailableInMapProjection = true;
                     break;
                   }
@@ -751,7 +763,7 @@
               // TODO: parse better legend & attribution
               if (angular.isArray(layer.Style) && layer.Style.length > 0) {
                 var url = layer.Style[layer.Style.length - 1]
-                  .LegendURL[0];
+                    .LegendURL[0];
                 if (url) {
                   legend = url.OnlineResource;
                 }
@@ -802,8 +814,7 @@
 
                   var parts = url.split('?');
 
-                  var proxyUrl = gnGlobalSettings.proxyUrl +
-                      encodeURIComponent(gnUrlUtils.append(parts[0],
+                  var url = gnUrlUtils.append(parts[0],
                       gnUrlUtils.toKeyValue({
                         service: 'WFS',
                         request: 'GetFeature',
@@ -811,12 +822,12 @@
                         srsName: map.getView().getProjection().getCode(),
                         bbox: extent.join(','),
                         typename: getCapLayer.name.prefix + ':' +
-                                   getCapLayer.name.localPart})));
+                                   getCapLayer.name.localPart}));
 
                   $.ajax({
-                    url: proxyUrl
+                    url: url
                   })
-                    .done(function(response) {
+                      .done(function(response) {
                         // TODO: Check WFS exception
                         vectorSource.addFeatures(vectorFormat.
                             readFeatures(response));
@@ -834,7 +845,7 @@
                         map.getView().fit(extent, map.getSize());
 
                       })
-                    .then(function() {
+                      .then(function() {
                         this.loadingLayer = false;
                       });
                 },
@@ -867,6 +878,7 @@
                 extent: extent
               });
               layer.set('errors', errors);
+              layer.set('featureTooltip', true);
               ngeoDecorateLayer(layer);
               layer.displayInLayerManager = true;
               layer.set('label', getCapLayer.name.prefix + ':' +
@@ -1003,6 +1015,7 @@
                   o.layer = olL;
 
                   gnWmsQueue.error(o);
+                  o.layer = olL;
                   defer.reject(o);
                 } else {
                   olL = $this.createOlWMSFromCap(map, capL, url);
@@ -1036,36 +1049,6 @@
               });
             }
             return defer.promise;
-          },
-
-          /**
-           * Call a WMS getCapabilities and create ol3 layers for all items.
-           * Add them to the map if `createOnly` is false;
-           *
-           * @param {ol.Map} map to add the layer
-           * @param {string} url of the service
-           * @param {string} name of the layer
-           * @param {boolean} createOnly or add it to the map
-           */
-          addWmsAllLayersFromCap: function(map, url, createOnly) {
-            var $this = this;
-
-            return gnOwsCapabilities.getWMSCapabilities(url).
-                then(function(capObj) {
-
-                  var createdLayers = [];
-
-                  var layers = capObj.layers || capObj.Layer;
-                  for (var i = 0, len = layers.length; i < len; i++) {
-                    var capL = layers[i];
-                    var olL = $this.createOlWMSFromCap(map, capL);
-                    if (!createOnly) {
-                      map.addLayer(olL);
-                    }
-                    createdLayers.push(olL);
-                  }
-                  return createdLayers;
-                });
           },
 
           /**
@@ -1521,7 +1504,19 @@
                 _content_type: 'json'
               }).then(function(data) {
                 if (data.metadata.length == 1) {
-                  layer.set('md', new Metadata(data.metadata[0]));
+                  var md = new Metadata(data.metadata[0]);
+                  layer.set('md', md);
+
+                  var mdLinks = md.getLinksByType('#OGC:WMTS',
+                      '#OGC:WMS', '#OGC:WMS-1.1.1-http-get-map');
+
+                  angular.forEach(mdLinks, function(link) {
+                    if (layer.get('url').indexOf(link.url) >= 0 &&
+                        link.name == layer.getSource().getParams().LAYERS) {
+                      this.feedLayerWithRelated(layer, link.group);
+                      return;
+                    }
+                  }, $this);
                 }
                 return layer;
               });
@@ -1547,11 +1542,11 @@
 
             // We can bind layer and download/process
             if (md.getLinksByType(linkGroup, '#OGC:WMTS',
-                    '#OGC:WMS', '#OGC:WMS-1.1.1-http-get-map').length == 1) {
+                '#OGC:WMS', '#OGC:WMS-1.1.1-http-get-map').length == 1) {
 
               var downloads = md && md.getLinksByType(linkGroup,
-                      'WWW:DOWNLOAD-1.0-link--download', 'FILE', 'DB',
-                      'WFS', 'WCS', 'COPYFILE');
+                  'WWW:DOWNLOAD-1.0-link--download', 'FILE', 'DB',
+                  'WFS', 'WCS', 'COPYFILE');
               layer.set('downloads', downloads);
 
               var wfs = md && md.getLinksByType(linkGroup, '#WFS');
@@ -1561,7 +1556,6 @@
               layer.set('processes', process);
             }
           }
-
         };
       }];
   });
@@ -1577,7 +1571,7 @@
          * appear in the layer manager
          */
         selected: function(layer) {
-          return layer.displayInLayerManager;
+          return layer.displayInLayerManager && !layer.get('fromWps');
         },
         visible: function(layer) {
           return layer.displayInLayerManager && layer.visible;

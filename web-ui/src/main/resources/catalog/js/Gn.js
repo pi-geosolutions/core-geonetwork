@@ -21,6 +21,7 @@
  * Rome - Italy. email: geonetwork@osgeo.org
  */
 
+// Define root geonetwork namespace
 var geonetwork = {};
 
 (function() {
