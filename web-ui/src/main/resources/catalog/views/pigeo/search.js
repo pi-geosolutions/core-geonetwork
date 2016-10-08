@@ -92,6 +92,11 @@
       }
     }.bind(this));
 
+    $('app-auth').click(function(e){
+      e.stopPropagation();
+    }.bind(this));
+
+
     chartlayerService.init(this.map);
 
   };
@@ -113,13 +118,13 @@
           tipLabel: 'Emprise globale',
           className: 'un-zoom-extent',
           label:$(
-              '<span class="fa fa-globe"></span>')}),
+              '<span class="fa fa-globe"></span>').get(0)}),
 
         new ol.control.FullScreen({
           tipLabel: 'Plein écran',
           className: 'un-full-screen',
           label:$(
-              '<span class="fa fa-arrows-alt"></span>')})
+              '<span class="fa fa-arrows-alt"></span>').get(0)})
       ]
     });
   };

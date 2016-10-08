@@ -23,7 +23,7 @@
   module.directive('appMeasureTools', gn.measureToolsDirective);
 
   gn.MeasureController = function($sce, $scope, $translate, $compile,
-                                  ngeoDecorateInteraction) {
+                                  ngeoDecorateInteraction, $filter) {
 
     this.measureStartMsg = $sce.trustAsHtml($translate('measureStart'));
     this.measureLengthContinueMsg = $sce.trustAsHtml($translate('measureLengthContinue'));
@@ -66,7 +66,7 @@
 
     var map = this.map;
 
-    this.measureLength = new ngeo.interaction.MeasureLength({
+    this.measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), {
       sketchStyle: style,
       startMsg: measureStartMsg[0],
       continueMsg: measureLengthContinueMsg[0]
@@ -77,7 +77,7 @@
     ngeoDecorateInteraction(measureLength);
     map.addInteraction(measureLength);
 
-    this.measureArea = new ngeo.interaction.MeasureArea({
+    this.measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), {
       sketchStyle: style,
       startMsg: measureStartMsg[0],
       continueMsg: measureAreaContinueMsg[0]
@@ -88,7 +88,7 @@
     ngeoDecorateInteraction(measureArea);
     map.addInteraction(measureArea);
 
-    this.measureAzimut = new ngeo.interaction.MeasureAzimut({
+    this.measureAzimut = new ngeo.interaction.MeasureAzimut($filter('ngeoUnitPrefix'), {
       sketchStyle: style,
       startMsg: measureStartMsg[0],
       continueMsg: measureAzimutContinueMsg[0]
@@ -112,7 +112,7 @@
 
 
   gn.MeasureController['$inject'] = [
-    '$sce', '$scope', '$translate', '$compile', 'ngeoDecorateInteraction'
+    '$sce', '$scope', '$translate', '$compile', 'ngeoDecorateInteraction', '$filter'
   ];
 
   module.controller('AppMeasureController', gn.MeasureController);
