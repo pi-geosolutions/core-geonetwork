@@ -45,6 +45,7 @@
   module.provider('gnMap', function() {
     this.$get = [
       'ngeoDecorateLayer',
+      'ngeoDecorateLayerLoading',
       'gnOwsCapabilities',
       'gnConfig',
       '$log',
@@ -58,7 +59,7 @@
       'Metadata',
       'gnGlobalSettings',
       'gnViewerSettings',
-      function(ngeoDecorateLayer, gnOwsCapabilities, gnConfig, $log,
+      function(ngeoDecorateLayer, ngeoDecorateLayerLoading, gnOwsCapabilities, gnConfig, $log,
           gnSearchLocation, $rootScope, gnUrlUtils, $q, $translate,
           gnWmsQueue, gnSearchManagerService, Metadata,
           gnGlobalSettings, viewerSettings) {
@@ -552,7 +553,9 @@
               }
             }
             ngeoDecorateLayer(olLayer);
+            ngeoDecorateLayerLoading(olLayer, $rootScope);
             olLayer.displayInLayerManager = true;
+            olLayer.set('errors', []);
 
             var unregisterEventKey = olLayer.getSource().on(
                 (viewerSettings.singleTileWMS) ?

@@ -21,6 +21,7 @@
   goog.require('app.chartlayer.service');
   goog.require('app.mdactionsmenu');
   goog.require('app.kmz.overlay');
+  goog.require('app.layerloader');
 
 
   var module = angular.module('gn_search_pigeo',[
@@ -41,7 +42,8 @@
     'app.auth',
     'app.chartlayer.service',
     'app.mdactionsmenu',
-    'app.kmz.overlay'
+    'app.kmz.overlay',
+    'app.layerloader'
   ]);
 
   gn.MainController = function($scope, gnPopup, ngeoSyncArrays, gnMdView,

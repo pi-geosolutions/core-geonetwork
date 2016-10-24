@@ -28,18 +28,21 @@
   module.directive('appBackgroundlayer', gn.backgroundlayerDirective);
 
 
-  gn.BackgroundlayerController = function(gnMap, ngeoBackgroundLayerMgr) {
+  gn.BackgroundlayerController = function($rootScope, gnMap, ngeoBackgroundLayerMgr, ngeoDecorateLayerLoading) {
 
     this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
+    this.$rootScope = $rootScope;
+    this.ngeoDecorateLayerLoading = ngeoDecorateLayerLoading;
+
     this.gnMap_ = gnMap;
     this['bgLayers'] = bgLayers;
-
     this.setLayer(bgLayers[0]);
   };
 
   gn.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
     this['currentBgLayer'] = layerSpec;
     var layer = this.createLayer_(layerSpec['layer']);
+    this.ngeoDecorateLayerLoading(layer, this.$rootScope);
     this.backgroundLayerMgr_.set(this['map'], layer);
   };
 
@@ -51,8 +54,10 @@
       gn.BackgroundlayerController);
 
   gn.BackgroundlayerController['$inject'] = [
+    '$rootScope',
     'gnMap',
-    'ngeoBackgroundLayerMgr'
+    'ngeoBackgroundLayerMgr',
+    'ngeoDecorateLayerLoading'
   ];
 
 })();
