@@ -62,7 +62,23 @@
                 border-top-color: white;
               }
             }
+            .ngeo-sortable-handle {
+              cursor: -webkit-grab;
+              cursor: grab;
+              margin-right: 5px;
+            }
           }
+          &.gmf-layertree-curr-drag-item {
+            * {
+              visibility: hidden;
+            }
+            background-color: transparent;
+            border: 1px dashed black;
+            ul {
+              display: none;
+            }
+          }
+
         }
         > ul > li.panel {
           &:last-child {
@@ -148,6 +164,24 @@
   }
 }
 
+.gmf-layertree-dragger {
+  background-color: white;
+  list-style: none;
+  font-size: 12px;
+  border: 1px grey solid;
+  border-radius: 0;
+  a {color: @main_color_600;}
+  * {
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+  }
+  ul {
+    display: none;
+  }
+}
+
+
 #layertree {
   margin-top: 20px;
 }
+

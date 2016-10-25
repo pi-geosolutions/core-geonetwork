@@ -22,7 +22,10 @@
       <li role="presentation">
         <a href="" data-target="#appSearchresults" data-toggle="tab"><span translate="">results</span>&nbsp;<span>({{searchResults.count}})</span> </a>
       </li>
-      <button type="submit" data-ng-click="resetSearch()" class="btn btn-default app-reset-btn ng-scope" ng-disabled="!searchObj.canReset" translate="" disabled="disabled">reset</button>
+      <button type="submit" data-ng-click="resetSearch()" class="btn btn-default app-reset-btn ng-scope" ng-disabled="!searchObj.canReset" disabled="disabled">
+        <span class="hidden-xs" translate="">reset</span>
+        <span class="fa fa-close visible-xs"></span>
+      </button>
     </ul>
 
     <div class="tab-content inner">
@@ -33,7 +36,7 @@
         <div class="row gn-toolbar"
              data-ng-show="searchResults.records.length > 0">
           <div class="col-md-12">
-            <div class="pull-right"
+            <div class="pull-right hidden-xs"
                  data-gn-pagination="paginationInfo"
                  template="../../catalog/views/pigeo/templates/pagination.html"
                  data-hits-values="searchObj.hitsperpageValues"></div>
@@ -43,7 +46,7 @@
                  data-params="searchObj.params"
                  template="../../catalog/views/pigeo/templates/sortbycombo.html"
                  data-gn-sortby-values="searchObj.sortbyValues"></div>
-            <div data-gn-selection-widget=""
+            <div data-gn-selection-widget="" class="hidden-xs"
                  data-results="searchResults"></div>
           </div>
         </div>

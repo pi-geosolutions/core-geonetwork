@@ -12,7 +12,7 @@ if(!goog) {
 (function() {
 
   goog.provide('app.admin.layertree');
-  
+
   var module = angular.module('app.admin.layertree', []);
 
   var layertreeDirective = function($compile) {
@@ -21,7 +21,7 @@ if(!goog) {
       scope: true,
       templateUrl: '../../catalog/views/pigeo/js/admin/adminlayertree.html',
       controller: 'AdminLayertreeController',
-      compile: 
+      compile:
           function(tElement, tAttrs) {
             var contents = tElement.contents().remove();
             var compiledContents;
@@ -42,7 +42,7 @@ if(!goog) {
   module.directive('adminLayertree', ['$compile', layertreeDirective]);
 
    var LayertreeController = function($scope, $element, $attrs) {
-  
+
     var isRoot = !angular.isDefined($attrs['adminLayertreeNotroot']);
     this.isRoot = isRoot;
 
@@ -52,7 +52,7 @@ if(!goog) {
     var nodeExpr = $attrs['adminLayertree'];
 
     this.node = undefined;
-  
+
     if (isRoot) {
       $scope.$watch(nodeExpr, function(newVal, oldVal) {
         this.node = newVal;
@@ -60,21 +60,21 @@ if(!goog) {
     } else {
       this.node = ($scope.$eval(nodeExpr));
     }
-    
+
     var nodelayerExpr = $attrs['adminLayertreeNodelayer'];
     if (!angular.isDefined(nodelayerExpr)) {
       var nodelayerexprExpr = $attrs['adminLayertreeNodelayerexpr'];
       nodelayerExpr = $scope.$eval(nodelayerexprExpr);
     }
-  
+
     this.nodelayerExpr = nodelayerExpr;
     this.layer = isRoot ? null :
         ($scope.$eval(nodelayerExpr, {'node': this.node}));
-    
+
     this.parentUid = $scope.$parent.uid;
     this.uid = goog.getUid(this);
     this.depth = isRoot ? 0 : $scope.$parent.depth + 1;
-  
+
     $scope.uid = this.uid;
     $scope.depth = this.depth;
     $scope.layertreeCtrl = this;
@@ -86,14 +86,14 @@ if(!goog) {
       if(el.is('i')) {
         el = el.parent();
       }
-      el.find('.fa').first().toggleClass('fa-minus-square')
+      el.find('i.fa').first().toggleClass('fa-minus-square')
           .toggleClass('fa-plus-square');
 
-      el.find('.fa').last().toggleClass('fa-folder')
+      el.find('i.fa').last().toggleClass('fa-folder')
           .toggleClass('fa-folder-open');
     }
   };
-    
+
   module.controller('AdminLayertreeController',
       LayertreeController);
 

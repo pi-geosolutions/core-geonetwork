@@ -28,10 +28,10 @@
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.layersOpen"><span class="icon layers"></span><span role="tooltip" translate="">layers</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.importOpen"><span class="fa fa-plus"></span><span role="tooltip" translate="">import</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.contextOpen"><i class="icon map"></i><span role="tooltip" translate="">mycontext</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.printOpen"><i class="fa fa-print"></i><span role="tooltip" translate="">print</span></button>
+      <button class="un-tool-btn btn hidden-xs" ngeo-btn ng-model="mainCtrl.printOpen"><i class="fa fa-print"></i><span role="tooltip" translate="">print</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.animationOpen"><i class="fa fa-clock-o"></i><span role="tooltip" translate="">animation</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.measureActive"><i class="icon measure"></i><span role="tooltip" translate="">measure</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.geodashQueryOpen"><i class="fa fa-bar-chart"></i><span role="tooltip" translate="">temporalquery</span></button>
+      <button class="un-tool-btn btn hidden-xs" ngeo-btn ng-model="mainCtrl.geodashQueryOpen"><i class="fa fa-bar-chart"></i><span role="tooltip" translate="">temporalquery</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.polygonQueryOpen" data-ng-disabled="!mainCtrl.polygonQueryEnabled"><i class="fa fa-info-circle"></i><span role="tooltip" translate="">polygonquery</span></button>
       <button class="un-tool-btn btn geocatalog-btn" ngeo-btn ng-model="mainCtrl.geocatalogOpen"><i class="fa fa-book"></i><span role="tooltip" translate="">geocatalog</span></button>
     </div>
@@ -209,6 +209,7 @@
   </app-query-geodash>
 
   <app-kml-overlay app-kml-overlay-map="::mainCtrl.map"></app-kml-overlay>
+  <app-layerloader app-layerloader-map="::mainCtrl.map"></app-layerloader>
 
   <footer>
     <app-scaleselector class="pull-right" map="::mainCtrl.map">

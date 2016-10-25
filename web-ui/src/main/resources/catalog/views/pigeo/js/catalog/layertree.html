@@ -19,6 +19,7 @@
 <div ng-if="::layertreeCtrl.layer">
   <un-layerinfo-btn layer="::layertreeCtrl.layer"></un-layerinfo-btn>
   <a href="" ng-click="catalogCtrl.toggle(layertreeCtrl.node)">
+    <i ng-if="layertreeCtrl.layer.loading" class="fa fa-refresh fa-spin layer-loader"></i>
     <i class="fa" ng-class="(layertreeCtrl.getSetActive()) ? 'fa-check-square' : 'fa-square'"></i>
     <i data-ng-if="layertreeCtrl.node.type == 'chart'" class="fa fa-pie-chart chart-icon"></i>
     {{layertreeCtrl.node.layer | translate}}
