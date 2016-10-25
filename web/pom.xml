@@ -652,6 +652,8 @@
             catalog/lib/style/font-awesome/css/**,
             catalog/lib/style/font-awesome/src/**,
             catalog/lib/style/font-awesome/scss/**
+            WEB-INF/data/data/metadata_data/**,
+            doc/**
           </packagingExcludes>
           <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
           <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
