@@ -47,10 +47,13 @@
   ]);
 
   gn.MainController = function($scope, gnPopup, ngeoSyncArrays, gnMdView,
-                               chartlayerService, gnViewerSettings) {
+                               chartlayerService, gnViewerSettings, appBboxLayer, ngeoDebounce, $location) {
 
     this.ui = gnViewerSettings.ui;
     this.$scope = $scope;
+    this.appBboxLayer = appBboxLayer;
+    this.ngeoDebounce = ngeoDebounce;
+    this.$location = $location;
 
     this.setMap_();
 
@@ -99,6 +102,8 @@
     }.bind(this));
 
 
+    this.initPermalink_();
+    this.manageBBoxLayer_();
     chartlayerService.init(this.map);
 
   };
@@ -120,28 +125,80 @@
           tipLabel: 'Emprise globale',
           className: 'un-zoom-extent',
           label:$(
-              '<span class="fa fa-globe"></span>').get(0)}),
+            '<span class="fa fa-globe"></span>').get(0)}),
 
         new ol.control.FullScreen({
           tipLabel: 'Plein écran',
           className: 'un-full-screen',
           label:$(
-              '<span class="fa fa-arrows-alt"></span>').get(0)})
+            '<span class="fa fa-arrows-alt"></span>').get(0)})
       ]
     });
   };
 
   gn.MainController.prototype.manageSelectedLayers_ =
-      function(scope, ngeoSyncArrays) {
-        var map = this.map;
-        ngeoSyncArrays(map.getLayers().getArray(),
-            this['selectedLayers'], true, scope,
-            function(layer) {
-              layer.changed();
-              return layer.displayInLayerManager;
-            }
-        );
-      };
+    function(scope, ngeoSyncArrays) {
+      var map = this.map;
+      ngeoSyncArrays(map.getLayers().getArray(),
+        this['selectedLayers'], true, scope,
+        function(layer) {
+          layer.changed();
+          return layer.displayInLayerManager;
+        }
+      );
+    };
+
+  gn.MainController.prototype.initPermalink_ = function() {
+    var view = this.map.getView();
+    var updateUrl = true, updateView = true;
+
+    // Check on page load if there is a permalink
+    var viewP = this.$location.search();
+    if(viewP.z) {
+      updateUrl = false;
+      view.setZoom(parseFloat(viewP.z));
+    }
+    if(viewP.x && viewP.y) {
+      updateUrl = false;
+      view.setCenter([parseFloat(viewP.x), parseFloat(viewP.y)]);
+    }
+
+    // Update $location on view change
+    view.on('propertychange',
+      this.ngeoDebounce(
+        function(e) {
+          if(updateUrl) {
+            var center = view.getCenter();
+            var params = {
+              'z': view.getZoom(),
+              'x': Math.round(center[0]),
+              'y': Math.round(center[1])
+            };
+            updateView = false;
+            this.$location.search(params);
+          }
+          else {
+            updateUrl = true;
+          }
+        }.bind(this), 300, true));
+
+    // update view on $location change
+    this.$scope.$on('$locationChangeSuccess', function() {
+      if(updateView) {
+        var viewP = this.$location.search();
+        updateUrl = false;
+        if(viewP.z) {
+          view.setZoom(parseFloat(viewP.z));
+        }
+        if(viewP.x && viewP.y) {
+          view.setCenter([parseFloat(viewP.x), parseFloat(viewP.y)]);
+        }
+      }
+      else {
+        updateView = true;
+      }
+    }.bind(this));
+  };
 
   gn.MainController.prototype.closeSidebar = function() {
     this.layersOpen = false;
@@ -180,7 +237,8 @@
   gn.MainController['$inject'] = [
     '$scope',
     'gnPopup',
-    'ngeoSyncArrays', 'gnMdView', 'chartlayerService', 'gnViewerSettings'
+    'ngeoSyncArrays', 'gnMdView', 'chartlayerService', 'gnViewerSettings', 'appBboxLayer',
+    'ngeoDebounce', '$location'
   ];
 
 })();
