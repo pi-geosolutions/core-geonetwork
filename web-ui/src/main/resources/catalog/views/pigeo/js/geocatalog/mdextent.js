@@ -4,6 +4,10 @@
 
   var module = angular.module('app.mdextent', []);
 
+  module.value('appBboxLayer', {
+    layer: undefined
+  });
+
   function getRandomColor() {
     var color = [],
         min = 0, max = 255;
@@ -21,7 +25,7 @@
     return 'rgb(' + color.join(',') + ')';
   }
 
-  gn.mdExtentDirective = function(gnMap) {
+  gn.mdExtentDirective = function(gnMap, appBboxLayer) {
     return {
       restrict: 'A',
       scope: {
@@ -30,7 +34,6 @@
       require: '^^appGeoCatalog',
       link: function(scope, element, attrs, geoCatctrl) {
 
-        var fo = geoCatctrl.fo;
         var map = geoCatctrl.map;
         var md = scope.md;
         var proj = map.getView().getProjection();
@@ -47,15 +50,14 @@
           })
         });
 
-
-        if(!fo) {
-          fo = new ol.layer.Vector({
+        if(!appBboxLayer.layer) {
+          appBboxLayer.layer = new ol.layer.Vector({
             source: new ol.source.Vector(),
-            map: map
+            map: map,
+            visible: false //we are not on geocatalog tab
           });
-          geoCatctrl.fo = fo;
         }
-
+        var fo = appBboxLayer.layer;
         var feat = gnMap.getBboxFeatureFromMd(md, proj);
         feat.setStyle(style);
         fo.getSource().addFeature(feat);
@@ -81,6 +83,6 @@
       }
     };
   };
-  module.directive('appMdExtent', ['gnMap', gn.mdExtentDirective]);
+  module.directive('appMdExtent', ['gnMap', 'appBboxLayer', gn.mdExtentDirective]);
 
 })();

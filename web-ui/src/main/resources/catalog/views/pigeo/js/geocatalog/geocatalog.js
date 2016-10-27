@@ -20,7 +20,7 @@
       templateUrl: '../../catalog/views/pigeo/js/geocatalog/geocatalog.html',
       link: function(scope, element) {
         // Must trigger search to generate facet, but hide this first search
-        var searchFormScope = angular.element(element.find('form')).scope();
+        /*var searchFormScope = angular.element(element.find('form')).scope();
         var unregisterFn = searchFormScope.$watch(
             'searchResults.count', function(n,o) {
           if(o <= 0) {
@@ -35,7 +35,7 @@
             unregisterFn();
           }
         }.bind(this));
-
+*/
 
       }
     };

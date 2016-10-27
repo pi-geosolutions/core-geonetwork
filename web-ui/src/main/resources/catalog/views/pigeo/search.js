@@ -210,6 +210,19 @@
     this.geocatalogOpen = false;
     this.polygonQueryOpen = false;
     this.geodashQueryOpen = false;
+    this.wfsFilterOpen = false;
+  };
+
+  gn.MainController.prototype.manageBBoxLayer_ = function() {
+    this.$scope.$watch(function() {
+      return this.geocatalogOpen;
+    }.bind(this), function(opened) {
+      var layer = this.appBboxLayer.layer
+      if(layer) {
+        layer.setVisible(opened);
+        layer.changed();
+      }
+    }.bind(this));
   };
 
   gn.MainController.prototype.sidebarOpen = function() {
