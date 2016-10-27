@@ -86,7 +86,15 @@
 
   gn.AnimatorController.prototype.setTime_ = function(index) {
     var filename = this.list[index];
-    this.time = eval(this.dateFormatter);
+    function scopedEval(code){
+      var vars = {
+        "filename": filename
+      };
+      with(vars) {
+        return eval('('+code+')');
+      }
+    }
+    this.time = scopedEval(this.dateFormatter);
   };
 
   module.controller('AppAnimatorController',
