@@ -4,6 +4,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,24 +17,33 @@ import java.util.Arrays;
 
 //http://localhost:8080/geonetwork/srv/fre/pigeo.animations.listfiles?dataName=eumetsat
 
-@Controller("pigeo.animations.listfiles")
+@Controller
 public class ListFiles
 {
     //private final String BASE_PATH = "d:/pigeo_data/animations";
     private final String BASE_PATH = "/home/jean/tomcat7/data/geoportal-global/animations";
     private final String EXT = "png";
 
+    private String basePath;
+    public void setBasePath(String basePath) {
+        this.basePath = basePath;
+    }
+
+    private @Value("${animations.path}") String path;
+
     @RequestMapping(value="/{lang}/pigeo.animations.listfiles")
     @ResponseBody
     public JSONObject exec(@RequestParam(defaultValue = "NDVI") String dataName) throws Exception
     {
 
+        // TODO: 27/10/16 Fix spring to load the bean once with pigeo.properties
+        this.basePath = BASE_PATH; //"/home/florent/dev/DATA_DIR/img/animations";
         ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
         GeonetworkDataDirectory dataDirectory = appContext.getBean(GeonetworkDataDirectory.class);
 
-        String path = dataDirectory.getSystemDataDir()+File.separator+BASE_PATH+File.separator+dataName;
-        if (BASE_PATH.startsWith("/")) { //then it is an absolute URL
-            path = BASE_PATH+File.separator+dataName;
+        String path = dataDirectory.getSystemDataDir()+File.separator+basePath+File.separator+dataName;
+        if (basePath.startsWith("/")) { //then it is an absolute URL
+            path = basePath+File.separator+dataName;
         }
         String ext = EXT;
         if (path == null || ext==null) {
