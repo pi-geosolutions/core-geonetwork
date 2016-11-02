@@ -221,7 +221,7 @@
                   source: kmlSource,
                   getinfo: true,
                   kml: true,
-                  label: $translate('kmlFile', {layer: url.split('/').pop()})
+                  label: $translate.instant('kmlFile', {layer: url.split('/').pop()})
                 });
                 $scope.addToMap(vector, map);
                 $scope.url = '';
@@ -240,7 +240,7 @@
                   map.getSize());
 
               gnAlertService.addAlert({
-                msg: $translate('layerAdded', {layer: layer.get('label')}),
+                msg: $translate.instant('layerAdded', {layer: layer.get('label')}),
                 type: 'success'
               });
             };
@@ -262,7 +262,7 @@
 
           var onError = function(msg) {
             gnAlertService.addAlert({
-              msg: $translate('mapImportFailure'),
+              msg: $translate.instant('mapImportFailure'),
               type: 'danger'
             });
           };
@@ -284,7 +284,7 @@
               source: vectorSource,
               getinfo: true,
               kml: true,
-              label: $translate('localLayerFile', {layer: event.file.name})
+              label: $translate.instant('localLayerFile', {layer: event.file.name})
             });
             scope.addToMap(layer, scope.map);
             scope.$apply();
@@ -334,7 +334,7 @@
               });
 
               var vector = new ol.layer.Vector({
-                label: $translate('localLayerFile', {layer: entry.filename}),
+                label: $translate.instant('localLayerFile', {layer: entry.filename}),
                 getinfo: true,
                 source: source,
                 kml: true
@@ -423,8 +423,8 @@
           var select = function() {
             controller.addLayer(scope.member);
             gnAlertService.addAlert({
-              msg: $translate('layerAdded', {layer:
-                  (scope.member.Title || scope.member.title)
+              msg: $translate.instant('layerAdded', {layer:
+                    (scope.member.Title || scope.member.title)
               }),
               type: 'success'
             });
