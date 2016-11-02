@@ -2,8 +2,9 @@
 
   goog.provide('app.layermanager');
   goog.require('app.layerclipping');
+  goog.require('app.layerprocess');
 
-  var module = angular.module('app.layermanager', ['app.layerclipping']);
+  var module = angular.module('app.layermanager', ['app.layerclipping', 'app.layerprocess']);
 
   gn.layermanagerDirective = function() {
     return {
@@ -22,8 +23,9 @@
 
   module.directive('appLayermanager', gn.layermanagerDirective);
 
-  gn.LayermanagerController = function() {
-    var $this = this;
+  gn.LayermanagerController = function(appLayerprocessService) {
+
+    this.appLayerprocessService = appLayerprocessService;
     this['uid'] = goog.getUid(this);
     this.opacities_ = {};
     this.selectedLayers = this.layers;
@@ -74,7 +76,12 @@
     });
   };
 
-  gn.LayermanagerController['$inject'] = [
+  gn.LayermanagerController.prototype.processLayer = function(layer, type) {
+    this.appLayerprocessService.addProcess(layer, type, this.map);
+  };
+
+    gn.LayermanagerController['$inject'] = [
+    'appLayerprocessService'
   ];
 
   module.controller('AppLayermanagerController', gn.LayermanagerController);

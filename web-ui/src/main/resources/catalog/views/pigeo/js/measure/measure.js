@@ -25,10 +25,10 @@
   gn.MeasureController = function($sce, $scope, $translate, $compile,
                                   ngeoDecorateInteraction, $filter) {
 
-    this.measureStartMsg = $sce.trustAsHtml($translate('measureStart'));
-    this.measureLengthContinueMsg = $sce.trustAsHtml($translate('measureLengthContinue'));
-    this.measureAreaContinueMsg = $sce.trustAsHtml($translate('measureAreaContinue'));
-    this.measureAzimutContinueMsg = $sce.trustAsHtml($translate('measureZimutContinue'));
+    this.measureStartMsg = $sce.trustAsHtml($translate.instant('measureStart'));
+    this.measureLengthContinueMsg = $sce.trustAsHtml($translate.instant('measureLengthContinue'));
+    this.measureAreaContinueMsg = $sce.trustAsHtml($translate.instant('measureAreaContinue'));
+    this.measureAzimutContinueMsg = $sce.trustAsHtml($translate.instant('measureZimutContinue'));
 
     // Create elements for the measure tools' tooltips.
     var measureStartMsg = angular.element(

@@ -1002,7 +1002,7 @@
                     name: name,
                     msg: 'layerNotInCap'
                   }, errors = [];
-                  olL = $this.addWmsToMap(map, o);
+                  //olL = $this.addWmsToMap(map, o);
 
                   if (!angular.isArray(olL.get('errors'))) {
                     olL.set('errors', []);

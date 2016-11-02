@@ -2,12 +2,14 @@
 
   goog.provide('app.catalog');
 
+  var PIGEO_GEOSERVER_URL = 'http://ne-risk.pigeo.fr/geoserver-prod/wms';
+
   var module = angular.module('app.catalog', []);
   //module.constant('appCatalogUrl', '../../catalog/views/pigeo/data/senegaltree.json');
   module.constant('appCatalogUrl', 'pigeo.layertree.get');
 
   module.value('ngeoLayertreeTemplateUrl',
-      '../../catalog/views/pigeo/js/catalog/layertree.html');
+    '../../catalog/views/pigeo/js/catalog/layertree.html');
 
   gn.catalogDirective = function() {
     return {
@@ -27,18 +29,19 @@
   module.directive('appCatalog', gn.catalogDirective);
 
   var layerCache_ = {};
-  gn.AppCatalogController = function($http, appCatalogUrl, gnMap,
-                                     gnGlobalSettings, ngeoDecorateLayer) {
+  gn.AppCatalogController =
+    function($http, appCatalogUrl, gnMap,
+             gnOwsCapabilities, ngeoDecorateLayer) {
 
-    var $this = this;
-    this.gnMap_ = gnMap;
-    this.gnGlobalSettings_ = gnGlobalSettings;
-    this.ngeoDecorateLayer = ngeoDecorateLayer;
+      this.gnMap_ = gnMap;
+      this.ngeoDecorateLayer = ngeoDecorateLayer;
+      this.gnOwsCapabilities = gnOwsCapabilities;
 
-    $http.get(appCatalogUrl).then(function(catalog) {
-      $this.tree = catalog.data;
-    });
-  };
+      $http.get(appCatalogUrl).then(function(catalog) {
+        this.tree = catalog.data;
+        this.updateLayersFromCap();
+      }.bind(this));
+    };
 
   gn.AppCatalogController.prototype.toggle = function(node) {
     var layer = this.getLayer(node);
@@ -58,7 +61,7 @@
         el = el.parent();
       }
       el.find('.fa').first().toggleClass('fa-minus-square')
-          .toggleClass('fa-plus-square');
+        .toggleClass('fa-plus-square');
     }
   };
 
@@ -76,13 +79,12 @@
     }
 
     var layer;
-    var $this = this;
 
     // Create a wms layer
     if(type == 'wms') {
       layer = this.gnMap_.createOlWMS(this.map,
-          {'LAYERS': node.layers},
-          {label: node.name, url: node.url, metadata: node.metadataUrl});
+        {'LAYERS': node.layers},
+        {label: node.name, url: node.url, metadata: node.metadataUrl});
     }
 
     else if (type == 'chart') {
@@ -129,14 +131,75 @@
     return layer;
   };
 
+  gn.AppCatalogController.prototype.updateLayersFromCap = function() {
+
+    this.gnOwsCapabilities.getWMSCapabilities(PIGEO_GEOSERVER_URL).then(
+      function(capObj) {
+        for(var p in layerCache_) {
+          var l = layerCache_[p],
+              layers = l.getSource().getParams().LAYERS,
+              url = l.get('url'),
+              capL;
+
+          if(url.indexOf('http://ne-risk.pigeo.fr/geoserver-prod/wms') >= 0) {
+            capL = this.gnOwsCapabilities.getLayerInfoFromCap(layers, capObj);
+          }
+          else if(url.indexOf('http://ne-risk.pigeo.fr/geoserver-prod/') >= 0) {
+            var r = layers.match(/:(.*)/);
+            if(r.length == 2) {
+              capL = this.gnOwsCapabilities.getLayerInfoFromCap(r[1], capObj);
+            }
+          }
+
+          if(capL) {
+            var tmpLayer = this.gnMap_.createOlWMSFromCap(this.map, capL, url);
+            for(var prop in tmpLayer.getProperties()) {
+              if(!l.get(prop) && tmpLayer.get(prop)) {
+                l.set(prop, tmpLayer.get(prop));
+              }
+            }
+            if(tmpLayer.get('time')) {
+              console.log(tmpLayer.get('time'));
+            }
+          }
+        }
+      }.bind(this));
+
+    this.gnOwsCapabilities.getWMSCapabilities('http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r-t.cgi?').then(
+      function(capObj) {
+        for(var p in layerCache_) {
+          var l = layerCache_[p],
+            layers = l.getSource().getParams().LAYERS,
+            url = l.get('url'),
+            capL;
+
+            capL = this.gnOwsCapabilities.getLayerInfoFromCap(layers, capObj);
+
+          if(capL) {
+            var tmpLayer = this.gnMap_.createOlWMSFromCap(this.map, capL, url);
+            for(var prop in tmpLayer.getProperties()) {
+              if(!l.get(prop) && tmpLayer.get(prop)) {
+                l.set(prop, tmpLayer.get(prop));
+              }
+            }
+            if(tmpLayer.get('time')) {
+              console.log(tmpLayer.get('time'));
+            }
+          }
+        }
+      }.bind(this));
+
+  };
+
   module.controller('AppCatalogController',
-      gn.AppCatalogController);
+    gn.AppCatalogController);
 
   gn.AppCatalogController['$inject'] = [
     '$http',
     'appCatalogUrl',
     'gnMap',
-    'gnGlobalSettings', 'ngeoDecorateLayer'
+    'gnOwsCapabilities',
+    'ngeoDecorateLayer'
   ];
 
 })();

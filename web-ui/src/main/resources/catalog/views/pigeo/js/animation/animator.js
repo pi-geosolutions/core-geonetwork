@@ -9,7 +9,7 @@
       restrict: 'E',
       scope: {
         list: '=appAnimatorList',
-        dateFormatter: '=appAnimatorDateformatter',
+        dateFormatter: '=?appAnimatorDateformatter',
         onchangeFn: '&appAnimatorOnchange'
       },
       controller: 'AppAnimatorController',
@@ -85,16 +85,22 @@
   };
 
   gn.AnimatorController.prototype.setTime_ = function(index) {
-    var filename = this.list[index];
-    function scopedEval(code){
-      var vars = {
-        "filename": filename
-      };
-      with(vars) {
-        return eval('('+code+')');
+    /* from pigeo animation service, current date is eval from expression */
+    if(this.dateFormatter) {
+      var filename = this.list[index];
+      function scopedEval(code){
+        var vars = {
+          "filename": filename
+        };
+        with(vars) {
+          return eval('('+code+')');
+        }
       }
+      this.time = scopedEval(this.dateFormatter);
     }
-    this.time = scopedEval(this.dateFormatter);
+    else {
+      this.time = moment(this.list[index]).format('LLL');
+    }
   };
 
   module.controller('AppAnimatorController',

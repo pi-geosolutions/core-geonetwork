@@ -33,6 +33,7 @@
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.measureActive"><i class="icon measure"></i><span role="tooltip" translate="">measure</span></button>
       <button class="un-tool-btn btn hidden-xs" ngeo-btn ng-model="mainCtrl.geodashQueryOpen"><i class="fa fa-bar-chart"></i><span role="tooltip" translate="">temporalquery</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.polygonQueryOpen" data-ng-disabled="!mainCtrl.polygonQueryEnabled"><i class="fa fa-info-circle"></i><span role="tooltip" translate="">polygonquery</span></button>
+      <button class="un-tool-btn btn hidden-xs" ngeo-btn ng-model="mainCtrl.wfsFilterOpen" ><i class="fa fa-filter"></i><span role="tooltip" translate="">wfsfilter</span></button>
       <button class="un-tool-btn btn geocatalog-btn" ngeo-btn ng-model="mainCtrl.geocatalogOpen"><i class="fa fa-book"></i><span role="tooltip" translate="">geocatalog</span></button>
     </div>
 
@@ -65,7 +66,7 @@
         </ul>
 
         <!--Tab panel content-->
-        <div class="tab-content">
+        <div class="tab-content" ng-class="{divided: mainCtrl.appLayerprocessService.current != null}">
 
           <!--Catalog tree-->
           <div id="layertree" class="tab-pane active">
@@ -80,6 +81,8 @@
             <div class="text-center">
               <button class="btn btn-default" ng-click="mainCtrl.showTab('a[data-target=#layertree]');" translate>+ Ajouter</button>
             </div>
+            <app-layerprocess app-layerprocess-map="::mainCtrl.map" app-layerprocess.layer="" id="layerprocess">
+            </app-layerprocess>
           </div>
         </div>
       </div>
@@ -94,13 +97,13 @@
         <!--Tab panel header-->
         <ul class="nav nav-tabs">
           <li role="presentation"  class="active">
-            <a href="#importwms" data-toggle="tab">WMS</a>
+            <a href data-target="#importwms" data-toggle="tab">WMS</a>
           </li>
           <li role="presentation">
-            <a href="#importwmts" data-toggle="tab">WMTS</a>
+            <a href data-target="#importwmts" data-toggle="tab">WMTS</a>
           </li>
           <li role="presentation">
-            <a href="#importkml" data-toggle="tab">KML</a>
+            <a href data-target="#importkml" data-toggle="tab">KML</a>
           </li>
         </ul>
 
@@ -183,6 +186,17 @@
                              app-query-polygon-active="mainCtrl.polygonQueryOpen"
                              app-query-polygon-enabled="mainCtrl.polygonQueryEnabled">
           </app-query-polygon>
+        </div>
+      </div>
+
+      <!--WFS Filter panel -->
+      <div id="wfsfilterpanel" data-ng-show="mainCtrl.wfsFilterOpen">
+        <h2 translate>wfsfilter</h2>
+        <button class="close-panel" ng-click="mainCtrl.closeSidebar()">
+          ✕
+        </button>
+        <div class="tab-content no-nav">
+              <div data-gn-data-filter-view="::mainCtrl.map"/>
         </div>
       </div>
 

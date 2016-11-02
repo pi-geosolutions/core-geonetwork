@@ -115,6 +115,12 @@
     "stddev": "Standard variation",
     "search.resources": "Associated resources",
     "search.download": "Downloads",
-    "search.dynamic": "Layers"
+    "search.dynamic": "Layers",
+    "format.pointofcontact": "Point of contact",
+    "format.mdauthor": "Metadata author",
+    "layerProcess": "Layer processes",
+    "wmst": "WMS Time service",
+    "wfsfilter": "WFS filters"
+
 
 }

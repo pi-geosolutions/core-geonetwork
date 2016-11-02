@@ -118,5 +118,8 @@
   "search.download": "Données téléchargeables",
   "search.dynamic": "Données visualisables",
   "format.pointofcontact": "Point de contact",
-  "format.mdauthor": "Auteur de la métadonnée"
+  "format.mdauthor": "Auteur de la métadonnée",
+  "layerProcess": "Traitements de la couche",
+  "wmst": "WMS Temporel",
+  "wfsfilter": "Filtres WFS"
 }

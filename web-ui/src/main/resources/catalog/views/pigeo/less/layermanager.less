@@ -1,12 +1,13 @@
 #layermanager {
   .text-center {
-    margin-top:20px;
+    margin:10px;
   }
 }
 
 ul.layermanager {
   margin: 0;
   padding: 0;
+  overflow: auto;
 }
 
 li.layermanager-panel {
@@ -15,8 +16,11 @@ li.layermanager-panel {
   padding: 5px 10px;
   padding-bottom: 2px;
   border-radius: 0;
-  background-color: @main_color_50;
+  background-color: @main_color_100;
 
+  &.proccessed {
+    background-color: @main_color_200;
+  }
   .sortable-handle {
     padding-right: 15px;
     margin-top: 2px;
@@ -79,7 +83,11 @@ li.layermanager-panel {
     margin-bottom: 5px;
     color: grey;
   }
-
+  &.proccessed {
+    .right-content {
+      color: @main_color_50;
+    }
+  }
   .slider-col {
     span {
       width: 105px;
@@ -95,6 +103,9 @@ li.layermanager-panel {
   }
   &:hover .info-icon {
     display: block;
+  }
+  .fa.proccessed-type {
+    color: #982c2c;
   }
 }
 
@@ -112,4 +123,12 @@ li.layermanager-panel {
       visibility: visible;
     }
   }
+}
+
+.layermanager-curr-drag-item {
+  * {
+    visibility: hidden;
+  }
+  background-color: white !important;
+  border: 2px dashed @main_color_300;
 }

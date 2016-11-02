@@ -7,7 +7,7 @@
 @fa-font-path: '../catalog/lib/style/font-awesome/fonts';
 
 @header-height: 60px;
-@sidebar-width: 380px;
+@sidebar-width: 415px;
 @sidebar-left-offset: 40px;
 @sidebar-top-offset: 30px;
 
@@ -27,6 +27,7 @@
 @import "auth.less";
 @import "query.less";
 @import "mobile.less";
+@import "layerprocess.less";
 
 @font-face {
   font-family: 'mapicon';
@@ -56,6 +57,7 @@
   position: absolute;
   clip: rect(1px, 1px, 1px, 1px);
 }
+
 button:focus [role=tooltip],
 button:hover [role=tooltip] {
   clip: auto;
@@ -240,3 +242,8 @@ app-animator.form-horizontal {
     margin-left: 0;
   }
 }
+
+.ol-dragzoom, .gnbbox-dragbox {
+   background-color: rgba(255,255,255,0.4);
+   border: solid 2px red;
+ }

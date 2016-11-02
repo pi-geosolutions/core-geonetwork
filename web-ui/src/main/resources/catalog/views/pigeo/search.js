@@ -18,10 +18,12 @@
   goog.require('app.query.geodash');
   goog.require('app.measure');
   goog.require('app.auth');
+  goog.require('app.wmst');
   goog.require('app.chartlayer.service');
   goog.require('app.mdactionsmenu');
   goog.require('app.kmz.overlay');
   goog.require('app.layerloader');
+  goog.require('app.layerprocess');
 
 
   var module = angular.module('gn_search_pigeo',[
@@ -40,20 +42,25 @@
     'app.query.polygon',
     'app.query.geodash',
     'app.auth',
+    'app.wmst',
     'app.chartlayer.service',
     'app.mdactionsmenu',
     'app.kmz.overlay',
+    'app.layerprocess',
     'app.layerloader'
   ]);
 
   gn.MainController = function($scope, gnPopup, ngeoSyncArrays, gnMdView,
-                               chartlayerService, gnViewerSettings, appBboxLayer, ngeoDebounce, $location) {
+                               chartlayerService, gnViewerSettings,
+                               appBboxLayer, ngeoDebounce, $location,
+                               appLayerprocessService) {
 
     this.ui = gnViewerSettings.ui;
     this.$scope = $scope;
     this.appBboxLayer = appBboxLayer;
     this.ngeoDebounce = ngeoDebounce;
     this.$location = $location;
+    this.appLayerprocessService = appLayerprocessService;
 
     this.setMap_();
 
@@ -104,7 +111,17 @@
 
     this.initPermalink_();
     this.manageBBoxLayer_();
+
     chartlayerService.init(this.map);
+
+/*
+    $scope.$watch(function() {
+      return appLayerprocessService.current;
+    }, function(current) {
+      if(current)
+        this.layerProcess = current. layer;
+    }.bind(this));
+*/
 
   };
 
@@ -227,8 +244,8 @@
 
   gn.MainController.prototype.sidebarOpen = function() {
     return this.layersOpen || this.contextOpen || this.printOpen ||
-        this.drawOpen || this.importOpen || this.geocatalogOpen ||
-        this.animationOpen || this.polygonQueryOpen || this.geodashQueryOpen;
+      this.drawOpen || this.importOpen || this.geocatalogOpen ||
+      this.animationOpen || this.polygonQueryOpen || this.geodashQueryOpen || this.wfsFilterOpen;
   };
 
   gn.MainController.prototype.showTab = function(selector) {
@@ -251,7 +268,7 @@
     '$scope',
     'gnPopup',
     'ngeoSyncArrays', 'gnMdView', 'chartlayerService', 'gnViewerSettings', 'appBboxLayer',
-    'ngeoDebounce', '$location'
+    'ngeoDebounce', '$location', 'appLayerprocessService'
   ];
 
 })();
