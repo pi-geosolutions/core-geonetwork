@@ -23,6 +23,7 @@
 
   gn.Layerprocess = function($scope, appLayerprocessService) {
     this.processes = [];
+    this.expanded = false;
     this.service = appLayerprocessService;
 
     this.map.getLayers().on('remove', function(e) {

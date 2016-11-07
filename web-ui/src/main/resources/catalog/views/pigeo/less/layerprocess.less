@@ -1,12 +1,27 @@
 .layerprocess {
   margin-top: 15px;
   padding-top: 15px;
+  padding-right: 30px;
   height: 280px;
   position: relative;
   border-top: #982c2c 1px solid;
   overflow-y: scroll;
   .close-panel {
     top: 15px;
+    &:hover {
+      color: @main_color_500;
+    }
+  }
+  .expand-panel {
+    background: none;
+    border: 0;
+    top: 15px;
+    right: 36px;
+    position: absolute;
+    cursor: pointer;
+    &:hover {
+      color: @main_color_500;
+    }
   }
   .info {
     margin-left:15px;
