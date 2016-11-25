@@ -31,9 +31,17 @@
   gn.TimesliderController = function($scope, wmstService) {
     var timeP = wmstService.parseCap(this.layer);
 
-    this.startUTC = getUTCDate(timeP.start);
-    this.endUTC = getUTCDate(timeP.end);
-    this.stepMs = timeP.step.as('milliseconds');
+    if(timeP.start) {
+      this.type = 'interval';
+      this.startUTC = getUTCDate(timeP.start);
+      this.endUTC = getUTCDate(timeP.end);
+      this.stepMs = timeP.step.as('milliseconds');
+      this.dates = wmstService.getAllDatesAsIso(timeP.start, timeP.end, timeP.step);
+    }
+    else if (timeP.list) {
+      this.type = 'list';
+      this.dates = timeP.list;
+    }
 
     $scope.$watch(function() {
       return this.curDateUTC;
@@ -43,7 +51,6 @@
       }
     }.bind(this));
 
-    this.dates = wmstService.getAllDatesAsIso(timeP.start, timeP.end, timeP.step);
   };
 
   gn.TimesliderController.prototype.onDateChange = function(date) {
@@ -99,22 +106,35 @@
 
 
   gn.AppWmstService.prototype.parseCap = function(layer) {
-    var timeSpec = layer.get('time')[0];
-    var seq = timeSpec.split('/'),
-      initDate, endDate, step;
 
-    if(seq.length > 1) {
-      initDate = new Date(seq[0]);
-      endDate = new Date(seq[1]);
+    var timeSpec = layer.get('time');
+
+    // list
+    if(timeSpec.length > 1 || timeSpec[0].indexOf('/') < 0) {
+      return {
+        list: timeSpec
+      };
     }
-    if(seq.length > 2) {
-      step = getDuration(seq[2]);
+
+    // intervals
+    timeSpec = timeSpec[0];
+    if(timeSpec.indexOf('/') > 0) {
+      var seq = timeSpec.split('/'),
+        initDate, endDate, step;
+
+      if(seq.length > 1) {
+        initDate = new Date(seq[0]);
+        endDate = new Date(seq[1]);
+      }
+      if(seq.length > 2) {
+        step = getDuration(seq[2]);
+      }
+      return {
+        start: initDate,
+        end: endDate,
+        step: step
+      };
     }
-    return {
-      start: initDate,
-      end: endDate,
-      step: step
-    };
   };
 
   gn.AppWmstService.prototype.getAllDatesAsIso = function(start, end, step) {
