@@ -28,6 +28,8 @@
     "layertreeloading": "Tree loading...",
     "layertreeloadsuccess": "Tree loading success",
     "layertreeloaderror": "Treeloading failure",
+    "layertreesavesuccess": "Tree save success",
+    "layertreesaveerror": "Tree save failure",
     "groupsloading": "Groups loading...",
     "groupsloadsuccess": "Groups loading success",
     "groupsloaderror": "Groups loading failure",
@@ -120,7 +122,7 @@
     "format.mdauthor": "Metadata author",
     "layerProcess": "Layer processes",
     "wmst": "WMS Time service",
-    "wfsfilter": "WFS filters"
-
-
+    "wfsfilter": "WFS filters",
+    "animation.loaded": "The current animation is successfully loaded",
+    "animation.notloaded": "Load the animation for better performances"
 }

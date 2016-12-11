@@ -113,6 +113,7 @@
 
       var el = angular.element(
         '<app-timeslider ng-show="layer.visible" ' +
+        '   app-timeslider-map="map"' +
         '   app-timeslider-layer="layer">' +
         '</app-timeslider>'
       );

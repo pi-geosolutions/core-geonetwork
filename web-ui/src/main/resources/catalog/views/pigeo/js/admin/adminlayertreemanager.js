@@ -6,10 +6,15 @@
   goog.require('app.admin.layertree.service');
 
   var module = angular.module('app.admin.layertreemanager',
-      ['app.admin.layertree', 'app.admin.layertree.service']);
+    ['app.admin.layertree', 'app.admin.layertree.service']);
 
   module.constant('appCatalogUrl', 'pigeo.layertree.get');
 //  module.constant('piCatalogUrl', '../../catalog/views/pigeo/data/layertree.json');
+
+  var getNodeText = function(htmlParentNode, nodeName) {
+    var parent = $(htmlParentNode);
+    return $(parent.find(nodeName)).text();
+  };
 
   /**
    * Admin layertree manager Controller.
@@ -67,7 +72,7 @@
         if(activeNode != node) {
           activeNode = node;
           $scope.activeLayer = angular.copy(node);
-          addToLog($translate('layertreenodeloading',{layer: node.text}));
+          addToLog($translate.instant('layertreenodeloading',{layer: node.text}));
         }
         $scope.rightPanel = undefined;
       };
@@ -99,9 +104,22 @@
 
         $http.post('pigeo.layertree.admin.set', xml,  {
           headers: {'Content-type': 'application/xml'}
-        }).success(function(data) {
-
-        });
+        }).then(
+          function(response) {
+            var doc = ol.xml.parse(response.data);
+            var status = getNodeText(doc, 'status')
+            if(status == 'error') {
+              var message = getNodeText(doc, 'message')
+              addToLog('layertreesaveerror', 'danger');
+              addToLog(message, 'danger');
+            }
+            else {
+              addToLog('layertreesavesuccess', 'success');
+            }
+          },
+          function () {
+            addToLog('layertreesaveerror', 'danger');
+          });
       };
 
       /**
@@ -111,13 +129,13 @@
        */
       $scope.loadLayertree = function(id) {
         var url = id ? 'pigeo.layertree.admin.backups.get?id=' + id :
-            appCatalogUrl;
+          appCatalogUrl;
         return $http.get(url).then(function(catalog) {
           $scope.tree = catalog.data;
           layerTreeService.setParent($scope.tree);
           addToLog('layertreeloadsuccess', 'success');
-        }, function() {
-          addToLog('layertreeloadfailure', 'danger');
+        }, function(response) {
+          addToLog('layertreeloaderror', 'danger');
         });
       };
 
@@ -129,9 +147,10 @@
       $scope.createNode = function(type, node) {
         if(activeNode) {
           var newNode = node || {
-            type: type,
-            text: 'new ' + type
-          };
+              id: 'x',
+              type: type,
+              text: 'new ' + type
+            };
           newNode.parent = activeNode;
           if(activeNode.children) {
             activeNode.children.push(newNode);
@@ -140,7 +159,7 @@
             activeNode.children = [newNode];
           }
           if(!node) {
-            addToLog($translate('nodecreated', {
+            addToLog($translate.instant('nodecreated', {
               text: activeNode.text,
               type: type
             }), 'success');
@@ -160,14 +179,16 @@
           if(!a.length) {
             delete activeNode.parent.children;
           }
-          addToLog($translate('noderemoved',{id: activeNode.text}), 'success');
+          addToLog($translate.instant('noderemoved',{id: activeNode.text}), 'success');
           activeNode = undefined;
           $scope.activeLayer = undefined;
         }
       };
 
       $scope.copyNode = function() {
-        $scope.paperWeight = angular.copy(activeNode);
+        var copy = angular.copy(activeNode);
+        copy.id = 'x';
+        $scope.paperWeight = angular.copy(copy);
       };
 
       $scope.cutNode = function() {
@@ -186,9 +207,10 @@
       $scope.duplicateNode = function() {
         var parent = activeNode.parent;
         var newNode = angular.copy(activeNode);
+        newNode.id = 'x';
         newNode.text += ' (copy)';
         parent.children.push(newNode);
-        addToLog($translate('nodeduplicated',{text: activeNode.text}), 'success');
+        addToLog($translate.instant('nodeduplicated',{text: activeNode.text}), 'success');
       };
 
       $scope.importFromJson = function() {
@@ -225,7 +247,7 @@
           $scope.backuplist = response[0];
           addToLog('backuplistloadsuccess', 'success');
         }, function() {
-          addToLog('backuplistloadfailure', 'danger');
+          addToLog('backuplistloaderror', 'danger');
         });
       };
 

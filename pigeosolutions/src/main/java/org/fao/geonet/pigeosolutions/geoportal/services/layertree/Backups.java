@@ -110,7 +110,13 @@ public class Backups implements Service {
         try {
             pstmt = con.prepareStatement("DELETE FROM geoportal.\"nodesBackups\" WHERE id =?;");
             pstmt.setInt(1, Integer.parseInt(id));
-            return pstmt.execute();
+            int rows = pstmt.executeUpdate();
+            boolean res = false;
+            if (rows > 0) {
+                res = true;
+                con.commit();
+            }
+            return res;
         }  catch (SQLException e ) {
             throw e;
         } finally {

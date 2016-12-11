@@ -129,14 +129,14 @@ if(!goog) {
             params: {id: id}
           }).then(function(response) {
             if(response.data[0] == "true") {
-              addToLog($translate('backupremovesuccess', {id:id}), 'success');
+              addToLog($translate.instant('backupremovesuccess', {id:id}), 'success');
               loadList();
             }
             else {
-              addToLog($translate('backupremovefailure', {id:id}), 'danger');
+              addToLog($translate.instant('backupremovefailure', {id:id}), 'danger');
             }
           }, function() {
-            addToLog($translate('backupremovefailure', {id:id}), 'danger');
+            addToLog($translate.instant('backupremovefailure', {id:id}), 'danger');
           });
         };
 

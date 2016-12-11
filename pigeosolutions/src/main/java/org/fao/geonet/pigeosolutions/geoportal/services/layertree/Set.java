@@ -131,7 +131,7 @@ public class Set implements Service {
     }
 
     private int saveChildren(Element root, int parentid, Connection con) throws SQLException {
-        int id=0; 
+        int id=0;
         java.util.List list = root.getChildren("children");
 
         for (int i = 0; i < list.size(); i++) {
@@ -183,7 +183,7 @@ public class Set implements Service {
                 rs = pstmt.executeQuery();
                 String dbchangedate = null;
                 while (rs.next()) {
-                    dbchangedate = rs.getString("lastchanged");
+                    dbchangedate = rs.getString("lastchanged").toString();
                 }
                 pstmt.close();
 
@@ -199,6 +199,10 @@ public class Set implements Service {
                 if (!this.force) {
                     //we check if database content has changed since last load
                     //if it does, abort the transaction and warn the user
+                    //dbchangedate = dbchangedate.substring(0, dbchangedate.length()-3);
+                    if (dbchangedate.length() == 26) {
+                        dbchangedate += "+01";
+                    }
                     if (dbchangedate != null && dbchangedate.compareTo(lastchanged)!=0) {
                         return -1; //will be the code to tell there is a changedate  error
                     }
@@ -253,7 +257,7 @@ public class Set implements Service {
 
         System.out.println("BACKUP : "+name);
         //transforms it to XML text (serializes the tree)
-        XMLOutputter xmOut=new XMLOutputter(); 
+        XMLOutputter xmOut=new XMLOutputter();
         String tree = xmOut.outputString(tree_xml);
         System.out.println("INFO : backing up the previous layertree structure");
         //and commits it to the DB's table nodeBackups
@@ -309,6 +313,6 @@ public class Set implements Service {
             if (stmt != null) stmt.close();
             if (rs != null) rs.close();
         }
-    }    
-    
+    }
+
 }

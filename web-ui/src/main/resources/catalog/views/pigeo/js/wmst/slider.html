@@ -1,11 +1,15 @@
-  <app-animator app-animator-list="ctrl.dates"
-                app-animator-onchange="ctrl.onAnimatorChange(index)"
-                ng-if="ctrl.dates"
-                class="row form-horizontal">
-  </app-animator>
+<button class="btn btn-default pull-right" ng-click="ctrl.loadImages(true)" translate>Load Full</button>
+<button class="btn btn-default pull-right" ng-click="ctrl.loadImages()" translate>Load</button>
+<span class="text-success" ng-show="ctrl.loaded" translate>animation.loaded</span>
+<span class="text-danger" ng-hide="ctrl.loaded" translate>animation.notloaded</span>
+<div class="progress">
+  <div class="progress-bar"
+       ng-class="ctrl.loader[ctrl.loader.isFull ? 'full' : 'current'].loaded ? 'progress-bar-success' : 'progress-bar-danger'"
+       data-ng-style="{width: ctrl.imageLoaderProgress + '%'}"/>
+</div>
 
-
-<!--
-<input class="form-control" type="range" min="{{ctrl.startUTC}}" max="{{ctrl.endUTC}}" step="{{ctrl.stepMs}}" ng-model="ctrl.curDateUTC">
-{{ctrl.curDateIso}}
--->
+<app-animator app-animator-list="ctrl.dates"
+              app-animator-onchange="ctrl.onAnimatorChange(index)"
+              ng-if="ctrl.dates"
+              class="row form-horizontal">
+</app-animator>

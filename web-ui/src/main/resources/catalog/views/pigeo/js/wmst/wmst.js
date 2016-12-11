@@ -1,8 +1,9 @@
 (function() {
 
   goog.provide('app.wmst');
+  goog.require('app.wmst.imageloader');
 
-  var module = angular.module('app.wmst', []);
+  var module = angular.module('app.wmst', ['app.wmst.imageloader']);
 
 
   /**
@@ -13,7 +14,8 @@
     return {
       restrict: 'E',
       scope: {
-        layer: '<appTimesliderLayer'
+        layer: '<appTimesliderLayer',
+        map: '<appTimesliderMap'
       },
       controller: 'AppTimesliderController',
       controllerAs: 'ctrl',
@@ -28,7 +30,27 @@
    * Controller
    * @constructor
    */
-  gn.TimesliderController = function($scope, wmstService) {
+  gn.TimesliderController = function($scope, wmstService, wmstImageLoader,
+                                     gnUrlUtils) {
+    this.$scope = $scope;
+    this.wmstImageLoader = wmstImageLoader;
+    this.gnUrlUtils = gnUrlUtils;
+
+    window.map = this.map;
+
+    this.loader = {
+      current: {
+        loaded: false,
+        images: []
+      },
+      full: {
+        loaded: false,
+        images: []
+      },
+      isFull: false
+    };
+
+    this.wmsSource = this.layer.getSource();
     var timeP = wmstService.parseCap(this.layer);
 
     if(timeP.start) {
@@ -62,15 +84,124 @@
 
   gn.TimesliderController.prototype.onAnimatorChange = function(index) {
     var dateISO = this.dates[index];
-    this.layer.getSource().updateParams({
-      TIME:  dateISO
-    });
+    if(!this.loader.isFull) {
+      this.layer.getSource().updateParams({
+        TIME:  dateISO
+      });
+    }
+    else if(this.loader.full.loaded) {
+      var size = [291, 350];
+      var sourceConfig = {
+        size: size,
+        url: this.loader.full.images[index].src,
+        imageExtent: this.layer.get('cextent'),
+        projection: this.map.getView().getProjection()
+      };
+      this.layer.setSource(new ol.source.ImageStatic(sourceConfig));
+    }
+  };
 
+  gn.TimesliderController.prototype.loadImages = function(isFull) {
+
+    var map = this.map,
+      layer = this.layer,
+      extent, loader;
+
+    this.loader.isFull = isFull;
+    this.imageLoaderProgress = 0;
+
+    if(isFull) {
+      loader = this.loader.full;
+      extent = layer.get('cextent');
+
+      if (!this.loader.full.url) {
+
+        var image = this.wmsSource.getImage(
+          extent,
+          map.getView().getResolution(),
+          1,
+          map.getView().getProjection());
+
+        var urlA = image.src_.split('?');
+        var params = this.gnUrlUtils.parseKeyValue(urlA[1]);
+        delete params.TIME;
+        var size = [291, 350];
+        angular.merge(params, {
+          BBOX: this.layer.get('cextent').join(),
+          WIDTH: size[0],
+          HEIGHT: size[1]
+        });
+        this.loader.full.url = this.gnUrlUtils.append(urlA[0],
+          this.gnUrlUtils.toKeyValue(params));
+      }
+    } else {
+      loader = this.loader.current;
+      extent = map.getView().calculateExtent(map.getSize());
+      this.layer.setSource(this.wmsSource);
+    }
+
+    var loadCounter = this.dates.length;
+    var unBindKey = this.layer.getSource().on('imageloadend', function(e) {
+      this.$scope.$apply(function(){
+        if(!--loadCounter) {
+          loader.loaded = true;
+          ol.Observable.unByKey(unBindKey);
+        }
+        this.imageLoaderProgress =
+          (this.dates.length - loadCounter) * 100 / this.dates.length;
+
+      }.bind(this));
+    }.bind(this));
+
+    this.dates.forEach(function(d) {
+      if(!isFull) {
+        this.wmsSource.updateParams({
+          TIME:  d,
+          FORMAT: 'image/png8'
+        });
+
+        var image = this.wmsSource.getImage(
+          extent,
+          map.getView().getResolution(),
+          1,
+          map.getView().getProjection());
+        loader.images.push(image);
+        image.load();
+      }
+      else {
+        var img = new Image();
+        img.src = this.loader.full.url + '&TIME=' + d;
+        loader.images.push(img);
+        img.onload = function() {
+          this.$scope.$apply(function(){
+            if(!--loadCounter) {
+              loader.loaded = true;
+              ol.Observable.unByKey(unBindKey);
+            }
+            this.imageLoaderProgress =
+              (this.dates.length - loadCounter) * 100 / this.dates.length;
+
+          }.bind(this));
+
+        }.bind(this);
+      }
+    }.bind(this));
+
+    if(!isFull) {
+      map.getView().once(['change:center', 'change:resolution'], function(e) {
+        console.log('change');
+        loader.loaded = false;
+        this.imageLoaderProgress = 0;
+        this.$scope.$apply();
+      }.bind(this));
+    }
   };
 
   gn.TimesliderController['$inject'] = [
     '$scope',
-    'wmstService'
+    'wmstService',
+    'wmstImageLoader',
+    'gnUrlUtils'
   ];
 
   module.controller('AppTimesliderController', gn.TimesliderController);

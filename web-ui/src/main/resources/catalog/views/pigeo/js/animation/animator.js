@@ -29,7 +29,7 @@
     $scope.$watch(function(){
       return this.list;
     }.bind(this), function(list) {
-      this.index = 0;
+      this.index = list.length-1;
     }.bind(this));
 
     $scope.$watch(function(){

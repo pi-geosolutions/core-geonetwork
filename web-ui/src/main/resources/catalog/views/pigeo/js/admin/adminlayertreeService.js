@@ -66,7 +66,7 @@
 
     this.addToLog = function(msg, type, selector) {
       var p = '<p' + (type ? ' class="text-'+ type + '"' : '') +
-          '>' + $translate(msg) + '</p>';
+          '>' + $translate.instant(msg) + '</p>';
 
       $timeout(function() {
         var div = $(selector);

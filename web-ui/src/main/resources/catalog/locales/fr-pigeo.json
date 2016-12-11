@@ -30,6 +30,8 @@
   "layertreeloaderror": "Erreur lors du chargement de l'arbre",
   "groupsloading": "Chargement des groupes...",
   "groupsloadsuccess": "Les groupes ont été chargés avec succès",
+  "layertreesavesuccess": "L'arbre a été enregistré avec succès",
+  "layertreesaveerror": "Erreur lors de l'enregistrement de l'arbre",
   "groupsloaderror": "Erreur lors du chargement des groupes",
   "layertreenodeloading": "Chargement des paramètres du noeud: {{layer}}",
   "backuplistloadsuccess": "Chargement de la liste des backups",
@@ -121,5 +123,7 @@
   "format.mdauthor": "Auteur de la métadonnée",
   "layerProcess": "Traitements de la couche",
   "wmst": "WMS Temporel",
-  "wfsfilter": "Filtres WFS"
+  "wfsfilter": "Filtres WFS",
+  "animation.loaded": "L'animation a été chargée",
+  "animation.notloaded": "Chargez l'animation pour une meilleure fluidité"
 }
