@@ -123,6 +123,12 @@
     "layerProcess": "Layer processes",
     "wmst": "WMS Time service",
     "wfsfilter": "WFS filters",
-    "animation.loaded": "The current animation is successfully loaded",
-    "animation.notloaded": "Load the animation for better performances"
+    "animation.loaded": "The animation is successfully loaded",
+    "animation.notloaded": "Load for better performances",
+    "resolution.high": "High resolution",
+    "resolution.medium": "Medium resolution",
+    "resolution.low": "Low resolution",
+    "Load": "Load",
+    "Loading": "Loading"
+
 }

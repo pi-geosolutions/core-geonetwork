@@ -125,5 +125,10 @@
   "wmst": "WMS Temporel",
   "wfsfilter": "Filtres WFS",
   "animation.loaded": "L'animation a été chargée",
-  "animation.notloaded": "Chargez l'animation pour une meilleure fluidité"
+  "animation.notloaded": "Chargez pour une meilleure fluidité",
+  "resolution.high": "Haute résolution",
+  "resolution.medium": "Moyenne résolution",
+  "resolution.low": "Basse résolution",
+  "Load": "Charger",
+  "Loading": "Chargement"
 }

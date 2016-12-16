@@ -36,18 +36,11 @@
     this.wmstImageLoader = wmstImageLoader;
     this.gnUrlUtils = gnUrlUtils;
 
-    window.map = this.map;
-
     this.loader = {
-      current: {
-        loaded: false,
-        images: []
-      },
-      full: {
-        loaded: false,
-        images: []
-      },
-      isFull: false
+      loaded: false,
+      images: [],
+      ratio: 1,
+      loading: false
     };
 
     this.wmsSource = this.layer.getSource();
@@ -84,117 +77,71 @@
 
   gn.TimesliderController.prototype.onAnimatorChange = function(index) {
     var dateISO = this.dates[index];
-    if(!this.loader.isFull) {
-      this.layer.getSource().updateParams({
-        TIME:  dateISO
-      });
-    }
-    else if(this.loader.full.loaded) {
-      var size = [291, 350];
-      var sourceConfig = {
-        size: size,
-        url: this.loader.full.images[index].src,
-        imageExtent: this.layer.get('cextent'),
-        projection: this.map.getView().getProjection()
-      };
-      this.layer.setSource(new ol.source.ImageStatic(sourceConfig));
+    if(this.loader.loaded) {
+      this.layer.setSource(new ol.source.ImageStatic(this.loader.images[index]));
     }
   };
 
-  gn.TimesliderController.prototype.loadImages = function(isFull) {
+  gn.TimesliderController.prototype.loadImages = function() {
 
-    var map = this.map,
-      layer = this.layer,
-      extent, loader;
+    var map  = this.map,
+      loader = this.loader,
+      loadCounter = this.dates.length,
+      extent = map.getView().calculateExtent(map.getSize()),
+      url;
 
-    this.loader.isFull = isFull;
-    this.imageLoaderProgress = 0;
+    loader.loaded = false;
+    loader.progress = 0;
+    loader.images = [];
+    loader.loading = true;
 
-    if(isFull) {
-      loader = this.loader.full;
-      extent = layer.get('cextent');
+    // Get current WMS image URL
+    var image = this.wmsSource.getImage(
+      extent,
+      map.getView().getResolution(),
+      1,
+      map.getView().getProjection()
+    );
+    url = image.src_;
 
-      if (!this.loader.full.url) {
+    var urlA = image.src_.split('?');
+    var params = this.gnUrlUtils.parseKeyValue(urlA[1]);
 
-        var image = this.wmsSource.getImage(
-          extent,
-          map.getView().getResolution(),
-          1,
-          map.getView().getProjection());
+    // The extent is extended by the gutter
+    extent = params.BBOX.split(',').map(function(c) {
+      return parseFloat(c);
+    });
 
-        var urlA = image.src_.split('?');
-        var params = this.gnUrlUtils.parseKeyValue(urlA[1]);
-        delete params.TIME;
-        var size = [291, 350];
-        angular.merge(params, {
-          BBOX: this.layer.get('cextent').join(),
-          WIDTH: size[0],
-          HEIGHT: size[1]
-        });
-        this.loader.full.url = this.gnUrlUtils.append(urlA[0],
-          this.gnUrlUtils.toKeyValue(params));
-      }
-    } else {
-      loader = this.loader.current;
-      extent = map.getView().calculateExtent(map.getSize());
-      this.layer.setSource(this.wmsSource);
-    }
+    delete params.TIME;
+    angular.merge(params, {
+      WIDTH: Math.round(params.WIDTH / loader.ratio),
+      HEIGHT: Math.round(params.HEIGHT / loader.ratio)
+    });
 
-    var loadCounter = this.dates.length;
-    var unBindKey = this.layer.getSource().on('imageloadend', function(e) {
-      this.$scope.$apply(function(){
-        if(!--loadCounter) {
-          loader.loaded = true;
-          ol.Observable.unByKey(unBindKey);
-        }
-        this.imageLoaderProgress =
-          (this.dates.length - loadCounter) * 100 / this.dates.length;
-
-      }.bind(this));
-    }.bind(this));
+    url = this.gnUrlUtils.append(urlA[0],
+         this.gnUrlUtils.toKeyValue(params));
 
     this.dates.forEach(function(d) {
-      if(!isFull) {
-        this.wmsSource.updateParams({
-          TIME:  d,
-          FORMAT: 'image/png8'
-        });
 
-        var image = this.wmsSource.getImage(
-          extent,
-          map.getView().getResolution(),
-          1,
-          map.getView().getProjection());
-        loader.images.push(image);
-        image.load();
-      }
-      else {
-        var img = new Image();
-        img.src = this.loader.full.url + '&TIME=' + d;
-        loader.images.push(img);
-        img.onload = function() {
-          this.$scope.$apply(function(){
-            if(!--loadCounter) {
-              loader.loaded = true;
-              ol.Observable.unByKey(unBindKey);
-            }
-            this.imageLoaderProgress =
-              (this.dates.length - loadCounter) * 100 / this.dates.length;
+      getDataUri(url + '&TIME=' + d, function(dataUri) {
+        var sourceConfig = {
+          url: dataUri,
+          imageExtent: extent,
+          projection: this.map.getView().getProjection()
+        };
+        loader.images.push(sourceConfig);
 
-          }.bind(this));
-
-        }.bind(this);
-      }
-    }.bind(this));
-
-    if(!isFull) {
-      map.getView().once(['change:center', 'change:resolution'], function(e) {
-        console.log('change');
-        loader.loaded = false;
-        this.imageLoaderProgress = 0;
-        this.$scope.$apply();
+        this.$scope.$apply(function() {
+          loadCounter--;
+          this.loader.progress =
+            (this.dates.length - loadCounter) * 100 / this.dates.length;
+          if(loadCounter <= 0) {
+            loader.loaded = true;
+            loader.loading = false;
+          }
+        }.bind(this));
       }.bind(this));
-    }
+    }.bind(this));
   };
 
   gn.TimesliderController['$inject'] = [
@@ -286,4 +233,23 @@
 
   module.service('wmstService', gn.AppWmstService);
 
+
+  function getDataUri(url, callback) {
+    var image = new Image();
+
+    image.onload = function () {
+      var canvas = document.createElement('canvas');
+      canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+      canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+
+      canvas.getContext('2d').drawImage(this, 0, 0);
+
+      // ... or get as Data URI
+      callback(canvas.toDataURL('image/png'));
+    };
+    image.setAttribute('crossOrigin', 'anonymous');
+    image.src = url;
+  }
+
 })();
+
