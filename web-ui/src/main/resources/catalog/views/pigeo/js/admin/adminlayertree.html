@@ -1,5 +1,5 @@
 <!--folder-->
-<a ng-if="layertreeCtrl.isRoot || layertreeCtrl.node.type == 'folder'"
+<a ng-if="!layertreeCtrl.isRoot && layertreeCtrl.node.type == 'folder'"
    data-target="#catalog-{{::layertreeCtrl.uid}}"
    data-toggle="collapse"
    data-ng-class="{active : layertreeCtrl.node.id == activeLayer.id}"

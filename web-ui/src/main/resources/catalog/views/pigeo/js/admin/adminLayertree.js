@@ -20,22 +20,7 @@ if(!goog) {
       restrict: 'A',
       scope: true,
       templateUrl: '../../catalog/views/pigeo/js/admin/adminlayertree.html',
-      controller: 'AdminLayertreeController',
-      compile:
-          function(tElement, tAttrs) {
-            var contents = tElement.contents().remove();
-            var compiledContents;
-            return (
-                function(scope, iElement, iAttrs) {
-                  if (!compiledContents) {
-                    compiledContents = $compile(contents);
-                  }
-                  compiledContents(scope,
-                      function(clone) {
-                        iElement.append(clone);
-                      });
-                });
-          }
+      controller: 'AdminLayertreeController'
     };
   };
 

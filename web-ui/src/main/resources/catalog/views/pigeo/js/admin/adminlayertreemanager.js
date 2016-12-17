@@ -99,10 +99,12 @@
        * @param force
        */
       $scope.saveLayertree = function(force) {
-        var simpleTree = angular.copy($scope.tree);
-        var xml = layerTreeService.getTreeAsXml(simpleTree);
 
-        $http.post('pigeo.layertree.admin.set', xml,  {
+        var simpleTree = angular.copy($scope.tree);
+        var xml = layerTreeService.getTreeAsXml(simpleTree,
+          moment(new Date()).format());
+
+        $http.post('pigeo.layertree.admin.set_force', xml,  {
           headers: {'Content-type': 'application/xml'}
         }).then(
           function(response) {

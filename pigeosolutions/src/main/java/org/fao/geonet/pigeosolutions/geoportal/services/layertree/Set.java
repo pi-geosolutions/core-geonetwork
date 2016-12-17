@@ -182,29 +182,46 @@ public class Set implements Service {
                 pstmt.setInt(1, Integer.parseInt(nodeid));
                 rs = pstmt.executeQuery();
                 String dbchangedate = null;
+                int rowCount = 0;
                 while (rs.next()) {
                     dbchangedate = rs.getString("lastchanged").toString();
+                    rowCount++;
                 }
                 pstmt.close();
 
-                pstmt = con.prepareStatement("WITH row AS (UPDATE geoportal.nodes SET (parentid, weight, isfolder, json, lastchanged) = (?, ? ,? ,?, (SELECT now()))  WHERE id=? RETURNING lastchanged ) SELECT lastchanged from row ;");
-                pstmt.setInt(1, parentid);
-                pstmt.setInt(2, Integer.parseInt(node.getChildText("weight")));
-                pstmt.setString(3, isfolder);
-                pstmt.setString(4, node.getChildText("jsonextensions"));
-                pstmt.setInt(5, Integer.parseInt(nodeid));
-                pstmt.execute();
-                pstmt.close();
-
-                if (!this.force) {
-                    //we check if database content has changed since last load
-                    //if it does, abort the transaction and warn the user
-                    //dbchangedate = dbchangedate.substring(0, dbchangedate.length()-3);
-                    if (dbchangedate.length() == 26) {
-                        dbchangedate += "+01";
+                // Create a new entry
+                if(rowCount == 0) {
+                    pstmt = con.prepareStatement("WITH row AS (INSERT INTO geoportal.nodes (parentid, weight, isfolder, json) VALUES (?, ?, ?, ?) RETURNING id ) SELECT id from row ;");
+                    pstmt.setInt(1, parentid);
+                    pstmt.setInt(2, Integer.parseInt(node.getChildText("weight")));
+                    pstmt.setString(3, isfolder);
+                    pstmt.setString(4, node.getChildText("jsonextensions"));
+                    rs = pstmt.executeQuery();
+                    while (rs.next()) {
+                        nodeid = rs.getString("id");
                     }
-                    if (dbchangedate != null && dbchangedate.compareTo(lastchanged)!=0) {
-                        return -1; //will be the code to tell there is a changedate  error
+                    System.out.println("recovered node id "+nodeid);
+                }
+                else if(rowCount == 1) {
+                    pstmt = con.prepareStatement("WITH row AS (UPDATE geoportal.nodes SET (parentid, weight, isfolder, json, lastchanged) = (?, ? ,? ,?, (SELECT now()))  WHERE id=? RETURNING lastchanged ) SELECT lastchanged from row ;");
+                    pstmt.setInt(1, parentid);
+                    pstmt.setInt(2, Integer.parseInt(node.getChildText("weight")));
+                    pstmt.setString(3, isfolder);
+                    pstmt.setString(4, node.getChildText("jsonextensions"));
+                    pstmt.setInt(5, Integer.parseInt(nodeid));
+                    pstmt.execute();
+                    pstmt.close();
+
+                    if (!this.force) {
+                        //we check if database content has changed since last load
+                        //if it does, abort the transaction and warn the user
+                        //dbchangedate = dbchangedate.substring(0, dbchangedate.length()-3);
+                        if (dbchangedate.length() == 26) {
+                            dbchangedate += "+01";
+                        }
+                        if (dbchangedate != null && dbchangedate.compareTo(lastchanged)!=0) {
+                            return -1; //will be the code to tell there is a changedate  error
+                        }
                     }
                 }
             }

@@ -15,6 +15,7 @@
 
     var prepareNode = function(node) {
       var json = [];
+      var weight = 0;
       for(var p in node) {
         if(angular.isString(node[p])) {
           node[p] = escapeXml(node[p]);
@@ -26,9 +27,9 @@
         }
       }
       node.jsonextensions = json.join(',');
-      node.weight = 1;
       if(node.children) {
         node.children.forEach(function(n) {
+          n.weight = weight++;
           prepareNode(n);
         });
       }
@@ -61,6 +62,16 @@
         node.children.forEach(function(n) {
           this.setParent(n, node);
         }, this);
+      }
+    };
+
+    this.computeWeight = function(node) {
+      var weight = 0;
+      if(node.children) {
+        node.children.forEach(function(c) {
+          c.weight = weight++;
+          this.computeWeight(c);
+        }.bind(this));
       }
     };
 
