@@ -80,6 +80,11 @@
     if(this.loader.loaded) {
       this.layer.setSource(new ol.source.ImageStatic(this.loader.images[index]));
     }
+    else {
+      this.layer.getSource().updateParams({
+        TIME:  dateISO
+      });
+    }
   };
 
   gn.TimesliderController.prototype.loadImages = function() {
