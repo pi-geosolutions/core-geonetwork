@@ -181,7 +181,7 @@
         </xsl:for-each>
 
         <xsl:for-each
-          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date">
+            select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date">
           <Field name="revisionDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
                  store="true" index="true"/>
           <Field name="createDateMonth"
@@ -197,7 +197,7 @@
         </xsl:for-each>
 
         <xsl:for-each
-          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date">
+            select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date">
           <Field name="createDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
                  store="true" index="true"/>
           <Field name="createDateMonth"
@@ -213,7 +213,7 @@
         </xsl:for-each>
 
         <xsl:for-each
-          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
+            select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
           <Field name="publicationDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
                  store="true" index="true"/>
           <xsl:if test="$useDateAsTemporalExtent">
@@ -263,7 +263,7 @@
         </xsl:for-each>
 
         <xsl:for-each
-          select="gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString">
+            select="gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString">
           <Field name="geoDescCode" string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
@@ -366,21 +366,6 @@
                    store="true" index="true"/>
           </xsl:if>
 
-                <xsl:for-each select="gmd:useLimitation/gco:CharacterString">
-                    <Field name="{$fieldPrefix}UseLimitation"
-                           string="{string(.)}" store="true" index="true"/>
-                </xsl:for-each>
-
-                <xsl:for-each select="gmd:useLimitation/gmx:Anchor[not(string(@xlink:href))]">
-                    <Field name="{$fieldPrefix}UseLimitation"
-                           string="{string(.)}" store="true" index="true"/>
-                </xsl:for-each>
-
-                <xsl:for-each select="gmd:useLimitation/gmx:Anchor[string(@xlink:href)]">
-                    <Field name="{$fieldPrefix}UseLimitation"
-                           string="{concat('link|',string(@xlink:href), '|', string(.))}" store="true" index="true"/>
-                </xsl:for-each>
-            </xsl:for-each>
 
           <xsl:if test="$indexAllKeywordDetails and $thesaurusIdentifier != ''">
             <!-- field thesaurus-{{thesaurusIdentifier}}={{keyword}} allows
@@ -389,9 +374,9 @@
 
             <xsl:for-each select="$listOfKeywords">
               <Field
-                name="thesaurus-{substring-after($thesaurusIdentifier,'geonetwork.thesaurus.')}"
-                string="{string(.)}"
-                store="true" index="true"/>
+                  name="thesaurus-{substring-after($thesaurusIdentifier,'geonetwork.thesaurus.')}"
+                  string="{string(.)}"
+                  store="true" index="true"/>
 
             </xsl:for-each>
           </xsl:if>
@@ -449,7 +434,7 @@
 
       <xsl:for-each select="gmd:pointOfContact">
         <xsl:apply-templates mode="index-contact"
-                             select="gmd:CI_ResponsibleParty">
+                             select="gmd:CI_ResponsibleParty|*[@gco:isoType = 'gmd:CI_ResponsibleParty']">
           <xsl:with-param name="type" select="'resource'"/>
           <xsl:with-param name="fieldPrefix" select="'responsibleParty'"/>
           <xsl:with-param name="position" select="position()"/>
@@ -490,7 +475,7 @@
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
       <xsl:for-each
-        select="gmd:language/gco:CharacterString|gmd:language/gmd:LanguageCode/@codeListValue">
+          select="gmd:language/gco:CharacterString|gmd:language/gmd:LanguageCode/@codeListValue">
         <Field name="datasetLang" string="{string(.)}" store="true" index="true"/>
       </xsl:for-each>
 
@@ -498,7 +483,7 @@
 
       <xsl:for-each select="gmd:spatialResolution/gmd:MD_Resolution">
         <xsl:for-each
-          select="gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer">
+            select="gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer">
           <Field name="denominator" string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
@@ -534,7 +519,7 @@
         <xsl:variable name="fieldPrefix" select="local-name()"/>
 
         <xsl:for-each
-          select="gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue[string(.) != 'otherRestrictions']">
+            select="gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue[string(.) != 'otherRestrictions']">
           <Field name="{$fieldPrefix}AccessConstraints"
                  string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
@@ -547,6 +532,16 @@
         <xsl:for-each select="gmd:useLimitation/gco:CharacterString">
           <Field name="{$fieldPrefix}UseLimitation"
                  string="{string(.)}" store="true" index="true"/>
+        </xsl:for-each>
+
+        <xsl:for-each select="gmd:useLimitation/gmx:Anchor[not(string(@xlink:href))]">
+          <Field name="{$fieldPrefix}UseLimitation"
+                 string="{string(.)}" store="true" index="true"/>
+        </xsl:for-each>
+
+        <xsl:for-each select="gmd:useLimitation/gmx:Anchor[string(@xlink:href)]">
+          <Field name="{$fieldPrefix}UseLimitation"
+                 string="{concat('link|',string(@xlink:href), '|', string(.))}" store="true" index="true"/>
         </xsl:for-each>
       </xsl:for-each>
 
@@ -629,7 +624,7 @@
       </xsl:for-each>
 
       <xsl:for-each
-        select="gmd:graphicOverview/gmd:MD_BrowseGraphic[normalize-space(gmd:fileName/gco:CharacterString) != '']">
+          select="gmd:graphicOverview/gmd:MD_BrowseGraphic[normalize-space(gmd:fileName/gco:CharacterString) != '']">
         <xsl:variable name="fileName" select="gmd:fileName/gco:CharacterString"/>
         <xsl:variable name="fileDescr" select="gmd:fileDescription/gco:CharacterString"/>
         <xsl:variable name="thumbnailType"
@@ -674,7 +669,7 @@
           </xsl:if>
 
           <xsl:if
-            test="string($title)!='' and string($desc)!='' and not(contains($linkage,$download_check))">
+              test="string($title)!='' and string($desc)!='' and not(contains($linkage,$download_check))">
             <Field name="linkage_name_des" string="{string(concat($title, ':::', $desc))}"
                    store="true" index="true"/>
           </xsl:if>
@@ -700,7 +695,7 @@
 
           <!-- Add KML link if WMS -->
           <xsl:if
-            test="starts-with($protocol,'OGC:WMS') and string($linkage)!='' and string($title)!=''">
+              test="starts-with($protocol,'OGC:WMS') and string($linkage)!='' and string($title)!=''">
             <!-- FIXME : relative path -->
             <Field name="link" string="{concat($title, '|', $desc, '|',
                                                 '../../srv/en/google.kml?uuid=', /gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString, '&amp;layers=', $title,
@@ -777,7 +772,7 @@
       </xsl:for-each>
 
       <xsl:for-each
-        select="//gmd:specification/*/gmd:date/*/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue">
+          select="//gmd:specification/*/gmd:date/*/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue">
         <Field name="specificationDateType" string="{string(.)}" store="true" index="true"/>
       </xsl:for-each>
     </xsl:for-each>
@@ -936,7 +931,7 @@
     <Field name="anylight" store="false" index="true">
       <xsl:attribute name="string">
         <xsl:for-each
-          select="$identification/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString|
+            select="$identification/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString|
                     $identification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString|
                     $identification/gmd:abstract/gco:CharacterString|
                     $identification/gmd:credit/gco:CharacterString|
@@ -962,7 +957,7 @@
   </xsl:template>
 
 
-  <xsl:template mode="index-contact" match="gmd:CI_ResponsibleParty">
+  <xsl:template mode="index-contact" match="gmd:CI_ResponsibleParty|*[@gco:isoType = 'gmd:CI_ResponsibleParty']">
     <xsl:param name="type"/>
     <xsl:param name="fieldPrefix"/>
     <xsl:param name="position" select="'0'"/>
@@ -1023,7 +1018,7 @@
     <xsl:param name="inspireThemes"/>
 
     <xsl:value-of
-      select="$inspireThemes/skos:prefLabel[@xml:lang='en' and ../skos:prefLabel = $keyword]/text()"/>
+        select="$inspireThemes/skos:prefLabel[@xml:lang='en' and ../skos:prefLabel = $keyword]/text()"/>
   </xsl:template>
 
   <xsl:template name="getInspireThemeAcronym">

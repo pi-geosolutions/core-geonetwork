@@ -107,7 +107,7 @@
       1,
       map.getView().getProjection()
     );
-    url = image.src_;
+    url = image.getSrc();
 
     var urlA = image.src_.split('?');
     var params = this.gnUrlUtils.parseKeyValue(urlA[1]);
