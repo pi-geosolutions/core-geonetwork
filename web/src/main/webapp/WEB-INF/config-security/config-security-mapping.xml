@@ -923,6 +923,7 @@
           <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/pigeo.animations.list!?.*" access="permitAll"/>
           <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/pigeo.animations.listfiles!?.*" access="permitAll"/>
           <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/pigeo.animations.getimage!?.*" access="permitAll"/>
+          <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/pigeo.adminunit!?.*" access="permitAll"/>
 
           <sec:intercept-url pattern="/.*" access="denyAll"/>
       </sec:filter-security-metadata-source>

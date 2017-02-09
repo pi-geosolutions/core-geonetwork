@@ -1,0 +1,3029 @@
+<tree>
+  <name>Backup 2016-12-17T13:51:04+01:00</name>
+  <children>
+    <id>2076</id>
+    <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+    <weight>1</weight>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <children>
+      <id>2079</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>
+        "type":"folder","text":"AGRHYMET","qcktip":"","extensions":"","qtip":"","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2080</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2081</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"abn:abn_1a1_lim_adm","layer":"Limites
+          des pays concernés par le Bassin du Niger
+          (ABN)","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Limites
+          des pays concernés par le Bassin du Niger
+          (ABN)","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2086</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"abn:abn_3l1_stations","layer":"Stations
+          hydrométriques avec données
+          2011-2012","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","uuid":"938fadc6-40e3-49e6-9df1-1afa0e52d1bc
+          ","format":"image/png","type":"wms","queryable":"true","text":"Stations
+          hydrométriques avec données
+          2011-2012","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2082</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"abn:abn_3c1_hydro","layer":"Réseau
+          Hydrographique du Bassin du
+          Niger","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","qtip":"","queryable":"true","text":"Réseau
+          Hydrographique du Bassin du
+          Niger","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2083</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"abn:abn_3c2_hydro_prin","layer":"Réseau
+          hydrographique principal du Bassin du
+          Niger","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","qtip":"","queryable":"true","text":"Réseau
+          hydrographique principal du Bassin du
+          Niger","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2084</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"abn:abn_3b1_barrages","layer":"Barrages","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","qtip":"","queryable":"true","text":"Barrages","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2085</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"abn:abn_3l4_stations","layer":"Stations
+          hydrométriques","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","qtip":"","queryable":"true","text":"Stations
+          hydrométriques","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>
+        "type":"folder","text":"ABN","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2077</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2078</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>"type":"wms","text":"Stations
+          synoptiques","opacity":"1","qcktip":"Données quotidiennes transmises à
+          l&apos;OMM (données mises a disposition par l&apos;ACMAD). Données
+          mises a jour tous les jours à
+          9:00GMT.","url":"http://afo.pigeo.fr/geoserver-prod/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"afo:afo_2e1_stations","uuid":"","layer":"Stations
+          synoptiques","qtip":"Données quotidiennes transmises à l&apos;OMM
+          (données mises a disposition par l&apos;ACMAD). Données mises a jour
+          tous les jours à 9:00GMT.","draggable":"true"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>
+        "type":"folder","text":"ACMAD","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <isfolder>n</isfolder>
+    <jsonextensions>"type":"folder","text":"Institutions
+      régionales","qcktip":"","extensions":"","qtip":"","expanded":"true","draggable":"true","opacity":"1"
+    </jsonextensions>
+  </children>
+  <children>
+    <id>1841</id>
+    <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+    <weight>1</weight>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <children>
+      <id>1843</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinAg - Statistiques
+        agricoles","qcktip":"","extensions":"","qtip":"","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2023</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"CAPM - SAP","qcktip":"Service d&apos;Alerte
+        Précoce","extensions":"","qtip":"Service d&apos;Alerte
+        Précoce","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2043</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinCom - SIM
+        A","qcktip":"","extensions":"","qtip":"","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2044</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2045</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "type":"wms","text":"PEM","opacity":"1","qcktip":"affichage des
+          données de
+          SISEAN","url":"http://103.231.76.198:8080/geoserver/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"topp:tblPEM","uuid":"","layer":"PEM","qtip":"affichage
+          des données de SISEAN"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MHA - DGRE","qcktip":"Direction
+        Générale des Ressources en Eau","extensions":"","qtip":"Direction
+        Générale des Ressources en
+        Eau","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2024</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2025</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <children>
+          <id>2031</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <children>
+            <id>2032</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Construction de seuils et
+              petits barrages","opacity":"1","qcktip":"Vous pouvez placer ici
+              vos commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_barrages","uuid":"","layer":"Construction
+              de seuils et petits barrages","qtip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <children>
+            <id>2033</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Construction ou réhabilitation
+              de digues","opacity":"1","qcktip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_digues","uuid":"","layer":"Construction
+              ou réhabilitation de digues","qtip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <children>
+            <id>2034</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Protection des berges des
+              koris","opacity":"1","qcktip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_koris","uuid":"","layer":"Protection
+              des berges des koris","qtip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <children>
+            <id>2035</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Protection des berges des
+              fleuves et rivières","opacity":"1","qcktip":"Vous pouvez placer
+              ici vos commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_berges","uuid":"","layer":"Protection
+              des berges des fleuves et rivières","qtip":"Vous pouvez placer ici
+              vos commentaires au sujet de cette couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <isfolder>n</isfolder>
+          <jsonextensions>"type":"folder","text":"1.2 - Infrastructures de
+            protection contre les
+            inondations","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+          </jsonextensions>
+        </children>
+        <children>
+          <id>2036</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <children>
+            <id>2037</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Réalisation de site maraichers
+              féminins","opacity":"1","qcktip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_maraich","uuid":"","layer":"Réalisation
+              de site maraichers féminins","qtip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <children>
+            <id>2038</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Construction et réhabilitation
+              d&apos;ouvrages de contrôle des
+              mares","opacity":"1","qcktip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_mares","uuid":"","layer":"Construction
+              et réhabilitation d&apos;ouvrages de contrôle des
+              mares","qtip":"Vous pouvez placer ici vos commentaires au sujet de
+              cette couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <isfolder>n</isfolder>
+          <jsonextensions>"type":"folder","text":"1.3 - Réhabilitation des
+            bassins
+            versants","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+          </jsonextensions>
+        </children>
+        <children>
+          <id>2039</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <children>
+            <id>2040</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Soutien Direction des Resources
+              en Eaux","opacity":"1","qcktip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_dgre","uuid":"","layer":"Soutien
+              Direction des Resources en Eaux","qtip":"Vous pouvez placer ici
+              vos commentaires au sujet de cette couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <children>
+            <id>2042</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Soutien Protection
+              Civile","opacity":"1","qcktip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_dgpc","uuid":"","layer":"Soutien
+              Protection Civile","qtip":"Vous pouvez placer ici vos commentaires
+              au sujet de cette couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <children>
+            <id>2041</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Création de brigades d&apos;entretien
+              des périmètres","opacity":"1","qcktip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_perim","uuid":"","layer":"Création
+              de brigades d&apos;entretien des périmètres","qtip":"Vous pouvez
+              placer ici vos commentaires au sujet de cette
+              couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <isfolder>n</isfolder>
+          <jsonextensions>"type":"folder","text":"2.2 - Renforcer le
+            gouvernement
+            central","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+          </jsonextensions>
+        </children>
+        <children>
+          <id>2026</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <children>
+            <id>2027</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Amélioration de l&apos;assainissement
+              urbain","opacity":"1","qcktip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_urbain","uuid":"","layer":"Amélioration
+              de l&apos;assainissement urbain","qtip":"Vous pouvez placer ici
+              vos commentaires au sujet de cette couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <children>
+            <id>2028</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Amélioration de la dynamique du
+              fleuve","opacity":"1","qcktip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_fleuve","uuid":"","layer":"Amélioration
+              de la dynamique du fleuve","qtip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <children>
+            <id>2029</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Réhabilitation / aménagement de
+              routes","opacity":"1","qcktip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_routes","uuid":"","layer":"Réhabilitation
+              / aménagement de routes","qtip":"Vous pouvez placer ici vos
+              commentaires au sujet de cette couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <children>
+            <id>2030</id>
+            <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+            <weight>1</weight>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <group>
+              <show>true</show>
+            </group>
+            <isfolder>n</isfolder>
+            <jsonextensions>"type":"wms","text":"Réhabilitation / aménagement
+              des sites pour les sinistrés","opacity":"1","qcktip":"Vous pouvez
+              placer ici vos commentaires au sujet de cette
+              couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_1c1_sinistres","uuid":"","layer":"Réhabilitation
+              / aménagement des sites pour les sinistrés","qtip":"Vous pouvez
+              placer ici vos commentaires au sujet de cette
+              couche","draggable":"true"
+            </jsonextensions>
+          </children>
+          <isfolder>n</isfolder>
+          <jsonextensions>"type":"folder","text":"1.1 - Infrastructures d&apos;évacuation
+            des eaux de
+            pluie","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+          </jsonextensions>
+        </children>
+        <isfolder>n</isfolder>
+        <jsonextensions>"type":"folder","text":"Projet Gestion des risques et
+          développement
+          urbain","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>
+        "type":"folder","text":"PGRC-DU","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2071</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2072</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ner_7b2_naturels","layer":"Niamey
+          : espaces
+          naturels","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","type":"wms","queryable":"true","text":"Niamey
+          : espaces
+          naturels","TILED":"true","checked":"false","opacity":"1","qcktip":"","extensions":"","uuid":"","qtip":""
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2073</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_7b1_equip","layer":"Niamey
+          : Equipements (écoles, hopitaux, centres sportifs et de
+          loisirs)","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Niamey
+          : Equipements (écoles, hopitaux, centres sportifs et de
+          loisirs)","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinUrb - DU","qcktip":"Direction
+        de l&apos;Urbanisme","extensions":"","qtip":"Direction de l&apos;Urbanisme","expanded":"false","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2046</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MISPDACR -
+        DGPC","qcktip":"Direction Générale de la Protection
+        civile","extensions":"","qtip":"Direction Générale de la Protection
+        civile","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2047</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2048</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","layers":"ne:ne_2h1_pluviometres","layer":"Localisation
+          des installations de mesure de la
+          pluviomètrie","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Localisation
+          des installations de mesure de la
+          pluviomètrie","TILED":"true","checked":"false","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinTrans -
+        DMN","qcktip":"Direction de le Météorologie
+        Nationale","extensions":"","qtip":"Direction de le Météorologie
+        Nationale","expanded":"false","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2049</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinElev - Statistiques
+        pastorales","qcktip":"","extensions":"","qtip":"","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2050</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinEnv -
+        ","qcktip":"","extensions":"","qtip":"","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2051</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2054</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_0_zae","layer":"Zones
+          agro-écologiques","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Zones
+          agro-écologiques","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2053</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_1f_aires_protegees","layer":"Aires
+          protégées","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Aires
+          protégées","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2052</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_1f_forets_classees","layer":"Forêts
+          classées","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Forêts
+          classées","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinEnv -
+        CNEDD","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2055</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinElev - SIM
+        B","qcktip":"","extensions":"","qtip":"","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2056</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinSant -
+        ","qcktip":"","extensions":"","qtip":"","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2057</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinElev - Santé
+        animale","qcktip":"","extensions":"","qtip":"","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2058</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"INS","qcktip":"Institut National
+        des Statistiques","extensions":"","qtip":"Institut National des
+        Statistiques","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2059</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2060</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_1e_gr200","layer":"Tableaux
+          d’assemblage des cartes IGN
+          1/200.000","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Tableaux
+          d’assemblage des cartes IGN
+          1/200.000","TILED":"true","checked":"false","opacity":"1","qcktip":"","extensions":"","uuid":"","qtip":""
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2061</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"abn:abn_1b1_ne_villages","layer":"Localités
+          du Niger
+          (ABN)","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Localités
+          du Niger (ABN)","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2062</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_1c_localites","layer":"Localités
+          fournies par
+          SIGNER","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Localités
+          fournies par
+          SIGNER","TILED":"true","checked":"false","opacity":"1","qcktip":"","extensions":"","uuid":"","qtip":""
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2063</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_1c_cheflieu_dep","layer":"Chefs
+          lieux de
+          département","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Chefs
+          lieux de département","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2064</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"abn:abn_1b2_ne_cantons","layer":"Chefs
+          lieux de cantons
+          (ABN)","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Chefs
+          lieux de cantons (ABN)","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2065</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"abn:abn_1b3_ne_arrond","layer":"Chefs
+          lieux arrondissements
+          (ABN)","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Chefs
+          lieux arrondissements
+          (ABN)","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2066</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"abn:abn_1b4_ne_dep","layer":"Chefs
+          lieux de départements
+          (ABN)","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Chefs
+          lieux de départements
+          (ABN)","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2067</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ner_1b1_pays","layer":"Niger","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","type":"wms","queryable":"true","text":"Niger","TILED":"true","checked":"false","opacity":"1","qcktip":"","extensions":"","uuid":"","qtip":""
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2068</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ner_1b2_regions","layer":"Régions","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Régions","TILED":"true","checked":"false","opacity":"1","qcktip":"","extensions":"","uuid":"","qtip":""
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2069</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ner_1b3_communes","layer":"Communes","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Communes","TILED":"true","checked":"false","opacity":"1","qcktip":"","extensions":"","uuid":"","qtip":""
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"IGN-N","qcktip":"Institut
+        Géographique National du Niger","extensions":"","qtip":"Institut
+        Géographique National du
+        Niger","expanded":"false","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2070</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinInt - DCL","qcktip":"Direction
+        des Collectivités Locales","extensions":"","qtip":"Direction des
+        Collectivités
+        Locales","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2074</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2075</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ner_1d1_routes","layer":"Réseau
+          routier (source
+          DGER)","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","type":"wms","queryable":"true","text":"Réseau
+          routier (source
+          DGER)","TILED":"true","checked":"false","opacity":"1","qcktip":"source
+          : Direction Générale de l&apos;Entretien routier
+          2015","extensions":"","uuid":"","qtip":"source : Direction Générale de
+          l&apos;Entretien routier 2015"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"MinEquip - DR","qcktip":"Direction
+        des Routes","extensions":"","qtip":"Direction des
+        Routes","expanded":"true","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <isfolder>n</isfolder>
+    <jsonextensions>"type":"folder","text":"Institutions
+      nationales","qcktip":"","extensions":"","qtip":"","expanded":"true","draggable":"true","opacity":"1"
+    </jsonextensions>
+  </children>
+  <children>
+    <id>2087</id>
+    <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+    <weight>1</weight>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <group>
+      <show>true</show>
+    </group>
+    <children>
+      <id>2096</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2097</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <children>
+          <id>2098</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>"type":"wms","text":"Debits d&apos;exploitation","opacity":"1","qcktip":"Vous
+            pouvez placer ici vos commentaires au sujet de cette
+            couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_3f1_de","uuid":"2cd78505-d73c-4cf3-acc5-d7b84a86f861","layer":"Debits
+            d&apos;exploitation","qtip":"Vous pouvez placer ici vos commentaires
+            au sujet de cette couche","draggable":"true"
+          </jsonextensions>
+        </children>
+        <children>
+          <id>2099</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>"type":"wms","text":"Niveaux
+            statiques","opacity":"1","qcktip":"Vous pouvez placer ici vos
+            commentaires au sujet de cette
+            couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_3f1_ns","uuid":"2cd78505-d73c-4cf3-acc5-d7b84a86f861","layer":"Niveaux
+            statiques","qtip":"Vous pouvez placer ici vos commentaires au sujet
+            de cette couche","draggable":"true"
+          </jsonextensions>
+        </children>
+        <isfolder>n</isfolder>
+        <jsonextensions>"type":"folder","text":"Etude eaux souterraines
+          Sahel","qcktip":"étude Gramont &amp;
+          Balique","extensions":"","qtip":"étude Gramont &amp;
+          Balique","expanded":"false","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>
+        "type":"folder","text":"BRGM","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2088</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2090</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <children>
+          <id>2091</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>
+            "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_5a_globcover_ras","layer":"Globcover","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Globcover","TILED":"true","checked":"false","opacity":"1"
+          </jsonextensions>
+        </children>
+        <children>
+          <id>2092</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>
+            "nodeType":"gx_layer","draggable":"true","layers":"abn:abn_5a1_ocsol","layer":"Ocupation
+            des sols sur le Bassin du Niger (
+            ABN)","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Ocupation
+            des sols sur le Bassin du Niger (
+            ABN)","TILED":"true","checked":"false","opacity":"1"
+          </jsonextensions>
+        </children>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "text":"Globcover","expanded":"false","type":"folder","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2093</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <children>
+          <id>2094</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>"nodeType":"gx_layer","layers":"fires24","layer":"
+            feux au cours des dernières 24
+            Heures","url":"http://firms.modaps.eosdis.nasa.gov/wms/?","TILED":"false","format":"image/png","type":"wms","queryable":"true","text":"
+            feux au cours des dernières 24
+            Heures","checked":"false","draggable":"true","opacity":"1"
+          </jsonextensions>
+        </children>
+        <children>
+          <id>2095</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>
+            "nodeType":"gx_layer","layers":"global:ml_5b2_fires48","layer":"
+            feux au cours des dernières 48
+            Heures","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","TILED":"false","format":"image/png","type":"wms","queryable":"true","text":"
+            feux au cours des dernières 48
+            Heures","checked":"false","draggable":"true","opacity":"1"
+          </jsonextensions>
+        </children>
+        <isfolder>n</isfolder>
+        <jsonextensions>"text":"FIRMS ( MODIS) : Feux de Brousse repérés au
+          cours des
+          dernières","type":"folder","draggable":"true","opacity":"1","qcktip":"","extensions":"","qtip":""
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2089</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>"type":"wms","text":"Vue nocturne de la
+          planète","opacity":"1","qcktip":"Vous pouvez placer ici vos
+          commentaires au sujet de cette
+          couche","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"global:glo_3a1_night","uuid":"","layer":"Vue
+          nocturne de la planète","qtip":"Vous pouvez placer ici vos
+          commentaires au sujet de cette couche","draggable":"true"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>
+        "type":"folder","text":"NASA","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2100</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2101</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>"type":"wms","text":"Landscan
+          2012","opacity":"1","qcktip":"Densité de population estimée aux heures
+          d&apos;activité
+          humaine","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"afo:afo_1c3_landscan","uuid":"59ae384f-e842-4cf9-a8fe-bb0722745915","layer":"Landscan
+          2012","qtip":"Densité de population estimée aux heures d&apos;activité
+          humaine","draggable":"true"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"type":"folder","text":"Oak Ridge National
+        Laboratory","qcktip":"","expanded":"false","extensions":"","qtip":"","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2102</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2103</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ner_3b1_worldpop15","layer":"Densité
+          de population
+          2015","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","type":"wms","queryable":"true","text":"Densité
+          de population
+          2015","TILED":"true","checked":"false","opacity":"1","qcktip":"","extensions":"","uuid":"","qtip":""
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>
+        "type":"folder","text":"WorldPop","qcktip":"http://www.worldpop.org.uk/","extensions":"","qtip":"http://www.worldpop.org.uk/","expanded":"false","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2104</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2105</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","layers":"afo:afo_2i5_lastrain","layer":"dernier
+          1/4 heure : estimation des mm
+          tombes","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"dernier
+          1/4 heure : estimation des mm
+          tombes","TILED":"true","checked":"false","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2106</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","layers":"afo:afo_2i1_pluvio03h","layer":"dernières
+          3h : estimation des mm
+          tombes","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"dernières
+          3h : estimation des mm
+          tombes","TILED":"true","checked":"false","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2107</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","layers":"afo:afo_2i2_pluvio06h","layer":"dernières
+          6h : estimation des mm
+          tombes","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"dernières
+          6h : estimation des mm
+          tombes","TILED":"true","checked":"false","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2108</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","layers":"afo:afo_2i3_pluvio12h","layer":"dernières
+          12h : estimation des mm
+          tombes","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"dernières
+          12h : estimation des mm
+          tombes","TILED":"true","checked":"false","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2109</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","layers":"afo:afo_2i4_pluvio24h","layer":"dernières
+          24h : estimation des mm
+          tombes","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"dernières
+          24h : estimation des mm
+          tombes","TILED":"true","checked":"false","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"text":"Eumetsat : estimation de
+        pluviométrie","type":"folder","draggable":"true","opacity":"1","expanded":"false"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2110</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2111</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","layers":"afo:afo_3d3_alcom_l0_lim_pluv","layer":"Au
+          cours du jour
+          précédent","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Au
+          cours du jour
+          précédent","TILED":"true","checked":"false","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"text":"Eumetsat : estimation de la quantité d eau tombée
+        par bassin
+        versant","type":"folder","draggable":"true","opacity":"1","qcktip":"","extensions":"","qtip":""
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2112</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2113</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"preview:fl_frequency","layer":"Inondations
+          :
+          Fréquence","url":"http://preview.grid.unep.ch:8080/geoserver/wms?","format":"image/png","type":"wms","queryable":"true","text":"Inondations
+          : Fréquence","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2114</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"preview:fl_physexp","layer":"Inondations
+          : Exposition
+          physique","url":"http://preview.grid.unep.ch:8080/geoserver/wms?","format":"image/png","type":"wms","queryable":"true","text":"Inondations
+          : Exposition physique","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2115</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"preview:fl_ecoexp","layer":"Inondations
+          : Exposition
+          économique","url":"http://preview.grid.unep.ch:8080/geoserver/wms?","format":"image/png","type":"wms","queryable":"true","text":"Inondations
+          : Exposition
+          économique","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2116</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"preview:fl_risk","layer":"Inondations
+          :
+          Risque","url":"http://preview.grid.unep.ch:8080/geoserver/wms?","format":"image/png","type":"wms","queryable":"true","text":"Inondations
+          : Risque","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"text":"UNEP-Dartmouth :
+        inondations","type":"folder","draggable":"true","opacity":"1","qcktip":"","extensions":"","qtip":""
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2117</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2118</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_7a1_niamey_inond_120901","layer":"Inondations
+          à Niamey le 01 Septembre
+          2012","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Inondations
+          à Niamey le 01 Septembre
+          2012","TILED":"true","checked":"false","opacity":"1"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"text":"SERTIT : Inondations de
+        2012","type":"folder","draggable":"true","opacity":"1","expanded":"false","qcktip":"","extensions":"","qtip":""
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2119</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2120</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","layers":"ne:ne_4b_afsys_twi","layer":"Indice
+          topographique d&apos;humidité / Topographic Wetness Index - TWI
+          (source
+          AFSIS)","uuid":"39ab271f-2693-48c0-afc0-f451510ee257","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Indice
+          topographique d&apos;humidité / Topographic Wetness Index - TWI
+          (source
+          AFSIS)","TILED":"true","checked":"false","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2121</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>
+          "nodeType":"gx_layer","layers":"ne:ne_4b_afsys_sca","layer":"Indice d&apos;accumulation
+          / Specific Catchment Area - SCA (source
+          AFSIS)","uuid":"4f6cb3f0-7ff1-4dae-8298-25c7ca6ba39b","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Indice
+          d&apos;accumulation / Specific Catchment Area - SCA (source
+          AFSIS)","TILED":"true","checked":"false","draggable":"true","opacity":"1"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>"text":"Africa Soil Information
+        Service","type":"folder","draggable":"true","opacity":"1","expanded":"false","qcktip":"","extensions":"","qtip":""
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2134</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2135</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <isfolder>n</isfolder>
+        <jsonextensions>"type":"wms","text":"Aptitude aux forages
+          manuels","opacity":"1","qcktip":"étude de Fabio
+          Fussi","url":"http://ne-risk.pigeo.fr/geoserver-prod/ne/wms?","format":"image/png","TILED":"true","queryable":"true","checked":"false","extensions":"","layers":"ne:ner_3e1_apti_for_man","uuid":"","layer":"Aptitude
+          aux forages manuels","qtip":"étude de Fabio Fussi","draggable":"true"
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>
+        "type":"folder","text":"UNICEF","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+      </jsonextensions>
+    </children>
+    <children>
+      <id>2122</id>
+      <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+      <weight>1</weight>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <group>
+        <show>true</show>
+      </group>
+      <children>
+        <id>2128</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <children>
+          <id>2129</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>
+            "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_3d_alcomwwf_l1","layer":"MegaBassins
+            (source FAO-alcom)","uuid":"4f61d982-7840-4002-a491-0e0913e54a79
+            ","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"MegaBassins
+            (source FAO-alcom)","TILED":"true","checked":"false","opacity":"1"
+          </jsonextensions>
+        </children>
+        <children>
+          <id>2130</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>
+            "nodeType":"gx_layer","draggable":"true","layers":"afo:afo_3d3_alcom_l0","layer":"sous-bassins
+            (source FAO-alcom)","uuid":"4f61d982-7840-4002-a491-0e0913e54a79
+            ","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"sous-bassins
+            (source FAO-alcom)","TILED":"true","checked":"false","opacity":"1"
+          </jsonextensions>
+        </children>
+        <isfolder>n</isfolder>
+        <jsonextensions>"text":"bassins versants
+          FAO-Alcom","type":"folder","draggable":"true","opacity":"1","qcktip":"","extensions":"","qtip":""
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2131</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <children>
+          <id>2132</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>
+            "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_3d_hydrobasins_l1","layer":"Bassins
+            majeurs (source
+            FAO)","uuid":"e54e2014-d23b-402b-8e73-c827628d17f4","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Bassins
+            majeurs (source FAO)","TILED":"true","checked":"false","opacity":"1"
+          </jsonextensions>
+        </children>
+        <children>
+          <id>2133</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>
+            "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_3d_hydrobasins","layer":"Bassins
+            (source
+            FAO)","uuid":"e54e2014-d23b-402b-8e73-c827628d17f4","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"Bassins
+            (source FAO)","TILED":"true","checked":"false","opacity":"1"
+          </jsonextensions>
+        </children>
+        <isfolder>n</isfolder>
+        <jsonextensions>"text":"bassins versants
+          FAO","type":"folder","draggable":"true","opacity":"1","qcktip":"","extensions":"","qtip":""
+        </jsonextensions>
+      </children>
+      <children>
+        <id>2123</id>
+        <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+        <weight>1</weight>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <group>
+          <show>true</show>
+        </group>
+        <children>
+          <id>2124</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>
+            "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_3d_h1k_lev1","layer":"H1k-lev1
+            (sourve FAO -
+            USGS)","uuid":"a6113a9b-296d-46f5-af04-b906b0dddddb","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"H1k-lev1
+            (sourve FAO - USGS)","TILED":"true","checked":"false","opacity":"1"
+          </jsonextensions>
+        </children>
+        <children>
+          <id>2125</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>
+            "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_3d_h1k_lev2","layer":"H1k-lev2
+            (sourve FAO -
+            USGS)","uuid":"a6113a9b-296d-46f5-af04-b906b0dddddb","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"H1k-lev2
+            (sourve FAO - USGS)","TILED":"true","checked":"false","opacity":"1"
+          </jsonextensions>
+        </children>
+        <children>
+          <id>2126</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>
+            "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_3d_h1k_lev3","layer":"H1k-lev3
+            (sourve FAO -
+            USGS)","uuid":"a6113a9b-296d-46f5-af04-b906b0dddddb","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"H1k-lev3
+            (sourve FAO - USGS)","TILED":"true","checked":"false","opacity":"1"
+          </jsonextensions>
+        </children>
+        <children>
+          <id>2127</id>
+          <lastchanged>2016-12-17 13:41:54.508734+01</lastchanged>
+          <weight>1</weight>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <group>
+            <show>true</show>
+          </group>
+          <isfolder>n</isfolder>
+          <jsonextensions>
+            "nodeType":"gx_layer","draggable":"true","layers":"ne:ne_3d_h1k_lev6","layer":"H1k-lev6
+            (sourve FAO -
+            USGS)","uuid":"a6113a9b-296d-46f5-af04-b906b0dddddb","url":"http://ne-risk.pigeo.fr/geoserver-prod/wms?","format":"image/png","type":"wms","queryable":"true","text":"H1k-lev6
+            (sourve FAO - USGS)","TILED":"true","checked":"false","opacity":"1"
+          </jsonextensions>
+        </children>
+        <isfolder>n</isfolder>
+        <jsonextensions>"text":"bassins versants FAO -
+          USGS","type":"folder","draggable":"true","opacity":"1","qcktip":"","extensions":"","qtip":""
+        </jsonextensions>
+      </children>
+      <isfolder>n</isfolder>
+      <jsonextensions>
+        "text":"FAO","type":"folder","draggable":"true","opacity":"1","expanded":"false","qcktip":"","extensions":"","qtip":""
+      </jsonextensions>
+    </children>
+    <isfolder>n</isfolder>
+    <jsonextensions>"type":"folder","text":"Autres
+      sources","qcktip":"","extensions":"","qtip":"","expanded":"false","draggable":"true","opacity":"1"
+    </jsonextensions>
+  </children>
+  <isfolder>n</isfolder>
+  <jsonextensions></jsonextensions>
+  <weight>1</weight>
+</tree>
