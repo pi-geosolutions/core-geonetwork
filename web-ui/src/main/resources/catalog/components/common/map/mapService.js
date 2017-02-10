@@ -661,9 +661,11 @@
                 metadata = getCapLayer.MetadataURL[0].OnlineResource;
               }
 
-              var layer = this.createOlWMS(map, {
-                LAYERS: getCapLayer.Name
-              }, {
+              var layerParam = {LAYERS: getCapLayer.Name};
+              if (getCapLayer.version) {
+                layerParam.VERSION = getCapLayer.version;
+              }
+              var layer = this.createOlWMS(map, layerParam, {
                 url: url || getCapLayer.url,
                 label: getCapLayer.Title,
                 attribution: attribution,
@@ -981,7 +983,7 @@
            * @param {boolean} createOnly or add it to the map
            * @param {!Object} md object
            */
-          addWmsFromScratch: function(map, url, name, createOnly, md) {
+          addWmsFromScratch: function(map, url, name, createOnly, md, version) {
             var defer = $q.defer();
             var $this = this;
 
@@ -1002,15 +1004,19 @@
                     name: name,
                     msg: 'layerNotInCap'
                   }, errors = [];
+                  if (version) {
+                    o.version = version;
+                  }
                   //olL = $this.addWmsToMap(map, o);
 
                   if (!angular.isArray(olL.get('errors'))) {
                     olL.set('errors', []);
                   }
-                  var errormsg = $translate.instant('layerNotfoundInCapability', {
-                    layer: name,
-                    url: url
-                  });
+                  var errormsg = $translate.instant(
+                      'layerNotfoundInCapability', {
+                        layer: name,
+                        url: url
+                      });
                   errors.push(errormsg);
                   console.warn(errormsg);
 
@@ -1037,7 +1043,7 @@
                     finishCreation();
                   }
                   else {
-                    $this.feedLayerMd(olL).finally (finishCreation);
+                    $this.feedLayerMd(olL).finally(finishCreation);
                   }
                 }
 
@@ -1552,6 +1558,16 @@
               var process = md && md.getLinksByType(linkGroup, 'OGC:WPS');
               layer.set('processes', process);
             }
+          },
+
+          /**
+           * Return a secured extent that is contained in projection max extent.
+           * @param {Array} extent
+           * @param {Array} proj
+           * @return {ol.Extent} intersected extent
+           */
+          secureExtent: function(extent, proj) {
+            return ol.extent.getIntersection(extent, proj.getExtent());
           }
         };
       }];

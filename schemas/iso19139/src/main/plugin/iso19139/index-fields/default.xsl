@@ -39,6 +39,7 @@
   <xsl:include href="../convert/functions.xsl"/>
   <xsl:include href="../../../xsl/utils-fn.xsl"/>
   <xsl:include href="index-subtemplate-fields.xsl"/>
+  <xsl:include href="inspire-util.xsl" />
 
   <!-- This file defines what parts of the metadata are indexed by Lucene
        Searches can be conducted on indexes defined here.
@@ -181,7 +182,7 @@
         </xsl:for-each>
 
         <xsl:for-each
-            select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date">
+          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date">
           <Field name="revisionDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
                  store="true" index="true"/>
           <Field name="createDateMonth"
@@ -197,7 +198,7 @@
         </xsl:for-each>
 
         <xsl:for-each
-            select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date">
+          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date">
           <Field name="createDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
                  store="true" index="true"/>
           <Field name="createDateMonth"
@@ -213,7 +214,7 @@
         </xsl:for-each>
 
         <xsl:for-each
-            select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
+          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
           <Field name="publicationDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
                  store="true" index="true"/>
           <xsl:if test="$useDateAsTemporalExtent">
@@ -263,7 +264,7 @@
         </xsl:for-each>
 
         <xsl:for-each
-            select="gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString">
+          select="gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString">
           <Field name="geoDescCode" string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
@@ -374,9 +375,9 @@
 
             <xsl:for-each select="$listOfKeywords">
               <Field
-                  name="thesaurus-{substring-after($thesaurusIdentifier,'geonetwork.thesaurus.')}"
-                  string="{string(.)}"
-                  store="true" index="true"/>
+                name="thesaurus-{substring-after($thesaurusIdentifier,'geonetwork.thesaurus.')}"
+                string="{string(.)}"
+                store="true" index="true"/>
 
             </xsl:for-each>
           </xsl:if>
@@ -475,7 +476,7 @@
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
       <xsl:for-each
-          select="gmd:language/gco:CharacterString|gmd:language/gmd:LanguageCode/@codeListValue">
+        select="gmd:language/gco:CharacterString|gmd:language/gmd:LanguageCode/@codeListValue">
         <Field name="datasetLang" string="{string(.)}" store="true" index="true"/>
       </xsl:for-each>
 
@@ -483,7 +484,7 @@
 
       <xsl:for-each select="gmd:spatialResolution/gmd:MD_Resolution">
         <xsl:for-each
-            select="gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer">
+          select="gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer">
           <Field name="denominator" string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
@@ -519,7 +520,7 @@
         <xsl:variable name="fieldPrefix" select="local-name()"/>
 
         <xsl:for-each
-            select="gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue[string(.) != 'otherRestrictions']">
+          select="gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue[string(.) != 'otherRestrictions']">
           <Field name="{$fieldPrefix}AccessConstraints"
                  string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
@@ -530,18 +531,18 @@
         </xsl:for-each>
 
         <xsl:for-each select="gmd:useLimitation/gco:CharacterString">
-          <Field name="{$fieldPrefix}UseLimitation"
-                 string="{string(.)}" store="true" index="true"/>
+            <Field name="{$fieldPrefix}UseLimitation"
+                   string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
         <xsl:for-each select="gmd:useLimitation/gmx:Anchor[not(string(@xlink:href))]">
-          <Field name="{$fieldPrefix}UseLimitation"
-                 string="{string(.)}" store="true" index="true"/>
+            <Field name="{$fieldPrefix}UseLimitation"
+                   string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
         <xsl:for-each select="gmd:useLimitation/gmx:Anchor[string(@xlink:href)]">
-          <Field name="{$fieldPrefix}UseLimitation"
-                 string="{concat('link|',string(@xlink:href), '|', string(.))}" store="true" index="true"/>
+            <Field name="{$fieldPrefix}UseLimitation"
+                   string="{concat('link|',string(@xlink:href), '|', string(.))}" store="true" index="true"/>
         </xsl:for-each>
       </xsl:for-each>
 
@@ -594,6 +595,7 @@
 
       <xsl:for-each select="srv:serviceType/gco:LocalName">
         <Field name="serviceType" string="{string(.)}" store="true" index="true"/>
+        <Field  name="type" string="service-{string(.)}" store="true" index="true"/>
       </xsl:for-each>
 
       <xsl:for-each select="srv:serviceTypeVersion/gco:CharacterString">
@@ -624,7 +626,7 @@
       </xsl:for-each>
 
       <xsl:for-each
-          select="gmd:graphicOverview/gmd:MD_BrowseGraphic[normalize-space(gmd:fileName/gco:CharacterString) != '']">
+        select="gmd:graphicOverview/gmd:MD_BrowseGraphic[normalize-space(gmd:fileName/gco:CharacterString) != '']">
         <xsl:variable name="fileName" select="gmd:fileName/gco:CharacterString"/>
         <xsl:variable name="fileDescr" select="gmd:fileDescription/gco:CharacterString"/>
         <xsl:variable name="thumbnailType"
@@ -669,7 +671,7 @@
           </xsl:if>
 
           <xsl:if
-              test="string($title)!='' and string($desc)!='' and not(contains($linkage,$download_check))">
+            test="string($title)!='' and string($desc)!='' and not(contains($linkage,$download_check))">
             <Field name="linkage_name_des" string="{string(concat($title, ':::', $desc))}"
                    store="true" index="true"/>
           </xsl:if>
@@ -695,7 +697,7 @@
 
           <!-- Add KML link if WMS -->
           <xsl:if
-              test="starts-with($protocol,'OGC:WMS') and string($linkage)!='' and string($title)!=''">
+            test="starts-with($protocol,'OGC:WMS') and string($linkage)!='' and string($title)!=''">
             <!-- FIXME : relative path -->
             <Field name="link" string="{concat($title, '|', $desc, '|',
                                                 '../../srv/en/google.kml?uuid=', /gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString, '&amp;layers=', $title,
@@ -772,7 +774,7 @@
       </xsl:for-each>
 
       <xsl:for-each
-          select="//gmd:specification/*/gmd:date/*/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue">
+        select="//gmd:specification/*/gmd:date/*/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue">
         <Field name="specificationDateType" string="{string(.)}" store="true" index="true"/>
       </xsl:for-each>
     </xsl:for-each>
@@ -889,14 +891,18 @@
     <!-- === Reference system info === -->
 
     <xsl:for-each select="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem">
-      <xsl:for-each select="gmd:referenceSystemIdentifier/gmd:RS_Identifier">
-        <xsl:variable name="crs"
-                      select="concat(string(gmd:codeSpace/gco:CharacterString),'::',string(gmd:code/gco:CharacterString))"/>
+        <xsl:for-each select="gmd:referenceSystemIdentifier/gmd:RS_Identifier">
+            <xsl:variable name="crs">
+                <xsl:for-each select="gmd:codeSpace/gco:CharacterString/text() | gmd:code/gco:CharacterString/text()">
+                    <xsl:value-of select="."/>
+                    <xsl:if test="not(position() = last())">::</xsl:if>
+                </xsl:for-each>
+            </xsl:variable>
 
-        <xsl:if test="$crs != '::'">
-          <Field name="crs" string="{$crs}" store="true" index="true"/>
-        </xsl:if>
-      </xsl:for-each>
+            <xsl:if test="$crs != ''">
+                <Field name="crs" string="{$crs}" store="true" index="true"/>
+            </xsl:if>
+        </xsl:for-each>
     </xsl:for-each>
 
     <xsl:for-each select="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem">
@@ -931,7 +937,7 @@
     <Field name="anylight" store="false" index="true">
       <xsl:attribute name="string">
         <xsl:for-each
-            select="$identification/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString|
+          select="$identification/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString|
                     $identification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString|
                     $identification/gmd:abstract/gco:CharacterString|
                     $identification/gmd:credit/gco:CharacterString|
@@ -1009,65 +1015,5 @@
 
   <!-- ========================================================================================= -->
 
-  <!-- inspireThemes is a nodeset consisting of skos:Concept elements -->
-  <!-- each containing a skos:definition and skos:prefLabel for each language -->
-  <!-- This template finds the provided keyword in the skos:prefLabel elements and
-  returns the English one from the same skos:Concept -->
-  <xsl:template name="translateInspireThemeToEnglish">
-    <xsl:param name="keyword"/>
-    <xsl:param name="inspireThemes"/>
 
-    <xsl:value-of
-        select="$inspireThemes/skos:prefLabel[@xml:lang='en' and ../skos:prefLabel = $keyword]/text()"/>
-  </xsl:template>
-
-  <xsl:template name="getInspireThemeAcronym">
-    <xsl:param name="keyword"/>
-
-    <xsl:value-of select="$inspire-theme/skos:altLabel[../skos:prefLabel = $keyword]/text()"/>
-  </xsl:template>
-
-  <xsl:template name="determineInspireAnnex">
-    <xsl:param name="keyword"/>
-    <xsl:param name="inspireThemes"/>
-    <xsl:variable name="englishKeywordMixedCase">
-      <xsl:call-template name="translateInspireThemeToEnglish">
-        <xsl:with-param name="keyword" select="$keyword"/>
-        <xsl:with-param name="inspireThemes" select="$inspireThemes"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="englishKeyword" select="lower-case($englishKeywordMixedCase)"/>
-    <!-- Another option could be to add the annex info in the SKOS thesaurus using something
-    like a related concept. -->
-    <xsl:choose>
-      <!-- annex i -->
-      <xsl:when test="$englishKeyword='coordinate reference systems' or $englishKeyword='geographical grid systems'
-                                    or $englishKeyword='geographical names' or $englishKeyword='administrative units'
-                                    or $englishKeyword='addresses' or $englishKeyword='cadastral parcels'
-                                    or $englishKeyword='transport networks' or $englishKeyword='hydrography'
-                                    or $englishKeyword='protected sites'">
-        <xsl:text>i</xsl:text>
-      </xsl:when>
-      <!-- annex ii -->
-      <xsl:when test="$englishKeyword='elevation' or $englishKeyword='land cover'
-                                    or $englishKeyword='orthoimagery' or $englishKeyword='geology'">
-        <xsl:text>ii</xsl:text>
-      </xsl:when>
-      <!-- annex iii -->
-      <xsl:when test="$englishKeyword='statistical units' or $englishKeyword='buildings'
-                                    or $englishKeyword='soil' or $englishKeyword='land use'
-                                    or $englishKeyword='human health and safety' or $englishKeyword='utility and governmental services'
-                                    or $englishKeyword='environmental monitoring facilities' or $englishKeyword='production and industrial facilities'
-                                    or $englishKeyword='agricultural and aquaculture facilities' or $englishKeyword='population distribution — demography'
-                                    or $englishKeyword='area management/restriction/regulation zones and reporting units'
-                                    or $englishKeyword='natural risk zones' or $englishKeyword='atmospheric conditions'
-                                    or $englishKeyword='meteorological geographical features' or $englishKeyword='oceanographic geographical features'
-                                    or $englishKeyword='sea regions' or $englishKeyword='bio-geographical regions'
-                                    or $englishKeyword='habitats and biotopes' or $englishKeyword='species distribution'
-                                    or $englishKeyword='energy resources' or $englishKeyword='mineral resources'">
-        <xsl:text>iii</xsl:text>
-      </xsl:when>
-      <!-- inspire annex cannot be established: leave empty -->
-    </xsl:choose>
-  </xsl:template>
 </xsl:stylesheet>

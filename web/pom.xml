@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>3.3.0-SNAPSHOT</version>
+    <version>3.2.1-SNAPSHOT</version>
   </parent>
 
 
@@ -652,8 +652,6 @@
             catalog/lib/style/font-awesome/css/**,
             catalog/lib/style/font-awesome/src/**,
             catalog/lib/style/font-awesome/scss/**
-            WEB-INF/data/data/metadata_data/**,
-            doc/**
           </packagingExcludes>
           <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
           <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
@@ -668,6 +666,9 @@
         <configuration>
           <contextXml>${basedir}/jetty-context.xml</contextXml>
           <webAppSourceDirectory>${project.build.directory}/geonetwork</webAppSourceDirectory>
+          <httpConnector>
+            <port>${jetty.port}</port>
+          </httpConnector>
           <webApp>
             <contextPath>/geonetwork</contextPath>
             <descriptor>${project.build.directory}/WEB-INF/web.xml</descriptor>
@@ -686,7 +687,7 @@
             </systemProperty>
           </systemProperties>
           <stopKey>JETTY_TOP</stopKey>
-          <stopPort>8090</stopPort>
+          <stopPort>${jetty.stop.port}</stopPort>
         </configuration>
       </plugin>
     </plugins>

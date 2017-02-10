@@ -102,9 +102,7 @@ public class Handlers {
             if (env.param("debug").toBool()) {
                 minimize = '?minimize=false'
             }
-            String cssLinks = """
-    <link rel="stylesheet" href="../../static/gn_bootstrap.css$minimize"/>
-    <link rel="stylesheet" href="../../static/gn_metadata.css$minimize"/>""";
+            String cssLinks = """""";
 
             if (func.isPDFOutput()) {
                 cssLinks = """<link rel="stylesheet" href="../../static/gn_metadata_pdf.css$minimize"/>"""
