@@ -23,8 +23,10 @@
 
 (function() {
   goog.provide('gn_mdview_service');
+  goog.require('app.linksbtn');
 
   var module = angular.module('gn_mdview_service', [
+    'app.linksbtn'
   ]);
 
   module.value('gnMdViewObj', {

@@ -24,10 +24,14 @@
     "type": "fixed-params",
     "params": []
   }, {
-    "key": "vacuum",
-    "type": "fixed-params",
-    "params": []
-  }, {
+  "key": "vacuum",
+  "type": "fixed-params",
+  "params": []
+}, {
+  "key": "pigeo-fixOnlineResources-process",
+  "type": "fixed-params",
+  "params": []
+}, {
     "key": "massive-content-update",
     "type": "template",
     "template": "../../catalog/templates/admin/tools/batch-replacer.html",
