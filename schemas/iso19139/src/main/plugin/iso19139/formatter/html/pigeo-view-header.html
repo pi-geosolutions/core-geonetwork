@@ -74,7 +74,7 @@
 
       <div class="col-md-3 gn-md-side">
 
-        <section class="links">
+        <section class="links" ng-if="downloads.length > 0 || links.length > 0 ||layers.length > 0">
           <h3 translate="">accessData</h3>
           <div gn-related="md" types="parent|children"
                template="../../catalog/views/sextant/templates/related.html"></div>

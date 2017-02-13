@@ -54,6 +54,8 @@
   goog.require('gn_popup_service');
   goog.require('gn_search_default_directive');
   goog.require('gn_utility');
+  goog.require('app.linksbtn');
+  goog.require('app.mdactionsmenu');
 
 
 
@@ -68,7 +70,9 @@
     'gn_catalog_service',
     'gn_mdactions_service',
     'gn_utility',
-    'gn_mdview'
+    'gn_mdview',
+    'app.mdactionsmenu',
+    'app.linksbtn'
   ]);
 
   module.config(['$LOCALES', 'gnGlobalSettings',
@@ -91,8 +95,11 @@
            $scope.loading = false;
          });
 
-         var url = '../api/records/' + mdId + '/formatters/' + formatter;
-
+         //TODO: move to api
+         // var url = '../api/records/' + mdId + '/formatters/' + formatter;
+         var idParam = isNaN(mdId) ? 'uuid=' + mdId : 'id=' + mdId;
+         var url = 'md.format.xml?xsl=' + formatter + '&' + idParam
+          $scope.isFormatterView = true;
          gnMdFormatter.load(mdId, '.formatter-container', $scope, url);
        }]);
 

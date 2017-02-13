@@ -210,8 +210,9 @@
     'gnSearchSettings',
     '$q',
     'gnMetadataManager',
+    'appGridService',
     function($rootScope, $http, $compile, $sce, gnAlertService,
-             gnSearchSettings, $q, gnMetadataManager) {
+             gnSearchSettings, $q, gnMetadataManager, appGridService) {
 
 
       this.getFormatterUrl = function(fUrl, scope, uuid, opt_url) {
@@ -237,6 +238,7 @@
           // Attach the md to the grid element scope
           if (!scope.md) {
             scope.$parent.md = md;
+            appGridService.feedMd(scope.$parent);
           }
           return url;
         });

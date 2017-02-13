@@ -33,37 +33,9 @@
         <em>{{::md.getContactResources() | characters : 80}}</em>
       </div>
       <div class="md-footer">
+        <app-admin-btn></app-admin-btn>
         <app-links-btn class="pull-right"></app-links-btn>
       </div>
-
-      <!-- <div class="gn-md-details" title="{{(md.abstract || md.defaultAbstract) | striptags}}">
-
-         <div class="flex-row">
-           <div class="pull-right" style="width:5px;height:20px;background-color: {{::md.extentColor}}"></div>
-
-           &lt;!&ndash; Thumbnail &ndash;&gt;
-           <div class="gn-md-thumbnail" ng-class="{'gn-md-emptythumbnail': !md.getThumbnails().small }">
-             <img gn-img-modal="md" class="gn-img-thumbnail" data-ng-src="{{md.getThumbnails().small}}" data-ng-if="md.getThumbnails().small"/>
-           </div>
-
-           <div class="text-justify md-abstract ellipsis">
-             <div>
-               <p>{{::(md.abstract || md.defaultAbstract) | striptags}}</p>
-             </div>
-           </div>
-         </div>
-
-         <div class="flex-row">
-           <p data-ng-if="md.getContactResources()" class="gn-md-source" title="{{::md.getContactResources()}}">
-             <em>{{::md.getContactResources() | characters : 100}}</em>
-           </p>
-         </div>
-         <div class="flex-row">
-           <div class="md-footer">
-             <app-links-btn></app-links-btn>
-           </div>
-         </div>
-       </div>-->
     </div>
   </li>
 </ul>

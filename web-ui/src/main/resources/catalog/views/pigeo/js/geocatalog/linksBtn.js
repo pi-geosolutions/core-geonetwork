@@ -15,6 +15,18 @@
       };
     }
   ]);
+  module.directive('appAdminBtn', [
+    function() {
+      return {
+        restrict: 'E',
+        scope: true,
+        templateUrl: '../../catalog/views/pigeo/js/geocatalog/adminbtn.html',
+        link: function(scope) {
+          scope.user = scope.ctrl.user;
+        }
+      };
+    }
+  ]);
 
   module.directive('appFixMdlinks', [ 'appGridService',
     function(appGridService) {

@@ -1,7 +1,7 @@
 <div class="gn-md-links">
 
   <!--Downloads button-->
-  <div class="btn-group pull-right dropup" ng-if="downloads">
+  <div class="btn-group pull-right"  ng-class="::{dropup: !isFormatterView}" ng-if="downloads">
     <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="{{'download' | translate}}" data-ng-disabled="md['geonet:info'].download == 'false'">
       <span class="fa fa-download"></span>
       <span class="caret"></span>
@@ -16,7 +16,7 @@
   </div>
 
   <!--Layers to map button-->
-  <div class="btn-group pull-right dropup" ng-if="layers.length > 1 ">
+  <div class="btn-group pull-right" ng-class="::{dropup: !isFormatterView}" ng-if="layers.length > 1 && !isFormatterView">
     <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="{{'view' | translate}}" data-ng-disabled="md['geonet:info'].dynamic == 'false'">
       <span class="fa fa-globe"></span>
       <span class="caret"></span>
@@ -38,11 +38,11 @@
     </ul>
   </div>
   <button type="button" class="btn btn-default btn-sm pull-right" data-ng-disabled="md['geonet:info'].dynamic == 'false'"
-          ng-if="layers.length == 1" ng-click="resultviewFns.addMdLayerToMap(layers[0], md)" title="{{'view' | translate}}">
+          ng-if="layers.length == 1 && !isFormatterView" ng-click="resultviewFns.addMdLayerToMap(layers[0], md)" title="{{'view' | translate}}">
     <span class="fa fa-globe"></span>
   </button>
 
-  <div class="btn-group pull-right dropup" ng-if="links.length > 0">
+  <div class="btn-group pull-right"  ng-class="::{dropup: !isFormatterView}" ng-if="links.length > 0">
     <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="{{'links' | translate}}">
       <span class="fa fa-link"></span>
       <span class="caret"></span>

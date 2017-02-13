@@ -23,45 +23,29 @@
 
 package org.fao.geonet.guiservices.metadata;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Sets;
-
-import jeeves.constants.Jeeves;
 import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
-
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.Constants;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.Util;
 import org.fao.geonet.api.records.MetadataUtils;
+import org.fao.geonet.api.records.model.related.RelatedItemType;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.Metadata;
-import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.exceptions.MetadataNotFoundEx;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.RelatedMetadata;
-import org.fao.geonet.kernel.SchemaManager;
-import org.fao.geonet.kernel.schema.AssociatedResource;
-import org.fao.geonet.kernel.schema.AssociatedResourcesSchemaPlugin;
-import org.fao.geonet.kernel.schema.SchemaPlugin;
-import org.fao.geonet.kernel.search.MetaSearcher;
-import org.fao.geonet.kernel.search.SearchManager;
-import org.fao.geonet.kernel.search.SearcherType;
-import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.services.Utils;
-import org.fao.geonet.services.metadata.Show;
-import org.fao.geonet.services.relations.Get;
-import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
-import org.jdom.Content;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -73,13 +57,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Set;
 
 /**
  * Perform a search and return all children metadata record for current record.
@@ -272,7 +253,8 @@ public class GetRelated implements Service, RelatedMetadata {
 
     @Override
     public Element getRelated(ServiceContext context, int iId, String uuid, String type, int from_, int to_, boolean fast_) throws Exception {
-        throw new RuntimeException("Not supported. Use /api/records/<uuid>/related.");
-//        return MetadataUtils.getRelated(context, iId, uuid, type, from_, to_, fast_);
+       // throw new RuntimeException("Not supported. Use /api/records/<uuid>/related.");
+        RelatedItemType[] rType = new RelatedItemType[0];
+       return MetadataUtils.getRelated(context, iId, uuid, rType, from_, to_, fast_);
     }
 }

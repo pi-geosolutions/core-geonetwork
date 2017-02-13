@@ -12,7 +12,8 @@
     return {
       restrict: 'E',
       scope: {
-        map: '=appGeoCatalogMap'
+        map: '=appGeoCatalogMap',
+        user: '<appGeoCatalogUser'
       },
       controller: 'AppGeoCatalogController',
       controllerAs: 'ctrl',

@@ -16,10 +16,10 @@
 
   <div class="geocatalog-content">
     <ul class="nav nav-tabs">
-      <li role="presentation"  class="active">
+      <li role="presentation">
         <a href="" data-target="#appSearchForm" data-toggle="tab"><span translate="">advanced</span></a>
       </li>
-      <li role="presentation">
+      <li role="presentation" class="active">
         <a href="" data-target="#appSearchresults" data-toggle="tab"><span translate="">results</span>&nbsp;<span>({{searchResults.count}})</span> </a>
       </li>
       <button type="submit" data-ng-click="resetSearch()" class="btn btn-default app-reset-btn ng-scope" ng-disabled="!searchObj.canReset" disabled="disabled">
@@ -31,7 +31,7 @@
     <div class="tab-content inner">
 
       <!--Search result -->
-      <div id="appSearchresults" class="tab-pane">
+      <div id="appSearchresults" class="tab-pane active">
         <!--Tool bar-->
         <div class="row gn-toolbar"
              data-ng-show="searchResults.records.length > 0">
@@ -78,7 +78,7 @@
       </div>
 
       <!--Advanced search form -->
-      <div id="appSearchForm" class="tab-pane active">
+      <div id="appSearchForm" class="tab-pane">
 
         <div class="row">
 
