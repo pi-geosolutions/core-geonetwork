@@ -22,7 +22,7 @@
     <a class="delete" ng-click="ctrl.removeLayer(layer);"><span class="fa fa-trash-o"></span></a>
 
     <div class="info-icon pull-right">
-      <span ng-if="::layer.get('md')" title="{{'hasMetadata' | translate}}" class="fa fa-file-text-o fa-fw"></span>
+      <span ng-if="::layer.get('md') || layer.get('metadataUuid')" title="{{'hasMetadata' | translate}}" class="fa fa-file-text-o fa-fw"></span>
       <span ng-if="::layer.get('queryable')" title="{{'queryable' | translate}}" class="fa fa-info fa-fw"></span>
       <span ng-if="::layer.get('queryablepolygon')" title="{{'queryablepolygon' | translate}}" class="fa fa-info-circle fa-fw"></span>
       <span ng-if="::layer.get('time')" title="{{'queryablepolygon' | translate}}" class="fa fa-clock-o fa-fw"></span>
@@ -40,7 +40,7 @@
         </a>
 
         <!--open metadata-->
-        <a href ng-if="::layer.get('md')" app-formatter app-formatter-md="::layer.get('md')" title="{{'openMetadata' | translate}}">
+        <a href ng-if="::layer.get('md') || layer.get('metadataUuid')" app-formatter app-formatter-md="::layer.get('md') || layer.get('metadataUuid')" title="{{'openMetadata' | translate}}">
           <span class="fa fa-file-text-o"></span>&nbsp;
         </a>
 

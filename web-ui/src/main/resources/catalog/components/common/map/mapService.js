@@ -542,7 +542,7 @@
                   options.metadata.split('?')[1]);
               var uuid = params.uuid || params.id;
               if (!uuid) {
-                var res = new RegExp(/\#\/metadata\/(.*)/g).
+                var res = new RegExp(/\#\/metadata|pigeo_simple_view\/(.*)/g).
                     exec(options.metadata);
                 if (angular.isArray(res) && res.length == 2) {
                   uuid = res[1];
