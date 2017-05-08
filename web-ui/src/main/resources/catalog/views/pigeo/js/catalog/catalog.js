@@ -131,6 +131,10 @@
     return layer;
   };
 
+  /**
+   * Do one capabilities for all pigeo layers, then fetch layers info
+   * depending on layer name and if belongs to a workspace or not.
+   */
   gn.AppCatalogController.prototype.updateLayersFromCap = function() {
 
     this.gnOwsCapabilities.getWMSCapabilities(PIGEO_GEOSERVER_URL).then(
@@ -141,13 +145,22 @@
               url = l.get('url'),
               capL;
 
-          if(url.indexOf('http://ne-risk.pigeo.fr/geoserver-prod/wms') >= 0) {
+          // Layers configured to main geoserver, layername contains workspace
+          if(url.indexOf('http://ne-risk.pigeo.fr/geoserver-prod/wms') >= 0 ||
+            url.indexOf('http://ne-risk.pigeo.fr/geoserver-prod/ows') >= 0) {
             capL = this.gnOwsCapabilities.getLayerInfoFromCap(layers, capObj);
           }
           else if(url.indexOf('http://ne-risk.pigeo.fr/geoserver-prod/') >= 0) {
-            var r = layers.match(/:(.*)/);
-            if(r.length == 2) {
-              capL = this.gnOwsCapabilities.getLayerInfoFromCap(r[1], capObj);
+            if(layers.indexOf(':') > 0) {
+              capL = this.gnOwsCapabilities.getLayerInfoFromCap(layers, capObj);
+            }
+            else {
+              var r = layers.match(/geoserver-prod\/(.*)\//);
+              if(r.length == 2) {
+                // TODO can layers have multiple ?
+                capL = this.gnOwsCapabilities.getLayerInfoFromCap(
+                  r[1] + ':' + layers, capObj);
+              }
             }
           }
 
