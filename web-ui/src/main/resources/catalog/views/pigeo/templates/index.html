@@ -29,11 +29,9 @@
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.importOpen"><span class="fa fa-plus"></span><span role="tooltip" translate="">import</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.contextOpen"><i class="icon map"></i><span role="tooltip" translate="">mycontext</span></button>
       <button class="un-tool-btn btn hidden-xs" ngeo-btn ng-model="mainCtrl.printOpen"><i class="fa fa-print"></i><span role="tooltip" translate="">print</span></button>
-      <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.animationOpen"><i class="fa fa-clock-o"></i><span role="tooltip" translate="">animation</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.measureActive"><i class="icon measure"></i><span role="tooltip" translate="">measure</span></button>
       <button class="un-tool-btn btn hidden-xs" ngeo-btn ng-model="mainCtrl.geodashQueryOpen"><i class="fa fa-bar-chart"></i><span role="tooltip" translate="">temporalquery</span></button>
       <button class="un-tool-btn btn" ngeo-btn ng-model="mainCtrl.polygonQueryOpen" data-ng-disabled="!mainCtrl.polygonQueryEnabled"><i class="fa fa-info-circle"></i><span role="tooltip" translate="">polygonquery</span></button>
-      <button class="un-tool-btn btn hidden-xs" ngeo-btn ng-model="mainCtrl.wfsFilterOpen" ><i class="fa fa-filter"></i><span role="tooltip" translate="">wfsfilter</span></button>
       <button class="un-tool-btn btn geocatalog-btn" ngeo-btn ng-model="mainCtrl.geocatalogOpen"><i class="fa fa-book"></i><span role="tooltip" translate="">geocatalog</span></button>
     </div>
 
@@ -152,17 +150,6 @@
         </div>
       </div>
 
-      <!--Animation panel -->
-      <div id="animationpanel" data-ng-show="mainCtrl.animationOpen">
-        <h2 translate>animation</h2>
-        <button class="close-panel" ng-click="mainCtrl.closeSidebar()">
-          ✕
-        </button>
-        <div class="tab-content no-nav">
-          <app-animation app-animation-map="::mainCtrl.map"></app-animation>
-        </div>
-      </div>
-
       <!--geo catalog form & results-->
       <div id="geocatalog" data-ng-show="mainCtrl.geocatalogOpen">
         <h2 translate>geocatalog</h2>
@@ -188,18 +175,6 @@
           </app-query-polygon>
         </div>
       </div>
-
-      <!--WFS Filter panel -->
-      <div id="wfsfilterpanel" data-ng-show="mainCtrl.wfsFilterOpen">
-        <h2 translate>wfsfilter</h2>
-        <button class="close-panel" ng-click="mainCtrl.closeSidebar()">
-          ✕
-        </button>
-        <div class="tab-content no-nav">
-              <div data-gn-data-filter-view="::mainCtrl.map"/>
-        </div>
-      </div>
-
     </div>
   </div>
 
