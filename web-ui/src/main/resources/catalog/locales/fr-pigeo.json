@@ -130,5 +130,10 @@
   "resolution.medium": "Moyenne résolution",
   "resolution.low": "Basse résolution",
   "Load": "Charger",
-  "Loading": "Chargement"
+  "Loading": "Chargement",
+  "organize": "Organiser",
+  "select": "Sélectionner",
+  "addLayer": "+ Ajouter",
+  "legends": "Légendes"
+
 }

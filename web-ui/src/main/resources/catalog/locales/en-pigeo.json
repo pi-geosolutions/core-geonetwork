@@ -129,6 +129,10 @@
     "resolution.medium": "Medium resolution",
     "resolution.low": "Low resolution",
     "Load": "Load",
-    "Loading": "Loading"
+    "Loading": "Loading",
+    "organize": "Organize",
+    "select": "Select",
+    "addLayer": "+ Add",
+    "legends": "Legends"
 
 }

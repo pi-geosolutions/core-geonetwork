@@ -77,7 +77,8 @@
                               app-layermanager-layers="::mainCtrl.selectedLayers">
             </app-layermanager>
             <div class="text-center">
-              <button class="btn btn-default" ng-click="mainCtrl.showTab('a[data-target=#layertree]');" translate>+ Ajouter</button>
+              <button class="btn btn-default" app-alllegends app-alllegends-map="::mainCtrl.map"><i class="fa fa-list"></i>&nbsp;<span translate="">legends</span></button>
+              <button class="btn btn-default" ng-click="mainCtrl.showTab('a[data-target=#layertree]')"><span translate>addLayer</span></button>
             </div>
             <app-layerprocess app-layerprocess-map="::mainCtrl.map" app-layerprocess.layer="" id="layerprocess">
             </app-layerprocess>
