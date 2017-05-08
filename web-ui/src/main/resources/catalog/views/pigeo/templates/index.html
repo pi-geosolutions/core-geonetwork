@@ -125,6 +125,13 @@
           <div id="importkml" class="tab-pane">
             <div gn-kml-import="" gn-kml-import-map="::mainCtrl.map"></div>
           </div>
+          <div class="text-center">
+            <button class="btn btn-default"
+                    ngeo-btn ng-model="mainCtrl.layersOpen"
+                    ng-click="mainCtrl.showTab('a[data-target=#layermanager]')">
+              <span class="icon layers"></span>&nbsp;<span translate="">organize</span>
+            </button>
+          </div>
 
         </div>
       </div>
