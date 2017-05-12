@@ -17,7 +17,7 @@
 
   <!--Layers to map button-->
   <div class="btn-group pull-right" ng-class="::{dropup: !isFormatterView}" ng-if="layers.length > 1 && !isFormatterView">
-    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="{{'view' | translate}}" data-ng-disabled="md['geonet:info'].dynamic == 'false'">
+    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="{{'View' | translate}}" data-ng-disabled="md['geonet:info'].dynamic == 'false'">
       <span class="fa fa-globe"></span>
       <span class="caret"></span>
     </button>
@@ -38,7 +38,7 @@
     </ul>
   </div>
   <button type="button" class="btn btn-default btn-sm pull-right" data-ng-disabled="md['geonet:info'].dynamic == 'false'"
-          ng-if="layers.length == 1 && !isFormatterView" ng-click="resultviewFns.addMdLayerToMap(layers[0], md)" title="{{'view' | translate}}">
+          ng-if="layers.length == 1 && !isFormatterView" ng-click="resultviewFns.addMdLayerToMap(layers[0], md)" title="{{'View' | translate}}">
     <span class="fa fa-globe"></span>
   </button>
 

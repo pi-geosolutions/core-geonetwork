@@ -990,6 +990,10 @@
                                         gmd:deliveryPoint|gmd:postalCode|gmd:city|
                                         gmd:administrativeArea|gmd:country)/gco:CharacterString/text(), ', ')"/>
 
+    <xsl:if test="$role = 'author'">
+      <Field name="mdAuthor" string="{string($individualName)}" store="true" index="true"/>
+    </xsl:if>
+
     <Field name="{$fieldPrefix}"
            string="{concat($roleTranslation, '|', $type,'|',
                              $orgName, '|',
