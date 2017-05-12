@@ -20,7 +20,7 @@
       controller: 'AppCatalogController',
       controllerAs: 'catalogCtrl',
       bindToController: true,
-      template: '<div ngeo-layertree="catalogCtrl.tree" ' +
+      template: '<div ngeo-layertree="::catalogCtrl.tree" ' +
       'ngeo-layertree-map="catalogCtrl.map" ' +
       'ngeo-layertree-nodelayer="catalogCtrl.getLayer(node)" ' +
       'class="themes-switcher collapse in"></div>'
@@ -30,7 +30,7 @@
 
   var layerCache_ = {};
   gn.AppCatalogController =
-    function($http, appCatalogUrl, gnMap,
+    function($http, appCatalogUrl, gnMap, $scope,
              gnOwsCapabilities, ngeoDecorateLayer) {
 
       this.gnMap_ = gnMap;
@@ -40,8 +40,59 @@
       $http.get(appCatalogUrl).then(function(catalog) {
         this.tree = catalog.data;
         this.updateLayersFromCap();
+
+        // Apply text filter on the tree
+        $scope.$watch(function() {
+          return this.activeFilter;
+        }.bind(this), function(filter) {
+          if(angular.isDefined(filter)) {
+            this.clearFilterNode_(this.tree);
+            this.filterNode_(this.tree, filter);
+          }
+        }.bind(this));
       }.bind(this));
     };
+
+  /**
+   * Traverse tree and disable filter.
+   * Mark all nodes as visible.
+   * @param {TreeNode} node Node to traverse.
+   * @private
+   */
+  gn.AppCatalogController.prototype.clearFilterNode_ = function(node) {
+    delete node._matchFilter;
+    if(node.children) {
+      node.children.forEach(function(child) {
+        this.clearFilterNode_(child);
+      }.bind(this));
+    }
+  };
+
+  /**
+   * Filter a tree structure. Match filter text and `node.text` property.
+   * All node that match are marked with `node._matchFilter = true`.
+   * If a node match, then all children are visible.
+   *
+   * @param {TreeNode} node Node to traverse.
+   * @param {string} text Filter text.
+   * @returns {boolean}
+   * @private
+   */
+  gn.AppCatalogController.prototype.filterNode_ = function(node, text) {
+    var match = false;
+    if(node.text && node.text.toLowerCase().indexOf(text.toLowerCase()) >= 0) {
+      match = true;
+    }
+    else {
+      if(node.children) {
+        node.children.forEach(function(child) {
+          match = (this.filterNode_(child, text) || match);
+        }.bind(this));
+      }
+    }
+    node._matchFilter = match;
+    return match;
+  };
 
   gn.AppCatalogController.prototype.toggle = function(node) {
     var layer = this.getLayer(node);
@@ -211,6 +262,7 @@
     '$http',
     'appCatalogUrl',
     'gnMap',
+    '$scope',
     'gnOwsCapabilities',
     'ngeoDecorateLayer'
   ];
