@@ -490,7 +490,10 @@
             var options = layerOptions || {};
 
             var source, olLayer;
-            if (viewerSettings.singleTileWMS) {
+            var isTiledWMS = angular.isDefined(options.tiled) ?
+              options.tiled : !viewerSettings.singleTileWMS;
+
+            if (!isTiledWMS) {
               source = new ol.source.ImageWMS({
                 params: layerParams,
                 url: options.url,
@@ -528,9 +531,10 @@
               advanced: options.advanced,
               minResolution: options.minResolution,
               maxResolution: options.maxResolution,
-              cextent: options.extent
+              cextent: options.extent,
+              tiled: isTiledWMS
             };
-            if (viewerSettings.singleTileWMS) {
+            if (!isTiledWMS) {
               olLayer = new ol.layer.Image(layerOptions);
             } else {
               olLayer = new ol.layer.Tile(layerOptions);
@@ -558,7 +562,7 @@
             olLayer.set('errors', []);
 
             var unregisterEventKey = olLayer.getSource().on(
-                (viewerSettings.singleTileWMS) ?
+                (olLayer.getSource() instanceof ol.source.ImageWMS) ?
                 'imageloaderror' : 'tileloaderror',
                 function(tileEvent, target) {
                   var url = tileEvent.tile && tileEvent.tile.getKey ?
