@@ -133,9 +133,16 @@
 
     // Create a wms layer
     if(type == 'wms') {
+      var layerOpts = {
+        label: node.name,
+        url: node.url,
+        metadata: node.metadataUrl
+      };
+      if(angular.isDefined(node.TILED)) {
+        layerOpts.tiled = node.TILED;
+      }
       layer = this.gnMap_.createOlWMS(this.map,
-        {'LAYERS': node.layers},
-        {label: node.name, url: node.url, metadata: node.metadataUrl});
+        {'LAYERS': node.layers}, layerOpts);
     }
 
     else if (type == 'chart') {
@@ -207,7 +214,7 @@
             }
             else {
               var r = layers.match(/geoserver-prod\/(.*)\//);
-              if(r.length == 2) {
+              if(r && r.length == 2) {
                 // TODO can layers have multiple ?
                 capL = this.gnOwsCapabilities.getLayerInfoFromCap(
                   r[1] + ':' + layers, capObj);

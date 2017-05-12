@@ -22,7 +22,12 @@
         }
         node.isfolder = node.type == 'folder' ? 'y' : 'n';
         if(propToKeepAsXml.indexOf(p) < 0) {
-          json.push('"' + p + '":"' + node[p] + '"');
+          if(angular.isString(node[p])) {
+            json.push('"' + p + '":"' + node[p] + '"');
+          }
+          else {
+            json.push('"' + p + '":' + node[p]);
+          }
           delete node[p];
         }
       }
