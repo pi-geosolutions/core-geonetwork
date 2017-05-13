@@ -25,6 +25,7 @@
   goog.require('app.layerloader');
   goog.require('app.layerprocess');
   goog.require('app.legend');
+  goog.require('app.catalog.recenter');
 
 
   var module = angular.module('gn_search_pigeo',[
@@ -49,6 +50,7 @@
     'app.kmz.overlay',
     'app.layerprocess',
     'app.layerloader',
+    'app.catalog.recenter',
     'app.legend'
   ]);
 

@@ -39,7 +39,8 @@
     '$timeout',
     'gnGlobalSettings',
     'gnViewerSettings',
-    function($timeout, gnGlobalSettings, gnViewerSettings) {
+    '$rootScope', // pigeo for recenter
+    function($timeout, gnGlobalSettings, gnViewerSettings, $rootScope) {
       return {
         restrict: 'A',
         require: 'gnLocalisationInput',
@@ -61,6 +62,7 @@
 
             var zoomTo = function(extent, map) {
               map.getView().fit(extent, map.getSize());
+              $rootScope.$broadcast('mapfit');
             };
             this.onClick = function(loc, map) {
               zoomTo(loc.extent, map);

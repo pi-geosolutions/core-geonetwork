@@ -25,7 +25,7 @@
     return 'rgb(' + color.join(',') + ')';
   }
 
-  gn.mdExtentDirective = function(gnMap, appBboxLayer) {
+  gn.mdExtentDirective = function(gnMap, appBboxLayer, $rootScope) {
     return {
       restrict: 'A',
       scope: {
@@ -75,6 +75,7 @@
             map.getView().fit(
                 feat.getGeometry().getExtent(),
                 map.getSize());
+          $rootScope.$broadcast('mapfit');
         });
 
         scope.$on('aftersearch', function() {
@@ -83,6 +84,10 @@
       }
     };
   };
-  module.directive('appMdExtent', ['gnMap', 'appBboxLayer', gn.mdExtentDirective]);
+  module.directive('appMdExtent', [
+    'gnMap',
+    'appBboxLayer',
+    '$rootScope',
+    gn.mdExtentDirective]);
 
 })();
