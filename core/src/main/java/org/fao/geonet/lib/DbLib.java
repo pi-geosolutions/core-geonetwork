@@ -236,7 +236,7 @@ public class DbLib {
 
     private List<String> loadSqlDataFile(ServletContext servletContext, ApplicationContext appContext, Path appPath, Path filePath, String filePrefix)
         throws IOException, SQLException {
-        final DataSource dataSource = appContext.getBean(DataSource.class);
+        final DataSource dataSource = (DataSource)appContext.getBean("jdbcDataSource");
         Connection connection = null;
         try {
             connection = dataSource.getConnection();

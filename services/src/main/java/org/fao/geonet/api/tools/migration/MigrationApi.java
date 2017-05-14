@@ -73,7 +73,7 @@ public class MigrationApi {
             String stepName) throws Exception {
 
         ApplicationContext appContext = ApplicationContextHolder.get();
-        final DataSource dataSource = appContext.getBean(DataSource.class);
+        final DataSource dataSource = (DataSource)appContext.getBean("jdbcDataSource");
         try (Connection connection = dataSource.getConnection()) {
             DatabaseMigrationTask task =
                 (DatabaseMigrationTask) Class.forName(stepName).newInstance();

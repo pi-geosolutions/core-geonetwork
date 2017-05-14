@@ -106,6 +106,8 @@
             });
           }
 
+          // pigeo: remove md extent fit
+
           scope.$watch('resultTemplate', function(templateUrl) {
 
             if (angular.isUndefined(templateUrl)) {

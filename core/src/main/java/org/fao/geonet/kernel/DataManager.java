@@ -594,6 +594,7 @@ public class DataManager implements ApplicationEventPublisherAware {
 
             // get metadata, extracting and indexing any xlinks
             Element md = getXmlSerializer().selectNoXLinkResolver(metadataId, true, false);
+            final ServiceContext serviceContext = getServiceContext();
             if (getXmlSerializer().resolveXLinks()) {
                 List<Attribute> xlinks = Processor.getXLinks(md);
                 if (xlinks.size() > 0) {
@@ -683,26 +684,25 @@ public class DataManager implements ApplicationEventPublisherAware {
                     }
                 }
             }
-            if (logoUUID == null) {
-                logoUUID = source;
+
+            // Group logo are in the harvester folder and contains extension in file name
+            final Path harvesterLogosDir = Resources.locateHarvesterLogosDir(serviceContext);
+            boolean added = false;
+            if (StringUtils.isNotEmpty(logoUUID)) {
+                final Path logoPath = harvesterLogosDir.resolve(logoUUID);
+                if (Files.exists(logoPath)) {
+                    added = true;
+                    moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.LOGO, "/images/harvesting/" + logoPath.getFileName(), true, false));
+                }
             }
 
-            if (logoUUID != null) {
-                final Path logosDir = Resources.locateLogosDir(getServiceContext());
-                final String[] logosExt = {"png", "PNG", "gif", "GIF", "jpg", "JPG", "jpeg", "JPEG", "bmp", "BMP",
-                    "tif", "TIF", "tiff", "TIFF"};
-                boolean added = false;
-                for (String ext : logosExt) {
-                    final Path logoPath = logosDir.resolve(logoUUID + "." + ext);
-                    if (Files.exists(logoPath)) {
-                        added = true;
-                        moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.LOGO, "/images/logos/" + logoPath.getFileName(), true, false));
-                        break;
-                    }
-                }
-
-                if (!added) {
-                    moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.LOGO, "/images/logos/" + logoUUID + ".png", true, false));
+            // If not available, use the local catalog logo
+            if (!added) {
+                logoUUID = source + ".png";
+                final Path logosDir = Resources.locateLogosDir(serviceContext);
+                final Path logoPath = logosDir.resolve(logoUUID);
+                if (Files.exists(logoPath)) {
+                    moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.LOGO, "/images/logos/" + logoUUID, true, false));
                 }
             }
 
@@ -723,7 +723,7 @@ public class DataManager implements ApplicationEventPublisherAware {
                 }
             }
 
-            for (MetadataCategory category : fullMd.getCategories()) {
+            for (MetadataCategory category : fullMd.getMetadataCategories()) {
                 moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.CAT, category.getName(), true, true));
             }
 
@@ -1496,9 +1496,9 @@ public class DataManager implements ApplicationEventPublisherAware {
             .getBean(GroupRepository.class)
             .findOne(Integer.valueOf(groupOwner));
         if (group.getDefaultCategory() != null) {
-            newMetadata.getCategories().add(group.getDefaultCategory());
+            newMetadata.getMetadataCategories().add(group.getDefaultCategory());
         }
-        Collection<MetadataCategory> filteredCategories = Collections2.filter(templateMetadata.getCategories(),
+        Collection<MetadataCategory> filteredCategories = Collections2.filter(templateMetadata.getMetadataCategories(),
             new Predicate<MetadataCategory>() {
                 @Override
                 public boolean apply(@Nullable MetadataCategory input) {
@@ -1506,7 +1506,7 @@ public class DataManager implements ApplicationEventPublisherAware {
                 }
             });
 
-        newMetadata.getCategories().addAll(filteredCategories);
+        newMetadata.getMetadataCategories().addAll(filteredCategories);
 
         int finalId = insertMetadata(context, newMetadata, xml, false, true, true, UpdateDatestamp.YES,
             fullRightsForGroup, true).getId();
@@ -1568,14 +1568,14 @@ public class DataManager implements ApplicationEventPublisherAware {
             if (metadataCategory == null) {
                 throw new IllegalArgumentException("No category found with name: " + category);
             }
-            newMetadata.getCategories().add(metadataCategory);
+            newMetadata.getMetadataCategories().add(metadataCategory);
         } else if (StringUtils.isNotEmpty(groupOwner)) {
             //If the group has a default category, use it
             Group group = getApplicationContext()
                 .getBean(GroupRepository.class)
                 .findOne(Integer.valueOf(groupOwner));
             if (group.getDefaultCategory() != null) {
-                newMetadata.getCategories().add(group.getDefaultCategory());
+                newMetadata.getMetadataCategories().add(group.getDefaultCategory());
             }
         }
 
@@ -2687,8 +2687,8 @@ public class DataManager implements ApplicationEventPublisherAware {
         getMetadataRepository().update(Integer.valueOf(mdId), new Updater<Metadata>() {
             @Override
             public void apply(@Nonnull Metadata entity) {
-                changed[0] = !entity.getCategories().contains(newCategory);
-                entity.getCategories().add(newCategory);
+                changed[0] = !entity.getMetadataCategories().contains(newCategory);
+                entity.getMetadataCategories().add(newCategory);
             }
         });
 
@@ -2707,7 +2707,7 @@ public class DataManager implements ApplicationEventPublisherAware {
      * @throws Exception
      */
     public boolean isCategorySet(final String mdId, final int categId) throws Exception {
-        Set<MetadataCategory> categories = getMetadataRepository().findOne(mdId).getCategories();
+        Set<MetadataCategory> categories = getMetadataRepository().findOne(mdId).getMetadataCategories();
         for (MetadataCategory category : categories) {
             if (category.getId() == categId) {
                 return true;
@@ -2729,10 +2729,10 @@ public class DataManager implements ApplicationEventPublisherAware {
             return;
         }
         boolean changed = false;
-        for (MetadataCategory category : metadata.getCategories()) {
+        for (MetadataCategory category : metadata.getMetadataCategories()) {
             if (category.getId() == categId) {
                 changed = true;
-                metadata.getCategories().remove(category);
+                metadata.getMetadataCategories().remove(category);
                 break;
             }
         }
@@ -2757,7 +2757,7 @@ public class DataManager implements ApplicationEventPublisherAware {
             throw new IllegalArgumentException("No metadata found with id: " + mdId);
         }
 
-        return metadata.getCategories();
+        return metadata.getMetadataCategories();
     }
 
     /**
@@ -2985,7 +2985,7 @@ public class DataManager implements ApplicationEventPublisherAware {
         }
 
 
-        for (MetadataCategory category : metadata.getCategories()) {
+        for (MetadataCategory category : metadata.getMetadataCategories()) {
             addElement(info, Edit.Info.Elem.CATEGORY, category.getName());
         }
 
