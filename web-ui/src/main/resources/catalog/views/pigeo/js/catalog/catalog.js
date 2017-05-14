@@ -123,7 +123,6 @@
       return null;
     }
 
-    node.name = node.text || node.layer;
     layerCacheKey = type + '_' + node['layers'];
     if (layerCacheKey in layerCache_) {
       return layerCache_[layerCacheKey];
@@ -134,7 +133,7 @@
     // Create a wms layer
     if(type == 'wms') {
       var layerOpts = {
-        label: node.name,
+        label: node.text,
         url: node.url,
         metadata: node.metadataUrl
       };
@@ -147,7 +146,7 @@
 
     else if (type == 'chart') {
       layer = new ol.layer.Image({
-        label: node.name,
+        label: node.text,
         layers: node.layers
       });
       this.ngeoDecorateLayer(layer);
