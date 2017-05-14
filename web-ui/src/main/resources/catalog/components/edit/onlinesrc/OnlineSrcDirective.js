@@ -27,6 +27,7 @@
 
   goog.require('ga_print_directive');
   goog.require('gn_utility');
+  goog.require('gn_wfs_service');
 
   /**
    * @ngdoc overview
@@ -43,6 +44,7 @@
    */
   angular.module('gn_onlinesrc_directive', [
     'gn_utility',
+    'gn_wfs_service',
     'blueimp.fileupload',
     'ga_print_directive'
   ])
