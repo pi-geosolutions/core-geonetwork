@@ -14,6 +14,8 @@
 
   .tab-content.no-nav {
     width: calc(@sidebar-width + 300px);
+    max-height: calc(~"100vh - 187px");
+    overflow-y: hidden;
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.4);
   }
   .nav-tabs li > a {
@@ -136,6 +138,11 @@
         display: inline-block;
       }
     }
+  }
+
+  #search-result, #appSearchForm {
+    overflow-y: scroll;
+    max-height: calc(~"100vh - 187px - 145px");;
   }
 
   .gn-resultview {
