@@ -141,13 +141,6 @@
           zoomInTipLabel: 'Zoom avant',
           zoomOutTipLabel: 'Zoom arrière'
         }),
-        new ol.control.ZoomToExtent({
-          extent: this.ui.map.extent,
-          tipLabel: 'Emprise globale',
-          className: 'un-zoom-extent',
-          label:$(
-            '<span class="fa fa-globe"></span>').get(0)}),
-
         new ol.control.FullScreen({
           tipLabel: 'Plein écran',
           className: 'un-full-screen',
@@ -265,6 +258,12 @@
         moment.lang(this.langs[code]);
       }
     }
+  };
+
+  gn.MainController.prototype.zoomToExtent = function() {
+    var map = this.map;
+    map.getView().fit(this.ui.map.extent, map.getSize());
+    this.$scope.$broadcast('mapfit');
   };
 
   module.controller('MainController', gn.MainController);

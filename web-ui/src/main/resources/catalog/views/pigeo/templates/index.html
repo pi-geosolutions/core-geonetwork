@@ -191,6 +191,9 @@
   <div id="map-container" >
     <div ngeo-map="::mainCtrl.map">
     </div>
+    <div class="un-zoom-extent ol-control">
+      <button title="{{'ZoomToMapMaxExtent' | translate}}" ng-click="mainCtrl.zoomToExtent()"><span class="fa fa-globe"></span></button>
+    </div>
   </div>
   <div gn-gfi=""  map="::mainCtrl.map" ></div>
   <gn-features-tables gn-features-tables-map="::mainCtrl.map"></gn-features-tables>
