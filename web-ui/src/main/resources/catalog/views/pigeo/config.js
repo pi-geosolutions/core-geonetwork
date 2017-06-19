@@ -34,7 +34,10 @@ if(!goog) {
               name: 'Pigeo geoserver',
               url: 'http://gm-risk.pigeo.fr/geoserver-prod/ows'
             }, {
-              name: 'Pigeo geoserver tests WMST',
+              name: 'Pigeo geoserver Niger',
+              url: 'http://ne-risk.pigeo.fr/geoserver-prod/ne/ows'
+            }, {
+              name: 'Pigeo geoserver WMS-Time',
               url: 'http://ne-risk.pigeo.fr/geoserver-prod/test_time/ows'
             }],
             wmts: [{

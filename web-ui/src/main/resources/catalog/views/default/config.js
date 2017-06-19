@@ -52,8 +52,25 @@
             gnMap.createLayerForType('osm')
           ];
 
-          viewerSettings.servicesUrl =
-            viewerSettings.mapConfig.listOfServices || {};
+          viewerSettings.servicesUrl = {
+            wms: [{
+              name: 'Pigeo geoserver',
+              url: 'http://gm-risk.pigeo.fr/geoserver-prod/ows'
+            }, {
+              name: 'Pigeo geoserver Niger',
+              url: 'http://ne-risk.pigeo.fr/geoserver-prod/ne/ows'
+            }, {
+              name: 'Pigeo geoserver tests WMST',
+              url: 'http://ne-risk.pigeo.fr/geoserver-prod/test_time/ows'
+            }],
+            wmts: [{
+              name: 'Arcgisonline - Relief ombré',
+              url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/WMTS/1.0.0/WMTSCapabilities.xml?REQUEST=GetCapabilities&service=WMTS'
+            }, {
+              name: 'Arcgisonline - World Imagery',
+              url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/WMTS/1.0.0/WMTSCapabilities.xml?REQUEST=GetCapabilities&service=WMTS'
+            }]
+          };
 
           // WMS settings
           // If 3D mode is activated, single tile WMS mode is
@@ -65,7 +82,7 @@
             // down rendering.
             viewerSettings.cesiumProxy = true;
           } else {
-            viewerSettings.singleTileWMS = true;
+            viewerSettings.singleTileWMS = false;
           }
 
           var bboxStyle = new ol.style.Style({
