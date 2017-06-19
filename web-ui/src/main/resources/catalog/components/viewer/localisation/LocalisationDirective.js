@@ -136,42 +136,44 @@
             //specific pigeo
             var adminDepth = -1;
             var locs;
-            gnViewerSettings.adminunitsPromise.then(function(){
-              locs = gnViewerSettings.adminunits;
-              this.adminUnits = [];
-              angular.forEach(locs, function(value, key) {
-                this.adminUnits.push({
-                  choice: '',
-                  name: key,
-                  lvl: ++adminDepth,
-                  values: value
-                });
-              }.bind(this));
-              this.auLevel = 0;
-            }.bind(this));
-
-            this.filterLowerAdmin_ = function(unit) {
-              if (unit.lvl < adminDepth) {
-                for (var i = unit.lvl+1; i <= adminDepth; i++) {
-                  var au = this.adminUnits[i];
-                  au.values = locs[au.name].filter(function(item) {
-                    return item['up' + (i - unit.lvl)] == unit.id;
+            if(gnViewerSettings.adminunitsPromise) {
+              gnViewerSettings.adminunitsPromise.then(function(){
+                locs = gnViewerSettings.adminunits;
+                this.adminUnits = [];
+                angular.forEach(locs, function(value, key) {
+                  this.adminUnits.push({
+                    choice: '',
+                    name: key,
+                    lvl: ++adminDepth,
+                    values: value
                   });
-                }
-              }
-            };
-
-            this.adminSelect = function(adminUnit) {
-              this.auLevel = adminUnit.lvl+1;
-              this.filterLowerAdmin_(adminUnit);
-              zoomTo(adminUnit.extent, $scope.map);
-              this.adminUnits.some(function(unit) {
-                if(unit.lvl == adminUnit.lvl) {
-                  unit.choice = adminUnit.name;
-                  return true;
-                }
+                }.bind(this));
+                this.auLevel = 0;
               }.bind(this));
-            };
+
+              this.filterLowerAdmin_ = function(unit) {
+                if (unit.lvl < adminDepth) {
+                  for (var i = unit.lvl+1; i <= adminDepth; i++) {
+                    var au = this.adminUnits[i];
+                    au.values = locs[au.name].filter(function(item) {
+                      return item['up' + (i - unit.lvl)] == unit.id;
+                    });
+                  }
+                }
+              };
+
+              this.adminSelect = function(adminUnit) {
+                this.auLevel = adminUnit.lvl+1;
+                this.filterLowerAdmin_(adminUnit);
+                zoomTo(adminUnit.extent, $scope.map);
+                this.adminUnits.some(function(unit) {
+                  if(unit.lvl == adminUnit.lvl) {
+                    unit.choice = adminUnit.name;
+                    return true;
+                  }
+                }.bind(this));
+              };
+            }
             // end specific pigeo
           }],
 

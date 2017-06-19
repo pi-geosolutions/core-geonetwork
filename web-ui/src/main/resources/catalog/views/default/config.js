@@ -24,8 +24,9 @@
 (function() {
 
   goog.provide('gn_search_default_config');
+  goog.require('gn_ncwms');
 
-  var module = angular.module('gn_search_default_config', []);
+  var module = angular.module('gn_search_default_config', ['gn_ncwms']);
 
   module.value('gnTplResultlistLinksbtn',
       '../../catalog/views/default/directives/partials/linksbtn.html');
