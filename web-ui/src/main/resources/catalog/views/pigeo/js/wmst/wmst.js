@@ -101,15 +101,18 @@
     loader.loading = true;
 
     // Get current WMS image URL
+    // fixme: hack ol.js to export ol.image.getImage
+    this.wmsSource.getImage = this.wmsSource.getImage || this.wmsSource.ra;
     var image = this.wmsSource.getImage(
       extent,
       map.getView().getResolution(),
       1,
       map.getView().getProjection()
     );
-    url = image.src_;
+    // fixme: hack ol.js to export image.src_
+    url = image.src_ || image.u;
 
-    var urlA = image.src_.split('?');
+    var urlA = url.split('?');
     var params = this.gnUrlUtils.parseKeyValue(urlA[1]);
 
     // The extent is extended by the gutter
