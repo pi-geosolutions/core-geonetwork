@@ -354,6 +354,28 @@
           </div>
         </div>
       </div>
+
+      <!--Groups privileges-->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <a role="button" translate="">
+            privileges
+          </a>
+        </div>
+        <div class="panel-body">
+          <select multiple="multiple"
+                  id="groupsSelect"
+                  name="groupsSelect"
+                  class="form-control"
+                  data-ng-model="activeLayer.group"
+                  data-ng-options="g.label[lang]|empty:g.name
+                                    for g in groups |
+                                    orderBy:sortByLabel
+                                    track by g.id">
+          </select>
+        </div>
+      </div>
+
     </form>
 
     <div pi-backup-list class="col-md-8" data-ng-if="rightPanel == 'backuplist'">

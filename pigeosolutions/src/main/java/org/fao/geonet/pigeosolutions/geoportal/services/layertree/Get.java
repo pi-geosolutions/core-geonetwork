@@ -117,15 +117,15 @@ public class Get implements Service {
                         String excludes_id = rs.getString("excludes_id");
                         if(excludes_id != null) {
                             String[] excludeIds = rs.getString("excludes_id").split(",");
-                            int index =Arrays.asList(excludeIds).indexOf(group.getId());
+                            int index =Arrays.asList(excludeIds).indexOf(String.valueOf(group.getId()));
                             show = (index < 0); //are listed in exclude the groups for which we want the node NOT to be shown
                         }
                         //so, show is true if the binary Search is negative !
                         groupXML.addContent(new Element("show").setText(String.valueOf(show)));
-                        groupXML.setName("group");
+                        groupXML.addContent(new Element("name").setText(group.getName()));
+                        groupXML.addContent(new Element("id").setText(String.valueOf(group.getId())));
                         groupXML.setName("group");
                         nodeXML.addContent(groupXML);
-
                     }
                 }
                 //load children if there are

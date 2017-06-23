@@ -70,6 +70,21 @@
       }
     };
 
+    this.clearGroup = function(node) {
+      if(node.group && node.group.length) {
+        for(var i=node.group.length-1; i>=0;i--) {
+          if(!node.group[i].show) {
+            node.group.splice(i, 1);
+          }
+        }
+      }
+      if(node.children) {
+        node.children.forEach(function(n) {
+          this.clearGroup(n);
+        }, this);
+      }
+    };
+
     this.computeWeight = function(node) {
       var weight = 0;
       if(node.children) {

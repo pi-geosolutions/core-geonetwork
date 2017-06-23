@@ -91,7 +91,22 @@
       $scope.applyChanges = function() {
         var checked = activeNode.checked;
         angular.extend(activeNode, $scope.activeLayer);
-        activeNode.checked = checked;
+        var groups = [];
+        $scope.groups.forEach(function(group) {
+          var show = activeNode.group.some(function(g) {
+            return g.id == group.id;
+          });
+          groups.push({
+            id: group.id,
+            show: show,
+            name: group.label[$scope.lang] || group.name
+          })
+        });
+
+        activeNode.group = groups;
+        if(angular.isDefined(checked)) {
+          activeNode.checked = checked;
+        }
       };
 
       /**
@@ -135,6 +150,7 @@
         return $http.get(url).then(function(catalog) {
           $scope.tree = catalog.data;
           layerTreeService.setParent($scope.tree);
+          layerTreeService.clearGroup($scope.tree);
           addToLog('layertreeloadsuccess', 'success');
         }, function(response) {
           addToLog('layertreeloaderror', 'danger');
@@ -261,7 +277,7 @@
       };
 
       // Load groups
-      $http.get('admin.group.list@json').success(function(data) {
+      $http.get('../api/groups?withReservedGroup=true').success(function(data) {
         $scope.groups = data !== 'null' ? data : null;
         addToLog('groupsloadsuccess', 'success');
       }).error(function(data) {
