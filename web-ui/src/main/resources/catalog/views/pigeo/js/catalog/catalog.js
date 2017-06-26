@@ -212,7 +212,7 @@
               capL = this.gnOwsCapabilities.getLayerInfoFromCap(layers, capObj);
             }
             else {
-              var r = layers.match(/geoserver-prod\/(.*)\//);
+              var r = url.match(/geoserver-prod\/(.*)\//);
               if(r && r.length == 2) {
                 // TODO can layers have multiple ?
                 capL = this.gnOwsCapabilities.getLayerInfoFromCap(
