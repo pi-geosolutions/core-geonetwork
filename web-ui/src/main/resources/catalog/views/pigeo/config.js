@@ -139,8 +139,7 @@ if(!goog) {
           /** Facets configuration */
           searchSettings.facetsSummaryType = 'details';
 
-          viewerSettings.bingKey = 'AnElW2Zqi4fI-9cYx1LHiQfokQ9GrNzcjOh_' +
-              'p_0hkO1yo78ba8zTLARcLBIf8H6D';
+          viewerSettings.bingKey = 'OJ406UcdTSlR1GU2QjU7~xLtyWnYQdT5nDt2U7hmx0w~Ar0D0SyRddnP8LhelSVgJM5rREa_nMsIvemMoEhRJMD8qDMKEsq-SSBjqxB0pFzs';
 
           viewerSettings.singleTileWMS = false;
 
