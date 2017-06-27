@@ -134,6 +134,10 @@
     "select": "Select",
     "addLayer": "+ Add",
     "legends": "Legends",
-    "mdAuthors": "Authors"
+    "mdAuthors": "Authors",
+    "enableQuery": "Enable polygon query",
+    "pq_layer": "WMS layer to query",
+    "pq_bandnb": "Index of band to use to compute stats",
+    "pq_header": "Header"
 
 }

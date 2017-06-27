@@ -141,7 +141,7 @@
         layerOpts.tiled = node.TILED;
       }
       layer = this.gnMap_.createOlWMS(this.map,
-        {'LAYERS': node.layers}, layerOpts);
+        {'LAYERS': node.layers, 'FORMAT': node.format || 'image/png'}, layerOpts);
     }
 
     else if (type == 'chart') {
@@ -170,6 +170,7 @@
     }
     layer.set('metadataUuid', node.uuid);
     layer.set('queryable', node.queryable);
+
     if(node.pq_rastertype_fields) {
       layer.set('queryablepolygon', {
         pq_bandnb: node.pq_bandnb,

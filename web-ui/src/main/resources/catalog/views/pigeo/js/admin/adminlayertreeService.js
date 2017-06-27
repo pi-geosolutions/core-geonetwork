@@ -11,7 +11,7 @@
     function($translate, $timeout) {
 
     var propToKeepAsXml = ['children', 'id', 'parentid', 'weight', 'isfolder',
-      'lastchanged', 'group', 'legend'];
+      'lastchanged', 'group', 'groups', 'legend'];
 
     var prepareNode = function(node) {
       var json = [];
