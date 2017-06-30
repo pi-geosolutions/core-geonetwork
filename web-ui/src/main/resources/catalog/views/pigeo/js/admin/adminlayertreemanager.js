@@ -225,6 +225,7 @@
       $scope.duplicateNode = function() {
         var parent = activeNode.parent;
         var newNode = angular.copy(activeNode);
+        newNode.parent = parent;
         newNode.id = 'x';
         newNode.text += ' (copy)';
         parent.children.push(newNode);
