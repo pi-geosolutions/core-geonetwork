@@ -168,8 +168,6 @@
         values_dbfield: node.values_dbfield
       });
     }
-    layer.set('metadataUuid', node.uuid);
-    layer.set('queryable', node.queryable);
 
     if(node.pq_rastertype_fields) {
       layer.set('queryablepolygon', {
@@ -181,6 +179,9 @@
       });
 
     }
+
+    layer.set('metadataUuid', node.uuid);
+    layer.set('queryable', node.queryable);
 
     this.gnMap_.feedLayerMd(layer);
 
@@ -200,15 +201,15 @@
         for(var p in layerCache_) {
           var l = layerCache_[p],
               layers = l.getSource().getParams().LAYERS,
-              url = l.get('url'),
-              capL;
+              url = l.get('url');
+          var capL = undefined;
 
           // Layers configured to main geoserver, layername contains workspace
-          if(url.indexOf('http://ne-risk.pigeo.fr/geoserver-prod/wms') >= 0 ||
-            url.indexOf('http://ne-risk.pigeo.fr/geoserver-prod/ows') >= 0) {
+          if(url.indexOf('/geoserver-prod/wms') >= 0 ||
+            url.indexOf('/geoserver-prod/ows') >= 0) {
             capL = this.gnOwsCapabilities.getLayerInfoFromCap(layers, capObj);
           }
-          else if(url.indexOf('http://ne-risk.pigeo.fr/geoserver-prod/') >= 0) {
+          else if(url.indexOf('/geoserver-prod/') >= 0) {
             if(layers.indexOf(':') > 0) {
               capL = this.gnOwsCapabilities.getLayerInfoFromCap(layers, capObj);
             }
