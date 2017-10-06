@@ -23,12 +23,16 @@
 
 package org.fao.geonet.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import jeeves.component.ProfileManager;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
@@ -68,6 +72,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -164,6 +172,35 @@ public final class XslUtil {
 
         return "";
     }
+
+    public static String getJsonSettingValue(String key, String path) {
+        if (key == null) {
+            return "";
+        }
+        try {
+            final ServiceContext serviceContext = ServiceContext.get();
+            if (serviceContext != null) {
+                SettingManager settingsMan = serviceContext.getBean(SettingManager.class);
+                if (settingsMan != null) {
+                    String json = settingsMan.getValue(key);
+
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    Object jsonObj = objectMapper.readValue(json, Object.class);
+
+                    Object value = PropertyUtils.getProperty(jsonObj, path);
+                    if (value != null) {
+                        return value.toString();
+                    } else {
+                        return "";
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 
     /**
      * Check if bean is defined in the context
@@ -652,6 +689,12 @@ public final class XslUtil {
         }
     }
 
+    private static final Random RANDOM = new Random();
+
+    public static String randomId() {
+        return "N" + RANDOM.nextInt(Integer.MAX_VALUE);
+    }
+
     public static String getMax(Object values) {
         String[] strings = values.toString().split(" ");
         String max = "";
@@ -663,5 +706,27 @@ public final class XslUtil {
             }
         }
         return max;
+    }
+
+    private static final Cache<String, Boolean> URL_VALIDATION_CACHE;
+
+    static {
+        URL_VALIDATION_CACHE = CacheBuilder.<String, Boolean>newBuilder().
+                maximumSize(100000).
+                expireAfterAccess(25, TimeUnit.HOURS).
+                build();
+    }
+
+    public static boolean validateURL(final String urlString) throws ExecutionException {
+        return URL_VALIDATION_CACHE.get(urlString, new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                try {
+                    return (Integer.parseInt(getUrlStatus(urlString)) / 100 == 2);
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+        });
     }
 }

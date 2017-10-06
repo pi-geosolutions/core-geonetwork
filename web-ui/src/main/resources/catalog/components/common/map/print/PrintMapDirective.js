@@ -210,7 +210,10 @@
       var layers = $scope.map.getLayers();
       pdfLegendsToDownload = [];
 
-      angular.forEach(layers.getArray(), function(layer) {
+      var sortedZindexLayers = layers.getArray().sort(function(a, b) {
+        return a.getZIndex() > b.getZIndex();
+      });
+      angular.forEach(sortedZindexLayers, function(layer) {
         if (layer.getVisible()) {
           var attribution = layer.attribution;
           if (attribution !== undefined &&
@@ -294,7 +297,7 @@
             resolution >= minResolution) {
           if (src instanceof ol.source.WMTS) {
             encLayer = gnPrint.encoders.layers['WMTS'].call(this,
-                layer, layerConfig);
+                layer, layerConfig, $scope.map);
           } else if (src instanceof ol.source.OSM) {
             encLayer = gnPrint.encoders.layers['OSM'].call(this,
                 layer, layerConfig);
@@ -304,7 +307,7 @@
           } else if (src instanceof ol.source.ImageWMS ||
               src instanceof ol.source.TileWMS) {
             encLayer = gnPrint.encoders.layers['WMS'].call(this,
-                layer, layerConfig);
+                layer, layerConfig, $scope.map);
           } else if (src instanceof ol.source.Vector ||
               src instanceof ol.source.ImageVector) {
             if (src instanceof ol.source.ImageVector) {
@@ -359,13 +362,15 @@
 
             scope.defaultLayout = attrs.layout;
             scope.auto = true;
+            scope.activatedOnce = false;
 
             // Deactivate only if it has been activated once first
             scope.$watch('printActive', function(isActive, old) {
               if (angular.isDefined(isActive) &&
-                  (angular.isDefined(old) && isActive != old)) {
+                  (scope.activatedOnce || isActive)) {
                 if (isActive) {
                   ctrl.activate();
+                  scope.activatedOnce = true;
                 } else {
                   ctrl.deactivate();
                 }

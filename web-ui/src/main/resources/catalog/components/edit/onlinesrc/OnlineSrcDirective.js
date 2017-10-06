@@ -98,6 +98,20 @@
               var loadRelations = function() {
                 gnOnlinesrc.getAllResources()
                     .then(function(data) {
+
+                      // If multilingual, get current lang url to
+                      // diplay the resource in the list (img, link)
+                      // lUrl means localize Url
+                      angular.forEach(data.onlines, function(src) {
+                        src.lUrl = src.url[scope.lang] ||
+                         src.url[gnCurrentEdit.mdLanguage] ||
+                         src.url[Object.keys(src.url)[0]];
+                      });
+                      angular.forEach(data.thumbnails, function(img) {
+                        img.lUrl = img.url[scope.lang] ||
+                         img.url[gnCurrentEdit.mdLanguage] ||
+                         img.url[Object.keys(img.url)[0]];
+                      });
                       scope.relations = data;
                     });
               };
@@ -132,7 +146,7 @@
                     }
                   });
               scope.sortLinks = function(g) {
-                return $filter('gnLocalized')(g);
+                return $filter('gnLocalized')(g.title);
               };
             }
           };
@@ -190,6 +204,8 @@
                 };
                 scope.modelOptions =
                     angular.copy(gnGlobalSettings.modelOptions);
+
+                scope.ctrl = {};
               },
               post: function(scope, element, attrs) {
                 scope.popupid = attrs['gnPopupid'];
@@ -248,12 +264,15 @@
                       icon: 'fa gn-icon-onlinesrc',
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
-                        'protocol': {value: 'WWW:LINK-1.0-http--link'},
+                        'url': {isMultilingual: false},
+                        'protocol': {
+                          value: 'WWW:LINK-1.0-http--link',
+                          isMultilingual: false
+                        },
                         'name': {},
                         'desc': {},
-                        'function': {},
-                        'applicationProfile': {}
+                        'function': {isMultilingual: false},
+                        'applicationProfile': {isMultilingual: false}
                       }
                     }, {
                       label: 'addThumbnail',
@@ -265,10 +284,14 @@
                       fileStoreFilter: '*.{jpg,JPG,png,PNG,gif,GIF}',
                       process: 'thumbnail-add',
                       fields: {
-                        'url': {param: 'thumbnail_url'},
+                        'url': {
+                          param: 'thumbnail_url',
+                          isMultilingual: false
+                        },
                         'name': {param: 'thumbnail_desc'}
                       }
-                    }]
+                    }],
+                    multilingualFields: ['name', 'desc']
                   },
                   'iso19115-3': {
                     display: 'select',
@@ -283,7 +306,7 @@
                       fileStoreFilter: '*.{jpg,JPG,png,PNG,gif,GIF}',
                       process: 'thumbnail-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'name': {param: 'desc'}
                       }
                     }, {
@@ -301,13 +324,15 @@
                       icon: 'fa gn-icon-map',
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'protocol': {
-                          value: 'WWW:LINK-1.0-http--link', hidden: true
+                          value: 'WWW:LINK-1.0-http--link', hidden: true,
+                          isMultilingual: false
                         },
                         'name': {},
                         'desc': {},
-                        'function': {value: 'browsing', hidden: true}
+                        'function': {value: 'browsing', hidden: true,
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineDiscover',
@@ -324,11 +349,13 @@
                       },
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
-                        'protocol': {value: 'OGC:WMS', hidden: true},
+                        'url': {isMultilingual: false},
+                        'protocol': {value: 'OGC:WMS', hidden: true,
+                          isMultilingual: false},
                         'name': {},
                         'desc': {},
-                        'function': {value: 'browsing', hidden: true}
+                        'function': {value: 'browsing', hidden: true,
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineDiscover',
@@ -345,13 +372,16 @@
                       },
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
-                        'protocol': {value: 'OGC:WMS', hidden: true},
+                        'url': {isMultilingual: false},
+                        'protocol': {value: 'OGC:WMS', hidden: true,
+                          isMultilingual: false},
                         'name': {},
                         'desc': {},
-                        'function': {value: 'browsing', hidden: true},
+                        'function': {value: 'browsing', hidden: true,
+                          isMultilingual: false},
                         'applicationProfile': {
-                          value: 'inspire-view', hidden: true
+                          value: 'inspire-view', hidden: true,
+                          isMultilingual: false
                         }
                       }
                     }, {
@@ -369,11 +399,13 @@
                       },
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
-                        'protocol': {value: 'OGC:WMTS', hidden: true},
+                        'url': {isMultilingual: false},
+                        'protocol': {value: 'OGC:WMTS', hidden: true,
+                          isMultilingual: false},
                         'name': {},
                         'desc': {},
-                        'function': {value: 'browsing', hidden: true}
+                        'function': {value: 'browsing', hidden: true,
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineDiscover',
@@ -390,11 +422,13 @@
                       },
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
-                        'protocol': {value: 'ESRI:REST', hidden: true},
+                        'url': {isMultilingual: false},
+                        'protocol': {value: 'ESRI:REST', hidden: true,
+                          isMultilingual: false},
                         'name': {},
                         'desc': {},
-                        'function': {value: 'browsing', hidden: true}
+                        'function': {value: 'browsing', hidden: true,
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineDiscover',
@@ -408,14 +442,17 @@
                       fields: {
                         'url': {},
                         'protocol': {
-                          value: 'WWW:LINK-1.0-http--link', hidden: true
+                          value: 'WWW:LINK-1.0-http--link', hidden: true,
+                          isMultilingual: false
                         },
                         'name': {},
                         'desc': {},
-                        'function': {value: 'browsing', hidden: true},
+                        'function': {value: 'browsing', hidden: true,
+                          isMultilingual: false},
                         'applicationProfile': {
                           value: 'application/vnd.google-earth.kml+xml',
-                          hidden: true
+                          hidden: true,
+                          isMultilingual: false
                         }
                       }
                     }, {
@@ -428,14 +465,15 @@
                       icon: 'fa gn-icon-map',
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'protocol': {
-                          value: 'WWW:LINK-1.0-http--link', hidden: true
+                          value: 'WWW:LINK-1.0-http--link', hidden: true,
+                          isMultilingual: false
                         },
                         'name': {},
                         'desc': {},
-                        'function': {value: 'browsing', hidden: true},
-                        'applicationProfile': 'applicationProfile'
+                        'function': {value: 'browsing', hidden: true,
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineDownload',
@@ -447,13 +485,15 @@
                       icon: 'fa gn-icon-onlinesrc',
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'protocol': {
-                          value: 'WWW:LINK-1.0-http--link', hidden: true
+                          value: 'WWW:LINK-1.0-http--link', hidden: true,
+                          isMultilingual: false
                         },
                         'name': {},
                         'desc': {},
-                        'function': {value: 'download', hidden: true}
+                        'function': {value: 'download', hidden: true,
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineDownload',
@@ -465,16 +505,19 @@
                       icon: 'fa gn-icon-onlinesrc',
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'protocol': {
-                          value: 'WWW:LINK-1.0-http--link', hidden: true
+                          value: 'WWW:LINK-1.0-http--link', hidden: true,
+                          isMultilingual: false
                         },
                         'name': {},
                         'desc': {},
-                        'function': {value: 'download', hidden: true},
+                        'function': {value: 'download', hidden: true,
+                          isMultilingual: false},
                         'applicationProfile': {
                           value: 'application/vnd.google-earth.kml+xml',
-                          hidden: true
+                          hidden: true,
+                          isMultilingual: false
                         }
                       }
                     }, {
@@ -487,13 +530,15 @@
                       icon: 'fa gn-icon-onlinesrc',
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'protocol': {
-                          value: 'WWW:LINK-1.0-http--link', hidden: true
+                          value: 'WWW:LINK-1.0-http--link', hidden: true,
+                          isMultilingual: false
                         },
                         'name': {},
                         'desc': {},
-                        'function': {value: 'download', hidden: true}
+                        'function': {value: 'download', hidden: true,
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineDownload',
@@ -510,11 +555,13 @@
                       },
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
-                        'protocol': {value: 'OGC:WFS', hidden: true},
+                        'url': {isMultilingual: false},
+                        'protocol': {value: 'OGC:WFS', hidden: true,
+                          isMultilingual: false},
                         'name': {},
                         'desc': {},
-                        'function': {value: 'download', hidden: true}
+                        'function': {value: 'download', hidden: true,
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineDownload',
@@ -531,11 +578,13 @@
                       },
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
-                        'protocol': {value: 'OGC:WCS', hidden: true},
+                        'url': {isMultilingual: false},
+                        'protocol': {value: 'OGC:WCS', hidden: true,
+                          isMultilingual: false},
                         'name': {},
                         'desc': {},
-                        'function': {value: 'download', hidden: true}
+                        'function': {value: 'download', hidden: true,
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineDownload',
@@ -552,13 +601,16 @@
                       },
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
-                        'protocol': {value: 'OGC:WFS', hidden: true},
+                        'url': {isMultilingual: false},
+                        'protocol': {value: 'OGC:WFS', hidden: true,
+                          isMultilingual: false},
                         'name': {},
                         'desc': {},
-                        'function': {value: 'download', hidden: true},
+                        'function': {value: 'download', hidden: true,
+                          isMultilingual: false},
                         'applicationProfile': {
-                          value: 'inspire-download', hidden: true
+                          value: 'inspire-download', hidden: true,
+                          isMultilingual: false
                         }
                       }
                     }, {
@@ -571,7 +623,7 @@
                       icon: 'fa fa-table',
                       process: 'fcats-file-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'name': {}
                       }
                     }, {
@@ -584,10 +636,11 @@
                       icon: 'fa fa-table',
                       process: 'dq-report-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'name': {},
                         'desc': {},
-                        'type': {param: 'type', value: 'qualityReport'}
+                        'type': {param: 'type', value: 'qualityReport',
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineUse',
@@ -599,10 +652,11 @@
                       icon: 'fa fa-table',
                       process: 'dq-report-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'name': {},
                         'desc': {},
-                        'type': {param: 'type', value: 'qualitySpecification'}
+                        'type': {param: 'type', value: 'qualitySpecification',
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineUse',
@@ -614,10 +668,11 @@
                       icon: 'fa fa-table',
                       process: 'dq-report-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'name': {},
                         'desc': {},
-                        'type': {param: 'type', value: 'lineage'}
+                        'type': {param: 'type', value: 'lineage',
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineUse',
@@ -630,7 +685,7 @@
                       icon: 'fa fa-table',
                       process: 'legend-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'name': {}
                       }
                     }, {
@@ -644,7 +699,7 @@
                       icon: 'fa fa-table',
                       process: 'legend-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'name': {}
                       }
                     }, {
@@ -658,7 +713,7 @@
                       icon: 'fa fa-table',
                       process: 'legend-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'name': {}
                       }
                       //},{
@@ -692,13 +747,15 @@
                       icon: 'fa gn-icon-onlinesrc',
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'protocol': {
-                          value: 'WWW:LINK-1.0-http--link', hidden: true
+                          value: 'WWW:LINK-1.0-http--link', hidden: true,
+                          isMultilingual: false
                         },
                         'name': {},
                         'desc': {},
-                        'function': {value: 'information', hidden: true}
+                        'function': {value: 'information', hidden: true,
+                          isMultilingual: false}
                       }
                     }, {
                       group: 'onlineMore',
@@ -710,13 +767,15 @@
                       icon: 'fa gn-icon-onlinesrc',
                       process: 'onlinesrc-add',
                       fields: {
-                        'url': {},
+                        'url': {isMultilingual: false},
                         'protocol': {
-                          value: 'WWW:LINK-1.0-http--link', hidden: true
+                          value: 'WWW:LINK-1.0-http--link', hidden: true,
+                          isMultilingual: false
                         },
                         'name': {},
                         'desc': {},
-                        'function': {value: 'information', hidden: true}
+                        'function': {value: 'information', hidden: true,
+                          isMultilingual: false}
                       }
                     }]
                   }
@@ -892,10 +951,21 @@
                     }
                   }
 
+                  var typeConfig = linkToEdit ?
+                      getTypeConfig(linkToEdit) :
+                      scope.config.types[0];
+                  scope.config.multilingualFields = [];
+                  angular.forEach(typeConfig.fields, function(f, k) {
+                    if (f.isMultilingual !== false) {
+                      scope.config.multilingualFields.push(k);
+                    }
+                  });
+
                   initThumbnailMaker();
                   resetForm();
 
                   $(scope.popupid).modal('show');
+
 
                   if (scope.isEditing) {
                     // If the title object contains more than one value,
@@ -908,50 +978,55 @@
 
                     // Create a key which will be sent to XSL processing
                     // for finding which element to edit.
-                    var keysuffix = $filter('gnLocalized')(linkToEdit.title);
+                    var keyName = $filter('gnLocalized')(linkToEdit.title);
+                    var keyUrl = $filter('gnLocalized')(linkToEdit.url);
                     if (scope.isMdMultilingual) {
                       // Key in multilingual mode is
                       // the title in the main language
-                      keysuffix =
-                          linkToEdit.title[Object.keys(scope.mdLangs)[0]];
-                      if (angular.isUndefined(keysuffix)) {
+                      keyName = linkToEdit.title[scope.mdLang];
+                      keyUrl = linkToEdit.url[scope.mdLang];
+                      if (!keyName || ! keyUrl) {
                         console.warn(
                             'Failed to compute key for updating the resource.');
                       }
                     }
-                    scope.editingKey = [linkToEdit.url,
-                                        linkToEdit.protocol,
-                                        keysuffix].join('');
+                    scope.editingKey = [keyUrl, linkToEdit.protocol,
+                      keyName].join('');
 
                     scope.OGCProtocol = checkIsOgc(linkToEdit.protocol);
-
-                    var name = $filter('gnLocalized')(linkToEdit.title),
-                        desc = $filter('gnLocalized')(linkToEdit.description);
 
                     // For multilingual record, build
                     // name and desc based on loc IDs
                     // and no iso3letter code.
                     // If OGC, only take into account, the first element
-                    if (scope.isMdMultilingual && scope.OGCProtocol == null) {
-                      name = {};
-                      desc = {};
-                      $.each(scope.mdLangs, function(key, v) {
-                        name[v] =
-                            (linkToEdit.title && linkToEdit.title[key]) || '';
-                      });
-                      $.each(scope.mdLangs, function(key, v) {
-                        desc[v] =
-                            (linkToEdit.description &&
-                             linkToEdit.description[key]) || '';
-                      });
-                    }
+                    var fields = {
+                      name: 'title',
+                      desc: 'description',
+                      url: 'url'
+                    };
+
+                    angular.forEach(fields, function(value, field) {
+                      if (scope.isFieldMultilingual(field)) {
+                        var e = {};
+                        $.each(scope.mdLangs, function(key, v) {
+                          e[v] =
+                              (linkToEdit[fields[field]] &&
+                              linkToEdit[fields[field]][key]) || '';
+                        });
+                        fields[field] = e;
+                      }
+                      else {
+                        fields[field] =
+                          $filter('gnLocalized')(linkToEdit[fields[field]]);
+                      }
+                    });
 
                     scope.params = {
-                      linkType: getTypeConfig(linkToEdit),
-                      url: linkToEdit.url,
+                      linkType: typeConfig,
+                      url: fields.url,
                       protocol: linkToEdit.protocol,
-                      name: name,
-                      desc: desc,
+                      name: fields.name,
+                      desc: fields.desc,
                       applicationProfile: linkToEdit.applicationProfile,
                       function: linkToEdit.function,
                       selectedLayers: []
@@ -960,9 +1035,10 @@
                       scope.editingKey= null;
                       scope.params.linkType= scope.config.types[0];
                       scope.params.protocol= null;
-                      setParameterValue(scope.params.name, '');
-                      setParameterValue(scope.params.desc, '');
-                    }
+                      scope.params.name= '';
+                      scope.params.desc= '';
+                      initMultilingualFields();
+                    };
                   });
 
                 // mode can be 'url' or 'thumbnailMaker' to init thumbnail panel
@@ -994,14 +1070,30 @@
                   scope.layers = [];
                   scope.OGCProtocol = false;
                   if (scope.params && !scope.isEditing) {
-                    scope.params.name = scope.isMdMultilingual ? {} : '';
-                    scope.params.desc = scope.isMdMultilingual ? {} : '';
+                    scope.params.name = '';
+                    scope.params.desc = '';
+                    initMultilingualFields();
                     scope.params.selectedLayers = [];
                     scope.params.layers = [];
                   }
                 };
 
+                var initMultilingualFields = function() {
+                  scope.config.multilingualFields.forEach(function(f) {
+                    scope.params[f] = {};
+                    setParameterValue(f, '');
+                  });
+                };
 
+
+                /**
+                 * Build the multingual structure if need for the onlinesrc
+                 * param (name, desc, url).
+                 * Struct like {'ger':'', 'eng': ''}
+                 *
+                 * @param {String} param
+                 * @return {*}
+                 */
                 function buildObjectParameter(param) {
                   if (angular.isObject(param)) {
                     var name = [];
@@ -1013,13 +1105,21 @@
                   return param;
                 }
 
-                function setParameterValue(param, value) {
-                  if (scope.isMdMultilingual) {
+                /**
+                 * Set a vlue to a onlinesrc parameter (url, desc, name).
+                 * Value as string if monolingual, else set to each lang.
+                 *
+                 * @param {String} pName name of attribute in `scope.params`
+                 * @param {string} value of the attribute
+                 */
+                function setParameterValue(pName, value) {
+                  var p = scope.params;
+                  if (scope.isFieldMultilingual(pName)) {
                     $.each(scope.mdLangs, function(key, v) {
-                      param[v] = value;
+                      p[pName][v] = value;
                     });
                   } else {
-                    param = value;
+                    p[pName] = value;
                   }
                 }
 
@@ -1030,9 +1130,10 @@
                  *  If it is an URL, we just call a $http.get
                  */
                 scope.addOnlinesrc = function() {
-                  scope.params.name = buildObjectParameter(scope.params.name);
-                  scope.params.desc = buildObjectParameter(scope.params.desc);
+                  scope.config.multilingualFields.forEach(function(f) {
+                    scope.params[f] = buildObjectParameter(scope.params[f]);
 
+                  });
 
                   var processParams = {};
                   angular.forEach(scope.params.linkType.fields,
@@ -1072,15 +1173,20 @@
                  * passed to the layers grid directive.
                  */
                 scope.loadCurrentLink = function(reportError) {
-                  if (angular.isUndefined(scope.params.url) ||
-                      scope.params.url == '') {
+
+                  // If multilingual or not
+                  var url = scope.params.url;
+                  if (angular.isObject(url)) {
+                    url = url[scope.ctrl.urlCurLang];
+                  }
+
+                  if (!url) {
                     return;
                   }
                   if (scope.OGCProtocol) {
                     scope.layers = [];
                     if (scope.OGCProtocol == 'WMS') {
-                      return gnOwsCapabilities.getWMSCapabilities(
-                          scope.params.url)
+                      return gnOwsCapabilities.getWMSCapabilities(url)
                           .then(function(capabilities) {
                             scope.layers = [];
                             scope.isUrlOk = true;
@@ -1093,8 +1199,7 @@
                             scope.isUrlOk = error === 200;
                           });
                     } else if (scope.OGCProtocol == 'WFS') {
-                      return gnWfsService.getCapabilities(
-                          scope.params.url)
+                      return gnWfsService.getCapabilities(url)
                           .then(function(capabilities) {
                             scope.layers = [];
                             scope.isUrlOk = true;
@@ -1113,18 +1218,14 @@
                             scope.isUrlOk = error === 200;
                           });
                     }
-                  } else if (scope.params.url.indexOf('http') === 0) {
-                    var useProxy =
-                        scope.params.url.indexOf(location.hostname) === -1;
-                    var url = useProxy ?
-                        '../../proxy?url=' +
-                        encodeURIComponent(scope.params.url) : scope.params.url;
-                    return $http.get(url).then(function(response) {
+                  } else if (url.indexOf('http') === 0) {
+                    return $http.get(url, {
+                      gnNoProxy: false
+                    }).then(function(response) {
                       scope.isUrlOk = response.status === 200;
                     },
                     function(response) {
-                      // Proxy may return 500 when document is not proxyable
-                      scope.isUrlOk = response.status === 200;
+                      scope.isUrlOk = response.status === 500;
                     });
                   } else {
                     scope.isUrlOk = true;
@@ -1132,7 +1233,8 @@
                 };
 
                 function checkIsOgc(protocol) {
-                  if (protocol && protocol.indexOf('OGC:WMS') >= 0) {
+
+                  if (/OGC:WMS-[0-9].[0-9].[0-9]-http-get-map/.exec(protocol)) {
                     return 'WMS';
                   }
                   else if (protocol && protocol.indexOf('OGC:WFS') >= 0) {
@@ -1166,13 +1268,20 @@
                  * On URL change, reload WMS capabilities
                  * if the protocol is WMS
                  */
-                scope.$watch('params.url', function() {
-                  if (!angular.isUndefined(scope.params.url)) {
+                var updateImageTag = function() {
+                  scope.isImage = false;
+                  var urls = scope.params.url;
+                  var curUrl = angular.isObject(urls) ?
+                      urls[scope.ctrl.urlCurLang] : urls;
+
+                  if (curUrl) {
                     scope.loadCurrentLink();
-                    scope.isImage =
-                        scope.params.url.match(/.*.(png|jpg|gif)$/i);
+                    scope.isImage = curUrl.match(/.*.(png|jpg|gif)$/i);
                   }
-                });
+
+                };
+                scope.$watch('params.url', updateImageTag, true);
+                scope.$watch('ctrl.urlCurLang', updateImageTag, true);
 
                 /**
                  * Concat layer names and title in params names
@@ -1192,10 +1301,18 @@
                           names.push(layer.Name || layer.name);
                           descs.push(layer.Title || layer.title);
                         });
-                    angular.extend(scope.params, {
-                      name: names.join(','),
-                      desc: descs.join(',')
-                    });
+
+                    if (scope.isMdMultilingual) {
+                      var langCode = scope.mdLangs[scope.mdLang];
+                      scope.params.name[langCode] = names.join(',');
+                      scope.params.desc[langCode] = descs.join(',');
+                    }
+                    else {
+                      angular.extend(scope.params, {
+                        name: names.join(','),
+                        desc: descs.join(',')
+                      });
+                    }
                   }
                 });
 
@@ -1205,9 +1322,18 @@
                    */
                 scope.$watch('params.linkType', function(newValue, oldValue) {
                   if (newValue !== oldValue) {
+                    scope.config.multilingualFields = [];
+                    angular.forEach(newValue.fields, function(f, k) {
+                      if (f.isMultilingual !== false) {
+                        scope.config.multilingualFields.push(k);
+                      }
+                    });
+
                     if (!scope.isEditing) {
                       resetForm();
                     }
+
+                    initMultilingualFields();
 
                     if (newValue.sources && newValue.sources.metadataStore) {
                       scope.$broadcast('resetSearch',
@@ -1235,15 +1361,22 @@
                 });
 
                 scope.resource = null;
-                scope.$watch('resource', function() {
-                  if (scope.resource && scope.resource.url) {
-                    scope.params.url = '';
-                    setParameterValue(scope.params.name, '');
-                    $timeout(function() {
-                      scope.params.url = scope.resource.url;
-                      setParameterValue(scope.params.name,
-                          scope.resource.id.split('/').splice(2).join('/'));
-                    }, 100);
+
+                /**
+                 * Update url and name from uploaded resource.
+                 * Triggered on file store selection change.
+                 */
+                scope.$watch('resource', function(rsrc) {
+
+                  if (rsrc && rsrc.url) {
+                    var o = {
+                      name: rsrc.id.split('/').splice(2).join('/'),
+                      url: rsrc.url
+                    };
+                    ['url', 'name'].forEach(function(pName) {
+                      setParameterValue(pName, o[pName]);
+                    });
+                    scope.params.protocol = 'WWW:DOWNLOAD-1.0-http--download';
                   }
                 });
 
@@ -1264,6 +1397,12 @@
                         }
                       }
                     });
+
+                scope.isFieldMultilingual = function(field) {
+                  return scope.isMdMultilingual &&
+                      scope.config.multilingualFields &&
+                      scope.config.multilingualFields.indexOf(field) >= 0;
+                };
               }
             }
           };
@@ -1560,6 +1699,7 @@
             compile: function compile(tElement, tAttrs, transclude) {
               return {
                 pre: function preLink(scope) {
+                  scope.ctrl = {};
                   scope.searchObj = {
                     any: '',
                     defaultParams: {

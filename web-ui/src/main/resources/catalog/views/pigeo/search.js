@@ -4,7 +4,7 @@
 
   goog.require('gn_search');
   goog.require('gn_search_pigeo_config');
-  goog.require('gn_solr');
+  goog.require('gn_index');
   goog.require('gn_featurestable');
   goog.require('app.bglayer');
   goog.require('app.catalog');
@@ -31,7 +31,8 @@
   var module = angular.module('gn_search_pigeo',[
     'gn_search',
     'gn_search_pigeo_config',
-    'gn_solr', 'gn_featurestable',
+    'gn_index',
+    'gn_featurestable',
     'app.bglayer',
     'app.catalog',
     'app.geocatalog',
