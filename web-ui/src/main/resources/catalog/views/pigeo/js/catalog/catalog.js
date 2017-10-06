@@ -39,7 +39,7 @@
 
       $http.get(appCatalogUrl).then(function(catalog) {
         this.tree = catalog.data;
-        this.updateLayersFromCap();
+        this.loadCapPromise = this.updateLayersFromCap();
 
         // Apply text filter on the tree
         $scope.$watch(function() {
@@ -100,6 +100,7 @@
     if (map.getLayers().getArray().indexOf(layer) >= 0) {
       map.removeLayer(layer);
     } else {
+      this.loadLayerMd(layer);
       map.addLayer(layer);
     }
   };
@@ -183,7 +184,7 @@
     layer.set('metadataUuid', node.uuid);
     layer.set('queryable', node.queryable);
 
-    this.gnMap_.feedLayerMd(layer);
+    // this.gnMap_.feedLayerMd(layer);
 
     layerCache_[layerCacheKey] = layer;
 
@@ -196,7 +197,7 @@
    */
   gn.AppCatalogController.prototype.updateLayersFromCap = function() {
 
-    this.gnOwsCapabilities.getWMSCapabilities(PIGEO_GEOSERVER_URL).then(
+    return this.gnOwsCapabilities.getWMSCapabilities(PIGEO_GEOSERVER_URL).then(
       function(capObj) {
         for(var p in layerCache_) {
           var l = layerCache_[p],
@@ -232,6 +233,7 @@
             }
           }
         }
+        return true;
       }.bind(this));
 
     this.gnOwsCapabilities.getWMSCapabilities('http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r-t.cgi?').then(
@@ -255,6 +257,16 @@
         }
       }.bind(this));
 
+  };
+
+  gn.AppCatalogController.prototype.loadLayerMd = function(layer) {
+
+    var md = layer.get('md');
+    if(!md) {
+      this.loadCapPromise.then(function(){
+        this.gnMap_.feedLayerMd(layer);
+      }.bind(this));
+    }
   };
 
   module.controller('AppCatalogController',

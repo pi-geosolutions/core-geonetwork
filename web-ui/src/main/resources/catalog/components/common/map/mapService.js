@@ -618,7 +618,7 @@
             var isTiledWMS = angular.isDefined(options.tiled) ?
               options.tiled : !gnViewerSettings.singleTileWMS;
 
-            if (isTiledWMS) {
+            if (!isTiledWMS) {
               var config = {
                 params: layerParams,
                 url: options.url,
@@ -1809,11 +1809,27 @@
                   layer.set('md', md);
 
                   var mdLinks = md.getLinksByType('#OGC:WMTS',
-                      '#OGC:WMS', '#OGC:WMS-1.1.1-http-get-map');
+                      '#OGC:WMS', 'OGC:WMS-');
 
                   angular.forEach(mdLinks, function(link) {
-                    if (layer.get('url').indexOf(link.url) >= 0 &&
-                        link.name == layer.getSource().getParams().LAYERS) {
+                    // pigeo
+                    var url = link.url;
+                    var name = link.name;
+                    var i = url.indexOf('layers=');
+                    if(i >= 0) {
+                      var res = new RegExp(/layers=(.*)/g).exec(link.url);
+                      if (angular.isArray(res) && res.length == 2) {
+                        name = res[1];
+                        url = link.url.substring(0, i);
+                      }
+                    }
+                    var lNameParts = name.split(':');
+                    var potentialNames = [name];
+                    if(lNameParts) {
+                      potentialNames.push(lNameParts[1]);
+                    }
+                    if (potentialNames.indexOf(
+                      layer.getSource().getParams().LAYERS) >= 0) {
                       this.feedLayerWithRelated(layer, link.group);
                       return;
                     }
@@ -1843,10 +1859,10 @@
 
             // We can bind layer and download/process
             if (md.getLinksByType(linkGroup, '#OGC:WMTS',
-                '#OGC:WMS', '#OGC:WMS-1.1.1-http-get-map').length == 1) {
+                '#OGC:WMS', 'OGC:WMS-').length == 1) {
 
               var downloads = md && md.getLinksByType(linkGroup,
-                  'WWW:DOWNLOAD-1.0-link--download', 'FILE', 'DB',
+                  'WWW:DOWNLOAD-1.0-', 'FILE', 'DB',
                   'WFS', 'WCS', 'COPYFILE');
               layer.set('downloads', downloads);
 

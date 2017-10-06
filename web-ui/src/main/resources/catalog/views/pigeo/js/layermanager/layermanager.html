@@ -23,6 +23,7 @@
 
     <div class="info-icon pull-right">
       <span ng-if="::layer.get('md') || layer.get('metadataUuid')" title="{{'hasMetadata' | translate}}" class="fa fa-file-text-o fa-fw"></span>
+      <span ng-if="::layer.get('downloads')" title="{{'download' | translate}}" class="fa fa-download fa-fw"></span>
       <span ng-if="::layer.get('queryable')" title="{{'queryable' | translate}}" class="fa fa-info fa-fw"></span>
       <span ng-if="::layer.get('queryablepolygon')" title="{{'queryablepolygon' | translate}}" class="fa fa-info-circle fa-fw"></span>
       <span ng-if="::layer.get('time')" title="{{'queryablepolygon' | translate}}" class="fa fa-clock-o fa-fw"></span>
@@ -42,6 +43,11 @@
         <!--open metadata-->
         <a href ng-if="::layer.get('md') || layer.get('metadataUuid')" app-formatter app-formatter-md="::layer.get('md') || layer.get('metadataUuid')" title="{{'openMetadata' | translate}}">
           <span class="fa fa-file-text-o"></span>&nbsp;
+        </a>
+
+        <!--downloads -->
+        <a href ng-if="::layer.get('downloads')" title="{{'download' | translate}}">
+          <span class="fa fa-download"></span>&nbsp;
         </a>
 
         <!--open WFS filter-->

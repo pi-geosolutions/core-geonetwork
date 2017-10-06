@@ -36,7 +36,7 @@
 </div>
 
 <ul id="catalog-{{::layertreeCtrl.uid}}" ng-if="::layertreeCtrl.node.children"
-    ng-class="{collapse: !layertreeCtrl.isRoot, catalog: layertreeCtrl.isRoot}">
+    ng-class="{collapse: !layertreeCtrl.isRoot, catalog: layertreeCtrl.isRoot, mainlevel: layertreeCtrl.depth == 1}">
   <li ng-repeat="node in ::layertreeCtrl.node.children"
       ngeo-layertree="node"
       ngeo-layertree-notroot
