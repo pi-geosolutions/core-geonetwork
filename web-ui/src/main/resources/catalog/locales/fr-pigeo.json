@@ -139,5 +139,7 @@
   "enableQuery": "Activer le polygon query",
   "pq_layer": "Couche WMS à interroger",
   "pq_bandnb": "N° de bande à utiliser pour calculer les stats (entier)",
-  "pq_header": "Entête"
+  "pq_header": "Entête",
+  "administrativeunits": "Unités administratives"
+
 }

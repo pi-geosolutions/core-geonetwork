@@ -230,9 +230,6 @@
                 l.set(prop, tmpLayer.get(prop));
               }
             }
-            if(tmpLayer.get('time')) {
-              console.log(tmpLayer.get('time'));
-            }
           }
         }
       }.bind(this));
@@ -253,9 +250,6 @@
               if(!l.get(prop) && tmpLayer.get(prop)) {
                 l.set(prop, tmpLayer.get(prop));
               }
-            }
-            if(tmpLayer.get('time')) {
-              console.log(tmpLayer.get('time'));
             }
           }
         }

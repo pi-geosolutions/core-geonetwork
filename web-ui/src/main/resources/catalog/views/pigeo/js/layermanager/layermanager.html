@@ -45,7 +45,7 @@
         </a>
 
         <!--open WFS filter-->
-        <a href ng-click="ctrl.processLayer(layer, 'wfsfilter')" title="{{'openWfsFilter' | translate}}">
+        <a href ng-if="::false" ng-click="ctrl.processLayer(layer, 'wfsfilter')" title="{{'openWfsFilter' | translate}}">
           <span class="fa fa-filter"
                 ng-class="{'proccessed-type': layer == ctrl.appLayerprocessService.current.layer && ctrl.appLayerprocessService.current.type == 'wfsfilter'}">
             </span>&nbsp;
