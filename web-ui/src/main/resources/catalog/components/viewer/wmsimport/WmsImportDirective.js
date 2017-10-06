@@ -174,7 +174,9 @@
     'gnAlertService',
     'kmlimportTemplateURL',
     '$translate',
-    function(ngeoDecorateLayer, gnAlertService, kmlimportTemplateURL, $translate) {
+    'kmzService',
+    function(ngeoDecorateLayer, gnAlertService, kmlimportTemplateURL,
+             $translate, kmzService) {
       return {
         restrict: 'A',
         replace: true,
@@ -270,8 +272,44 @@
               return;
             }
 
+            var countF = 0;
+            var countG = 0;
+            var features = [];
+            event.features.forEach(function(f) {
+              var g = f.getGeometry();
+              if(f.getGeometry()) {
+                if(f.getGeometry().getCoordinates()) {
+
+                  var c = g.getCoordinates();
+                  if(!angular.isArray(c[0])) {
+                    // g.setCoordinates([c]);
+                  }
+                  else {
+                    countF++;
+                  }
+
+                  if(f.getId() == 'CIS73') {
+                    features.push(f);
+                    var img = 'https://www.google.fr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png';
+                    var style = f.getStyleFunction().bind(f)()[0];
+                    style.getImage().getImage().src_ = img;
+                    f.setStyle(style);
+
+                    console.log(f.getStyle())
+
+
+                  }
+                }
+                countG++;
+              }
+            });
+
+            console.log('total ', event.features.length);
+            console.log('geometries ', countF);
+            console.log('geometries null ', countG);
+
             var vectorSource = new ol.source.Vector({
-              features: event.features,
+              features: features,
               projection: event.projection
             });
 
@@ -292,39 +330,17 @@
           var unzipProgress = document.createElement('progress');
           var fileInput = element.find('input[type="file"]')[0];
 
-          var model = (function() {
-            var URL = window.webkitURL || window.mozURL || window.URL;
-
-            return {
-              getEntries: function(file, onend) {
-                zip.createReader(new zip.BlobReader(file),
-                    function(zipReader) {
-                      zipReader.getEntries(onend);
-                    }, onerror);
-              },
-              getEntryFile: function(entry, creationMethod,
-                                     onend, onprogress) {
-                var writer, zipFileEntry;
-
-                function getData() {
-                  entry.getData(writer, function(blob) {
-                    var blobURL = URL.createObjectURL(blob);
-                    onend(blobURL);
-                  }, onprogress);
-                }
-                writer = new zip.BlobWriter();
-                getData();
-              }
-            };
-          })();
-
           scope.onEntryClick = function(entry, evt) {
-            model.getEntryFile(entry, 'Blob', function(blobURL) {
+            kmzService.model.getEntryFile(entry, function(blobURL) {
+
               entry.loading = true;
               scope.$apply();
               var source = new ol.source.Vector();
               $.ajax(blobURL).then(function(response) {
-                var format = new ol.format.KML();
+                var format = new ol.format.KML({
+                  showPointNames: false,
+                  blobImages: kmzService.imageMapping
+                });
                 var features = format.readFeatures(response, {
                   featureProjection: scope.map.getView().getProjection()
                 });
@@ -332,12 +348,14 @@
               });
 
               var vector = new ol.layer.Vector({
-                label: $translate.instant('localLayerFile',
-                    {layer: entry.filename}),
+                label: $translate.instant('localLayerFile', {
+                  layer: entry.filename
+                }),
                 getinfo: true,
                 source: source,
                 kml: true
               });
+
               var listenerKey = vector.getSource().on('change',
                   function(evt) {
                     if (vector.getSource().getState() == 'ready') {
@@ -358,8 +376,8 @@
 
           angular.element(fileInput).bind('change', function(changeEvent) {
             if (fileInput.files.length > 0) {
-              model.getEntries(fileInput.files[0], function(entries) {
-                scope.kmzEntries = entries;
+              kmzService.model.getEntries(fileInput.files[0], function(entries) {
+                scope.kmzEntries = kmzService.preProcessEntries(entries);
                 scope.$apply();
               });
             }

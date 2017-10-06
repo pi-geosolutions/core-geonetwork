@@ -46,7 +46,7 @@
         </a>
 
         <!--downloads -->
-        <a href ng-if="::layer.get('downloads')" title="{{'download' | translate}}">
+        <a href="{{::layer.get('downloads')[0].url}}" target="_blank" ng-if="::layer.get('downloads')" title="{{'download' | translate}}">
           <span class="fa fa-download"></span>&nbsp;
         </a>
 
