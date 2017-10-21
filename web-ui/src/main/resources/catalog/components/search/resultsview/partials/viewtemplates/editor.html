@@ -7,7 +7,8 @@
       <gn-md-type-widget metadata="md"></gn-md-type-widget>
       <a href=""
          data-ng-show="md.isTemplate != 's'"
-         data-ng-href="catalog.search#/metadata/{{md.getUuid()}}"
+         target="_blank"
+         data-ng-href="md.viewer#/pigeo_simple_view/{{md.getUuid()}}"
          title="{{md.abstract}}">{{md.title || md.defaultTitle}}</a>
       <span data-ng-show="md.isTemplate == 's'">{{md.title || md.defaultTitle}}</span>
       <br/>
