@@ -1246,6 +1246,7 @@
     <db.host>localhost</db.host>
     <db.port>5432</db.port>
     <db.name>ne_gn3</db.name>
+    <db.pigeo.geodata.database>pigeo_geodata</db.pigeo.geodata.database>
     <db.username>geonetwork</db.username>
     <db.password>geonetwork</db.password>
     <db.pool.maxActive>10</db.pool.maxActive>
