@@ -143,7 +143,7 @@ if(!goog) {
 
           viewerSettings.singleTileWMS = false;
 
-          viewerSettings.geodashUrl = 'http://dev.padre2.pigeo.fr/geodash/' +
+          viewerSettings.geodashUrl = '../../../geodash/' +
               'dashboard/public/index.html?'
 
 
