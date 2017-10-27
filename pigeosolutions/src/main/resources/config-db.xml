@@ -34,7 +34,7 @@
   </bean>
 
   <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-    <property name="dataSource" ref="ne_risques_geodata"/>
+    <property name="dataSource" ref="pigeo_geodata"/>
   </bean>
 
 </beans>
