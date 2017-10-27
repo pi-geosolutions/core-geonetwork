@@ -241,6 +241,7 @@
           if (!scope.md) {
             scope.$parent.md = md;
             appGridService.feedMd(scope.$parent);
+            scope.md = md;
           }
           return url;
         });
