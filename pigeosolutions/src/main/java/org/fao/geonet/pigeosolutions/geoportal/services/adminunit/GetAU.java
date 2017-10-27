@@ -1,10 +1,10 @@
 package org.fao.geonet.pigeosolutions.geoportal.services.adminunit;
 
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.fao.geonet.ApplicationContextHolder;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.MediaType;
@@ -19,6 +19,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fgravin on 21/11/2015.
@@ -31,28 +33,26 @@ public class GetAU {
     JdbcTemplate jdbcTemplate;
 
     private BasicDataSource dataSource;
-    @Resource(name="ne_risques_geodata")
+    @Resource(name="pigeo_geodata")
     public void setBean( BasicDataSource bean ) {
         dataSource = bean;
     }
 
     @RequestMapping(value="/{lang}/pigeo.adminunit/{type}/", produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public JSONObject get(@PathVariable String lang, @PathVariable String type) throws SQLException, JSONException {
+    public JSONArray getAll(@PathVariable String lang, @PathVariable String type) throws SQLException {
 
-        ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
-        String sql = "select gid, nom_" + type + ", ST_AsText (ST_Envelope(the_geom)) from ner_1b2_" + type + "s";
+        String sql = "select * from \"v_" + type + "bounds\"";
 
         jdbcTemplate = new JdbcTemplate(dataSource);
-        Connection con = dataSource.getConnection();
 
-        JSONObject res = new JSONObject();
-        res.put("data", new JSONArray(jdbcTemplate.query(sql, new DataRowMapper())));
-
-        Statement stmt = null;
-        ResultSet rs = null;
-        return res;
-
+        JSONArray data = new JSONArray();
+        List<JSONObject> entries = jdbcTemplate.query(sql, new DataRowMapper());
+        for(JSONObject entry : entries) {
+            data.add(entry);
+        }
+        return data;
+    }
 /*
         try {
             stmt = con.createStatement();
@@ -75,6 +75,19 @@ public class GetAU {
 */
 
 
+
+    @RequestMapping(value="/{lang}/pigeo.adminunit/{type}/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String getUnit(
+            @PathVariable String type,
+            @PathVariable String id
+    ) throws SQLException {
+
+        String sql = "select ST_AsGeoJSON(the_geom) AS geojson from \"v_" + type + "bounds\" where id=" + id;
+
+        jdbcTemplate = new JdbcTemplate(dataSource);
+
+        return jdbcTemplate.queryForObject(sql, String.class);
     }
 
 }

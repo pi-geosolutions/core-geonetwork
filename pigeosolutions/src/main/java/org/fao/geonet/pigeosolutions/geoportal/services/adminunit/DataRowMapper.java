@@ -1,7 +1,7 @@
 package org.fao.geonet.pigeosolutions.geoportal.services.adminunit;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import net.sf.json.JSONObject;
+import org.postgis.PGgeometry;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.JdbcUtils;
 
@@ -27,10 +27,13 @@ public class DataRowMapper implements RowMapper
                     String svalue = ((String)value).trim();
                     obj.put(column, svalue);
                 }
+                else if(value instanceof PGgeometry) {
+                    continue;
+                }
                 else {
                     obj.put(column, value);
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 throw new IllegalArgumentException("Cannot map to JSON => " + column + " : " + value);
             }

@@ -151,6 +151,23 @@
             //specific pigeo
             var adminDepth = -1;
             var locs;
+            var auFeature = new ol.Feature();
+            var auUnitLayer = new ol.layer.Vector({
+              source: new ol.source.Vector({
+                features: [auFeature]
+              }),
+              map: $scope.map,
+              style: new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                  color: 'rgba(227, 117, 107, 0.8)',
+                  width: 1
+                }),
+                fill: new ol.style.Fill({
+                  color: 'rgba(227, 117, 107, 0.1)'
+                })
+              })
+            });
+
             if(gnViewerSettings.adminunitsPromise) {
               gnViewerSettings.adminunitsPromise.then(function(){
                 locs = gnViewerSettings.adminunits;
@@ -171,14 +188,30 @@
                   for (var i = unit.lvl+1; i <= adminDepth; i++) {
                     var au = this.adminUnits[i];
                     au.values = locs[au.name].filter(function(item) {
-                      return item['up' + (i - unit.lvl)] == unit.id;
+                      return item.up == unit.id && item.lvl == (unit.lvl +1);
+                      // return item['up' + (i - unit.lvl)] == unit.id;
                     });
                   }
                 }
               };
 
+              this.getAdminGeom = function(unit) {
+                $http.get('pigeo.adminunit/' +
+                  this.adminUnits[unit.lvl].name +
+                  '/' + unit.id, {
+                  cache: true
+                }).then(function(response) {
+                  auFeature.setGeometry((new ol.format.GeoJSON()).
+                  readGeometry(response.data, {
+                    dataProjection: 'EPSG:4326',
+                    featureProjection: $scope.map.getView().getProjection()
+                  }));
+                });
+              }
+
               this.adminSelect = function(adminUnit) {
                 this.auLevel = adminUnit.lvl+1;
+                this.getAdminGeom(adminUnit);
                 this.filterLowerAdmin_(adminUnit);
                 zoomTo(adminUnit.extent, $scope.map);
                 this.adminUnits.some(function(unit) {

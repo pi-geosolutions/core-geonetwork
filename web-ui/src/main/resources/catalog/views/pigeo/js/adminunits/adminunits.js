@@ -29,16 +29,31 @@
 
     var loc = {};
     var promises = [];
-    var adminUnitsNames = ['Provinces', 'Communes', 'Collines'];
-    serviceUrl = gnViewerSettings.ui.auService;
+    var adminUnitsNames = ['regions', 'communes'];
+    serviceUrl = 'pigeo.adminunit/';
 
     adminUnitsNames.forEach(function(adminType, lvl) {
-      var url = serviceUrl + 'get' + adminType + '.php';
-      var proxyUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-      promises.push($http.get(proxyUrl).then(function(response) {
+      var url = serviceUrl + adminType + '/';
+      promises.push($http.get(url).then(function(response) {
+        var values = [];
+        response.data.forEach(function(au) {
+          values.push({
+            name: au.name,
+            id: au.id,
+            lvl: lvl,
+            up: au.up_id,
+            extent: ol.proj.transformExtent([
+              au.xmin,
+              au.ymin,
+              au.xmax,
+              au.ymax
+            ], 'EPSG:4326', this.map.getView().getProjection())
+          });
+        }.bind(this));
+
+/*
         var doc = ol.xml.parse(response.data);
         var nodes = doc.getElementsByTagName('emprise');
-        var values = [];
         for(var i = 0; i < nodes.length ; i ++) {
           var node = nodes.item(i);
           values.push({
@@ -56,6 +71,7 @@
             ], 'EPSG:4326', this.map.getView().getProjection())
           });
         }
+*/
         loc[adminType] = values;
       }.bind(this)));
     }.bind(this));
