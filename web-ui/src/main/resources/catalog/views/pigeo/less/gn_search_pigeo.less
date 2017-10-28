@@ -176,13 +176,19 @@ input[type=range]:focus::-webkit-slider-runnable-track {
       }
       &.active {
         font-weight: bold;
-        border: none;
+        border-color: #ddd;
         background-color: white;
         a {
           color: #428bca !important;
         }
       }
     }
+  }
+  .fa-eraser {
+    &:hover {
+      color:@main_color_50
+    }
+    cursor: pointer;
   }
 }
 

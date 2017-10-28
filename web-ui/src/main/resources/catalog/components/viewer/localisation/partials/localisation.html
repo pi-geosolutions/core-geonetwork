@@ -17,7 +17,7 @@
       </li>
     </ul>
 
-    <h5 translate>administrativeunits</h5>
+    <h5><span class="pull-right fa fa-eraser" ng-click="locCtrl.clearAu()"></span><span translate="">administrativeunits</span></h5>
     <div ng-repeat="unit in locCtrl.adminUnits" ng-if="unit.lvl <= locCtrl.auLevel">
       <h6 translate>{{unit.name}}</h6>
       <ul class="loc-geonames list-group">

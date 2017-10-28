@@ -207,6 +207,14 @@
                     featureProjection: $scope.map.getView().getProjection()
                   }));
                 });
+              };
+
+              this.clearAu = function() {
+                this.adminUnits.forEach(function(unit) {
+                  unit.choice = null;
+                });
+                auFeature.setGeometry(null);
+                $scope.collapsed = true;
               }
 
               this.adminSelect = function(adminUnit) {
