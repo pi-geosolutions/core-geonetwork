@@ -1,7 +1,6 @@
 (function() {
 
   goog.provide('app.kmz.overlay');
-  goog.require('app.kmz.format');
   goog.require('app.kmz.service');
 
   var module = angular.module('app.kmz.overlay', [
