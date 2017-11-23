@@ -30,7 +30,9 @@
 }, {
   "key": "pigeo-fixOnlineResources-process",
   "type": "fixed-params",
-  "params": []
+  "params": [
+    {"name": "pattern", "value": "pigeo"}
+  ]
 }, {
     "key": "massive-content-update",
     "type": "template",

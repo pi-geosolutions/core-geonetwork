@@ -2,12 +2,16 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:geonet="http://www.fao.org/geonetwork" xmlns:gco="http://www.isotc211.org/2005/gco"
   xmlns:gmx="http://www.isotc211.org/2005/gmx" 
-  xmlns:gmd="http://www.isotc211.org/2005/gmd" version="2.0">
-  
-	<!-- ============================================================================= -->
+  xmlns:exsl="http://exslt.org/common"
+  xmlns:gmd="http://www.isotc211.org/2005/gmd" version="2.0"
+  exclude-result-prefixes="exsl gmx">
+	
+    	<!-- ============================================================================= -->
 
 	<!--  give a pattern that the URL should contain in order to be concerned by the fix -->
 	<xsl:param name="pattern"/>
+	
+	<!-- ============================================================================= -->
 	
 	<!-- ============================================================================= -->
   
@@ -30,16 +34,34 @@
        </xsl:choose>
     </xsl:template>
     
+    <!-- Applies fixes on old metadata created in pigeo context : chains following fixes...
+    -->
+
+    <xsl:template match="gmd:CI_OnlineResource[contains(gmd:protocol/gco:CharacterString, 'WMS')]">
+    	<xsl:variable name="step1">
+			<xsl:apply-templates mode="fixLayerNameLocation" select=".">
+			</xsl:apply-templates>
+		</xsl:variable>
+   		<xsl:variable name="step2">
+			<xsl:apply-templates mode="fixNamespaceLocation" select="exsl:node-set($step1)/node()">
+			</xsl:apply-templates>
+		</xsl:variable>
+
+	    <xsl:copy-of select="exsl:node-set($step2)/node()"/>
+    </xsl:template>
     
-    <!-- Fixes WMS resources when setup by Philippe : removes the layer name from the url and puts it in gmd:name tag, and moves the gmd:name tag to gmd:description-->
-    <xsl:template match="gmd:CI_OnlineResource[contains(gmd:protocol/gco:CharacterString, 'WMS')]" priority="3">
+    <!-- Fixes WMS resources when setup by Philippe : removes the layer name from the url 
+    and puts it in gmd:name tag, and moves the gmd:name tag to gmd:description.
+    Also cleans double / if present in url 
+    -->
+    <xsl:template mode="fixLayerNameLocation" match="*">
     	<xsl:variable name="url" select="substring-before(gmd:linkage/gmd:URL, 'layers=')"/>
     	<xsl:variable name="name" select="substring-after(gmd:linkage/gmd:URL, 'layers=')"/>
     	<xsl:choose>
          <xsl:when test="gmd:description/gco:CharacterString[not(*) and not(normalize-space())]">
            <xsl:copy>
+         		<gmd:linkage><gmd:URL><xsl:value-of select="replace($url,'//','/')"/></gmd:URL></gmd:linkage>
          		<xsl:copy-of select="*[not(self::gmd:description) and not(self::gmd:linkage) and not(self::gmd:name)]"/>
-         		<gmd:linkage><gmd:URL><xsl:value-of select="$url"/></gmd:URL></gmd:linkage>
          		<gmd:name><gco:CharacterString><xsl:value-of select="$name"/></gco:CharacterString></gmd:name>
 	      		<gmd:description>
 					<gco:CharacterString><xsl:value-of select="gmd:name/gco:CharacterString"/></gco:CharacterString>
@@ -57,15 +79,15 @@
     <!-- Fixes namespace-in-layer-name WMS resources pb when setup by Philippe : 
 			moves the namespace prefix, when located in layer name, to the URL. Applies only to [pattern]ed (e.g. "pigeo") URLs
 			in order not to break anything -->
-    <xsl:template match="gmd:CI_OnlineResource[contains(gmd:protocol/gco:CharacterString, 'WMS')]" priority="4">
+    <xsl:template mode="fixNamespaceLocation" match="*">
     	<xsl:choose>
          <xsl:when test=".[contains(gmd:linkage/gmd:URL, $pattern) and contains(gmd:name/gco:CharacterString, ':')] ">
     		<xsl:variable name="webapp" select="substring-before(gmd:linkage/gmd:URL, 'wms?')"/>
     		<xsl:variable name="ns" select="substring-before(gmd:name/gco:CharacterString, ':')"/>
     		<xsl:variable name="shortname" select="substring-after(gmd:name/gco:CharacterString, ':')"/>
            <xsl:copy>
-         		<xsl:copy-of select="*[not(self::gmd:linkage) and not(self::gmd:name)]"/>
          		<gmd:linkage><gmd:URL><xsl:value-of select="$webapp"/><xsl:value-of select="$ns"/>/wms?</gmd:URL></gmd:linkage>
+         		<xsl:copy-of select="*[not(self::gmd:linkage) and not(self::gmd:name)]"/>
          		<gmd:name><gco:CharacterString><xsl:value-of select="$shortname"/></gco:CharacterString></gmd:name>
 	      	</xsl:copy>
          </xsl:when>
@@ -77,6 +99,8 @@
        </xsl:choose>
     </xsl:template>
     
+    
+
     
   
    <!-- Do a copy of every nodes and attributes -->
