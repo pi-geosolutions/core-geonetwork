@@ -16,8 +16,25 @@
               zoom: 6,
               extent: [-639625.0526903549, 891561.4979182958, 2493681.61077559, 2948634.803128959]
             },
-            auService: 'http://sn-risk.pigeo.fr/sigdt-config/services-niger/',
             geonamesCode: 'NE'
-          }
+          };
+
+          viewerSettings.servicesUrl = {
+            wms: [{
+              name: 'Pigeo geoserver',
+              url: 'http://ne-risk.pigeosolutions.fr/geoserver/wms'
+            }, {
+              name: 'Pigeo geoserver Niger',
+              url: 'http://ne-risk.pigeosolutions.fr/geoserver/wms'
+            }],
+            wmts: [{
+              name: 'Arcgisonline - Relief ombré',
+              url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/WMTS/1.0.0/WMTSCapabilities.xml?REQUEST=GetCapabilities&service=WMTS'
+            }, {
+              name: 'Arcgisonline - World Imagery',
+              url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/WMTS/1.0.0/WMTSCapabilities.xml?REQUEST=GetCapabilities&service=WMTS'
+            }]
+          };
+
         }]);
 })();

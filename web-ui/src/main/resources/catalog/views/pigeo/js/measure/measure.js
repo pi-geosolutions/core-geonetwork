@@ -4,8 +4,6 @@
 
   var module = angular.module('app.measure', []);
 
-  var WPS_SERVER_URL = 'http://gm-risk.pigeo.fr//geoserver-prod/wps';
-
   gn.measureToolsDirective = function() {
     return {
       restrict: 'E',

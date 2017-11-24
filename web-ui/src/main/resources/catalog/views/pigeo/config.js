@@ -49,6 +49,8 @@ if(!goog) {
             }]
           };
 
+          viewerSettings.auList = ['regions', 'communes'];
+
           var bboxStyle = new ol.style.Style({
             stroke: new ol.style.Stroke({
               color: 'rgba(255,0,0,1)',
@@ -143,8 +145,7 @@ if(!goog) {
 
           viewerSettings.singleTileWMS = false;
 
-          viewerSettings.geodashUrl = '../../../geodash/' +
-              'dashboard/public/index.html?'
+          viewerSettings.geodashUrl = '/geodash/dashboard/public/index.html?'
 
 
         }]);
