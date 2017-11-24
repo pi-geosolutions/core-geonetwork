@@ -1171,7 +1171,7 @@
                   if (version) {
                     o.version = version;
                   }
-                  //olL = $this.addWmsToMap(map, o);
+                  olL = $this.addWmsToMap(map, o);
 
                   if (!angular.isArray(olL.get('errors'))) {
                     olL.set('errors', []);
