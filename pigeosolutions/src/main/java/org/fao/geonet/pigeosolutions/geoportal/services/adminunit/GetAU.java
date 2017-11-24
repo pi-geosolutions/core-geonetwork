@@ -83,7 +83,7 @@ public class GetAU {
             @PathVariable String id
     ) throws SQLException {
 
-        String sql = "select ST_AsGeoJSON(the_geom) AS geojson from \"v_" + type + "bounds\" where id=" + id;
+        String sql = "select ST_AsGeoJSON(the_geom) AS geojson from \"v_" + type + "bounds\" where gid=" + id;
 
         jdbcTemplate = new JdbcTemplate(dataSource);
 
