@@ -116,20 +116,9 @@
     function(gnMap) {
       return {
         addMdLayerToMap: function(link, md) {
-
-          //hack but badly done in GN so hard to fix
           var map = angular.element($('#main-container')).scope().mainCtrl.map;
-          var url, name;
-          var i = link.url.indexOf('layers=');
-          if(i >= 0) {
-            var res = new RegExp(/layers=(.*)/g).exec(link.url);
-            if (angular.isArray(res) && res.length == 2) {
-              name = res[1];
-              url = link.url.substring(0, i);
-            }
-          }
           gnMap.addWmsFromScratch(map,
-              url || link.url, name || link.name, undefined, md).then(
+              link.url, link.name, undefined, md).then(
               function(layer) {
                 if(layer) {
                   layer.set('label', link.name);

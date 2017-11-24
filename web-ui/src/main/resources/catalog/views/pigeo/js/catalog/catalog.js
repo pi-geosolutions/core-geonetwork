@@ -2,10 +2,8 @@
 
   goog.provide('app.catalog');
 
-  var PIGEO_GEOSERVER_URL = 'http://ne-risk.pigeo.fr/geoserver-prod/wms';
 
   var module = angular.module('app.catalog', []);
-  //module.constant('appCatalogUrl', '../../catalog/views/pigeo/data/senegaltree.json');
   module.constant('appCatalogUrl', 'pigeo.layertree.get');
 
   module.value('ngeoLayertreeTemplateUrl',
@@ -39,7 +37,7 @@
 
       $http.get(appCatalogUrl).then(function(catalog) {
         this.tree = catalog.data;
-        this.loadCapPromise = this.updateLayersFromCap();
+        //this.loadCapPromise = this.updateLayersFromCap();
 
         // Apply text filter on the tree
         $scope.$watch(function() {
@@ -100,7 +98,7 @@
     if (map.getLayers().getArray().indexOf(layer) >= 0) {
       map.removeLayer(layer);
     } else {
-      this.loadLayerMd(layer);
+      this.feedLayer(layer, node);
       map.addLayer(layer);
     }
   };
@@ -142,7 +140,11 @@
         layerOpts.tiled = node.TILED;
       }
       layer = this.gnMap_.createOlWMS(this.map,
-        {'LAYERS': node.layers, 'FORMAT': node.format || 'image/png'}, layerOpts);
+        {
+          'LAYERS': node.layers,
+          'FORMAT': node.format || 'image/png'
+        }, layerOpts
+      );
     }
 
     else if (type == 'chart') {
@@ -178,95 +180,48 @@
         pq_rastertype_fields: node.pq_rastertype_fields,
         pq_round: node.pq_round
       });
-
     }
 
     layer.set('metadataUuid', node.uuid);
     layer.set('queryable', node.queryable);
-
-    // this.gnMap_.feedLayerMd(layer);
 
     layerCache_[layerCacheKey] = layer;
 
     return layer;
   };
 
+
   /**
-   * Do one capabilities for all pigeo layers, then fetch layers info
-   * depending on layer name and if belongs to a workspace or not.
+   * Feed layerTree layer with info from capabilities.
+   * Link the layer to a md if defined.
+   *
+   * @param {ol.Layer} layer ol layer.
+   * @param {TreeNode} node Layer tree node info.
    */
-  gn.AppCatalogController.prototype.updateLayersFromCap = function() {
+  gn.AppCatalogController.prototype.feedLayer = function(layer, node) {
 
-    return this.gnOwsCapabilities.getWMSCapabilities(PIGEO_GEOSERVER_URL).then(
-      function(capObj) {
-        for(var p in layerCache_) {
-          var l = layerCache_[p],
-              layers = l.getSource().getParams().LAYERS,
-              url = l.get('url');
-          var capL = undefined;
-
-          // Layers configured to main geoserver, layername contains workspace
-          if(url.indexOf('/geoserver-prod/wms') >= 0 ||
-            url.indexOf('/geoserver-prod/ows') >= 0) {
-            capL = this.gnOwsCapabilities.getLayerInfoFromCap(layers, capObj);
-          }
-          else if(url.indexOf('/geoserver-prod/') >= 0) {
-            if(layers.indexOf(':') > 0) {
-              capL = this.gnOwsCapabilities.getLayerInfoFromCap(layers, capObj);
-            }
-            else {
-              var r = url.match(/geoserver-prod\/(.*)\//);
-              if(r && r.length == 2) {
-                // TODO can layers have multiple ?
-                capL = this.gnOwsCapabilities.getLayerInfoFromCap(
-                  r[1] + ':' + layers, capObj);
-              }
-            }
-          }
-
-          if(capL) {
-            var tmpLayer = this.gnMap_.createOlWMSFromCap(this.map, capL, url);
-            for(var prop in tmpLayer.getProperties()) {
-              if(!l.get(prop) && tmpLayer.get(prop)) {
-                l.set(prop, tmpLayer.get(prop));
-              }
-            }
+    this.gnMap_.addWmsFromScratch(this.map, node.url, node.layers, true).
+    then(
+      function(tmpLayer) {
+        // merge properties from layertree with getCapabilities
+        for(var prop in tmpLayer.getProperties()) {
+          if(!layer.get(prop) && tmpLayer.get(prop)) {
+            layer.set(prop, tmpLayer.get(prop));
           }
         }
-        return true;
-      }.bind(this));
-
-    this.gnOwsCapabilities.getWMSCapabilities('http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r-t.cgi?').then(
-      function(capObj) {
-        for(var p in layerCache_) {
-          var l = layerCache_[p],
-            layers = l.getSource().getParams().LAYERS,
-            url = l.get('url'),
-            capL;
-
-            capL = this.gnOwsCapabilities.getLayerInfoFromCap(layers, capObj);
-
-          if(capL) {
-            var tmpLayer = this.gnMap_.createOlWMSFromCap(this.map, capL, url);
-            for(var prop in tmpLayer.getProperties()) {
-              if(!l.get(prop) && tmpLayer.get(prop)) {
-                l.set(prop, tmpLayer.get(prop));
-              }
-            }
-          }
+        return tmpLayer;
+      }, function() {
+        layer.set('errors', ['not found']);
+      }).
+    then(function(feedLayer) {
+      if(feedLayer) {
+        // Load metadata object
+        var md = feedLayer.get('md');
+        if(!md) {
+          this.gnMap_.feedLayerMd(layer);
         }
-      }.bind(this));
-
-  };
-
-  gn.AppCatalogController.prototype.loadLayerMd = function(layer) {
-
-    var md = layer.get('md');
-    if(!md) {
-      this.loadCapPromise.then(function(){
-        this.gnMap_.feedLayerMd(layer);
-      }.bind(this));
-    }
+      }
+    }.bind(this));
   };
 
   module.controller('AppCatalogController',
