@@ -16,7 +16,7 @@
               zoom: 8,
               extent: [-896623.80,435929.55, -253437.34,746126.71]
             },
-            auService: 'http://ci-sgie.pigeosolutions.fr/sigdt-config/services/',
+            auList: ['regions', 'departements', 'sousprefectures'],
             geonamesCode: 'CI'
           }
         }]);

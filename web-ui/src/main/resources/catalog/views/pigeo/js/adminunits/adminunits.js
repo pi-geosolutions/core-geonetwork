@@ -4,12 +4,7 @@
 
   var module = angular.module('app.adminunits', []);
 
-  var serviceUrl = 'pigeo.adminunit/';
-
-  var getNodeText = function(htmlParentNode, nodeName) {
-    var parent = $(htmlParentNode);
-    return $(parent.find(nodeName)).text();
-  };
+  var SERVICE_URL = 'pigeo.adminunit/';
 
   gn.adminunitsDirective = function() {
     return {
@@ -29,10 +24,10 @@
 
     var loc = {};
     var promises = [];
-    var adminUnitsNames = gnViewerSettings.auList;
+    var adminUnitsNames = gnViewerSettings.ui.auList;
 
     adminUnitsNames.forEach(function(adminType, lvl) {
-      var url = serviceUrl + adminType + '/';
+      var url = SERVICE_URL + adminType + '/';
       promises.push($http.get(url).then(function(response) {
         var values = [];
         response.data.forEach(function(au) {
@@ -49,28 +44,6 @@
             ], 'EPSG:4326', this.map.getView().getProjection())
           });
         }.bind(this));
-
-/*
-        var doc = ol.xml.parse(response.data);
-        var nodes = doc.getElementsByTagName('emprise');
-        for(var i = 0; i < nodes.length ; i ++) {
-          var node = nodes.item(i);
-          values.push({
-            name: getNodeText(node, 'nom'),
-            up: getNodeText(node, 'up'),
-            up1: getNodeText(node, 'up1'),
-            up2: getNodeText(node, 'up2'),
-            id: node.getAttribute('id'),
-            lvl: lvl,
-            extent: ol.proj.transformExtent([
-              parseFloat(getNodeText(node, 'xUL')),
-              parseFloat(getNodeText(node, 'yLR')),
-              parseFloat(getNodeText(node, 'xLR')),
-              parseFloat(getNodeText(node, 'yUL'))
-            ], 'EPSG:4326', this.map.getView().getProjection())
-          });
-        }
-*/
         loc[adminType] = values;
       }.bind(this)));
     }.bind(this));
