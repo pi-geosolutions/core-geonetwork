@@ -8,7 +8,7 @@
       <a href=""
          data-ng-show="md.isTemplate != 's'"
          target="_blank"
-         data-ng-href="md.viewer#/pigeo_simple_view/{{md.getUuid()}}"
+         data-ng-href="display#/{{md.getUuid()}}/formatters/pigeo_simple_view?output=html"
          title="{{md.abstract}}">{{md.title || md.defaultTitle}}</a>
       <span data-ng-show="md.isTemplate == 's'">{{md.title || md.defaultTitle}}</span>
       <br/>
