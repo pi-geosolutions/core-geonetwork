@@ -16,7 +16,7 @@
               zoom: 6,
               extent: [-2000000,600000,1000000,3500000]
             },
-            auService: 'https://ml-risk.pigeosolutions.fr/sigdt-config/services/',
+            auList: ['regions', 'cercles', 'communes'],
             geonamesCode: 'ML'
           }
         }]);

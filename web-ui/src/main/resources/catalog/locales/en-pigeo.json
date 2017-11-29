@@ -143,5 +143,10 @@
     "pq_layer": "WMS layer to query",
     "pq_bandnb": "Index of band to use to compute stats",
     "pq_header": "Header",
-    "administrativeunits": "Administrative units"
+    "administrativeunits": "Administrative units",
+    "regions":"Regions",
+    "cercles":"Circles",
+    "communes":"Municipalities",
+    "sousprefectures":"Sub-prefectures",
+    "departements":"Departements"
 }
