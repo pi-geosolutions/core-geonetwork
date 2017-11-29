@@ -58,14 +58,24 @@
     	<xsl:variable name="url" select="substring-before(gmd:linkage/gmd:URL, 'layers=')"/>
     	<xsl:variable name="name" select="substring-after(gmd:linkage/gmd:URL, 'layers=')"/>
     	<xsl:choose>
-         <xsl:when test="gmd:description/gco:CharacterString[not(*) and not(normalize-space())]">
+         <xsl:when test="$name and $name!=''">
            <xsl:copy>
-         		<gmd:linkage><gmd:URL><xsl:value-of select="replace($url,'//','/')"/></gmd:URL></gmd:linkage>
+         		<gmd:linkage><gmd:URL><xsl:value-of select="replace($url,'//geoserver','/geoserver')"/></gmd:URL></gmd:linkage>
          		<xsl:copy-of select="*[not(self::gmd:description) and not(self::gmd:linkage) and not(self::gmd:name)]"/>
          		<gmd:name><gco:CharacterString><xsl:value-of select="$name"/></gco:CharacterString></gmd:name>
-	      		<gmd:description>
-					<gco:CharacterString><xsl:value-of select="gmd:name/gco:CharacterString"/></gco:CharacterString>
-				</gmd:description>
+         		<xsl:choose>
+         			<xsl:when test="gmd:description/gco:CharacterString[not(*) and not(normalize-space())]">
+         				<gmd:description>
+							<gco:CharacterString><xsl:value-of select="gmd:name/gco:CharacterString"/></gco:CharacterString>
+						</gmd:description>
+         			</xsl:when>
+         			<xsl:otherwise>
+         				<gmd:description>
+							<gco:CharacterString><xsl:value-of select="gmd:name/gco:CharacterString"/>: <xsl:value-of select="gmd:description/gco:CharacterString"/></gco:CharacterString>
+						</gmd:description>
+         			</xsl:otherwise>
+         		</xsl:choose>
+	      		
     		</xsl:copy>
          </xsl:when>
          <xsl:otherwise>
