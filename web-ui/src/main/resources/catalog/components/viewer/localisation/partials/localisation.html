@@ -19,7 +19,7 @@
 
     <h5><span class="pull-right fa fa-eraser" ng-click="locCtrl.clearAu()"></span><span translate="">administrativeunits</span></h5>
     <div ng-repeat="unit in locCtrl.adminUnits" ng-if="unit.lvl <= locCtrl.auLevel">
-      <h6 translate>{{unit.name}}</h6>
+      <h6 translate>{{'au.' + unit.name}}</h6>
       <ul class="loc-geonames list-group">
         <li data-ng-repeat="loc in unit.values | filter:query" class="list-group-item"  ng-class="{active: unit.choice == loc.name}">
           <a href="" data-ng-click="locCtrl.adminSelect(loc)">{{loc.name}}</a>

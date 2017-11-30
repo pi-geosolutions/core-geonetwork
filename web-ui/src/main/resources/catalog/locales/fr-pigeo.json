@@ -145,9 +145,9 @@
   "pq_bandnb": "N° de bande à utiliser pour calculer les stats (entier)",
   "pq_header": "Entête",
   "administrativeunits": "Unités administratives",
-  "regions":"Régions",
-  "cercles":"Cercles",
-  "communes":"Communes",
-  "sousprefectures":"Sous préfectures",
-  "departements":"Départements"
+  "au.regions":"Régions",
+  "au.cercles":"Cercles",
+  "au.communes":"Communes",
+  "au.sousprefectures":"Sous préfectures",
+  "au.departements":"Départements"
 }

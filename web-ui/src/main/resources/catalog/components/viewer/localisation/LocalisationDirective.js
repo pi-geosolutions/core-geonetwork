@@ -198,7 +198,7 @@
               this.getAdminGeom = function(unit) {
                 $http.get('pigeo.adminunit/' +
                   this.adminUnits[unit.lvl].name +
-                  '/' + unit.id, {
+                  '/' + unit.gid, {
                   cache: true
                 }).then(function(response) {
                   auFeature.setGeometry((new ol.format.GeoJSON()).
