@@ -1579,12 +1579,22 @@
 
               var source = new ol.source.WMTS(sourceConfig);
 
+              var cap = {
+                Contents: capabilities,
+                OperationsMetadata: capabilities.operationsMetadata
+              };
+
+              var options = ol.source.WMTS.optionsFromCapabilities(cap, {
+                layer: getCapLayer.Identifier,
+                matrixSet: projection
+              });
+
               var olLayer = new ol.layer.Tile({
                 extent: projection.getExtent(),
-                name: layer.Identifier,
-                title: layer.Title,
-                label: layer.Title,
-                source: source,
+                name: getCapLayer.Identifier,
+                title: getCapLayer.Title,
+                label: getCapLayer.Title,
+                source: new ol.source.WMTS(options),
                 url: url,
                 urlCap: urlCap,
                 cextent: gnOwsCapabilities.getLayerExtentFromGetCap(map,
