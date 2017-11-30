@@ -29,6 +29,9 @@
               url: 'http://ne-risk.pigeosolutions.fr/geoserver/wms'
             }],
             wmts: [{
+              name: 'Saga Est (Drone Africa Service)',
+              url: 'https://tiles.openaerialmap.org/5a11d0c831eff4000c3805fe/0/c964b060-394c-4dd5-8b86-b4bc57336ce6/wmts'
+            }, {
               name: 'Arcgisonline - Relief ombré',
               url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/WMTS/1.0.0/WMTSCapabilities.xml?REQUEST=GetCapabilities&service=WMTS'
             }, {
