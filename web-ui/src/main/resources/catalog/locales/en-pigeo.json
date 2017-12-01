@@ -16,8 +16,7 @@
     "labelsdbfield": "Label fields",
     "dbwhere": "WHERE",
     "joingeofield": "Join field",
-    "dbparams": "Database parameters",
-    "geoFeatures": "Geographic features",
+    "dbparams": "Database parameters","geoFeatures": "Geographic features",
     "colorcodes": "Color codes",
     "chartsize": "Chart size",
     "representation": "Representation",
@@ -148,9 +147,9 @@
     "pq_bandnb": "Index of band to use to compute stats",
     "pq_header": "Header",
     "administrativeunits": "Administrative units",
-    "regions":"Regions",
-    "cercles":"Circles",
-    "communes":"Municipalities",
-    "sousprefectures":"Sub-prefectures",
-    "departements":"Departements"
+    "au.regions":"Regions",
+    "au.cercles":"Circles",
+    "au.communes":"Municipalities",
+    "au.sousprefectures":"Sub-prefectures",
+    "au.departements":"Departements"
 }

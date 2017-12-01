@@ -139,6 +139,9 @@
       if(angular.isDefined(node.TILED)) {
         layerOpts.tiled = node.TILED;
       }
+      else {
+        layerOpts.tiled = false;
+      }
       layer = this.gnMap_.createOlWMS(this.map,
         {
           'LAYERS': node.layers,

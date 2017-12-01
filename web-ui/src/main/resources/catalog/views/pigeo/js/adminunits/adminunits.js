@@ -33,7 +33,8 @@
         response.data.forEach(function(au) {
           values.push({
             name: au.name,
-            id: au.gid,
+            id: au.id,
+            gid: au.gid,
             lvl: lvl,
             up: au.up_id,
             extent: ol.proj.transformExtent([
