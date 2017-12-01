@@ -17,7 +17,7 @@
               extent: [-2960500,-3371179, 7559192,4202705]
             },
             auList: ['regions'],
-            geonamesCode: ''
+            geonamesCode: 'AFO'
           }
         }]);
 })();
