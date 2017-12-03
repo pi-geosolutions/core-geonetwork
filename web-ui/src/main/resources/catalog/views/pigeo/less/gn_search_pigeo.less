@@ -6,32 +6,24 @@
 @fa-version: '4.3.0';
 @fa-font-path: '../catalog/lib/style/font-awesome/fonts';
 
-@header-height: 60px;
-@sidebar-width: 415px;
-@sidebar-left-offset: 40px;
-@sidebar-top-offset: 30px;
-
-@main-font-size: 12px;
-
-@import "featurestables.less";
-@import "layout.less";
-@import "olcontrols.less";
-@import "catalog.less";
-@import "geocatalog.less";
-@import "layermanager.less";
-@import "temporalfiles.less";
-//@import "gfi.less";
-@import "import.less";
-@import "mouseposition.less";
-@import "mdview.less";
-@import "measure.less";
-@import "auth.less";
-@import "query.less";
-@import "mobile.less";
-@import "layerprocess.less";
-@import "speciallayout.less";
-@import "wmst.less";
-@import "legend.less";
+@import "featurestables";
+@import "layout";
+@import "olcontrols";
+@import "catalog";
+@import "geocatalog";
+@import "layermanager";
+@import "temporalfiles";
+//@import "gfi";
+@import "import";
+@import "mouseposition";
+@import "mdview";
+@import "measure";
+@import "auth";
+@import "query";
+@import "layerprocess";
+@import "speciallayout";
+@import "wmst";
+@import "legend";
 
 @font-face {
   font-family: 'mapicon';
@@ -267,3 +259,5 @@ app-animator.form-horizontal {
     max-height: 750px;
   }
 }
+
+@import "mobile";

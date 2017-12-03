@@ -71,6 +71,9 @@
       $scope.loadNodeInfo = function(node) {
         if(activeNode != node) {
           activeNode = node;
+          if(!node.modelGroup) {
+            layerTreeService.loadModelGroup(node, $scope.groups);
+          }
           $scope.activeLayer = angular.copy(node);
           addToLog($translate.instant('layertreenodeloading',{layer: node.text}));
         }
@@ -93,7 +96,8 @@
         angular.extend(activeNode, $scope.activeLayer);
         var groups = [];
         $scope.groups.forEach(function(group) {
-          var show = activeNode.group.some(function(g) {
+          var show = !!activeNode.modelGroup &&
+            activeNode.modelGroup.some(function(g) {
             return g.id == group.id;
           });
           groups.push({
