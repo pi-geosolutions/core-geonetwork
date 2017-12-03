@@ -16,6 +16,7 @@
     var prepareNode = function(node) {
       var json = [];
       var weight = 0;
+      delete node.modelGroup;
       for(var p in node) {
         if(angular.isString(node[p])) {
           node[p] = escapeXml(node[p]);
@@ -83,6 +84,14 @@
           this.clearGroup(n);
         }, this);
       }
+    };
+
+    this.loadModelGroup = function(node, groups, recursive) {
+      node.modelGroup = groups.filter(function(group) {
+        return !!node.group && node.group.some(function(g) {
+          return g.id == group.id;
+        });
+      });
     };
 
     this.computeWeight = function(node) {
