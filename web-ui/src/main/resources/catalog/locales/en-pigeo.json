@@ -47,6 +47,7 @@
     "loadbackup": "Backups list",
     "addfolder": "Add a folder",
     "addwms": "Add a WMS layer",
+    "addwmts": "Add a WMTS layer",
     "addchart": "Add a chart layer",
     "remove": "Delete",
     "reload": "Reload",

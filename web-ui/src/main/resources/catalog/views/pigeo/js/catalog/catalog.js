@@ -149,7 +149,24 @@
         }, layerOpts
       );
     }
-
+    else if (type == 'wmts') {
+      var layer = new ol.layer.Tile({
+        label: node.text
+      });
+      this.ngeoDecorateLayer(layer);
+      layer.displayInLayerManager = true;
+      this.gnMap_.addWmtsFromScratch(this.map, node.url, node.layers, true).
+      then(
+        function(tmpLayer) {
+          layer.setSource(tmpLayer.getSource());
+          for(var prop in tmpLayer.getProperties()) {
+            if(!layer.get(prop) && tmpLayer.get(prop)) {
+              layer.set(prop, tmpLayer.get(prop));
+            }
+          }
+          return tmpLayer;
+        });
+    }
     else if (type == 'chart') {
       layer = new ol.layer.Image({
         label: node.text,
