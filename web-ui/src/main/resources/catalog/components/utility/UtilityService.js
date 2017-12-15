@@ -417,8 +417,15 @@
           if (!listDefer) {
             listDefer = $q.defer();
             $http.get('../api/regions/types').success(function(data) {
+
+              // Pigeo exclusion
+              var excluded = [
+                'http://vocab.nerc.ac.uk/collection/C19/current/#SeaVoXGazetteer',
+                'http://www.naturalearthdata.com/ne_admin#Country/Dependency',
+                'http://www.naturalearthdata.com/ne_admin#Continent'
+              ];
               angular.forEach(data, function(value, key) {
-                if (value.id) {
+                if (value.id && excluded.indexOf(value.id) < 0) {
                   var tokens = value.id.split('#'),
                       asHash = tokens.length > 0,
                       name = asHash ? tokens[1] : value.id;
