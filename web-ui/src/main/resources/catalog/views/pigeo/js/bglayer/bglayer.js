@@ -10,6 +10,14 @@
   }, {
     "name": "Bing Aerial",
     "layer": "bing_aerial"
+  }, {
+    "name": "Digital Globe Premium",
+    "layer": "digitalglobe_premium",
+    "nolicense": true
+  }, {
+    "name": "Digital Globe Standard",
+    "layer": "digitalglobe_stadard",
+    "nolicense": true
   }];
 
   gn.backgroundlayerDirective = function() {

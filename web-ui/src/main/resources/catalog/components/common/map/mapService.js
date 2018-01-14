@@ -1727,6 +1727,26 @@
                   }),
                   title: title ||  'Bing Aerial'
                 });
+              case 'digitalglobe_premium':
+                return new ol.layer.Tile({
+                  title: 'DigitalGlobe Maps API: Terrain Map Premium',
+                  source: new ol.source.XYZ({
+                    url: 'http://api.tiles.mapbox.com/v4/digitalglobe.316c9a2e/{z}/{x}/{y}.jpg?access_token=pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNqNTVpcXdiNzA3NTczM3RnYnRqb2g2anEifQ.DziD_BPlGaeFqp3VXMqMvQ',
+                    // You will need to replace the 'access_token' and 'Map ID' values with your own.
+                    // http://developer.digitalglobe.com/docs/maps-api
+                    attribution: "©Mapbox, Inc / OpenStreetMap Contributors "
+                  })
+                });
+              case 'digitalglobe_stadard':
+                return new ol.layer.Tile({
+                  title: 'DigitalGlobe Maps API: Terrain Map Standard',
+                  source: new ol.source.XYZ({
+                    url: 'http://api.tiles.mapbox.com/v4/digitalglobe.nal0g75k/{z}/{x}/{y}.jpg?access_token=pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNqNTVpcXdiNzA3NTczM3RnYnRqb2g2anEifQ.DziD_BPlGaeFqp3VXMqMvQ',
+                    // You will need to replace the 'access_token' and 'Map ID' values with your own.
+                    // http://developer.digitalglobe.com/docs/maps-api
+                    attribution: "©Mapbox, Inc / OpenStreetMap Contributors "
+                  })
+                });
               case 'stamen':
                 //We make watercolor the default layer
                 var type = opt && opt.name ? opt.name : 'watercolor',
