@@ -59,7 +59,7 @@
 
       $scope.getLayer = function(node) {
         var type = node.type;
-        if(type == 'wms' || type == 'wmts' || type == 'chart') {
+        if(type == 'wms' || type == 'wmts' || type == 'wmsdem' || type == 'chart') {
           return true;
         }
       };
