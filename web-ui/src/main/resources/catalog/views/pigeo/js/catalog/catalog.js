@@ -207,6 +207,9 @@
 
     layerCache_[layerCacheKey] = layer;
 
+    if(node.checked) {
+      this.map.addLayer(layer);
+    }
     return layer;
   };
 
