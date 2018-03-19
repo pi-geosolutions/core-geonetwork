@@ -30,7 +30,7 @@
   <a href="" ng-click="loadNodeInfo(layertreeCtrl.node)" data-ng-class="{active : layertreeCtrl.node.id == activeLayer.id}">
     <i class="fa" ng-click="layertreeCtrl.node.checked = !layertreeCtrl.node.checked" ng-class="layertreeCtrl.node.checked ? 'fa-check-square' : 'fa-square'"></i>
     <i data-ng-if="::layertreeCtrl.node.type == 'chart'" class="fa fa-pie-chart chart-icon"></i>
-    <i data-ng-if="::layertreeCtrl.node.type == 'wms' || layertreeCtrl.node.type == 'wmts'" class="fa fa-globe"></i>
+    <i data-ng-if="::layertreeCtrl.node.type == 'wms' || layertreeCtrl.node.type == 'wmts' || layertreeCtrl.node.type == 'wmsdem'" class="fa fa-globe"></i>
     {{layertreeCtrl.node.text}}
   </a>
 </div>

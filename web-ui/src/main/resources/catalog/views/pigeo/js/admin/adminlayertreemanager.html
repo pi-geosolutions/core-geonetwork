@@ -60,6 +60,10 @@
               <span class="fa fa-globe"></span>
               <span translate="">addwmts</span>
             </a></li>
+            <li><a href="" ng-click="createNode('wmsdem')">
+              <span class="fa fa-globe"></span>
+              <span translate="">addwmsdem</span>
+            </a></li>
             <li><a href="" ng-click="createNode('chart')">
               <span class="fa fa-pie-chart"></span>
               <span translate="">addchart</span>
@@ -172,7 +176,7 @@
       </div>
 
       <!--WMS features-->
-      <div class="panel panel-default" ng-if="activeLayer.type == 'wms' || activeLayer.type == 'wmts'">
+      <div class="panel panel-default" ng-if="activeLayer.type == 'wms' || activeLayer.type == 'wmts' || activeLayer.type == 'wmsdem'">
         <div class="panel-heading" data-toggle="collapse" data-target="#wmsFeatures">
           <a role="button" translate="">
             wmsFeatures
@@ -198,11 +202,14 @@
                 <input data-ng-model="activeLayer.legend" class="form-control input-sm" placeholder="http://">
               </div>
             </div>
-            <label class="radio-inline col-md-offset-3">
+            <label class="radio-inline col-md-offset-3" ng-if="activeLayer.type != 'wmsdem'">
               <input type="radio" name="format" data-ng-model="activeLayer.format" value="image/png">image/png
             </label>
-            <label class="radio-inline col-md-offset-3">
+            <label class="radio-inline col-md-offset-3" ng-if="activeLayer.type != 'wmsdem'">
               <input type="radio" name="format" data-ng-model="activeLayer.format" id="inlineRadio2" value="image/jpeg">image/jpeg
+            </label>
+            <label class="radio-inline col-md-offset-3" ng-if="activeLayer.type == 'wmsdem'">
+              <input type="radio" name="format" data-ng-model="activeLayer.format" id="inlineRadio2" value="image/bil">image/bil
             </label>
             <div class="checkbox col-md-offset-3">
               <label>
@@ -398,7 +405,7 @@
       </div>
 
       <!--Metadata reference-->
-      <div class="panel panel-default" ng-if="activeLayer.type == 'wms' || activeLayer.type == 'wmts' ">
+      <div class="panel panel-default" ng-if="activeLayer.type == 'wms' || activeLayer.type == 'wmts' || activeLayer.type == 'wmsdem' ">
         <div class="panel-heading" data-toggle="collapse" data-target="#mdinfo">
           <a role="button" translate="">
             mdreference
