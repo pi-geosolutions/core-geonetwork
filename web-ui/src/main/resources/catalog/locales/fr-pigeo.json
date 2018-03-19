@@ -49,6 +49,7 @@
   "addfolder": "Ajouter un répertoire",
   "addwms": "Ajouter une couche WMS",
   "addwmts": "Ajouter une couche WMTS",
+  "addwmsdem": "Ajouter une couche MNT WMS",
   "addchart": "Ajouter une couche Chart",
   "remove": "Supprimer",
   "reload": "Recharger",

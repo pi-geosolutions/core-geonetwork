@@ -48,6 +48,7 @@
     "addfolder": "Add a folder",
     "addwms": "Add a WMS layer",
     "addwmts": "Add a WMTS layer",
+    "addwmsdem": "Add a DEM WMS layer",
     "addchart": "Add a chart layer",
     "remove": "Delete",
     "reload": "Reload",
