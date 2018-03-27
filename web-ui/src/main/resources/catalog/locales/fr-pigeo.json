@@ -116,6 +116,8 @@
   "ui.ci-sgie.subtitle": "Information Environnementale sur la Zone Côtière en Cote d'Ivoire",
   "ui.ml-risk.title": "Mali",
   "ui.ml-risk.subtitle": "Gestion des risques",
+  "ui.bi-risk.title": "Burundi",
+  "ui.bi-risk.subtitle": "Gestion des risques",
   "ui.rdc-risk.title": "République Démocratique du Congo",
   "ui.rdc-risk.subtitle": "Gestion des risques",
   "ui.afo.title": "Afrique de l'Ouest",
@@ -155,5 +157,7 @@
   "au.cercles":"Cercles",
   "au.communes":"Communes",
   "au.sousprefectures":"Sous préfectures",
-  "au.departements":"Départements"
+  "au.departements":"Départements",
+  "au.provinces":"Provinces",
+  "au.collines":"Collines"
 }

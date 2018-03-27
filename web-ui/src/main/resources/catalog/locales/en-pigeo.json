@@ -112,6 +112,8 @@
     "ui.niger.subtitle": "Risks management",
     "ui.ml-risk.title": "Mali",
     "ui.ml-risk.subtitle": "Risks management",
+    "ui.bi-risk.title": "Burundi",
+    "ui.bi-risk.subtitle": "Risks management",
     "ui.ci-sgie.title": "SGIE",
     "ui.ci-sgie.subtitle": "Environmental Information on Coastal Area in Ivory Coast",
     "ui.rdc-risk.title": "Democratic Republic of the Congo",
@@ -153,5 +155,7 @@
     "au.cercles":"Circles",
     "au.communes":"Municipalities",
     "au.sousprefectures":"Sub-prefectures",
-    "au.departements":"Departements"
+    "au.departements":"Departements",
+    "au.provinces":"Provinces",
+    "au.collines":"Collines"
 }
