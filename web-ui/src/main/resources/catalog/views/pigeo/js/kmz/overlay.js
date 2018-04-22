@@ -133,7 +133,7 @@
 
           // Replace image url with one from KMZ
           var match =
-            desc.match(/\<img.+src\=(?:\"|\')(.+?)(?:\"|\')(?:.+?)\>/);
+            desc.match(/\<img.+src\s*\=\s*(?:\"|\')(.+?)(?:\"|\')(?:.+?)\>/);
           if(match && match[1]) {
             if(this.kmzService.imageMapping[match[1]]) {
               desc = desc.replace(match[1],

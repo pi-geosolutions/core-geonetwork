@@ -28,7 +28,7 @@
   ]);
 
   var kmlimportTemplateURL = '../../catalog/components/viewer/wmsimport/' +
-      'partials/kmlimport.html';
+    'partials/kmlimport.html';
   module.value('kmlimportTemplateURL', kmlimportTemplateURL);
 
   /**
@@ -75,19 +75,19 @@
               return layer;
             } else if ($scope.format == 'wfs') {
               var layer = gnMap.addWfsToMapFromCap($scope.map, getCapLayer,
-                  $scope.url);
+                $scope.url);
               gnMap.feedLayerMd(layer);
               return layer;
             } else if ($scope.format == 'wmts') {
               return gnMap.addWmtsToMapFromCap($scope.map, getCapLayer,
-                  $scope.capability);
+                $scope.capability);
             }
           };
         }],
         link: function(scope, element, attrs) {
           scope.loading = false;
           scope.format = attrs['gnWmsImport'] != '' ?
-              attrs['gnWmsImport'] : 'all';
+            attrs['gnWmsImport'] : 'all';
           scope.serviceDesc = null;
           scope.servicesList = gnViewerSettings.servicesUrl[scope.format];
           scope.catServicesList = [];
@@ -140,7 +140,7 @@
             if (scope.url) {
               scope.loading = true;
               gnOwsCapabilities['get' + type.toUpperCase() +
-                  'Capabilities'](scope.url).then(function(capability) {
+              'Capabilities'](scope.url).then(function(capability) {
                 scope.loading = false;
                 scope.capability = capability;
               });
@@ -203,28 +203,28 @@
               }
 
               $http.get(gnGlobalSettings.proxyUrl + encodeURIComponent(url)).
-                  then(function(response) {
-                    var kmlSource = new ol.source.Vector();
-                    kmlSource.addFeatures(
-                    new ol.format.KML().readFeatures(
+              then(function(response) {
+                var kmlSource = new ol.source.Vector();
+                kmlSource.addFeatures(
+                  new ol.format.KML().readFeatures(
                     response.data, {
                       featureProjection: $scope.map.getView().getProjection(),
                       dataProjection: 'EPSG:4326'
                     }));
-                    var vector = new ol.layer.Vector({
-                      source: kmlSource,
-                      getinfo: true,
-                      kml: true,
-                      label: $translate.instant('kmlFile',
-                      {layer: url.split('/').pop()})
-                    });
-                    $scope.addToMap(vector, map);
-                    $scope.url = '';
-                    $scope.validUrl = true;
+                var vector = new ol.layer.Vector({
+                  source: kmlSource,
+                  getinfo: true,
+                  kml: true,
+                  label: $translate.instant('kmlFile',
+                    {layer: url.split('/').pop()})
+                });
+                $scope.addToMap(vector, map);
+                $scope.url = '';
+                $scope.validUrl = true;
 
-                  }, function() {
-                    $scope.validUrl = false;
-                  });
+              }, function() {
+                $scope.validUrl = false;
+              });
             };
 
             $scope.addToMap = function(layer, map) {
@@ -232,11 +232,11 @@
               layer.displayInLayerManager = true;
               map.getLayers().push(layer);
               map.getView().fit(layer.getSource().getExtent(),
-                  map.getSize());
+                map.getSize());
 
               gnAlertService.addAlert({
                 msg: $translate.instant('layerAdded',
-                    {layer: layer.get('label')}),
+                  {layer: layer.get('label')}),
                 type: 'success'
               });
             };
@@ -248,14 +248,14 @@
 
           /** File drag & drop support */
           var dragAndDropInteraction =
-              new ol.interaction.DragAndDrop({
-                formatConstructors: [
-                  ol.format.GPX,
-                  ol.format.GeoJSON,
-                  ol.format.KML,
-                  ol.format.TopoJSON
-                ]
-              });
+            new ol.interaction.DragAndDrop({
+              formatConstructors: [
+                ol.format.GPX,
+                ol.format.GeoJSON,
+                ol.format.KML,
+                ol.format.TopoJSON
+              ]
+            });
 
           var onError = function(msg) {
             gnAlertService.addAlert({
@@ -318,7 +318,7 @@
               getinfo: true,
               kml: true,
               label: $translate.instant('localLayerFile',
-                  {layer: event.file.name})
+                {layer: event.file.name})
             });
             scope.addToMap(layer, scope.map);
             scope.$apply();
@@ -326,7 +326,7 @@
 
 
           var requestFileSystem = window.webkitRequestFileSystem ||
-              window.mozRequestFileSystem || window.requestFileSystem;
+            window.mozRequestFileSystem || window.requestFileSystem;
           var unzipProgress = document.createElement('progress');
           var fileInput = element.find('input[type="file"]')[0];
 
@@ -357,16 +357,16 @@
               });
 
               var listenerKey = vector.getSource().on('change',
-                  function(evt) {
-                    if (vector.getSource().getState() == 'ready') {
-                      vector.getSource().unByKey(listenerKey);
-                      scope.addToMap(vector, scope.map);
-                      entry.loading = false;
-                    }
-                    else if (vector.getSource().getState() == 'error') {
-                    }
-                    scope.$apply();
-                  });
+                function(evt) {
+                  if (vector.getSource().getState() == 'ready') {
+                    vector.getSource().unByKey(listenerKey);
+                    scope.addToMap(vector, scope.map);
+                    entry.loading = false;
+                  }
+                  else if (vector.getSource().getState() == 'error') {
+                  }
+                  scope.$apply();
+                });
             }, function(current, total) {
               unzipProgress.value = current;
               unzipProgress.max = total;
@@ -447,19 +447,19 @@
             scope.layer = controller.addLayer(scope.member);
             gnAlertService.addAlert({
               msg: $translate.instant('layerAdded', {layer:
-                    (scope.member.Title || scope.member.title)
+                (scope.member.Title || scope.member.title)
               }),
               type: 'success'
             });
           };
           var toggleNode = function() {
             el.find('.fa').first().toggleClass('fa-folder-o')
-                .toggleClass('fa-folder-open-o');
+              .toggleClass('fa-folder-open-o');
             el.children('ul').toggle();
           };
           if (angular.isArray(scope.member.Layer)) {
             element.append("<gn-cap-tree-col class='list-group' " +
-                "collection='member.Layer'></gn-cap-tree-col>");
+              "collection='member.Layer'></gn-cap-tree-col>");
             $compile(element.contents())(scope);
           }
           scope.handle = function(evt) {
