@@ -32,7 +32,9 @@
           delete node[p];
         }
       }
-      node.jsonextensions = json.join(',');
+      if(json.length) {
+        node.jsonextensions = json.join(',');
+      }
       if(node.children) {
         node.children.forEach(function(n) {
           n.weight = weight++;
@@ -118,6 +120,8 @@
     };
 
     function json2xml(o, tab) {
+      var propOrder = ['id', 'jsonextensions', 'lastchanged', 'weight', 'group', 'children'];
+
       var toXml = function(v, name, ind) {
         var xml = "";
         if (v instanceof Array) {
@@ -125,16 +129,17 @@
             xml += ind + toXml(v[i], name, ind+"\t") + "\n";
         }
         else if (typeof(v) == "object") {
-          var hasChild = false;
+          var hasChild = true;
           xml += ind + "<" + name;
-          for (var m in v) {
-            if (m.charAt(0) == "@")
-              xml += " " + m.substr(1) + "=\"" + v[m].toString() + "\"";
-            else
-              hasChild = true;
-          }
           xml += hasChild ? ">" : "/>";
-          if (hasChild) {
+
+          if(name == 'children') {
+            propOrder.forEach(function(m) {
+              if (angular.isUndefined(v[m])) return;
+              xml += toXml(v[m], m, ind+"\t");
+            });
+          }
+          else {
             for (var m in v) {
               if (m == "#text")
                 xml += v[m];
@@ -143,16 +148,20 @@
               else if (m.charAt(0) != "@")
                 xml += toXml(v[m], m, ind+"\t");
             }
-            xml += (xml.charAt(xml.length-1)=="\n"?ind:"") + "</" + name + ">";
           }
+          xml += (xml.charAt(xml.length-1)=="\n"?ind:"") + "</" + name + ">";
         }
         else {
           xml += ind + "<" + name + ">" + v.toString() +  "</" + name + ">";
         }
         return xml;
       }, xml="";
-      for (var m in o)
-        xml += toXml(o[m], m, "");
+
+      propOrder.forEach(function(m) {
+        if(o[m]) {
+          xml += toXml(o[m], m, "");
+        }
+      });
       return tab ? xml.replace(/\t/g, tab) : xml.replace(/\t|\n/g, "");
     };
 
