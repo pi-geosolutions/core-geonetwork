@@ -46,6 +46,7 @@
              gnSearchManagerService, gnUtilityService, $timeout) {
 
       $scope.searchObj = {
+        internal: true,
         params: {
           template: 'y or s or n',
           sortBy: 'title'
@@ -407,6 +408,8 @@
       // TODO: Check if can be moved to arcsde.js
       $scope.$watch('harvesterSelected.site.connectionType',
           function(newValue) {
+            if (!$scope.harvesterSelected) return;
+
             if ($scope.harvesterSelected['@type'] === 'arcsde') {
               if (newValue === 'ARCSDE') {
                 $scope.harvesterSelected.site.databaseType = '';

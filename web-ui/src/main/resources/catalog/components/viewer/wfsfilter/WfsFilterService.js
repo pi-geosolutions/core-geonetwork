@@ -165,22 +165,21 @@
         };
 
         angular.forEach(facetState, function(attrValue, attrName) {
-          // fetch field info from attr name (expects 'ft_xxx_yy')
-          var fieldInfo = attrName.match(/ft_(.*)_([a-z]{1})?([a-z]{1})?$/);
+          // fetch field info from attr name (expects 'ft_xxx_yy_zz')
+          var fieldInfo = attrName.match(/ft_(.*?)_([a-z]+)(?:_(tree))?$/);
           var fieldName = fieldInfo ? fieldInfo[1] : attrName;
+          var type = attrValue.type || 'terms';
 
           // multiple values
           if (attrValue.values && Object.keys(attrValue.values).length) {
-            var multiValued = fieldInfo[3] != undefined;
-
             Array.prototype.push.apply(sldConfig.filters, buildSldFilter(
-                fieldName, attrValue.values, attrValue.type, multiValued));
+                fieldName, attrValue.values, type, true));
           }
 
           // single value
           else if (attrValue.value) {
             Array.prototype.push.apply(sldConfig.filters, buildSldFilter(
-                fieldName, attrValue.value, attrValue.type, false));
+                fieldName, attrValue.value, type, false));
           }
         });
 
@@ -262,7 +261,7 @@
         // Add appProfile extra fields
         newFields.forEach(function(f) {
           if (mergedF.indexOf(f.name) < 0) {
-            f.label = f.name;
+            f.label = f.label[gnGlobalSettings.lang] || f.name;
             fields.push(f);
           }
         });
@@ -360,8 +359,8 @@
             var escaped = k.replace(/'/g, '\\\'');
             clause.push(
                 (config.isTokenized) ?
-                "(" + paramName + " LIKE '%" + escaped + "%')" :
-                "(" + paramName + " = '" + escaped + "')"
+                '(' + paramName + " LIKE '%" + escaped + "%')" :
+                '(' + paramName + " = '" + escaped + "')"
             );
           });
           if (clause.length == 0) return;
@@ -374,7 +373,8 @@
        * takes an ElasticSearch request object as input and ouputs a simplified
        * object with properties describing names and values of the defined
        * filters.
-       * note: only qParams are taken into account.
+       * Values are always an array holding the different values if any.
+       * note: the bbox filter is set in the 'geometry' key
        *
        * @param {Object} elasticSearchObject
        */
@@ -387,26 +387,34 @@
           angular.forEach(state.qParams, function(fObj, fName) {
             var config = esObject.getIdxNameObj_(fName);
 
-            // special case: date time, use 'from' property
+            // init array
+            result[fName] = [];
+
+            // special case: date time, use 'from' and 'to' properties
             if (config.isDateTime) {
               if (fObj.values.from) {
-                result[fName] = transformDate(fObj.values.from);
+                result[fName].push(transformDate(fObj.values.from));
+              }
+              if (fObj.values.to) {
+                result[fName].push(transformDate(fObj.values.to));
               }
               return;
             }
 
-            // only the last value found will be kept
+            // adding all values to the array
             angular.forEach(fObj.values, function(value, key) {
-              result[fName] = key;
+              result[fName].push(key);
             });
           });
 
-          // add geometry
+          // add geometry (array with only one value)
           if (state.geometry) {
-            result.geometry = state.geometry[0][0] + ',' +
-                state.geometry[1][1] + ',' +
-                state.geometry[1][0] + ',' +
-                state.geometry[0][1];
+            result.geometry = [
+              state.geometry[0][0] + ',' +
+                  state.geometry[1][1] + ',' +
+                  state.geometry[1][0] + ',' +
+                  state.geometry[0][1]
+            ];
           }
         }
 

@@ -130,7 +130,7 @@
 
         <!-- Create form for all existing attribute (not in gn namespace)
          and all non existing attributes not already present. -->
-        <div class="well well-sm gn-attr {if ($isDisplayingAttributes) then '' else 'hidden'}">
+        <div class="well well-sm gn-attr {if ($isDisplayingAttributes = true()) then '' else 'hidden'}">
           <xsl:apply-templates mode="render-for-field-for-attribute"
                                select="
             ../../@*|
@@ -174,7 +174,7 @@
       <label class="col-sm-2 control-label">
         <xsl:value-of select="$labelConfig/label"/>
       </label>
-      <div class="col-sm-9 gn-value">
+      <div class="col-sm-9 gn-value nopadding-in-table">
         <div data-gn-date-picker="{gco:Date|gco:DateTime}"
              data-label=""
              data-element-name="{name(gco:Date|gco:DateTime)}"
@@ -184,7 +184,7 @@
 
         <!-- Create form for all existing attribute (not in gn namespace)
          and all non existing attributes not already present. -->
-        <div class="well well-sm gn-attr {if ($isDisplayingAttributes) then '' else 'hidden'}">
+        <div class="well well-sm gn-attr {if ($isDisplayingAttributes = true()) then '' else 'hidden'}">
           <xsl:apply-templates mode="render-for-field-for-attribute"
                                select="
             ../../@*|

@@ -27,13 +27,20 @@
 
 
 
+
+
+
+
+
   goog.require('gn_atom');
+  goog.require('gn_related_observer_directive');
   goog.require('gn_relatedresources_service');
   goog.require('gn_wms');
   goog.require('gn_wmts');
 
   var module = angular.module('gn_related_directive', [
-    'gn_relatedresources_service', 'gn_wms', 'gn_wmts', 'gn_atom'
+    'gn_relatedresources_service', 'gn_related_observer_directive', 'gn_wms',
+    'gn_wmts', 'gn_atom'
   ]);
 
   /**
@@ -112,12 +119,30 @@
               user: '=',
               hasResults: '=?'
             },
+            require: '?^gnRelatedObserver',
             link: function(scope, element, attrs, controller) {
               var promise;
+              var elem = element[0];
+              scope.lang = scope.lang || scope.$parent.lang;
+              element.on('$destroy', function() {
+                // Unregister the directive in the observer if it is defined
+                if (controller) {
+                  controller.unregisterGnRelated(elem);
+                }
+              });
+
+              if (controller) {
+                // Register the directive in the observer
+                controller.registerGnRelated(elem);
+              }
+
               scope.updateRelations = function() {
                 scope.relations = null;
                 if (scope.uuid) {
                   scope.relationFound = false;
+                  if (controller) {
+                    controller.startGnRelatedRequest(elem);
+                  }
                   (promise = gnRelatedService.get(
                      scope.uuid, scope.types)
                   ).then(function(data) {
@@ -146,7 +171,14 @@
                            scope.relations[idx] = value;
                          }
                        });
-                     });
+                       if (controller) {
+                          controller.finishRequest(elem, scope.relationFound);
+                        }
+                     } , function() {
+                      if (controller) {
+                        controller.finishRequest(elem, false);
+                      }
+                  });
                 }
               };
 
@@ -163,10 +195,7 @@
                 return angular.isFunction(fn);
               };
 
-              scope.isLayerProtocol = function(mainType) {
-                return gnSearchSettings.mapProtocols.layers.
-                   indexOf(mainType) > -1;
-              };
+              scope.isLayerProtocol = gnRelatedService.isLayerProtocol;
 
               scope.config = gnRelatedResources;
 

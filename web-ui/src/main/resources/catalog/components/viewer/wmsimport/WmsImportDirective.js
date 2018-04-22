@@ -445,12 +445,12 @@
           var el = element;
           var select = function() {
             scope.layer = controller.addLayer(scope.member);
-            gnAlertService.addAlert({
-              msg: $translate.instant('layerAdded', {layer:
-                (scope.member.Title || scope.member.title)
-              }),
-              type: 'success'
-            });
+            // gnAlertService.addAlert({
+            //   msg: $translate.instant('layerAdded', {layer:
+            //     (scope.member.Title || scope.member.title)
+            //   }),
+            //   type: 'success'
+            // });
           };
           var toggleNode = function() {
             el.find('.fa').first().toggleClass('fa-folder-o')

@@ -27,23 +27,40 @@
 
 package org.fao.geonet.kernel;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Sets;
-import jeeves.constants.Jeeves;
-import jeeves.server.ServiceConfig;
-import jeeves.server.UserSession;
-import jeeves.server.context.ServiceContext;
-import jeeves.transaction.TransactionManager;
-import jeeves.transaction.TransactionTask;
-import jeeves.xlink.Processor;
+import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataUuid;
+import static org.springframework.data.jpa.domain.Specifications.where;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.Root;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jetty.util.ConcurrentHashSet;
 import org.fao.geonet.ApplicationContextHolder;
@@ -83,9 +100,11 @@ import org.fao.geonet.domain.Pair;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.ReservedGroup;
 import org.fao.geonet.domain.ReservedOperation;
+import org.fao.geonet.domain.SchematronRequirement;
 import org.fao.geonet.domain.User;
 import org.fao.geonet.domain.UserGroup;
 import org.fao.geonet.domain.UserGroupId;
+import org.fao.geonet.domain.userfeedback.UserFeedback;
 import org.fao.geonet.events.md.MetadataIndexCompleted;
 import org.fao.geonet.exceptions.JeevesException;
 import org.fao.geonet.exceptions.NoSchemaMatchesException;
@@ -127,6 +146,7 @@ import org.fao.geonet.repository.specification.MetadataStatusSpecs;
 import org.fao.geonet.repository.specification.OperationAllowedSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.repository.specification.UserSpecs;
+import org.fao.geonet.repository.userfeedback.UserFeedbackRepository;
 import org.fao.geonet.resources.Resources;
 import org.fao.geonet.util.ThreadUtils;
 import org.fao.geonet.utils.IO;
@@ -139,6 +159,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.filter.ElementFilter;
+import org.jdom.filter.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
@@ -152,38 +173,24 @@ import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.Root;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Function;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
 
-import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataUuid;
-import static org.springframework.data.jpa.domain.Specifications.where;
+import jeeves.constants.Jeeves;
+import jeeves.server.ServiceConfig;
+import jeeves.server.UserSession;
+import jeeves.server.context.ServiceContext;
+import jeeves.transaction.TransactionManager;
+import jeeves.transaction.TransactionTask;
+import jeeves.xlink.Processor;
 
 /**
  * Handles all operations on metadata (select,insert,update,delete etc...).
@@ -247,23 +254,65 @@ public class DataManager implements ApplicationEventPublisherAware {
         //--- Note we have to use uuid here instead of id because we don't have
         //--- an id...
 
-        Element schemaTronXml = dataMan.doSchemaTronForEditor(schema, xml, context.getLanguage());
+        Element schemaTronReport = dataMan.doSchemaTronForEditor(schema,xml,context.getLanguage());
         xml.detach();
-        if (schemaTronXml != null && schemaTronXml.getContent().size() > 0) {
-            Element schemaTronReport = dataMan.doSchemaTronForEditor(schema, xml, context.getLanguage());
-
+        if (schemaTronReport != null && schemaTronReport.getContent().size() > 0) {
             List<Namespace> theNSs = new ArrayList<Namespace>();
             theNSs.add(Namespace.getNamespace("geonet", "http://www.fao.org/geonetwork"));
             theNSs.add(Namespace.getNamespace("svrl", "http://purl.oclc.org/dsdl/svrl"));
 
-            Element failedAssert = Xml.selectElement(schemaTronReport, "geonet:report/svrl:schematron-output/svrl:failed-assert", theNSs);
-
-            Element failedSchematronVerification = Xml.selectElement(schemaTronReport, "geonet:report/geonet:schematronVerificationError", theNSs);
-
-            if ((failedAssert != null) || (failedSchematronVerification != null)) {
-                throw new SchematronValidationErrorEx("Schematron errors detected for file " + fileName + " - "
-                    + Xml.getString(schemaTronReport) + " for more details", schemaTronReport);
+            List<?> informationalReports = Xml.selectNodes(schemaTronReport,
+                    "geonet:report[@geonet:required != '" + SchematronRequirement.REQUIRED + "']", theNSs);
+            for (Object informationalReport : informationalReports) {
+                ((Element)informationalReport).detach();
             }
+            List<?> failedAssert = Xml.selectNodes(schemaTronReport,
+                    "geonet:report[@geonet:required = '" + SchematronRequirement.REQUIRED +
+                            "']/svrl:schematron-output/svrl:failed-assert", theNSs);
+
+            List<?> failedSchematronVerification = Xml.selectNodes(schemaTronReport,
+                    "geonet:report[@geonet:required = '" + SchematronRequirement.REQUIRED + "']/geonet:schematronVerificationError", theNSs);
+
+            if ((!failedAssert.isEmpty()) || (!failedSchematronVerification.isEmpty())) {
+                StringBuilder errorReport = new StringBuilder();
+
+                Iterator reports = schemaTronReport.getDescendants(DataManager.ReportFinder);
+                while(reports.hasNext()) {
+                    Element report = (Element) reports.next();
+
+                    Iterator errors = report.getDescendants(DataManager.ErrorFinder);
+                    while(errors.hasNext()) {
+                        Element err = (Element) errors.next();
+
+                        StringBuilder msg = new StringBuilder();
+                        String reportType;
+                        if (err.getName().equals("failed-assert")) {
+                            reportType = report.getAttributeValue("rule", Edit.NAMESPACE);
+                            reportType = reportType == null ? "No name for rule" : reportType;
+
+                            Iterator descendants = err.getDescendants();
+                            while (descendants.hasNext()) {
+                                Object node = descendants.next();
+                                if (node instanceof Element) {
+                                    String textTrim = ((Element) node).getTextTrim();
+                                    msg.append(textTrim).append(" \n");
+                                }
+                            }
+                        } else {
+                            reportType = "Xsd Error";
+                            msg.append(err.getChildText("message", Edit.NAMESPACE));
+                        }
+
+                        if (msg.length() > 0) {
+                            errorReport.append(reportType).append(':').append(msg);
+                        }
+                    }
+                }
+
+                throw new SchematronValidationErrorEx("Schematron errors detected for file "+fileName+" - "
+                        + errorReport + " for more details",schemaTronReport);
+            }
+
         }
 
     }
@@ -607,10 +656,8 @@ public class DataManager implements ApplicationEventPublisherAware {
                     moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.HASXLINKS, "1", true, true));
                     StringBuilder sb = new StringBuilder();
                     for (Attribute xlink : xlinks) {
-                        sb.append(xlink.getValue());
-                        sb.append(" ");
+                        moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.XLINK, xlink.getValue(), true, true));
                     }
-                    moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.XLINK, sb.toString(), true, true));
                     Processor.detachXLink(md, getServiceContext());
                 } else {
                     moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.HASXLINKS, "0", true, true));
@@ -715,6 +762,8 @@ public class DataManager implements ApplicationEventPublisherAware {
             // get privileges
             List<OperationAllowed> operationsAllowed = operationAllowedRepository.findAllById_MetadataId(id$);
 
+            boolean isPublishedToAll = false;
+
             for (OperationAllowed operationAllowed : operationsAllowed) {
                 OperationAllowedId operationAllowedId = operationAllowed.getId();
                 int groupId = operationAllowedId.getGroupId();
@@ -725,8 +774,19 @@ public class DataManager implements ApplicationEventPublisherAware {
                     Group g = groupRepository.findOne(groupId);
                     if (g != null) {
                         moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.GROUP_PUBLISHED, g.getName(), true, true));
+
+                        if (g.getId() == ReservedGroup.all.getId()) {
+                            isPublishedToAll = true;
+                        }
                     }
                 }
+
+            }
+
+            if (isPublishedToAll) {
+                moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.IS_PUBLISHED_TO_ALL, "y", true, true));
+            } else {
+                moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.IS_PUBLISHED_TO_ALL, "n", true, true));
             }
 
             for (MetadataCategory category : fullMd.getMetadataCategories()) {
@@ -858,6 +918,9 @@ public class DataManager implements ApplicationEventPublisherAware {
      * Use this validate method for XML documents with xsd validation.
      */
     public void validate(String schema, Element md) throws Exception {
+        if(getSettingManager().getValueAsBool(Settings.SYSTEM_METADATA_VALIDATION_REMOVESCHEMALOCATION, false)) {
+            md.removeAttribute("schemaLocation", Namespaces.XSI);
+        }
         String schemaLoc = md.getAttributeValue("schemaLocation", Namespaces.XSI);
         if (Log.isDebugEnabled(Geonet.DATA_MANAGER))
             Log.debug(Geonet.DATA_MANAGER, "Extracted schemaLocation of " + schemaLoc);
@@ -881,6 +944,11 @@ public class DataManager implements ApplicationEventPublisherAware {
      * TODO javadoc.
      */
     public Element validateInfo(String schema, Element md, ErrorHandler eh) throws Exception {
+
+        if(getSettingManager().getValueAsBool(Settings.SYSTEM_METADATA_VALIDATION_REMOVESCHEMALOCATION, false)) {
+            md.removeAttribute("schemaLocation", Namespaces.XSI);
+        }
+
         String schemaLoc = md.getAttributeValue("schemaLocation", Namespaces.XSI);
         if (Log.isDebugEnabled(Geonet.DATA_MANAGER))
             Log.debug(Geonet.DATA_MANAGER, "Extracted schemaLocation of " + schemaLoc);
@@ -1874,6 +1942,8 @@ public class DataManager implements ApplicationEventPublisherAware {
             uuid = extractUUID(schema, metadataXml);
         }
 
+        checkMetadataWithSameUuidExist(uuid, metadata.getId());
+
         //--- write metadata to dbms
         getXmlSerializer().update(metadataId, metadataXml, changeDate, updateDateStamp, uuid, context);
         // Notifies the metadata change to metadata notifier service
@@ -1905,6 +1975,27 @@ public class DataManager implements ApplicationEventPublisherAware {
 
         // Return an up to date metadata record
         return getMetadataRepository().findOne(metadataId);
+    }
+
+    /**
+     * Check if another record exist with that UUID. This is not allowed
+     * and would return a DataIntegrityViolationException
+     *
+     * @param uuid  The UUID to check for
+     * @param id    The current record id to compare with other record which may be found
+     * @return      An exception if another record is found, false otherwise
+     */
+    private boolean checkMetadataWithSameUuidExist(String uuid, int id) {
+        // Check if another record exist with that UUID
+        Metadata recordWithThatUuid = getMetadataRepository().findOneByUuid(uuid);
+        if (recordWithThatUuid != null &&
+            recordWithThatUuid.getId() != id) {
+            // If yes, this would have triggered a DataIntegrityViolationException
+            throw new IllegalArgumentException(String.format(
+                "Another record exist with UUID '%s'. This record as internal id '%d'. The record you're trying to update with id '%d' can not be saved.",
+                uuid, recordWithThatUuid.getId(), id));
+        }
+        return false;
     }
 
     /**
@@ -2175,6 +2266,9 @@ public class DataManager implements ApplicationEventPublisherAware {
         //--- remove operations
         deleteMetadataOper(context, id, false);
 
+        //--- remove user comments
+        deleteMetadataUserFeedback_byMetadataId(context, metadata.getUuid());
+
         int intId = Integer.parseInt(id);
         getApplicationContext().getBean(MetadataRatingByIpRepository.class).deleteAllById_MetadataId(intId);
         getBean(MetadataValidationRepository.class).deleteAllById_MetadataId(intId);
@@ -2195,6 +2289,14 @@ public class DataManager implements ApplicationEventPublisherAware {
 
         //--- remove metadata
         getXmlSerializer().delete(id, context);
+    }
+
+    /**
+     * Removes all userfeedbacks associated with metadata.
+     */
+    public void deleteMetadataUserFeedback_byMetadataId(ServiceContext context, String metadataUUId) throws Exception {
+        UserFeedbackRepository userfeedbackRepository = context.getBean(UserFeedbackRepository.class);
+        userfeedbackRepository.deleteByMetadata_Uuid(metadataUUId);
     }
 
     private MetaSearcher searcherForReferencingMetadata(ServiceContext context, Metadata metadata) throws Exception {
@@ -3398,4 +3500,41 @@ public class DataManager implements ApplicationEventPublisherAware {
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
     }
+
+    /**
+     * Filter to find errors in schematron response (error on REQUIRED elements)
+     */
+    public static final Filter ErrorFinder  = new Filter() {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public boolean matches(Object obj) {
+            if (obj instanceof Element) {
+                Element element = (Element) obj;
+                String name = element.getName();
+                if (name.equals("error")) {
+                    return true;
+                } else if (name.equals("failed-assert")) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
+    public static final Filter ReportFinder = new Filter() {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public boolean matches(Object obj) {
+            if (obj instanceof Element) {
+                Element element = (Element) obj;
+                String name = element.getName();
+                if (name.equals("report") || name.equals("xsderrors")) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
+
 }

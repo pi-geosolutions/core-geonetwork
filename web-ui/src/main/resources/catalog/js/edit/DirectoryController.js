@@ -90,6 +90,7 @@
       $scope.ownerGroup = null;
       $scope.defaultSearchObj = {
         selectionBucket: 'd101',
+        any: '',
         params: {
           _isTemplate: 's',
           any: '',
@@ -238,6 +239,7 @@
       $scope.getEntries = function(type) {
         if (type) {
           $scope.searchObj.params._root = type;
+          $scope.defaultSearchObj.params._root = type;
         }
         $scope.$broadcast('clearResults');
         $scope.$broadcast('search');
@@ -504,6 +506,7 @@
         angular.extend(gnCurrentEdit, {
           id: id,
           formId: '#gn-editor-' + id,
+          containerId: '#gn-editor-container-' + id,
           tab: 'simple',
           displayTooltips: false,
           compileScope: $scope,
@@ -512,13 +515,13 @@
         });
 
         $scope.gnCurrentEdit = gnCurrentEdit;
-        $scope.editorFormUrl = '';
 
-        // put this out of the flow to clear the form first
-        setTimeout(function() {
-          $scope.editorFormUrl = gnEditor
-              .buildEditUrlPrefix('editor') +
-              '&starteditingsession=yes&random=' + i++;
+        $scope.editorFormUrl = gnEditor
+            .buildEditUrlPrefix('editor') +
+            '&starteditingsession=yes&random=' + i++;
+
+        gnEditor.load($scope.editorFormUrl).then(function() {
+          // $scope.onFormLoad();
         });
       };
 
@@ -532,24 +535,17 @@
         $scope.activeEntry = e;
         $('#gn-share').modal('show');
       };
-      $scope.$on('PrivilegesUpdated', function() {
+      $scope.closePermissionsEdit = function() {
         // clear active entry if privileges were updated from the list
         if (!$scope.currentEditorAction) {
           $scope.activeEntry = null;
+          $scope.$apply();
         }
+      };
+      // close modal on privileges update
+      $scope.$on('PrivilegesUpdated', function() {
         $('#gn-share').modal('hide');
       });
-
-      // UI utils
-      $scope.getOwnerName = function(e) {
-        return e.userinfo.split('|')[0];
-      };
-      $scope.getCreateDate = function(e) {
-        return moment(e['geonet:info'].createDate).format('LLL');
-      };
-      $scope.getChangeDate = function(e) {
-        return moment(e['geonet:info'].changeDate).format('LLL');
-      };
 
       // switch to templates (b === true) or entries (b === false)
       $scope.showTemplates = function(b) {
@@ -559,6 +555,12 @@
       };
       $scope.templatesShown = function() {
         return $scope.searchObj.params._isTemplate === 't';
+      };
+
+      // Append * for like search
+      $scope.updateParams = function() {
+        $scope.searchObj.params.any =
+            '*' + $scope.searchObj.any + '*';
       };
 
       init();

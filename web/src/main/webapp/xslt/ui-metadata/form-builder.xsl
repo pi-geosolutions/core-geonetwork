@@ -159,7 +159,7 @@
       <xsl:otherwise>
 
         <div
-          class="form-group gn-field gn-{substring-after(name(), ':')} {if ($isRequired) then 'gn-required' else ''} {if ($isFirst) then '' else 'gn-extra-field'}"
+          class="form-group gn-field gn-{substring-after(name(), ':')} {if ($isRequired) then 'gn-required' else ''} {if ($label/condition) then concat('gn-', $label/condition) else ''} {if ($isFirst) then '' else 'gn-extra-field'}"
           id="gn-el-{$editInfo/@ref}"
           data-gn-field-highlight="">
           <label
@@ -168,7 +168,7 @@
             <xsl:value-of select="$label/label"/>
           </label>
 
-          <div class="col-sm-9 gn-value">
+          <div class="col-sm-9 gn-value nopadding-in-table">
             <xsl:if test="$isMultilingual">
               <xsl:attribute name="data-gn-multilingual-field"
                              select="$metadataOtherLanguagesAsJson"/>
@@ -253,13 +253,13 @@
               <xsl:with-param name="domeElementToMoveRef" select="$editInfo/@ref"/>
             </xsl:call-template>
 
-
             <xsl:if test="$attributesSnippet">
               <xsl:variable name="cssDefaultClass" select="'well well-sm'"/>
               <div class="{$cssDefaultClass}
                 {if ($forceDisplayAttributes) then 'gn-attr-mandatory' else 'gn-attr'}
-                {if ($isDisplayingAttributes or $forceDisplayAttributes) then '' else 'hidden'}">
+                {if ($isDisplayingAttributes = true() or $forceDisplayAttributes = true()) then '' else 'hidden'}">
                 <xsl:copy-of select="$attributesSnippet"/>
+
               </div>
             </xsl:if>
 
@@ -374,7 +374,7 @@
       </legend>
 
       <xsl:if test="count($attributesSnippet/*) > 0">
-        <div class="well well-sm gn-attr {if ($isDisplayingAttributes) then '' else 'hidden'}">
+        <div class="well well-sm gn-attr {if ($isDisplayingAttributes = true()) then '' else 'hidden'}">
           <xsl:copy-of select="$attributesSnippet"/>
         </div>
       </xsl:if>
@@ -807,7 +807,33 @@
 
                     If only one choice, make a simple button
               -->
-              <xsl:when test="count($childEditInfo/gn:choose) = 1 and not($addDirective)">
+              <xsl:when test="$qualifiedName = 'gfc:code' and $schema='iso19110'">
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle fa fa-plus gn-add" data-toggle="dropdown" title="{$i18n/addA} {$label}">
+                    <span/>
+                    <span class="caret"/>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <xsl:variable name="name" select="'gco:CharacterString'"/>
+                    <xsl:variable name="label" select="gn-fn-metadata:getLabel($schema, $name, $labels)"/>
+                    <li title="{$label/description}">
+                      <a data-gn-click-and-spin="addChoice({$parentEditInfo/@ref}, '{$qualifiedName}', '{$name}', '{$id}', 'replaceWith');">
+                        <xsl:value-of select="$label/label"/>
+                      </a>
+                    </li>
+                    <xsl:variable name="name2" select="'gmx:Anchor'"/>
+                    <xsl:variable name="label2" select="gn-fn-metadata:getLabel($schema, $name2, $labels)"/>
+                    <li title="{$label2/description}">
+                      <a data-gn-click-and-spin="addChoice({$parentEditInfo/@ref}, '{$qualifiedName}', '{$name2}', '{$id}', 'replaceWith');">
+                        <xsl:value-of select="$label2/label"/>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </xsl:when>
+
+              <xsl:when test="count($childEditInfo/gn:choose) = 1">
                 <xsl:for-each select="$childEditInfo/gn:choose">
                   <xsl:variable name="label"
                                 select="gn-fn-metadata:getLabel($schema, @name, $labels, $parentName, '', '')"/>
@@ -829,7 +855,7 @@
               </xsl:when>
               <!--
                     If many choices, make a dropdown button -->
-              <xsl:when test="count($childEditInfo/gn:choose) > 1 and not($addDirective)">
+              <xsl:when test="count($childEditInfo/gn:choose) > 1">
                 <div class="btn-group">
                   <button type="button"
                           class="btn btn-default dropdown-toggle {if ($btnClass != '') then $btnClass else 'fa fa-plus'} gn-add"
@@ -1299,12 +1325,12 @@
         <xsl:variable name="elementToMoveRef"
                       select="if ($elementEditInfo) then $elementEditInfo/@ref else ''"/>
         <a
-          class="fa fa-angle-up {if ($elementEditInfo and $elementEditInfo/@up = 'true') then '' else 'invisible'}"
+          class="fa fa-angle-up {if ($elementEditInfo and $elementEditInfo/@up = 'true') then '' else 'hidden'}"
           data-gn-editor-control-move="{$elementToMoveRef}"
           data-domelement-to-move="{$domeElementToMoveRef}"
           data-direction="up" href="" tabindex="-1"></a>
         <a
-          class="fa fa-angle-down {if ($elementEditInfo and $elementEditInfo/@down = 'true') then '' else 'invisible'}"
+          class="fa fa-angle-down {if ($elementEditInfo and $elementEditInfo/@down = 'true') then '' else 'hidden'}"
           data-gn-editor-control-move="{$elementToMoveRef}"
           data-domelement-to-move="{$domeElementToMoveRef}"
           data-direction="down" href="" tabindex="-1"></a>
@@ -1409,10 +1435,10 @@
     <xsl:param name="insertRef" select="''"/>
 
     <xsl:variable name="attributeLabel" select="gn-fn-metadata:getLabel($schema, @name, $labels)"/>
-    <button type="button" class="btn btn-link btn-xs"
+    <button type="button" class="btn btn-default btn-xs"
             data-gn-click-and-spin="add('{$ref}', '{@name}', '{$insertRef}', null, true)"
             title="{$attributeLabel/description}">
-      <i class="fa fa-plus"/>
+      <i class="fa fa-plus fa-fw"/>
       <xsl:value-of select="$attributeLabel/label"/>
     </button>
   </xsl:template>
@@ -1555,6 +1581,27 @@
                                               else concat('_', */gn:element/@ref)"/>
 
                         <xsl:choose>
+                          <xsl:when test="@type = 'select'">
+                            <select class="form-control"
+                                      name="{$name}">
+                              <xsl:variable name="value"
+                                            select="*/text()"/>
+                              <option></option>
+                              <xsl:for-each select="options/option">
+                                <option value="{@value}">
+                                  <xsl:if test="@value = $value">
+                                    <xsl:attribute name="selected">selected</xsl:attribute>
+                                  </xsl:if>
+                                  <xsl:value-of select="."/>
+                                </option>
+                              </xsl:for-each>
+                              <xsl:if test="count(options/option[@value = $value]) = 0">
+                                <option value="{$value}">
+                                  <xsl:value-of select="$value"/>
+                                </option>
+                              </xsl:if>
+                            </select>
+                          </xsl:when>
                           <xsl:when test="@type = 'textarea'">
                             <!-- TODO: Multilingual, codelist, date ... -->
                             <textarea class="form-control"
