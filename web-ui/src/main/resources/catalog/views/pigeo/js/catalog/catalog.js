@@ -210,6 +210,13 @@
     if(node.checked) {
       this.map.addLayer(layer);
     }
+    if(node.opacity) {
+      try {
+        var opacity = parseFloat(node.opacity);
+        if(opacity) layer.setOpacity(opacity);
+      }
+      catch (e) {}
+    }
     return layer;
   };
 
