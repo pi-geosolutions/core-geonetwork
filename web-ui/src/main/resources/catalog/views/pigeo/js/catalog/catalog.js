@@ -201,22 +201,24 @@
         pq_round: node.pq_round
       });
     }
+    if(layer) {
+      layer.set('metadataUuid', node.uuid);
+      layer.set('queryable', node.queryable);
 
-    layer.set('metadataUuid', node.uuid);
-    layer.set('queryable', node.queryable);
+      layerCache_[layerCacheKey] = layer;
 
-    layerCache_[layerCacheKey] = layer;
-
-    if(node.checked) {
-      this.map.addLayer(layer);
-    }
-    if(node.opacity) {
-      try {
-        var opacity = parseFloat(node.opacity);
-        if(opacity) layer.setOpacity(opacity);
+      if(node.checked) {
+        this.map.addLayer(layer);
       }
-      catch (e) {}
+      if(node.opacity) {
+        try {
+          var opacity = parseFloat(node.opacity);
+          if(opacity) layer.setOpacity(opacity);
+        }
+        catch (e) {}
+      }
     }
+
     return layer;
   };
 
