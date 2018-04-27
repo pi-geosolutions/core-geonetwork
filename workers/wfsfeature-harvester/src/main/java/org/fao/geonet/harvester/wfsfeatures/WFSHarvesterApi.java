@@ -37,6 +37,7 @@ import org.fao.geonet.harvester.wfsfeatures.worker.WFSHarvesterRouteBuilder;
 import org.geonetwork.messaging.JMSMessager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -49,6 +50,7 @@ import java.util.HashMap;
  * Created by fgravin on 10/29/15.
  */
 @Controller
+@Profile("es")
 @RequestMapping(value = {
         "/api/workers/data/wfs/actions",
         "/api/" + API.VERSION_0_1 + "/workers/data/wfs/actions"
