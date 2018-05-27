@@ -26,6 +26,9 @@
           if(angular.isString(node[p])) {
             json.push('"' + p + '":"' + node[p] + '"');
           }
+          else if (angular.isObject(node[p])) {
+            json.push('"' + p + '":' + JSON.stringify(node[p]));
+          }
           else {
             json.push('"' + p + '":' + node[p]);
           }
