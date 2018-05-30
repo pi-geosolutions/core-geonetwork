@@ -201,6 +201,10 @@
         pq_round: node.pq_round
       });
     }
+    if(node.pq_mobile) {
+      layer.set('mobileProcess', true);
+    }
+
     if(layer) {
       layer.set('metadataUuid', node.uuid);
       layer.set('queryable', node.queryable);

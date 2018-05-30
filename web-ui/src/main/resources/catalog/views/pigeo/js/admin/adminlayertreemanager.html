@@ -237,48 +237,56 @@
         <div id="wmsQueryable" class="panel-collapse collapse in">
           <div class="panel-body">
             <div class="form-group">
-              <label translate="" class="col-md-3 control-label">pq_layer</label>
+              <label translate="" class="col-md-3 control-label">pq_mobile</label>
               <div class="col-md-9">
-                <input data-ng-model="activeLayer.pq_layer" value="" class="form-control input-sm">
+                <input type="checkbox" value="false" data-ng-model="activeLayer.pq_mobile">
               </div>
             </div>
-            <div class="form-group">
-              <label translate="" class="col-md-3 control-label">pq_bandnb</label>
-              <div class="col-md-3">
-                <input type="number" data-ng-model="activeLayer.pq_bandnb" value="0" class="form-control input-sm">
+            <div ng-hide="activeLayer.pq_mobile">
+              <div class="form-group">
+                <label translate="" class="col-md-3 control-label">pq_layer</label>
+                <div class="col-md-9">
+                  <input data-ng-model="activeLayer.pq_layer" value="" class="form-control input-sm">
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label translate="" class="col-md-3 control-label">pq_header</label>
-              <div class="col-md-9">
-                <input data-ng-model="activeLayer.pq_header" value="" class="form-control input-sm">
+              <div class="form-group">
+                <label translate="" class="col-md-3 control-label">pq_bandnb</label>
+                <div class="col-md-3">
+                  <input type="number" data-ng-model="activeLayer.pq_bandnb" value="0" class="form-control input-sm">
+                </div>
               </div>
-            </div>
-            <div class="col-md-offset-3">
-              <label class="checkbox-inline">
-                <input type="checkbox" value="false" data-ng-model="activeLayer.pq_rastertype_fields.count">
-                <span translate="">count</span>
-              </label>
-              <label class="checkbox-inline">
-                <input type="checkbox" value="false" data-ng-model="activeLayer.pq_rastertype_fields.sum">
-                <span translate="">sum</span>
-              </label>
-              <label class="checkbox-inline">
-                <input type="checkbox" value="false" data-ng-model="activeLayer.pq_rastertype_fields.min">
-                <span translate="">min</span>
-              </label>
-              <label class="checkbox-inline">
-                <input type="checkbox" value="false" data-ng-model="activeLayer.pq_rastertype_fields.avg">
-                <span translate="">avg</span>
-              </label>
-              <label class="checkbox-inline">
-                <input type="checkbox" value="false" data-ng-model="activeLayer.pq_rastertype_fields.max">
-                <span translate="">max</span>
-              </label>
-              <label class="checkbox-inline">
-                <input type="checkbox" value="" data-ng-model="activeLayer.pq_rastertype_fields.stddev">
-                <span translate="">stddev</span>
-              </label>
+              <div class="form-group">
+                <label translate="" class="col-md-3 control-label">pq_header</label>
+                <div class="col-md-9">
+                  <input data-ng-model="activeLayer.pq_header" value="" class="form-control input-sm">
+                </div>
+              </div>
+              <div class="col-md-offset-3">
+                <label class="checkbox-inline">
+                  <input type="checkbox" value="false" data-ng-model="activeLayer.pq_rastertype_fields.count">
+                  <span translate="">count</span>
+                </label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" value="false" data-ng-model="activeLayer.pq_rastertype_fields.sum">
+                  <span translate="">sum</span>
+                </label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" value="false" data-ng-model="activeLayer.pq_rastertype_fields.min">
+                  <span translate="">min</span>
+                </label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" value="false" data-ng-model="activeLayer.pq_rastertype_fields.avg">
+                  <span translate="">avg</span>
+                </label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" value="false" data-ng-model="activeLayer.pq_rastertype_fields.max">
+                  <span translate="">max</span>
+                </label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" value="" data-ng-model="activeLayer.pq_rastertype_fields.stddev">
+                  <span translate="">stddev</span>
+                </label>
+              </div>
             </div>
           </div>
         </div>

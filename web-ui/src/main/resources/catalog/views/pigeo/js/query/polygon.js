@@ -82,8 +82,13 @@
     this.map.getLayers().on('change:length', function() {
       this.queryLayers = [];
       this.map.getLayers().getArray().forEach(function(layer) {
-        if(layer.get('queryablepolygon')) {
-          this.queryLayers.push(layer);
+        if(layer.displayInLayerManager) {
+          if(layer.get('queryablepolygon')) {
+            this.queryLayers.push(layer);
+          }
+          if(layer.get('mobileProcess')) {
+            this.queryLayers.push(layer);
+          }
         }
       }.bind(this));
       if(this.queryLayers.length) {
@@ -107,11 +112,20 @@
     };
     geojsonO.features[0].properties = {};
 
-    this.callWpsRequest_(JSON.stringify(geojsonO));
+    if(this.activeLayer.get('mobileProcess')) {
+      this.callMobileProcess_(JSON.stringify(geojsonO));
+    }
+    else {
+      this.callWpsRequest_(JSON.stringify(geojsonO));
+    }
   };
 
   gn.QueryPolygonController.prototype.handleDrawStart_ = function(e) {
     this.vector.getSource().clear();
+  };
+
+  gn.QueryPolygonController.prototype.callMobileProcess_ = function(geojson) {
+    console.log('mobile process')
   };
 
   gn.QueryPolygonController.prototype.callWpsRequest_ = function(geojson) {

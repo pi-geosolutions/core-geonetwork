@@ -2,7 +2,8 @@
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
-  <span translate="">polygonhelp</span>
+  <span ng-hide="ctrl.activeLayer.get('mobileProcess')" translate="">polygonhelp</span>
+  <span ng-show="ctrl.activeLayer.get('mobileProcess')" translate="">mobileprocesshelp</span>
 </div>
 <select class="form-control input-sm" ng-model="ctrl.activeLayer" ng-options="layer as layer.get('label') for layer in ctrl.queryLayers"></select>
 <span class="fa fa-spinner fa-spin fa-2x" ng-show="ctrl.loading"></span>
