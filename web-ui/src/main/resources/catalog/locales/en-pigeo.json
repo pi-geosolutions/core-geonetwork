@@ -160,5 +160,8 @@
     "au.sousprefectures":"Sub-prefectures",
     "au.departements":"Departements",
     "au.provinces":"Provinces",
-    "au.collines":"Collines"
+    "au.collines":"Collines",
+    "queryablepolygon": "Polygon queryable",
+    "mobileProcess": "Contact by SMS",
+    "queryable": "Queryable"
 }

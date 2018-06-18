@@ -162,5 +162,8 @@
   "au.sousprefectures":"Sous préfectures",
   "au.departements":"Départements",
   "au.provinces":"Provinces",
-  "au.collines":"Collines"
+  "au.collines":"Collines",
+  "queryablepolygon": "Interrogation polygone",
+  "mobileProcess": "Contact par SMS",
+  "queryable": "Interrogeable"
 }
