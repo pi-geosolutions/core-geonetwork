@@ -4,8 +4,6 @@
 
   var module = angular.module('app.query.polygon', []);
 
-  var WPS_SERVER_URL = 'http://gm-risk.pigeo.fr//geoserver-prod/wps';
-
   gn.queryPolygonDirective = function() {
     return {
       restrict: 'E',
@@ -139,7 +137,7 @@
 
     var body = formatWPSBody(layerName, geojson);
     this.loading = true;
-    this.$http.post(WPS_SERVER_URL, body, {
+    this.$http.post(this.getLayerWpsUrl_(), body, {
       headers: {'Content-Type': 'application/xml'}
     }).then(function(response){
       try {
@@ -162,6 +160,19 @@
     }.bind(this)).finally(function() {
       this.loading = false;
     }.bind(this));
+  };
+
+  gn.QueryPolygonController.prototype.getLayerWpsUrl_ = function() {
+    var GS_PATTERN = '/geoserver/';
+    var url = this.activeLayer.get('url');
+    var idx = url.indexOf(GS_PATTERN);
+    if(idx >= 0) {
+      url = url.substring(0, idx + GS_PATTERN.length) + 'wps';
+    }
+    else {
+      console.warn('WPS url: layer has no geoserver source, cant determine WPS url', url);
+    }
+    return url;
   };
 
   gn.QueryPolygonController['$inject'] = [
