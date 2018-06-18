@@ -1275,20 +1275,21 @@
                   if (version) {
                     o.version = version;
                   }
-                  olL = $this.addWmsToMap(map, o);
+                  if(!createOnly) {
+                    olL = $this.addWmsToMap(map, o);
+                    if(olL && md) {
+                      olL.set('md', md);
+                    }
 
-                  if(olL && md) {
-                    olL.set('md', md);
+                    if (!angular.isArray(olL.get('errors'))) {
+                      olL.set('errors', []);
+                    }
+                    errors.push(errormsg);
+                    console.warn(errormsg);
+
+                    olL.get('errors').push(errors);
+                    o.layer = olL;
                   }
-
-                  if (!angular.isArray(olL.get('errors'))) {
-                    olL.set('errors', []);
-                  }
-                  errors.push(errormsg);
-                  console.warn(errormsg);
-
-                  olL.get('errors').push(errors);
-                  o.layer = olL;
 
                   gnWmsQueue.error(o);
                   o.layer = olL;
