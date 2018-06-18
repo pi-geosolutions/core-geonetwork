@@ -54,6 +54,7 @@
   gn.QueryPolygonController = function($http, $scope) {
     this.$http = $http;
     this.$scope = $scope;
+    this.error = false;
 
     $scope.$watch(function() {
       return this.active;
@@ -99,6 +100,7 @@
   };
 
   gn.QueryPolygonController.prototype.handleDrawEnd_ = function(e) {
+    this.error = false;
     var format = new ol.format.GeoJSON();
     var geojson = format.writeFeatures([e.feature]);
     var geojsonO = JSON.parse(geojson);
@@ -140,18 +142,23 @@
     this.$http.post(WPS_SERVER_URL, body, {
       headers: {'Content-Type': 'application/xml'}
     }).then(function(response){
-      this.result = response.data.features[0].properties;
+      try {
+        this.result = response.data.features[0].properties;
 
-      // Filter response fields depending on layer conf
-      angular.forEach(pqConf.pq_rastertype_fields, function(v, k) {
-        if(!v) {
-          delete this.result[k];
-        }
-        else {
-          this.result[k] = this.result[k].toFixed(pqConf.pq_round)
-        }
-      }.bind(this)
-      );
+        // Filter response fields depending on layer conf
+        angular.forEach(pqConf.pq_rastertype_fields, function(v, k) {
+            if(!v) {
+              delete this.result[k];
+            }
+            else {
+              this.result[k] = this.result[k].toFixed(pqConf.pq_round)
+            }
+          }.bind(this)
+        );
+      }
+      catch (e) {
+        this.error = true;
+      }
     }.bind(this)).finally(function() {
       this.loading = false;
     }.bind(this));

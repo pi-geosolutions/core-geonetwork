@@ -84,6 +84,7 @@
     "openMetadata": "Open the metadata",
     "nolayerselected": "No layer selected",
     "polygonhelp": "<p>The <em>Polygon Query</em> tool is currently active. You can draw on the map the polygon on which you want to collect information</p><p>When done, the panel below will update accordingly with the newly collected information. The information available in the panel below matches with the polygon drawn with red stroke on the map and the layer mentioned in this panel.</p>  To quit the <em>Polygon Query</em> mode, simply select another tool on the map's toolbar. Default tool is the pan tool (hand icon)",
+    "polygonerror": "Error while querying the layer",
     "mobileprocesshelp": "<p>The <em>Polygon Query</em> tool is currently active. You can draw on the map the polygon on which you want to collect information</p><p>When done, email and sms will be sent to contacts that match the drawns polygon.</p>  To quit the <em>Polygon Query</em> mode, simply select another tool on the map's toolbar. Default tool is the pan tool (hand icon)",
     "layers": "Layers",
     "mycontext": "Workspace",

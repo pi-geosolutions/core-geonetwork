@@ -86,6 +86,7 @@
   "openMetadata": "Ouvrir la métadonnée",
   "nolayerselected": "Aucune couche sélectionnée",
   "polygonhelp": "<p><em>Polygon Query</em>, l'outil est activé. Vous pvouez dessiner une polygone pour en extraire des informations.</p><p>Une fois l'extraction terminée, les informations collectée seront affichée ci-dessous. </p>  Pour quitter cet outil <em>Polygon Query</em>, Sélectionnez un autre outil dans la barre d'outils.",
+  "polygonerror": "Erreur lors de l'extraction des données.",
   "mobileprocesshelp": "<p>La fonctionnalité <em>Alerter les contacts</em>, est activée. Vous pvouez dessiner une polygone, un mail et un sms sera envoyé à tous les contacts situés dans le polygone dessiné. </p>  Pour quitter cet outil <em>Polygon Query</em>, Sélectionnez un autre outil dans la barre d'outils.",
   "layers": "Couches",
   "mycontext": "Espace de travail",
