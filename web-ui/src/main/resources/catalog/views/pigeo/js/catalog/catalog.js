@@ -208,6 +208,9 @@
     if(layer) {
       layer.set('metadataUuid', node.uuid);
       layer.set('queryable', node.queryable);
+      if(node.legend) {
+        layer.set('legend', node.legend);
+      }
 
       layerCache_[layerCacheKey] = layer;
 
