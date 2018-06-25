@@ -25,6 +25,7 @@
     this.playing = false;
     this.promise;
     this.time;
+    this.timeout = 1.5;
 
     $scope.$watch(function(){
       return this.list;
@@ -81,7 +82,7 @@
   gn.AnimatorController.prototype.applyNextValue_ = function() {
     if(this.modeBackward) this.previous();
     else this.next();
-    this.promise = this.$timeout(this.applyNextValue_.bind(this), 1000);
+    this.promise = this.$timeout(this.applyNextValue_.bind(this), (2-parseFloat(this.timeout))*1000);
   };
 
   gn.AnimatorController.prototype.setTime_ = function(index) {
