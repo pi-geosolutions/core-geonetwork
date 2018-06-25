@@ -129,7 +129,7 @@
     url = this.gnUrlUtils.append(urlA[0],
          this.gnUrlUtils.toKeyValue(params));
 
-    this.dates.forEach(function(d) {
+    this.dates.forEach(function(d, idx) {
 
       getDataUri(url + '&TIME=' + d, function(dataUri) {
         var sourceConfig = {
@@ -137,7 +137,7 @@
           imageExtent: extent,
           projection: this.map.getView().getProjection()
         };
-        loader.images.push(sourceConfig);
+        loader.images[idx] = sourceConfig;
 
         this.$scope.$apply(function() {
           loadCounter--;
